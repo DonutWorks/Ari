@@ -10,5 +10,4 @@ class AdminController < ApplicationController
       { read_users: read_users, unread_users: unread_users, gate: gate }
     end
   end
-
 end
