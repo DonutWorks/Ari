@@ -41,3 +41,4 @@ gem 'spring',        group: :development
 gem 'quiet_assets', group: :development
 gem "devise"
 
+gem 'unread'
