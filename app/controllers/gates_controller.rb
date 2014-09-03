@@ -13,7 +13,9 @@ class GatesController < ApplicationController
 
   def result
     @gate = Gate.find(params[:id])
-    @shortenURL = shortenURL(@gate.link)
+
+    @shortenURL = shortenURL(gate_url(@gate))
+
   end
 
   def show
