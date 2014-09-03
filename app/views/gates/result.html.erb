@@ -1,0 +1,26 @@
+<ul>
+  
+  <li>
+    <%= @gate.title %>
+  </li>
+  
+  <li>
+    <%= @gate.content %>
+  </li>
+  
+  <li>
+    <%= @gate.link %>
+  </li>
+  
+  <li>
+    <%= @gate.duedate.strftime("%m/%d/%Y %T%:z") %>
+  </li>
+
+  <li>
+   <%= link_to '공지주소', @shortenURL %>
+    <%= @shortenURL %>
+  </li>
+ 
+
+  
+</ul>

@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :gates
+  resources :gates do
+    member do
+      get 'result'
+    end
+  end
   
 
   devise_for :users
