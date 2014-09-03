@@ -9,12 +9,10 @@
 				  <%= f.text_field :username, autofocus: true, class: "form-control" %>
 			  </div>
 
-			  <%= f.hidden_field :password, value: "testtest" %>
-			 
-				<div><%= f.submit "보기", class: "btn btn-default"  %></div>
-			<% end %>
+        <%= f.hidden_field :password, value: "testtest" %>
 
-			<%= render "devise/shared/links" %>
+        <div><%= f.submit "보기", class: "btn btn-default"  %></div>
+        <% end %>
 		</div>
 	</div>
 </div>
