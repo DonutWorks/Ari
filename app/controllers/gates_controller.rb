@@ -9,18 +9,17 @@ class GatesController < ApplicationController
     if @gate.save
       redirect_to result_gate_path(@gate)
     end
-    
   end
 
   def result
     @gate = Gate.find(params[:id])
     @shortenURL = shortenURL(@gate.link)
-    
   end
 
   def show
     @gate = Gate.find(params[:id])
-    
+    @gate.mark_as_read!(for: current_user)
+
     redirect_to @gate.link
   end
 
