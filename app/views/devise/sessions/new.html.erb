@@ -1,0 +1,11 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+  <div><%= f.label :username, "이름" %><br />
+  <%= f.text_field :username, autofocus: true %></div>
+
+  <%= f.hidden_field :password, value: "testtest" %>
+ 
+	<div><%= f.submit "공지 보기" %></div>
+<% end %>
+
+<%= render "devise/shared/links" %>
