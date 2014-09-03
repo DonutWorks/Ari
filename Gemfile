@@ -44,3 +44,4 @@ gem 'roo'
 gem 'quiet_assets', group: :development
 gem "devise"
 
+gem 'unread'
