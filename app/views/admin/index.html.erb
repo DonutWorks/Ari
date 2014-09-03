@@ -1,0 +1,17 @@
+<% @status_list.each do |status| %>
+<div>
+<h1>Gate: <%= status[:gate].title %></h1>
+<p>Read Users<p>
+<ul>
+<% status[:read_users].each do |user| %>
+  <li><%= user.username %></li>
+<% end %>
+</ul>
+<p>Unread Users</p>
+<ul>
+<% status[:unread_users].each do |user| %>
+  <li><%= user.username %></li>
+<% end %>
+</ul>
+</div>
+<% end %>
