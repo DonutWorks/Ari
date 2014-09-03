@@ -18,6 +18,11 @@ class GatesController < ApplicationController
     
   end
 
+  def show
+    @gate = Gate.find(params[:id])
+    
+    redirect_to @gate.link
+  end
 
 
   private
