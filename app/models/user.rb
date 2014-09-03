@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :username
 
+  acts_as_reader
 
 	protected
 	def self.find_for_database_authentication(warden_conditions)

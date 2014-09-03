@@ -1,8 +1,6 @@
 class GatesController < ApplicationController
   def new
-    @gate = Gate.new
-
-    
+    @gate = Gate.new    
   end
 
   def create
