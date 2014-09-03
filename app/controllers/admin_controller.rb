@@ -1,4 +1,7 @@
 class AdminController < ApplicationController
+  skip_before_action :authenticate_user!
+  http_basic_authenticate_with name: "habitat", password: "iloveyou"
+
   def index
     @users = User.all
     @status_list = Gate.all.map do |gate|
@@ -7,4 +10,5 @@ class AdminController < ApplicationController
       { read_users: read_users, unread_users: unread_users, gate: gate }
     end
   end
+
 end

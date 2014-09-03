@@ -1,3 +1,9 @@
+
+<h1>관리자 페이지</h1>
+<p id="notice"><%= flash[:notice] %></p>
+
+<%= link_to "회원 등록", new_user_registration_path %>
+
 <% @status_list.each do |status| %>
 <div>
 <h1>Gate: <%= status[:gate].title %></h1>
@@ -14,4 +20,7 @@
 <% end %>
 </ul>
 </div>
+
+
+
 <% end %>

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ImportexcelControllerTest < ActionController::TestCase
+class ImportExcelControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
