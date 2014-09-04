@@ -1,4 +1,6 @@
 class GatesController < ApplicationController
+  skip_before_action :authenticate_user!, except: :show
+
   def new
     @gate = Gate.new    
   end
@@ -15,7 +17,6 @@ class GatesController < ApplicationController
     @gate = Gate.find(params[:id])
 
     @shortenURL = shortenURL(gate_url(@gate))
-
   end
 
   def show
