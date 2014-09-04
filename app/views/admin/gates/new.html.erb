@@ -1,7 +1,7 @@
 <div class="form-container">
   <div class="row">
     <div class="col-md-12">
-      <%= form_for @gate do |f|%>
+      <%= form_for [:admin, @gate] do |f|%>
         <div class="form-group">
           <%= f.label :title %><br>
           <%= f.text_field :title, class: "form-control" %>
