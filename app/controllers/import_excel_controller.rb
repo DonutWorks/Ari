@@ -11,7 +11,9 @@ class ImportExcelController < ApplicationController
     (2..lastRow).each do |i|
       user = User.new
       user.username = data.cell(i, 1)
-      #user.email = data.cell(i, 3)
+      user.phonenumber = data.cell(i, 2)
+      user.email = data.cell(i, 3)
+      user.major = data.cell(i, 4)
       user.password = "testtest"
       user.save!
     end
