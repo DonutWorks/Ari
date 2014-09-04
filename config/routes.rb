@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   get 'import' => 'import_excel#import'
   get 'destroy' => 'import_excel#destroy'
 
-  resources :admin, only: [:index]
+  namespace :admin do
+    resources :application, path: '', only: [:index]
+  end
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

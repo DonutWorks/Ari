@@ -1,6 +1,7 @@
-class AdminController < ApplicationController
-  skip_before_action :authenticate_user!
+class Admin::ApplicationController < ActionController::Base
+
   http_basic_authenticate_with name: "habitat", password: "iloveyou"
+  protect_from_forgery with: :exception
 
   def index
     @users = User.all
