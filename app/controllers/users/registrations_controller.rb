@@ -6,14 +6,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    User.create!(
-      username: params[:user][:username],
-      email: params[:user][:email],
-      phonenumber: params[:user][:phonenumber],
-      major: params[:user][:major],
-      password: "testtest")
+
+    User.create!(user_params.merge(password: "testtest"))
 
     flash[:notice] = params[:user][:username] + "님 회원 등록 완료"
-    redirect_to admin_index_path
+    redirect_to admin_root_path
+  end
+
+private
+  def user_params
+    params.require(:user).permit(:username, :email, :phonenumber, :major)
   end
 end

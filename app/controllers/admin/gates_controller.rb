@@ -5,8 +5,10 @@ class Admin::GatesController < Admin::ApplicationController
 
   def create
     @gate = Gate.new(gate_params)
-    @gate.shortenURL = @gate.make_shortenURL
+    
     if @gate.save
+      @gate.shortenURL = @gate.make_shortenURL(gate_url(@gate))
+      @gate.save!
       redirect_to result_admin_gate_path(@gate)
     end
   end
@@ -19,20 +21,5 @@ class Admin::GatesController < Admin::ApplicationController
 private
   def gate_params
     params.require(:gate).permit(:title, :link, :content, :duedate)
-  end
-
-  def shortenURL(longurl)
-    require "uri"
-    require "net/http"
-
-    uri = URI.parse("https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyCPjcArjKfGKsxMfa9DPXME7peALnwpLY0")
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE 
-    request = Net::HTTP::Post.new(uri.path,{'Content-Type' =>'application/json'})
-    request.body = '{"longUrl" : "'+longurl+'"}'
-    response = http.request(request)
-    hash = JSON.parse( response.body.to_s )
-    return hash["id"]
   end
 end

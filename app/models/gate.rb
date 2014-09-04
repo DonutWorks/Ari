@@ -1,7 +1,9 @@
 class Gate < ActiveRecord::Base
+
   acts_as_readable on: :created_at
 
-  def make_shortenURL
+
+  def make_shortenURL(long_url)
     require "uri"
     require "net/http"
 
@@ -9,10 +11,11 @@ class Gate < ActiveRecord::Base
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE 
-    request = Net::HTTP::Post.new(uri.path,{'Content-Type' =>'application/json'})
-    request.body = '{"longUrl" : "'+self.link+'"}'
+    request = Net::HTTP::Post.new(uri.path,{'Content-Type' => 'application/json'})
+    request.body = '{"longUrl" : "' + long_url + '"}'
     response = http.request(request)
     hash = JSON.parse( response.body.to_s )
+
     return hash["id"]
   end
 
