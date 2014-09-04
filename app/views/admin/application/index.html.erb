@@ -5,22 +5,31 @@
 <%= link_to "회원 등록", new_user_registration_path %>
 
 <% @status_list.each do |status| %>
-<div>
-<h1>Gate: <%= status[:gate].title %></h1>
-<p>Read Users<p>
-<ul>
-<% status[:read_users].each do |user| %>
-  <li><%= user.username %></li>
-<% end %>
-</ul>
-<p>Unread Users</p>
-<ul>
-<% status[:unread_users].each do |user| %>
-  <li><%= user.username %></li>
-<% end %>
-</ul>
-</div>
+  <div>
+    <h1>Gate: <%= status[:gate].title %></h1>
+    <p>공지 내용 : <%= status[:gate].content %></p>
+    <p>실제 공지 주소 : <%= status[:gate].link %></p>
+    <p>통합 공지 주소 : <%= status[:gate].shortenURL %></p>
+    <p>만든 시간 : <%= status[:gate].created_at.strftime("%m/%d/%Y %T%:z") %></p>
+    
+    <h3>Read Users ( <%= status[:read_users].count %> )</h3>
+    <div class="row">
+      <% status[:read_users].each do |user| %>
+      <div class="col-md-3"><%= user.username %></div>
+      <div class="col-md-3"><%= user.phonenumber %></div>
+      <div class="col-md-3"><%= user.email %></div>
+      <div class="col-md-3"><%= user.major %></div>
+      <% end %>
+    </div>
 
-
-
+    <h3>Unread Users ( <%= status[:unread_users].count %> )</h3>
+    <div class="row">
+      <% status[:unread_users].each do |user| %>
+      <div class="col-md-3"><%= user.username %></div>
+      <div class="col-md-3"><%= user.phonenumber %></div>
+      <div class="col-md-3"><%= user.email %></div>
+      <div class="col-md-3"><%= user.major %></div>
+      <% end %>
+    </div>
+  </div>
 <% end %>

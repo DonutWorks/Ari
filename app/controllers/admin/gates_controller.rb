@@ -5,7 +5,7 @@ class Admin::GatesController < Admin::ApplicationController
 
   def create
     @gate = Gate.new(gate_params)
-
+    @gate.shortenURL = @gate.make_shortenURL
     if @gate.save
       redirect_to result_admin_gate_path(@gate)
     end
@@ -13,7 +13,7 @@ class Admin::GatesController < Admin::ApplicationController
 
   def result
     @gate = Gate.find(params[:id])
-    @shortenURL = shortenURL(gate_url(@gate))
+    @shortenURL = @gate.shortenURL
   end
 
 private

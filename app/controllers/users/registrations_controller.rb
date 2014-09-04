@@ -8,6 +8,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     User.create!(
       username: params[:user][:username],
+      email: params[:user][:email],
+      phonenumber: params[:user][:phonenumber],
+      major: params[:user][:major],
       password: "testtest")
 
     flash[:notice] = params[:user][:username] + "님 회원 등록 완료"
