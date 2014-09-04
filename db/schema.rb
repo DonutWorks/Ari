@@ -11,7 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20140904063606) do
+
 
   create_table "gates", force: true do |t|
     t.string   "title"
@@ -46,6 +48,8 @@ ActiveRecord::Schema.define(version: 20140904063606) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username",                            null: false
+    t.string   "phonenumber"
+    t.string   "major"
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
