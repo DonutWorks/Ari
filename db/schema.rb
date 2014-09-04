@@ -11,7 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904054350) do
+
+ActiveRecord::Schema.define(version: 20140904063606) do
+
 
   create_table "gates", force: true do |t|
     t.string   "title"
@@ -20,6 +22,7 @@ ActiveRecord::Schema.define(version: 20140904054350) do
     t.datetime "duedate"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "shortenURL"
   end
 
   create_table "read_marks", force: true do |t|
