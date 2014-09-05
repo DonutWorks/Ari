@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   acts_as_reader
 
-	protected
+protected
 	def self.find_for_database_authentication(warden_conditions)
 	  conditions = warden_conditions.dup
 	  username = conditions.delete(:username)
@@ -17,5 +17,5 @@ class User < ActiveRecord::Base
 	end
 
   def email_required?
-  end
+  end  
 end

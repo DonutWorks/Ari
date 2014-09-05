@@ -41,7 +41,16 @@ gem 'roo'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.2'
+  gem 'guard-rspec', '~> 4.3.1'
+end
+
 gem 'quiet_assets', group: :development
 gem "devise"
 
 gem 'unread'
+
+
+
+
