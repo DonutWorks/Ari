@@ -1,17 +1,24 @@
-<div class="form-container">
+<div class="form-container main_form">
   <div class="row">
     <div class="col-md-12">
 
       <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {role: "form", class: "form-horizontal "}) do |f| %>
-        <%= f.hidden_field :password, value: "testtest" %>
-        <legend>공지 보러가기</legend>
 
+        <%= f.hidden_field :password, value: "testtest" %>
+        <div id = "notice-top">
+          <%= image_tag("snu_habitat.jpg", id: "emblem") %>
+          <legend>공지 확인 페이지</legend>
+          
+        </div>
         <div class="form-group form-group-lg">
-          <%= f.label :username, "이름", class: "col-sm-2 control-label" %>
+          <%= f.label :phonenumber, "전화번호", class: "col-sm-2 control-label" %>
 
           <div class="col-sm-10">
-            <%= f.text_field :username, autofocus: true, class: "form-control" %>
+            <%= f.telephone_field :phonenumber, autofocus: true, class: "form-control" %>
+            <br>
+            <%= flash[:alert] %>
           </div>
+
         </div>
 
         <div class="form-group form-group-lg">
@@ -24,3 +31,19 @@
 		</div>
 	</div>
 </div>
+
+<style>
+.main_form{
+  margin-top: 50px;
+}
+#notice-top {
+  text-align:center;
+}
+body{
+  background-color: rgb(209, 218, 201);
+}
+#emblem{
+  width:70%;
+  max-width:320px;
+}
+</style>
