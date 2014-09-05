@@ -27,7 +27,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 # Use excel import gem
-gem 'roo'
+gem 'roo', '~> 1.13.2'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -44,13 +44,9 @@ gem 'roo'
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.2'
   gem 'guard-rspec', '~> 4.3.1'
+  gem 'quiet_assets', '~> 1.0.3'
 end
 
-gem 'quiet_assets', group: :development
-gem "devise"
-
-gem 'unread'
-
-
-
-
+gem 'devise', '~> 3.3.0'
+gem 'unread', '~> 0.4.0'
+gem 'addressable', '~> 2.3.6'
