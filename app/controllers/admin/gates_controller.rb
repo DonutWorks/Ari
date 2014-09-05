@@ -15,12 +15,6 @@ class Admin::GatesController < Admin::ApplicationController
 
   def show
     @gate = Gate.find(params[:id])
-    read_users = User.joins(:read_marks).where(read_marks: {readable: @gate})
-    unread_users = User.where.not(id: read_users)
-    @status = {
-      read_users: read_users,
-      unread_users: unread_users
-    }
   end
 
 private
