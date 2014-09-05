@@ -1,16 +1,32 @@
-
 <h1>관리자 페이지</h1>
 <p id="notice"><%= flash[:notice] %></p>
 
-<div>
-	<%= link_to "회원 등록", new_user_registration_path %>
-	<%= link_to "회원 대량등록", admin_import_path %>
-	<%= link_to "새 링크 만들기", new_admin_gate_path %>
-</div>
-
-<h3>Gates</h3>
-<ul>
-<% @gates.each do |gate| %>
-  <li><%= link_to gate.title, admin_gate_path(gate) %></li>
+<%= link_to new_user_registration_path do %>
+  <button type="button" class="btn btn-default btn-lg">
+    회원 등록
+  </button>
 <% end %>
-</ul>
+<%= link_to admin_import_path do %>
+  <button type="button" class="btn btn-default btn-lg">
+    엑셀 파일로 회원 등록하기
+  </button>
+<% end %>
+<%= link_to new_admin_gate_path do %>
+  <button type="button" class="btn btn-default btn-lg">
+    새 링크 만들기
+  </button>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">Links</div>
+  <ul class="list-group">
+    <% @gates.each do |gate| %>
+      <%= link_to admin_gate_path(gate), class: "list-group-item" do %>
+        <span><%= gate.title %></span>
+        <span class="badge">
+          <%= "#{gate.read_users.count} / #{User.all.count}" %>
+        </span>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
