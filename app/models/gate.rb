@@ -24,6 +24,14 @@ class Gate < ActiveRecord::Base
     return hash["id"]
   end
 
+  def passed_users
+    User.joins(:read_marks).where(read_marks: {readable: self})
+  end
+
+  def not_passed_users
+    User.joins("LEFT OUTER JOIN (SELECT * FROM read_marks WHERE readable_id = #{self.id}) AS gate_reads ON gate_reads.user_id = users.id").where('gate_reads.user_id IS NULL')
+  end
+
 private
   def request_to_google(request, http)
     http.request(request)
