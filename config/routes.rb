@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'application#index'
     resources :gates, only: [:new, :create, :show]
+    get 'import' => 'gates#import'
+    post 'add_members' => 'gates#add_members'
   end
 
 end
