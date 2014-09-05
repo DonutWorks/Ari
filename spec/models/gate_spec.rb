@@ -30,43 +30,47 @@ RSpec.describe Gate, :type => :model do
     end
   end
 
-  describe "#passed_users" do
-    it "should return users who pass a gate" do
-      user = User.new
-      user.email = "test@test.com"
-      user.username = "John"
-      user.phonenumber = "01012341234"
-      user.major = "CS"
-      user.password = "testtest"
-      user.save!
+  describe "#read_users" do
+    before(:each) do
+      @user = User.new
+      @user.email = "test@test.com"
+      @user.username = "John"
+      @user.phonenumber = "01012341234"
+      @user.major = "CS"
+      @user.password = "testtest"
+      @user.save!
 
-      gate = Gate.new
-      gate.save!
+      @gate = Gate.new
+      @gate.save!
+    end
 
-      expect(gate.passed_users).to eq([])
+    it "should return users who read a gate" do
+      expect(@gate.read_users).to eq([])
 
-      gate.mark_as_read!(for: user)
-      expect(gate.passed_users).to eq([user])
+      @gate.mark_as_read!(for: @user)
+      expect(@gate.read_users).to eq([@user])
     end
   end
 
-  describe "#not_passed_users" do
-    it "should return users who don't pass a gate" do
-      user = User.new
-      user.email = "test@test.com"
-      user.username = "John"
-      user.phonenumber = "01012341234"
-      user.major = "CS"
-      user.password = "testtest"
-      user.save!
+  describe "#not_read_users" do
+    before(:each) do
+      @user = User.new
+      @user.email = "test@test.com"
+      @user.username = "John"
+      @user.phonenumber = "01012341234"
+      @user.major = "CS"
+      @user.password = "testtest"
+      @user.save!
 
-      gate = Gate.new
-      gate.save!
+      @gate = Gate.new
+      @gate.save!
+    end
 
-      expect(gate.not_passed_users).to eq([user])
-      
-      gate.mark_as_read!(for: user)
-      expect(gate.not_passed_users).to eq([])
+    it "should return users who don't read a gate" do
+      expect(@gate.not_read_users).to eq([@user])
+
+      @gate.mark_as_read!(for: @user)
+      expect(@gate.not_read_users).to eq([])
     end
   end
 end

@@ -5,9 +5,9 @@
   <p>통합 공지 주소 : <%= @gate.shortenURL %></p>
   <p>만든 시간 : <%= @gate.created_at.strftime("%m/%d/%Y %T%:z") %></p>
   
-  <h3>Read Users ( <%= @status[:read_users].count %> )</h3>
+  <h3>Read Users ( <%= @gate.read_users.count %> )</h3>
   <div class="row">
-    <% @status[:read_users].each do |user| %>
+    <% @gate.read_users.each do |user| %>
     <div class="col-md-3"><%= user.username %></div>
     <div class="col-md-3"><%= user.phonenumber %></div>
     <div class="col-md-3"><%= user.email %></div>
@@ -15,9 +15,9 @@
     <% end %>
   </div>
 
-  <h3>Unread Users ( <%= @status[:unread_users].count %> )</h3>
+  <h3>Unread Users ( <%= @gate.not_read_users.count %> )</h3>
   <div class="row">
-    <% @status[:unread_users].each do |user| %>
+    <% @gate.not_read_users.each do |user| %>
     <div class="col-md-3"><%= user.username %></div>
     <div class="col-md-3"><%= user.phonenumber %></div>
     <div class="col-md-3"><%= user.email %></div>
