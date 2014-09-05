@@ -6,22 +6,50 @@
   <p>만든 시간 : <%= @gate.created_at.localtime.strftime("%m/%d/%Y %T%:z") %></p>
   
   <h3>Read Users ( <%= @gate.read_users.count %> )</h3>
-  <div class="row">
-    <% @gate.read_users.each do |user| %>
-    <div class="col-md-3"><%= user.username %></div>
-    <div class="col-md-3"><%= user.phonenumber %></div>
-    <div class="col-md-3"><%= user.email %></div>
-    <div class="col-md-3"><%= user.major %></div>
-    <% end %>
-  </div>
+    <div class="table-responsive">
+    <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>이름</th>
+        <th>전화번호</th>
+        <th>이메일</th>
+        <th>전공</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @gate.read_users.each do |user| %>
+      <tr>
+        <td><%= user.username %></td>
+        <td><%= user.phonenumber %></td>
+        <td><%= user.email %></td>
+        <td><%= user.major %></td>
+      </tr>
+      <% end %>
+    </tbody>
+    </table>
+    </div>
 
-  <h3>Unread Users ( <%= @gate.not_read_users.count %> )</h3>
-  <div class="row">
-    <% @gate.not_read_users.each do |user| %>
-    <div class="col-md-3"><%= user.username %></div>
-    <div class="col-md-3"><%= user.phonenumber %></div>
-    <div class="col-md-3"><%= user.email %></div>
-    <div class="col-md-3"><%= user.major %></div>
-    <% end %>
-  </div>
+    <h3>Unread Users ( <%= @gate.not_read_users.count %> )</h3>
+    <div class="table-responsive">
+    <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>이름</th>
+        <th>전화번호</th>
+        <th>이메일</th>
+        <th>전공</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @gate.not_read_users.each do |user| %>
+      <tr>
+        <td><%= user.username %></td>
+        <td><%= user.phonenumber %></td>
+        <td><%= user.email %></td>
+        <td><%= user.major %></td>
+      </tr>
+      <% end %>
+    </tbody>
+    </table>
+    </div>
 </div>
