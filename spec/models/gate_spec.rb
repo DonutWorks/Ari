@@ -1,6 +1,18 @@
 require "rails_helper"
 
 RSpec.describe Gate, :type => :model do
+  describe "#save" do
+    it "should prepend protocol if not exist" do
+      gate = Gate.new
+      gate.link = 'www.google.com'
+      gate.shortenURL = 'www.google.com'
+
+      expect(gate.save).to eq(true)
+      expect(gate.link).to eq('http://www.google.com')
+      expect(gate.shortenURL).to eq('http://www.google.com')
+    end
+  end
+
   describe "#make_shortenURL" do
     it "should make shorten url" do
       gate = Gate.new
