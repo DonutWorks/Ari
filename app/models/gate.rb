@@ -2,6 +2,10 @@ class Gate < ActiveRecord::Base
   acts_as_readable on: :created_at
 
   def make_shortenURL(long_url)
+
+    require "uri"
+    require "net/http"
+
     uri = URI.parse("https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyA5-F8Di51O7rijYgzTeT8cmK1w4QDjCT8")
 
     http = Net::HTTP.new(uri.host, uri.port)
