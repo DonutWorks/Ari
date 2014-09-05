@@ -25,6 +25,6 @@ class Admin::GatesController < Admin::ApplicationController
 
 private
   def gate_params
-    params.require(:gate).permit(:title, :link, :content, :duedate)
+    params.require(:gate).permit(:title, :link, :content)
   end
 end
