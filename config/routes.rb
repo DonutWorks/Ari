@@ -14,11 +14,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'application#index'
-    resources :gates, only: [:new, :create] do
-      member do
-        get 'result'
-      end
-    end
+    resources :gates, only: [:new, :create, :show]
   end
 
 end

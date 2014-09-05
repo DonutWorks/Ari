@@ -9,13 +9,18 @@ class Admin::GatesController < Admin::ApplicationController
     if @gate.save
       @gate.shortenURL = @gate.make_shortenURL(gate_url(@gate))
       @gate.save!
-      redirect_to result_admin_gate_path(@gate)
+      redirect_to admin_gate_path(@gate)
     end
   end
 
-  def result
+  def show
     @gate = Gate.find(params[:id])
-    @shortenURL = @gate.shortenURL
+    read_users = User.joins(:read_marks).where(read_marks: {readable: @gate})
+    unread_users = User.where.not(id: read_users)
+    @status = {
+      read_users: read_users,
+      unread_users: unread_users
+    }
   end
 
 private
