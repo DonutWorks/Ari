@@ -1,0 +1,14 @@
+<div class="form-container">
+  <div class="row">
+    <div class="col-md-12">
+      <%= form_tag(admin_add_members_path, :method=>'post', :multipart => true) do %>
+        <div class="form-group">
+          <%= file_field_tag 'upload[file]' %>
+        </div>
+        <p>
+          <%= submit_tag "Upload", class: "btn btn-default"   %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>
