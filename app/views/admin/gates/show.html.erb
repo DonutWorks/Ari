@@ -29,7 +29,7 @@
     </table>
     </div>
 
-    <h3>Unread Users ( <%= @gate.not_read_users.count %> )</h3>
+    <h3>Unread Users ( <%= @gate.unread_users.count %> )</h3>
     <div class="table-responsive">
     <table class="table table-condensed">
     <thead>
@@ -41,7 +41,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @gate.not_read_users.each do |user| %>
+      <% @gate.unread_users.each do |user| %>
       <tr>
         <td><%= user.username %></td>
         <td><%= user.phonenumber %></td>
