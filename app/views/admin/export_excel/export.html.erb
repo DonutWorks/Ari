@@ -1,0 +1,32 @@
+<div class="form-container">
+  <div class="row">
+    
+    
+      
+    <div class="col-md-12">
+      <p>
+        <h1>공지 댓글을 엑셀파일로 저장하기</h1>    
+      </p>
+      <%= form_tag(admin_export_path, :method=>'post') do %>
+        <div class="form-group">
+          <%= label_tag "*cyworld 공지 주소를 입력해주세요." %><br>
+          <%= text_field_tag "notice_link", nil, class: "form-control" %><br>
+          <p>싸이월드 공지글 옆 "주소복사" 버튼을 클릭하여 주소를 복사해주세요. ex)<br>
+            <%= image_tag("HowToGetLink.png", id: "HowToGetLink", class: "img-responsive") %>
+          </p>
+
+          <%= label_tag "*댓글 양식 ( ex: 이름/기수/핸드폰 번호 뒷자리 )" %><br>
+          <%= text_field_tag "format", "이름/기수/핸드폰 번호 뒷자리", class: "form-control" %><br>
+          
+          <p>- 입력된 양식에 맞추어 엑셀파일로 저장합니다.<br>
+          - 구분자는 / 를 이용해주세.</p>
+      
+        </div>
+        <p>
+          <%= submit_tag "Send", class: "btn btn-default"   %>
+        </p>
+      <% end %>
+
+    </div>
+  </div>
+</div>

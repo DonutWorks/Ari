@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'application#index'
     resources :gates, only: [:new, :create, :show]
+
+    get 'export' => 'export_excel#export'
+    post 'export' => 'export_excel#export_excel'
+
     get 'import' => 'gates#import'
     post 'add_members' => 'gates#add_members'
   end
