@@ -22,8 +22,6 @@ Rails.application.routes.draw do
 
     get 'import' => 'gates#import'
     post 'add_members' => 'gates#add_members'
-
-    get 'export' => 'export_excel#export'
   end
 
 end
