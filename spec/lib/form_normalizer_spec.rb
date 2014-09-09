@@ -12,6 +12,11 @@ RSpec.describe FormNormalizer do
       expect(normalized).to eq("01012341234")
     end
 
+    it "should normalize generation info for some terms" do
+      normalized = FormNormalizer.normalize("기수", "4.5")
+      expect(normalized).to eq("4.5기")
+    end
+
     it "should return term not modified if there is no responding normalizer" do
       normalized = FormNormalizer.normalize("루비", "Ruby!")
       expect(normalized).to eq("Ruby!")

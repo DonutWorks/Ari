@@ -1,5 +1,9 @@
 class FormNormalizer
-  @normalizers = [FormNormalizers::GenderNormalizer, FormNormalizers::PhoneNumberNormalizer]
+  @normalizers = [
+    FormNormalizers::GenderNormalizer,
+    FormNormalizers::PhoneNumberNormalizer,
+    FormNormalizers::GenerationNormalizer
+  ]
 
   def self.normalize(column_name, term)
     find_normalizer(column_name).send(:normalize, term)
