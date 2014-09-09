@@ -5,7 +5,7 @@
 
       <h1>공지 댓글을 엑셀파일로 저장하기</h1>
 
-      <%= form_tag(admin_export_path, role: "form") do %>
+      <%= form_tag(admin_export_excel_path(format: :xls), role: "form") do %>
 
         <div class="form-group">
           <%= label_tag "*cyworld 공지 주소를 입력해주세요." %>
@@ -18,7 +18,7 @@
 
         <div class="form-group">
           <%= label_tag "*댓글 양식 ( ex: 이름/기수/핸드폰 번호 뒷자리 )" %>
-          <%= text_field_tag "format", "이름/기수/핸드폰 번호 뒷자리", class: "form-control" %>
+          <%= text_field_tag "pattern", "이름/기수/핸드폰 번호 뒷자리", class: "form-control" %>
         </div>
 
         <p class="help-block">

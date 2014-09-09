@@ -1,18 +1,21 @@
 class Admin::ExportExcelController < Admin::ApplicationController
 
+  require 'open-uri'
 
-  def export
+  def new
 
 
   end
 
 
-  def export_excel
+  def create
 
-    pattern = params[:format]
+    pattern = params[:pattern]
 
     url = convert_url(params[:notice_link])
-    page = Nokogiri::HTML(open(url), nil, 'utf-8')
+
+    
+    page = Nokogiri::HTML(open(url).read, nil, 'utf-8')
 
     column_names = []
     comments = []
@@ -21,12 +24,14 @@ class Admin::ExportExcelController < Admin::ApplicationController
       column_names.push e.strip
     end
 
+    p column_names.inspect
+
     page.css('.replylist .obj_rslt').each do |val|
       comment = {}
 
 
       val.text.split('/').each_with_index do |e, i|
-        comment[column_name[i].to_sym] = e
+        comment[column_names[i].to_sym] = e
       end
 
       comments.push comment

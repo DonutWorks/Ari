@@ -17,8 +17,7 @@ Rails.application.routes.draw do
 
     resources :gates, only: [:new, :create, :show]
 
-    get 'export' => 'export_excel#export'
-    post 'export' => 'export_excel#export_excel'
+    resource :export_excel,  controller: :export_excel,  only: [:new, :create]
 
     get 'import' => 'gates#import'
     post 'add_members' => 'gates#add_members'
