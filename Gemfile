@@ -58,4 +58,5 @@ end
 gem 'devise', '~> 3.3.0'
 gem 'unread', '~> 0.4.0'
 gem 'addressable', '~> 2.3.6'
+gem 'phone', '~> 1.2.3'
 gem 'nokogiri', '~> 1.6.3.1'
