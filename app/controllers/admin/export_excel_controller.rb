@@ -1,5 +1,6 @@
 class Admin::ExportExcelController < Admin::ApplicationController
 
+
   def export
     pattern = "이름/기수/전화번호"
 
@@ -26,5 +27,12 @@ class Admin::ExportExcelController < Admin::ApplicationController
 
 
     render text: comments
+  end
+
+
+  def export_excel
+    format = params[:format]
+    notice_link = params[:notice_link]
+    
   end
 end
