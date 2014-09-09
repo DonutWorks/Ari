@@ -8,26 +8,28 @@ class Admin::ExportExcelController < Admin::ApplicationController
     url = 'http://club.cyworld.com/club/board/common/CommentList.asp?club_id=52252462&board_type=1&board_no=36&item_seq=157146265'
     page = Nokogiri::HTML(open(url).read, nil, 'utf-8')
 
-    column_name = []
+    column_names = []
     comments = []
 
     pattern.split('/').each do |e|
-      column_name.push e.strip
+      column_names.push e.strip
     end
 
-    comments.push column_name
-
     page.css('.replylist .obj_rslt').each do |i|
-      comment = []
+      comment = Hash.new
 
-      i.text.split('/').each do |e|
-        comment.push e.strip
+      i.text.split('/').each_with_index do |e, index|
+        hash_value = column_names[index]
+        comment[hash_value] = e.strip
       end
 
       comments.push comment
     end
 
+    respond_to do |format|
+      format.html
+      format.xls { send_data ExcelExporter.export(comments) }
+    end
 
-    render text: comments
   end
 end
