@@ -25,11 +25,8 @@ class Admin::GatesController < Admin::ApplicationController
   end
 
   def add_members
-    file = Tempfile.new(['data','.xlsx'])
-    file.binmode
-    file.write(params[:upload][:file].read)
 
-    data = Roo::Excelx.new(file.path)
+    data = ExcelImporter.import(params[:upload][:file])
     data.default_sheet = data.sheets.first
 
     lastRow = data.last_row
