@@ -7,4 +7,12 @@ class FormNormalizer
     return "여" if FEMALE_GROUP.include?(term)
     return term
   end
+
+  def self.normalize_phone_number(term)
+    begin
+      Phoner::Phone.parse(term, country_code: "82").format("%A%f%l")
+    rescue
+      term
+    end
+  end
 end
