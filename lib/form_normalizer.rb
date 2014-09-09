@@ -1,18 +1,18 @@
 class FormNormalizer
-  MALE_GROUP = %w(남 남자)
-  FEMALE_GROUP = %w(여 여자)
-  def self.normalize_gender(term)
-    term = term.delete(" ")
-    return "남" if MALE_GROUP.include?(term)
-    return "여" if FEMALE_GROUP.include?(term)
-    return term
+  @normalizers = [FormNormalizers::GenderNormalizer, FormNormalizers::PhoneNumberNormalizer]
+
+  def self.normalize(column_name, term)
+    find_normalizer(column_name).send(:normalize, term)
   end
 
-  def self.normalize_phone_number(term)
-    begin
-      Phoner::Phone.parse(term, country_code: "82").format("%A%f%l")
-    rescue
-      term
+private
+  def self.find_normalizer(column_name)
+    column_name.delete!(" ")
+    @normalizers.each do |normalizer|
+      if normalizer.send(:column_names).include?(column_name)
+        return normalizer
+      end
     end
+    return FormNormalizers::Normalizer
   end
 end
