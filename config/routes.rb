@@ -24,7 +24,6 @@ Rails.application.routes.draw do
     resource :export_excel,  controller: :export_excel,  only: [:new, :create]
 
     get 'import' => 'gates#import'
-
     post 'add_members' => 'gates#add_members'
   end
 
