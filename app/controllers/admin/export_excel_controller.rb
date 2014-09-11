@@ -7,7 +7,7 @@ class Admin::ExportExcelController < Admin::ApplicationController
 
   def create
     pattern = params[:pattern]
-    url = convert_url(params[:notice_link])
+    url = CyworldURL.new(params[:notice_link]).to_comment_view_url
 
     page = Nokogiri::HTML(open(url).read, nil, 'utf-8')
 
@@ -32,10 +32,5 @@ class Admin::ExportExcelController < Admin::ApplicationController
       format.html
       format.xls { send_data ExcelExporter.export(comments) }
     end
-  end
-
-private
-  def convert_url(url)
-    url
   end
 end
