@@ -3,12 +3,12 @@ module FormNormalizers
   end
 
   class Normalizer
-    def self.normalize(term)
-      term
+    def column_names
+      raise 'This method should be overriden and return related column names.'
     end
 
-    def self.column_names
-      raise 'This method should be overriden and return related column names.'
+    def normalize(term)
+      term
     end
   end
 end
