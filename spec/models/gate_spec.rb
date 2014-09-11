@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Gate, :type => :model do
   describe "#save" do
     it "should prepend protocol if not exist" do
-      gate = create(:gate, link: "www.google.com", shortenURL: "www.google.com")
+      gate = FactoryGirl.create(:gate, link: "www.google.com", shortenURL: "www.google.com")
 
       expect(gate.link).to eq('http://www.google.com')
       expect(gate.shortenURL).to eq('http://www.google.com')
@@ -12,7 +12,7 @@ RSpec.describe Gate, :type => :model do
 
   describe "#make_shortenURL" do
     it "should make shorten url" do
-      gate = create(:gate)
+      gate = FactoryGirl.create(:gate)
 
       allow(gate).to receive(:request_to_google) do
         OpenStruct.new({
@@ -29,8 +29,8 @@ RSpec.describe Gate, :type => :model do
 
   describe "#read_users" do
     it "should return users who read a gate" do
-      user = create(:user)
-      gate = create(:gate)
+      user = FactoryGirl.create(:user)
+      gate = FactoryGirl.create(:gate)
 
       expect(gate.read_users).to eq([])
 
@@ -41,8 +41,8 @@ RSpec.describe Gate, :type => :model do
 
   describe "#unread_users" do
     it "should return users who don't read a gate" do
-      user = create(:user)
-      gate = create(:gate)
+      user = FactoryGirl.create(:user)
+      gate = FactoryGirl.create(:gate)
 
       expect(gate.unread_users).to eq([user])
 
