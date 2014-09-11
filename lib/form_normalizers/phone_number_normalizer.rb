@@ -7,8 +7,8 @@ module FormNormalizers
     def self.normalize(term)
       begin
         Phoner::Phone.parse(term, country_code: "82").format("%A%f%l")
-      rescue
-        term
+      rescue => e
+        raise NormalizeError
       end
     end
   end

@@ -11,7 +11,7 @@ module FormNormalizers
       term.delete!(" ")
       return "남" if MALE_GROUP.include?(term)
       return "여" if FEMALE_GROUP.include?(term)
-      return term
+      raise NormalizeError
     end
   end
 end

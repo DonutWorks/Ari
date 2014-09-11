@@ -1,4 +1,7 @@
 module FormNormalizers
+  class NormalizeError < RuntimeError
+  end
+
   class Normalizer
     def self.normalize(term)
       term

@@ -12,9 +12,12 @@ RSpec.describe FormNormalizers::PhoneNumberNormalizer do
       expect(normalized_number).to eq("01012341234")
     end
 
-    it "should return inputted number if fails parsing" do
-      normalized_number = FormNormalizers::PhoneNumberNormalizer.normalize("1234")
-      expect(normalized_number).to eq("1234")
+    it "should throw an exception when normalization is failed" do
+      begin
+        normalized = FormNormalizers::PhoneNumberNormalizer.normalize("1234")
+      rescue => e
+        expect(e.instance_of? FormNormalizers::NormalizeError).to eq(true)
+      end
     end
   end
 end

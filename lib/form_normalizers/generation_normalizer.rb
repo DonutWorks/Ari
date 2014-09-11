@@ -7,7 +7,7 @@ module FormNormalizers
     def self.normalize(term)
       return term if term.end_with?("기")
       return term << "기" if is_numeric?(term)
-      return term
+      raise NormalizeError
     end
 
   private

@@ -24,5 +24,13 @@ RSpec.describe FormNormalizers::GenderNormalizer do
         expect(normalized_term).to eq("남")
       end
     end
+
+    it "should throw an exception when normalization is failed" do
+      begin
+        normalized = FormNormalizers::GenderNormalizer.normalize("??")
+      rescue => e
+        expect(e.instance_of? FormNormalizers::NormalizeError).to eq(true)
+      end
+    end
   end
 end

@@ -13,4 +13,12 @@ RSpec.describe FormNormalizers::GenerationNormalizer do
       expect(normalized).to eq("3.5기")
     end
   end
+
+  it "should throw an exception when normalization is failed" do
+    begin
+      normalized = FormNormalizers::GenerationNormalizer.normalize("??")
+    rescue => e
+      expect(e.instance_of? FormNormalizers::NormalizeError).to eq(true)
+    end
+  end
 end
