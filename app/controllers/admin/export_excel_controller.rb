@@ -7,7 +7,7 @@ class Admin::ExportExcelController < Admin::ApplicationController
 
   def create
     pattern = params[:pattern]
-    url = convert_url(params[:notice_link])
+    url = CyworldURL.new(params[:notice_link]).to_comment_view_url
 
     page = Nokogiri::HTML(open(url).read, nil, 'utf-8')
 
@@ -32,20 +32,5 @@ class Admin::ExportExcelController < Admin::ApplicationController
       format.html
       format.xls { send_data ExcelExporter.export(comments) }
     end
-  end
-
-private
-  def convert_url(url)
-    shorten_url_template = URITemplate.new("http://{host}{/segments*}")
-    params = shorten_url_template.extract(url)["segments"]
-    query_params = {
-      club_id: params[0][0..7],
-      board_type: params[0][8],
-      board_no: params[0][9..-1],
-      item_seq: params[1]
-    }
-    comment_list_url = "http://club.cyworld.com/club/board/common/CommentList.asp"
-    comment_list_url_template = URITemplate.new("#{comment_list_url}{?#{query_params.keys.join(',')}}")
-    return comment_list_url_template.expand(query_params)
   end
 end
