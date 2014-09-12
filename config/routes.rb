@@ -7,14 +7,12 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  get 'import' => 'import_excel#import'
-  get 'destroy' => 'import_excel#destroy'
-
   resources :gates, only: [:show]
 
   namespace :admin do
     root 'application#index'
 
+    resource :import, controller: :import,  only: [:new, :create]
     resources :gates, only: [:new, :create, :show] do
       collection do
         get 'download_roster_example'
@@ -22,9 +20,5 @@ Rails.application.routes.draw do
     end
 
     resource :export_excel,  controller: :export_excel,  only: [:new, :create]
-
-    get 'import' => 'gates#import'
-    post 'add_members' => 'gates#add_members'
   end
-
 end
