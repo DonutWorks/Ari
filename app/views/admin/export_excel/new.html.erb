@@ -3,9 +3,11 @@
 
     <div class="col-md-12">
 
-      <h1>공지 댓글을 엑셀파일로 저장하기</h1>
+      
 
       <%= form_tag(admin_export_excel_path(format: :xls), role: "form") do %>
+
+        <legend>공지 댓글을 엑셀파일로 저장하기</legend>
 
         <div class="form-group">
           <%= label_tag "*cyworld 공지 주소를 입력해주세요." %>
