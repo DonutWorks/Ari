@@ -10,7 +10,8 @@ class Admin::GatesController < Admin::ApplicationController
     @gate = Gate.new(gate_params)
 
     if @gate.save
-      @gate.shortenURL = @gate.make_shortenURL(gate_url(@gate))
+      shortener = URLShortener.new
+      @gate.shortenURL = shortener.shorten_url(gate_url(@gate))
       @gate.save!
       redirect_to admin_gate_path(@gate)
     end
