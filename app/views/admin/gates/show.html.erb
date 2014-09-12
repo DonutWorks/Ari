@@ -1,8 +1,8 @@
 <div>
   <h1>Gate: <%= @gate.title %></h1>
   <p>공지 내용 : <%= @gate.content %></p>
-  <p>실제 공지 주소 : <%= @gate.link %></p>
-  <p>통합 공지 주소 : <%= @gate.shortenURL %></p>
+  <p>실제 공지 주소 : <%= link_to @gate.link, @gate.link, target: "_blank" %></p>
+  <p>통합 공지 주소 : <%= link_to @gate.shortenURL, @gate.shortenURL, target: "_blank" %></p>
   <p>만든 시간 : <%= @gate.created_at.localtime.strftime("%m/%d/%Y %T%:z") %></p>
   
   <h3>Read Users ( <%= @gate.read_users.count %> )</h3>
@@ -29,7 +29,7 @@
     </table>
     </div>
 
-    <h3>Unread Users ( <%= @gate.not_read_users.count %> )</h3>
+    <h3>Unread Users ( <%= @gate.unread_users.count %> )</h3>
     <div class="table-responsive">
     <table class="table table-condensed">
     <thead>
@@ -41,7 +41,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @gate.not_read_users.each do |user| %>
+      <% @gate.unread_users.each do |user| %>
       <tr>
         <td><%= user.username %></td>
         <td><%= user.phonenumber %></td>

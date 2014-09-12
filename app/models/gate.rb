@@ -8,7 +8,7 @@ class Gate < ActiveRecord::Base
     User.joins(:read_marks).where(read_marks: {readable: self})
   end
 
-  def not_read_users
+  def unread_users
     User.joins("LEFT OUTER JOIN (SELECT * FROM read_marks WHERE readable_id = #{self.id}) AS gate_reads ON gate_reads.user_id = users.id").where('gate_reads.user_id IS NULL')
   end
 
