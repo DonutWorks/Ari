@@ -1,14 +1,28 @@
 <div class="form-container">
   <div class="row">
     <div class="col-md-12">
-      <%= form_tag(admin_add_members_path, :method=>'post', :multipart => true) do %>
+
+      <h1>엑셀 파일로 회원 등록</h1>
+
+      <%= form_tag(admin_add_members_path, :multipart => true) do %>
+
         <div class="form-group">
+          <%= label_tag "등록하실 명단의 엑셀파일을 선택해주세요." %>
           <%= file_field_tag 'upload[file]' %>
         </div>
+
+        <p class="help-block">
+          명단 엑셀 파일은 아래와 같은 구조로 올려주셔야 합니다.<br>
+          <%= image_tag("RosterExample.png", id: "RosterExample.png", class: "img-responsive") %>
+          <%= link_to '명단 예제 다운로드', download_roster_example_admin_gates_path %>
+
+        </p>
+
         <p>
           <%= submit_tag "Upload", class: "btn btn-default"   %>
         </p>
       <% end %>
+
     </div>
   </div>
 </div>

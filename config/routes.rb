@@ -15,7 +15,11 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'application#index'
 
-    resources :gates, only: [:new, :create, :show]
+    resources :gates, only: [:new, :create, :show] do
+      collection do
+        get 'download_roster_example'
+      end
+    end
 
     resource :export_excel,  controller: :export_excel,  only: [:new, :create]
 

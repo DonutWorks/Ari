@@ -3,12 +3,12 @@ require 'tempfile'
 class Admin::GatesController < Admin::ApplicationController
 
   def new
-    @gate = Gate.new    
+    @gate = Gate.new
   end
 
   def create
     @gate = Gate.new(gate_params)
-    
+
     if @gate.save
       @gate.shortenURL = @gate.make_shortenURL(gate_url(@gate))
       @gate.save!
@@ -23,6 +23,13 @@ class Admin::GatesController < Admin::ApplicationController
   def import
     render 'import'
   end
+  def download_roster_example
+    send_file(
+    "#{Rails.root}/public/RosterExample.xlsx",
+    filename: "RosterExample.xlsx",
+    type: "application/xlsx"
+  )
+  end
 
   def add_members
 
@@ -33,7 +40,7 @@ class Admin::GatesController < Admin::ApplicationController
     lastColumn = data.last_column
 
     begin
-      User.transaction do 
+      User.transaction do
         (2..lastRow).each do |i|
           user = User.new
           user.username = data.cell(i, 1)

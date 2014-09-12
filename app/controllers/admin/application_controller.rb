@@ -10,5 +10,5 @@ class Admin::ApplicationController < ApplicationController
     @gates = Gate.all
   end
 
-  
+
 end
