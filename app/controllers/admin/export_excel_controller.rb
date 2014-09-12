@@ -12,7 +12,7 @@ class Admin::ExportExcelController < Admin::ApplicationController
     page = Nokogiri::HTML(open(url).read, nil, 'utf-8')
 
     column_names = []
-    comments = []
+    @comments = []
 
     pattern.split('/').each do |e|
       column_names.push e.strip
@@ -25,12 +25,13 @@ class Admin::ExportExcelController < Admin::ApplicationController
         comment[column_names[i].to_sym] = FormNormalizer.normalize(column_names[i], e)
       end
 
-      comments.push comment
+      @comments.push comment
     end
 
     respond_to do |format|
       format.html
-      format.xls { send_data ExcelExporter.export(comments) }
+      format.csv { send_data ExcelExporter.export(@comments) }
+      format.xls
     end
   end
 
