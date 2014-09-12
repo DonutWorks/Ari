@@ -53,6 +53,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0.2'
   gem 'guard-rspec', '~> 4.3.1'
   gem 'quiet_assets', '~> 1.0.3'
+  gem 'factory_girl_rails', '~> 4.4.1'
 end
 
 gem 'devise', '~> 3.3.0'
