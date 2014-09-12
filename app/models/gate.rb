@@ -13,7 +13,7 @@ class Gate < ActiveRecord::Base
 
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE 
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
     request = Net::HTTP::Post.new(uri.path,{'Content-Type' => 'application/json'})
     request.body = '{"longUrl" : "' + long_url + '"}'
@@ -28,7 +28,7 @@ class Gate < ActiveRecord::Base
     User.joins(:read_marks).where(read_marks: {readable: self})
   end
 
-  def not_read_users
+  def unread_users
     User.joins("LEFT OUTER JOIN (SELECT * FROM read_marks WHERE readable_id = #{self.id}) AS gate_reads ON gate_reads.user_id = users.id").where('gate_reads.user_id IS NULL')
   end
 

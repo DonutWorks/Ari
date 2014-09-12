@@ -13,11 +13,12 @@ Rails.application.routes.draw do
     root 'application#index'
 
     resource :import, controller: :import,  only: [:new, :create]
-
-    resources :gates, only: [:new, :create, :show]
+    resources :gates, only: [:new, :create, :show] do
+      collection do
+        get 'download_roster_example'
+      end
+    end
 
     resource :export_excel,  controller: :export_excel,  only: [:new, :create]
-
   end
-
 end

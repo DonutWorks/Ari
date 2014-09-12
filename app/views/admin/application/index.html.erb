@@ -1,24 +1,28 @@
-<h1>관리자 페이지</h1>
 <p id="notice"><%= flash[:notice] %></p>
+ <h3 class="pull-left">공지사항 관리</h3>
 
-<%= link_to new_user_registration_path do %>
-  <button type="button" class="btn btn-default btn-lg">
-    회원 등록
-  </button>
-<% end %>
-<%= link_to admin_import_path do %>
-  <button type="button" class="btn btn-default btn-lg">
-    엑셀 파일로 회원 등록하기
-  </button>
-<% end %>
-<%= link_to new_admin_gate_path do %>
-  <button type="button" class="btn btn-default btn-lg">
-    새 링크 만들기
-  </button>
-<% end %>
+<div id="buttons-div" class="pull-right">
+  <%= link_to new_user_registration_path do %>
+    <button type="button" class="btn btn-default btn-sm">
+      회원 등록
+    </button>
+  <% end %>
+  <%= link_to new_admin_import_path do %>
+    <button type="button" class="btn btn-default btn-sm">
+      엑셀로 회원 등록
+    </button>
+  <% end %>
+  <%= link_to new_admin_gate_path do %>
+    <button type="button" class="btn btn-primary btn-sm ">
+      새 공지
+    </button>
+  <% end %>
+</div>
 
-<div class="panel panel-default">
-  <div class="panel-heading">Links</div>
+<div class="clearfix"></div>
+
+<div id="notice-container" class="panel panel-default">
+  <div class="panel-heading">공지사항 목록</div>
   <ul class="list-group">
     <% @gates.each do |gate| %>
       <%= link_to admin_gate_path(gate), class: "list-group-item" do %>
