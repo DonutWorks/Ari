@@ -1,4 +1,5 @@
 require 'tempfile'
+require 'net/http'
 
 class Admin::GatesController < Admin::ApplicationController
 
