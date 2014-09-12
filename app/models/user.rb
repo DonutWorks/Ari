@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   validates_presence_of :username, :phonenumber
   validates_uniqueness_of :phonenumber
 
-
   acts_as_reader
 
 protected
@@ -19,5 +18,5 @@ protected
 	end
 
   def email_required?
-  end  
+  end
 end

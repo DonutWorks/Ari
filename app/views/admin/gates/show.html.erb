@@ -3,8 +3,8 @@
   <p>공지 내용 : <%= @gate.content %></p>
   <p>실제 공지 주소 : <%= @gate.link %></p>
   <p>통합 공지 주소 : <%= @gate.shortenURL %></p>
-  <p>만든 시간 : <%= @gate.created_at.localtime.strftime("%m/%d/%Y %T%:z") %></p>
-  
+  <p>만든 시간 : <%= @gate.created_at.localtime.strftime("%Y-%d-%m %T") %></p>
+
   <h3>Read Users ( <%= @gate.read_users.count %> )</h3>
     <div class="table-responsive">
     <table class="table table-condensed">
@@ -14,6 +14,7 @@
         <th>전화번호</th>
         <th>이메일</th>
         <th>전공</th>
+        <th>읽은 시간</th>
       </tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
         <td><%= user.phonenumber %></td>
         <td><%= user.email %></td>
         <td><%= user.major %></td>
+        <td><%= user.read_marks.take.timestamp.localtime.strftime("%Y-%d-%m %T") %></td>
       </tr>
       <% end %>
     </tbody>
