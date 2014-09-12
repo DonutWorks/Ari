@@ -8,7 +8,7 @@ module FormNormalizers
       begin
         Phoner::Phone.parse(term, country_code: "82").format("%A%f%l")
       rescue => e
-        raise NormalizeError
+        raise NormalizeError, "Invalid phone number string: #{term}"
       end
     end
   end
