@@ -3,14 +3,15 @@ require 'tempfile'
 class Admin::GatesController < Admin::ApplicationController
 
   def new
-    @gate = Gate.new    
+    @gate = Gate.new
   end
 
   def create
     @gate = Gate.new(gate_params)
-    
+
     if @gate.save
-      @gate.shortenURL = @gate.make_shortenURL(gate_url(@gate))
+      shortener = URLShortener.new
+      @gate.shortenURL = shortener.shorten_url(gate_url(@gate))
       @gate.save!
       redirect_to admin_gate_path(@gate)
     end
@@ -23,20 +24,24 @@ class Admin::GatesController < Admin::ApplicationController
   def import
     render 'import'
   end
+  def download_roster_example
+    send_file(
+    "#{Rails.root}/public/RosterExample.xlsx",
+    filename: "RosterExample.xlsx",
+    type: "application/xlsx"
+  )
+  end
 
   def add_members
-    file = Tempfile.new(['data','.xlsx'])
-    file.binmode
-    file.write(params[:upload][:file].read)
 
-    data = Roo::Excelx.new(file.path)
+    data = ExcelImporter.import(params[:upload][:file])
     data.default_sheet = data.sheets.first
 
     lastRow = data.last_row
     lastColumn = data.last_column
 
     begin
-      User.transaction do 
+      User.transaction do
         (2..lastRow).each do |i|
           user = User.new
           user.username = data.cell(i, 1)
