@@ -22,6 +22,7 @@
         <th>전화번호</th>
         <th>이메일</th>
         <th>전공</th>
+        <th colspan="2"></th>
       </tr>
     </thead>
     <tbody>
@@ -31,6 +32,13 @@
         <td><%= user.phonenumber %></td>
         <td><%= user.email %></td>
         <td><%= user.major %></td>
+        <td>
+          <%= link_to "수정", edit_admin_users_path(id: user), class: "btn btn-default" %>
+        </td>
+        <td>
+          <%= link_to "삭제", admin_users_path(id: user), method: :delete,
+          data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger" %>
+        </td>
       </tr>
       <% end %>
     </tbody>
