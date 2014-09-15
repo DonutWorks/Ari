@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12">
       <h2>수정하기</h2>
-      <%= form_for @user, url: admin_users_path(@user), method: :patch do |f| %>
+      <%= form_for @user, url: admin_user_path(@user), method: :patch do |f| %>
         
         <%= flash[:alert] %>
 

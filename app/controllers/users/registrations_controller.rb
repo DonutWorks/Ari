@@ -10,7 +10,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     if user.save
       flash[:notice] = params[:user][:username] + "님 회원 등록 완료"
-      redirect_to admin_users_index_path
+      redirect_to admin_users_path
     else
       flash[:alert] = "정보가 유효하지 않습니다. 다시 확인해주세요."
       redirect_to new_user_registration_path

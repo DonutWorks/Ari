@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :admin do
-  get 'users/index'
-  end
-
   devise_for :users, controllers: { registrations: "users/registrations" }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -16,7 +12,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'application#index'
 
-    resource :users, except: [:new, :create]
+    resources :users, except: [:new, :create]
     resource :import, controller: :import,  only: [:new, :create]
     resources :gates, only: [:new, :create, :show] do
       collection do
