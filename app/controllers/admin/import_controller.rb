@@ -1,6 +1,6 @@
 class Admin::ImportController < Admin::ApplicationController
 
-  def new   
+  def new
   end
 
   def create
@@ -14,7 +14,7 @@ class Admin::ImportController < Admin::ApplicationController
     lastRow = data.last_row
     lastColumn = data.last_column
 
-    User.transaction do 
+    User.transaction do
       (2..lastRow).each do |i|
         user = User.new
         user.group_id = data.cell(i, 1)
@@ -36,7 +36,7 @@ class Admin::ImportController < Admin::ApplicationController
     flash[:notice] = "멤버 입력을 성공 했습니다."
     redirect_to admin_root_path
 
-    rescue ActiveRecord::RecordInvalid
-      flash[:notice] = "멤버 입력에 실패 했습니다."
-    end
+  rescue ActiveRecord::RecordInvalid
+    flash[:notice] = "멤버 입력에 실패 했습니다."
   end
+end

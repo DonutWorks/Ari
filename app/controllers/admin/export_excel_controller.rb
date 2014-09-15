@@ -12,7 +12,8 @@ class Admin::ExportExcelController < Admin::ApplicationController
 
     respond_to do |format|
       format.html
-      format.xls { send_data ExcelExporter.export(comments) }
+      format.csv { send_data ExcelExporter.export(@comments) }
+      format.xls
     end
   end
 end
