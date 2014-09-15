@@ -30,6 +30,7 @@ protected
 
 private
   def normalize_phone_number
-    self.phonenumber = FormNormalizers::PhoneNumberNormalizer.normalize(phonenumber)
+    normalizer = FormNormalizers::PhoneNumberNormalizer.new
+    self.phone_number = normalizer.normalize(phone_number)
   end
 end
