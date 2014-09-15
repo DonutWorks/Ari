@@ -7,7 +7,14 @@ class Admin::ExportExcelController < Admin::ApplicationController
 
   def create
     pattern = params[:pattern]
-    url = CyworldURL.new(params[:notice_link]).to_comment_view_url
+
+    begin
+      url = CyworldURL.new(params[:notice_link]).to_comment_view_url
+    rescue Exception => e
+      flash[:error] = e.message
+      redirect_to new_admin_export_excel_path
+      return
+    end
 
     page = Nokogiri::HTML(open(url).read, nil, 'utf-8')
 
