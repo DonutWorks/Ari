@@ -1,22 +1,29 @@
 class FormNormalizer
-  @normalizers = [
+  NORMALIZERS = [
     FormNormalizers::GenderNormalizer,
     FormNormalizers::PhoneNumberNormalizer,
     FormNormalizers::GenerationNormalizer
   ]
 
-  def self.normalize(column_name, term)
+  def initialize
+    @normalizers = NORMALIZERS.map do |normalizer|
+      normalizer.new
+    end
+    @default_normalizer = FormNormalizers::Normalizer.new
+  end
+
+  def normalize(column_name, term)
     find_normalizer(column_name).send(:normalize, term)
   end
 
 private
-  def self.find_normalizer(column_name)
+  def find_normalizer(column_name)
     column_name.delete!(" ")
-    @normalizers.each do |normalizer|
-      if normalizer.send(:column_names).include?(column_name)
-        return normalizer
-      end
+
+    normalizer = @normalizers.detect do |normalizer|
+      normalizer.column_names.include?(column_name)
     end
-    return FormNormalizers::Normalizer
+
+    normalizer || @default_normalizer
   end
 end
