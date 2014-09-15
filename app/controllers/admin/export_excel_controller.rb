@@ -22,12 +22,12 @@ class Admin::ExportExcelController < Admin::ApplicationController
         val.text.split('/').each_with_index do |e, i|
           comment[column_names[i].to_sym] = FormNormalizer.normalize(column_names[i], e)
         end
-
+        
       else
         comment[:unvalid] = true
       end
 
-        comments.push comment    
+      comments.push comment
     end
 
     respond_to do |format|
