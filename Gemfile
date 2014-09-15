@@ -54,6 +54,8 @@ group :development, :test do
   gem 'guard-rspec', '~> 4.3.1'
   gem 'quiet_assets', '~> 1.0.3'
   gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'capybara', '~> 2.4.1'
+  gem 'selenium-webdriver'
 end
 
 gem 'devise', '~> 3.3.0'
@@ -62,3 +64,4 @@ gem 'addressable', '~> 2.3.6'
 gem 'phone', '~> 1.2.3'
 gem 'nokogiri', '~> 1.6.3.1'
 gem 'uri_template', '~> 0.7.0'
+

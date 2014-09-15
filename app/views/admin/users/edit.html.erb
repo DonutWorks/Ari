@@ -1,11 +1,23 @@
 <div class="form-container">
   <div class="row">
-  	<div class="col-md-12">
-  		<h2>등록하기</h2>
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        <%= devise_error_messages! %>
+    <div class="col-md-12">
+      <h2>수정하기</h2>
+      <%= form_for @user, url: admin_user_path(@user), method: :patch do |f| %>
 
         <%= flash[:alert] %>
+
+        <% if @user.errors.any? %>
+          <div id="error_explanation">
+            <h2>아래와 같은 이유로 에러가 발생했습니다:</h2>
+            <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+
         <div class="form-group">
           <%= f.label :username, "이름" %>
           <%= f.text_field :username, autofocus: true, class: "form-control" %>
@@ -24,8 +36,9 @@
         </div>
 
         <%= f.hidden_field :password, value: "testtest" %>
-      
-        <div><%= f.submit "등록", class: "btn btn-default"  %></div>
+        <%= f.hidden_field :id, value: @user.id %>
+
+        <div><%= f.submit "수정", class: "btn btn-default"  %></div>
       <% end %>
 
   </div>

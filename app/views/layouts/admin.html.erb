@@ -28,6 +28,9 @@
             <%= link_to "공지", admin_root_path %>
           </li>
           <li>
+            <%= link_to "회원", admin_users_path %>
+          </li>
+          <li>
             <%= link_to "설문조사", new_admin_export_excel_path %>
           </li>
         </ul>
@@ -36,6 +39,7 @@
   </nav>
 
   <div class="container">
+    <%= render 'layouts/messages' %>
     <%= yield %>
   </div>
 

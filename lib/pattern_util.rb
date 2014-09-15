@@ -8,7 +8,7 @@ class PatternUtil
   end
 
   def compare(comment)
-    if count_column == count_column(comment) 
+    if count_column == count_column(comment)
       true
     else
       false
