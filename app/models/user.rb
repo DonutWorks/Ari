@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   validates_presence_of :username, :phonenumber
   validates_uniqueness_of :phonenumber
 
+  before_save :normalize_phone_number
+
   acts_as_reader
 
   def read_at(gate)
@@ -24,5 +26,10 @@ protected
 	end
 
   def email_required?
+  end
+
+private
+  def normalize_phone_number
+    self.phonenumber = FormNormalizers::PhoneNumberNormalizer.normalize(phonenumber)
   end
 end
