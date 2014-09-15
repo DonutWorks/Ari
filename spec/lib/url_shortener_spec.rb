@@ -1,4 +1,5 @@
 require "rails_helper"
+require "net/http"
 
 RSpec.describe URLShortener do
   describe "#shorten_url" do

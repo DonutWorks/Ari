@@ -1,10 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "the signin process", :type => :feature do
-  before :each do
-    User.create!(:email => 'user@example.com', :password => 'caplinasdasd', :username => "Test", :phonenumber => "01001010101")
-  end
-
   def authenticate(name, password)
     if page.driver.respond_to?(:basic_auth)
       page.driver.basic_auth(name, password)

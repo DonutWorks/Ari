@@ -46,8 +46,15 @@ ActiveRecord::Schema.define(version: 20140915132537) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username",                            null: false
-    t.string   "phonenumber"
+    t.string   "phone_number"
     t.string   "major"
+    t.string   "group_id"
+    t.string   "student_id"
+    t.string   "sex"
+    t.string   "home_phone_number"
+    t.string   "emergency_phone_number"
+    t.string   "habitat_id"
+    t.string   "member_type"
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

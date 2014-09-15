@@ -1,17 +1,6 @@
-<p id="notice"><%= flash[:notice] %></p>
- <h3 class="pull-left">공지사항 관리</h3>
+<h3 class="pull-left">공지사항 관리</h3>
 
 <div id="buttons-div" class="pull-right">
-  <%= link_to new_user_registration_path do %>
-    <button type="button" class="btn btn-default btn-sm">
-      회원 등록
-    </button>
-  <% end %>
-  <%= link_to new_admin_import_path do %>
-    <button type="button" class="btn btn-default btn-sm">
-      엑셀로 회원 등록
-    </button>
-  <% end %>
   <%= link_to new_admin_gate_path do %>
     <button type="button" class="btn btn-primary btn-sm ">
       새 공지
