@@ -32,6 +32,6 @@ class Admin::ImportController < Admin::ApplicationController
       flash[:notice] = "멤버 입력에 실패 했습니다."
     end
 
-    redirect_to admin_root_path
+    redirect_to admin_users_path
   end
 end

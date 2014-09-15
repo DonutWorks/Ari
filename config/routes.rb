@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'application#index'
 
+    resources :users, only: [:index]
     resource :import, controller: :import,  only: [:new, :create]
     resources :gates, only: [:new, :create, :show] do
       collection do
