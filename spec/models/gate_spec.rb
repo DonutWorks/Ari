@@ -9,30 +9,6 @@ RSpec.describe Gate, :type => :model do
       expect(gate.shortenURL).to eq('http://www.google.com')
     end
   end
-
-  describe "#read_users" do
-    it "should return users who read a gate" do
-      user = FactoryGirl.create(:user)
-      gate = FactoryGirl.create(:gate)
-
-      expect(gate.read_users).to eq([])
-
-      gate.mark_as_read!(for: user)
-      expect(gate.read_users).to eq([user])
-    end
-  end
-
-  describe "#unread_users" do
-    it "should return users who don't read a gate" do
-      user = FactoryGirl.create(:user)
-      gate = FactoryGirl.create(:gate)
-
-      expect(gate.unread_users).to eq([user])
-
-      gate.mark_as_read!(for: user)
-      expect(gate.unread_users).to eq([])
-    end
-  end
 end
 
 

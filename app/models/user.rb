@@ -12,12 +12,6 @@ class User < ActiveRecord::Base
 
   acts_as_reader
 
-  def read_at(gate)
-    read_mark = ReadMark.find_by(user: self, readable: gate)
-    return read_mark.timestamp if read_mark
-    return nil
-  end
-
 protected
 	def self.find_for_database_authentication(warden_conditions)
 	  conditions = warden_conditions.dup
