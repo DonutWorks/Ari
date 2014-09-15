@@ -2,10 +2,11 @@ require 'open-uri'
 
 class Admin::ExportExcelController < Admin::ApplicationController
   def new
-
   end
 
   def create
+    pattern = PatternUtil.new(params[:pattern])
+
     begin
       url = CyworldURL.new(params[:notice_link]).to_comment_view_url
     rescue Exception => e
@@ -14,7 +15,7 @@ class Admin::ExportExcelController < Admin::ApplicationController
       return
     end
 
-    comments = HtmlCommentParser.import(params[:pattern], url)
+    @comments = HtmlCommentParser.import(pattern, url)
 
     respond_to do |format|
       format.html
