@@ -46,7 +46,7 @@ class Admin::GatesController < Admin::ApplicationController
         (2..lastRow).each do |i|
           user = User.new
           user.username = data.cell(i, 1)
-          user.phonenumber = data.cell(i, 2)
+          user.phone_number = data.cell(i, 2)
           user.email = data.cell(i, 3)
           user.major = data.cell(i, 4)
           user.password = "testtest"
