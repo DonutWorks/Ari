@@ -34,9 +34,10 @@ class Admin::ImportController < Admin::ApplicationController
     end
 
     flash[:notice] = "멤버 입력을 성공 했습니다."
-    redirect_to admin_root_path
+    redirect_to admin_users_path
 
   rescue ActiveRecord::RecordInvalid
     flash[:notice] = "멤버 입력에 실패 했습니다."
+    redirect_to admin_users_path
   end
 end
