@@ -9,6 +9,7 @@ class HtmlCommentParser
     page.css('.replylist .obj_rslt').each do |val|
       if pattern.compare(val.text)
         comment = {}
+        comment[:unvalid] = false
         val.text.split('/').each_with_index do |e, i|
           comment[column_names[i].to_sym] = normalizer.normalize(column_names[i], e)
         end

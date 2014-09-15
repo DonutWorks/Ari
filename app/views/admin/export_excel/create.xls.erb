@@ -4,17 +4,33 @@
   xmlns:x="urn:schemas-microsoft-com:office:excel"
   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Styles>
+    <Style ss:ID="unvalid">
+      <Interior ss:Color="#FF9900" ss:Pattern="Solid"/>
+    </Style>
+ </Styles>
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
-      <% @comments.first.keys.each do |key| %>
-        <Cell><Data ss:Type="String"><%= key %></Data></Cell>
+      <% @comments.first.keys.map do |key| %>
+        <% if key != :unvalid %>
+          <Cell><Data ss:Type="String"><%= key %></Data></Cell>
+        <% end %>
       <% end %>
       </Row>
-    <% @comments.each do |comment| %>
+    <% @comments.map do |comment| %>
       <Row>
-      <% comment.values.each do |value| %>
-        <Cell><Data ss:Type="String"><%= value %></Data></Cell>
+      <% is_unvalid = false %>
+      <% comment.values.map do |value| %>
+        <% if value == true or false %>
+          <% is_unvalid = value %>
+        <% else %>
+          <% if is_unvalid == false %>
+            <Cell><Data ss:Type="String"><%= value %></Data></Cell>
+          <% else %>
+            <Cell ss:StyleID="unvalid"><Data ss:Type="String"><%= value %></Data></Cell>
+          <% end %>
+        <% end %>
       <% end %>
       </Row>
     <% end %>
