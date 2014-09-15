@@ -22,7 +22,7 @@
       <Row>
       <% is_unvalid = false %>
       <% comment.values.map do |value| %>
-        <% if value == true or false %>
+        <% if value == false or value == true %>
           <% is_unvalid = value %>
         <% else %>
           <% if is_unvalid == false %>
