@@ -6,6 +6,17 @@
         
         <%= flash[:alert] %>
 
+        <% if @user.errors.any? %>
+          <div id="error_explanation">
+            <h2>아래와 같은 이유로 에러가 발생했습니다:</h2>
+            <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
 
         <div class="form-group">
           <%= f.label :username, "이름" %>

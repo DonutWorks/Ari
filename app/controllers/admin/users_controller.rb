@@ -11,15 +11,16 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.find(params[:user][:id])
  
     if @user.update(user_params)
+      flash[:notice] = @user.username + "님의 회원 정보 수정에 성공했습니다"
       redirect_to admin_users_index_path
     else
-      flash[:alert] = "정보가 유효하지 않습니다. 다시 확인해 주세요."
       render 'edit'
     end
   end
 
   def destroy
     @user = User.find(params[:id])
+    flash[:notice] = @user.username + "님의 회원 정보 삭제에 성공했습니다"
     @user.destroy
 
     redirect_to admin_users_index_path
