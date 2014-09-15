@@ -22,6 +22,31 @@ class Admin::GatesController < Admin::ApplicationController
     @gate = Gate.find(params[:id])
   end
 
+  def edit
+    @gate = Gate.find(params[:id])
+  end
+
+  def update
+    @gate = Gate.find(params[:id])
+
+    if @gate.update(gate_params)
+      flash[:notice] = @gate.title + " 공지 정보 수정 성공했습니다."
+      redirect_to admin_root_path
+    else
+      flash[:error] = @gate.title + " 공지 정보 수정에 실패하였습니다."
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @gate = Gate.find(params[:id])
+    flash[:notice] = @gate.title + "공지 삭제를 성공했습니다."
+    @gate.destroy
+
+    redirect_to admin_root_path
+  end
+
+
   def import
     render 'import'
   end

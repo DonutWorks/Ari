@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <%= form_for [:admin, @gate] do |f|%>
 
-        <legend>공지 생성</legend>
+        <legend>공지 수정</legend>
 
         <div class="form-group">
           <%= f.label :title %><br>
@@ -21,9 +21,9 @@
         </div>
 
         <p>
-          <%= f.submit "등록", class: "btn btn-primary btn-sm"  %>
+          <%= f.submit "수정", class: "btn btn-primary btn-sm"  %>
           <%= link_to admin_root_path do %>
-            <button type="button" class="btn btn-default btn-sm ">
+            <button type="button" class="btn btn-default btn-sm">
               취소
             </button>
           <% end %>
