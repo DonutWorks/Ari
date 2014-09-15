@@ -3,7 +3,7 @@ require 'addressable/uri'
 class Gate < ActiveRecord::Base
   acts_as_readable
   before_save :make_redirectable_url!
-
+  
 private
   def make_redirectable_url!
     unless link.blank?
