@@ -40,4 +40,3 @@ class Admin::ImportController < Admin::ApplicationController
       flash[:notice] = "멤버 입력에 실패 했습니다."
     end
   end
-end
