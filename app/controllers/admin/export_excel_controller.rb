@@ -6,26 +6,29 @@ class Admin::ExportExcelController < Admin::ApplicationController
   end
 
   def create
-    pattern = params[:pattern]
+    pattern = PatternUtil.new(params[:pattern])
     url = CyworldURL.new(params[:notice_link]).to_comment_view_url
 
     page = Nokogiri::HTML(open(url).read, nil, 'utf-8')
 
-    column_names = []
+    column_names = pattern.column_names
     comments = []
-
-    pattern.split('/').each do |e|
-      column_names.push e.strip
-    end
+    unvalid_comments = []
 
     page.css('.replylist .obj_rslt').each do |val|
-      comment = {}
+      if pattern.compare(val.text)
+        comment = {}
 
-      val.text.split('/').each_with_index do |e, i|
-        comment[column_names[i].to_sym] = FormNormalizer.normalize(column_names[i], e)
+        val.text.split('/').each_with_index do |e, i|
+          comment[column_names[i].to_sym] = FormNormalizer.normalize(column_names[i], e)
+        end
+
+        comments.push comment
+      else
+        # to 무진이형
+        # 나중에 완성된 이 unvalid_comments를 엑셀에 따로 기록해주면 돼!
+        unvalid_comments.push val.text
       end
-
-      comments.push comment
     end
 
     respond_to do |format|
@@ -33,4 +36,5 @@ class Admin::ExportExcelController < Admin::ApplicationController
       format.xls { send_data ExcelExporter.export(comments) }
     end
   end
+
 end
