@@ -13,9 +13,9 @@ class Admin::ExportExcelController < Admin::ApplicationController
 
     column_names = pattern.column_names
     comments = []
-    unvalid_comments = []
 
     page.css('.replylist .obj_rslt').each do |val|
+
       if pattern.compare(val.text)
         comment = {}
 
@@ -23,12 +23,11 @@ class Admin::ExportExcelController < Admin::ApplicationController
           comment[column_names[i].to_sym] = FormNormalizer.normalize(column_names[i], e)
         end
 
-        comments.push comment
       else
-        # to 무진이형
-        # 나중에 완성된 이 unvalid_comments를 엑셀에 따로 기록해주면 돼!
-        unvalid_comments.push val.text
+        comment[:unvalid] = true
       end
+
+        comments.push comment    
     end
 
     respond_to do |format|
