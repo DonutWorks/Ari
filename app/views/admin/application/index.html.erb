@@ -28,7 +28,7 @@
       <%= link_to admin_gate_path(gate), class: "list-group-item" do %>
         <span><%= gate.title %></span>
         <span class="badge">
-          <%= "#{gate.read_users.count} / #{User.all.count}" %>
+          <%= "#{gate.readers.count} / #{User.all.count}" %>
         </span>
       <% end %>
     <% end %>

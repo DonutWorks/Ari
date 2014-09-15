@@ -25,16 +25,16 @@ class Admin::GatesController < Admin::ApplicationController
   def import
     render 'import'
   end
+
   def download_roster_example
     send_file(
-    "#{Rails.root}/public/RosterExample.xlsx",
-    filename: "RosterExample.xlsx",
-    type: "application/xlsx"
-  )
+      "#{Rails.root}/public/RosterExample.xlsx",
+      filename: "RosterExample.xlsx",
+      type: "application/xlsx"
+    )
   end
 
   def add_members
-
     data = ExcelImporter.import(params[:upload][:file])
     data.default_sheet = data.sheets.first
 

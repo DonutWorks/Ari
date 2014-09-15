@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904063606) do
+ActiveRecord::Schema.define(version: 20140915132537) do
 
   create_table "gates", force: true do |t|
     t.string   "title"
@@ -23,14 +23,14 @@ ActiveRecord::Schema.define(version: 20140904063606) do
     t.string   "shortenURL"
   end
 
-  create_table "read_marks", force: true do |t|
+  create_table "read_activity_marks", force: true do |t|
+    t.integer  "reader_id",                 null: false
     t.integer  "readable_id"
-    t.integer  "user_id",                  null: false
-    t.string   "readable_type", limit: 20, null: false
-    t.datetime "timestamp"
+    t.string   "readable_type"
+    t.integer  "mark",          default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
-
-  add_index "read_marks", ["user_id", "readable_type", "readable_id"], name: "index_read_marks_on_user_id_and_readable_type_and_readable_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: ""
