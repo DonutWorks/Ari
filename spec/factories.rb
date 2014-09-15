@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :user do
     email "John@donutworks.com"
     username "John"
-    phonenumber "01012341234"
+    phone_number "01012341234"
     major "CS"
     password "testtest"
   end
