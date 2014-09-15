@@ -3,10 +3,10 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :authentication_keys => [:phonenumber]
+         :authentication_keys => [:phone_number]
 
-  validates_presence_of :username, :phonenumber
-  validates_uniqueness_of :phonenumber
+  validates_presence_of :username, :phone_number
+  validates_uniqueness_of :phone_number
 
   before_save :normalize_phone_number
 
@@ -21,8 +21,8 @@ class User < ActiveRecord::Base
 protected
 	def self.find_for_database_authentication(warden_conditions)
 	  conditions = warden_conditions.dup
-	  phonenumber = conditions.delete(:phonenumber)
-    find_by_phonenumber(phonenumber)
+	  phone_number = conditions.delete(:phone_number)
+    find_by_phone_number(phone_number)
 	end
 
   def email_required?
