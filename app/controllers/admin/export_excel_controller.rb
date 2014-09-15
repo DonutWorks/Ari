@@ -6,7 +6,13 @@ class Admin::ExportExcelController < Admin::ApplicationController
   end
 
   def create
-    url = CyworldURL.new(params[:notice_link]).to_comment_view_url
+    begin
+      url = CyworldURL.new(params[:notice_link]).to_comment_view_url
+    rescue Exception => e
+      flash[:error] = e.message
+      redirect_to new_admin_export_excel_path
+      return
+    end
 
     comments = HtmlCommentParser.import(params[:pattern], url)
 
