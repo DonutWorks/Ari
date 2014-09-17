@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
     resources :users, except: [:new, :create]
     resource :import, controller: :import,  only: [:new, :create]
-    resources :gates, only: [:new, :create, :show] do
+    resources :gates do
       collection do
         get 'download_roster_example'
       end

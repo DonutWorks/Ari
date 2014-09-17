@@ -15,12 +15,41 @@ class Admin::GatesController < Admin::ApplicationController
       @gate.shortenURL = shortener.shorten_url(gate_url(@gate))
       @gate.save!
       redirect_to admin_gate_path(@gate)
+    else
+      flash[:error] = @gate.errors.full_messages.join("<br/>").html_safe
+      render 'new'
     end
+
   end
 
   def show
     @gate = Gate.find(params[:id])
   end
+
+  def edit
+    @gate = Gate.find(params[:id])
+  end
+
+  def update
+    @gate = Gate.find(params[:id])
+
+    if @gate.update(gate_params)
+      flash[:notice] = @gate.title + " 공지 정보 수정 성공했습니다."
+      redirect_to admin_gate_path(@gate)
+    else
+      flash[:error] = @gate.errors.full_messages.join("<br/>").html_safe
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @gate = Gate.find(params[:id])
+    flash[:notice] = @gate.title + "공지 삭제를 성공했습니다."
+    @gate.destroy
+
+    redirect_to admin_root_path
+  end
+
 
   def import
     render 'import'
