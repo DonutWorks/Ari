@@ -4,7 +4,11 @@
   <p>실제 공지 주소 : <%= link_to @gate.link, @gate.link, target: "_blank" %></p>
   <p>통합 공지 주소 : <%= link_to @gate.shortenURL, @gate.shortenURL, target: "_blank" %></p>
   <p>만든 시간 : <%= @gate.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
-
+  <div class="pull-right">
+    <%= link_to "수정", edit_admin_gate_path(@gate), class: "btn btn-default btn-sm" %>
+    <%= link_to "삭제", admin_gate_path(@gate), method: :delete,
+    data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger btn-sm" %>
+  </div>
   <h3>Read Users ( <%= @gate.readers.count %> )</h3>
     <div class="table-responsive">
     <table class="table table-condensed">

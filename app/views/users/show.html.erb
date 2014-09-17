@@ -1,7 +1,7 @@
 <div class="form-container">
   <div class="row">
     <div class="col-md-12">
-      <h1>안녕하세요, <%= @user.username %>님!</h1>
+      <h1>안녕하세요, <%= current_user.username %>님!</h1>
       <% if user_signed_in? %>
         <li>
         <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
