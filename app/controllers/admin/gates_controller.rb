@@ -15,7 +15,11 @@ class Admin::GatesController < Admin::ApplicationController
       @gate.shortenURL = shortener.shorten_url(gate_url(@gate))
       @gate.save!
       redirect_to admin_gate_path(@gate)
+    else
+      flash[:error] = @gate.errors.full_messages.join("<br/>").html_safe
+      render 'new'
     end
+
   end
 
   def show
@@ -31,9 +35,9 @@ class Admin::GatesController < Admin::ApplicationController
 
     if @gate.update(gate_params)
       flash[:notice] = @gate.title + " 공지 정보 수정 성공했습니다."
-      redirect_to admin_root_path
+      redirect_to admin_gate_path(@gate)
     else
-      flash[:error] = @gate.title + " 공지 정보 수정에 실패하였습니다."
+      flash[:error] = @gate.errors.full_messages.join("<br/>").html_safe
       render 'edit'
     end
   end
