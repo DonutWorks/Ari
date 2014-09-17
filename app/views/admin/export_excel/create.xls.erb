@@ -8,7 +8,7 @@
     <Style ss:ID="unvalid">
       <Interior ss:Color="#FF9900" ss:Pattern="Solid"/>
     </Style>
- </Styles>
+  </Styles>
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
@@ -21,10 +21,11 @@
     <% @comments.map do |comment| %>
       <Row>
       <% is_unvalid = false %>
-      <% comment.values.map do |value| %>
-        <% if value == false or value == true %>
+      <% comment.values.each_with_index do |value, index| %>
+        <% if index == 0 %>
           <% is_unvalid = value %>
         <% else %>
+          <%= is_unvalid %>
           <% if is_unvalid == false %>
             <Cell><Data ss:Type="String"><%= value %></Data></Cell>
           <% else %>
