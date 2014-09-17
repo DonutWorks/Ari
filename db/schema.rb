@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140915132537) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "gates", force: true do |t|
     t.string   "title"
     t.string   "content"
@@ -57,6 +60,6 @@ ActiveRecord::Schema.define(version: 20140915132537) do
     t.string   "member_type"
   end
 
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

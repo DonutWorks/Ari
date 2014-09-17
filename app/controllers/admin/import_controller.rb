@@ -14,6 +14,8 @@ class Admin::ImportController < Admin::ApplicationController
     lastRow = data.last_row
     lastColumn = data.last_column
 
+    user_buffer = []
+
     User.transaction do
       (2..lastRow).each do |i|
         user = User.new
@@ -29,8 +31,9 @@ class Admin::ImportController < Admin::ApplicationController
         user.habitat_id = data.cell(i, 10)
         user.member_type = data.cell(i, 11)
         user.password = "testtest"
-        user.save!
+        user_buffer.push(user)
       end
+      User.create(user_buffer)
     end
 
     flash[:notice] = "멤버 입력을 성공 했습니다."
