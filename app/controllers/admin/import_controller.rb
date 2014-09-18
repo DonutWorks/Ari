@@ -1,6 +1,8 @@
 class Admin::ImportController < Admin::ApplicationController
 
   def new
+    @invalid_users = []
+    @invalid_ids = []
   end
 
   def create
@@ -14,16 +16,17 @@ class Admin::ImportController < Admin::ApplicationController
     lastRow = data.last_row
     lastColumn = data.last_column
 
-    invalid_data = []
+    @invalid_users = []
+    @invalid_ids = []
     normalizer = FormNormalizer.new
 
     (2..lastRow).each do |i|
       user = User.new
+      is_invalid = false
 
       d = normalizer.normalize("기수", data.cell(i, 1))
       if d == "Invalid"
-        invalid_data.push(i)
-        next
+        is_invalid = true
       else
         user.group_id = d
       end
@@ -35,32 +38,28 @@ class Admin::ImportController < Admin::ApplicationController
 
       d = normalizer.normalize("전화", data.cell(i, 6))
       if d == "Invalid"
-        invalid_data.push(i)
-        next
+        is_invalid = true
       else
         user.home_phone_number = d
       end
 
       d = normalizer.normalize("전화", data.cell(i, 7))
       if d == "Invalid"
-        invalid_data.push(i)
-        next
+        is_invalid = true
       else
         user.phone_number = d
       end
 
       d = normalizer.normalize("전화", data.cell(i, 8))
       if d == "Invalid"
-        invalid_data.push(i)
-        next
+        is_invalid = true
       else
         user.emergency_phone_number = d
       end
 
       d = normalizer.normalize("메일", data.cell(i, 9))
       if d == "Invalid"
-        invalid_data.push(i)
-        next
+        is_invalid = true
       else
         user.email = d
       end
@@ -68,14 +67,20 @@ class Admin::ImportController < Admin::ApplicationController
       user.habitat_id = data.cell(i, 10)
       user.member_type = data.cell(i, 11)
       user.password = "testtest"
-      user.save!
+
+      if is_invalid
+        @invalid_users.push(user)
+        @invalid_ids.push(i)
+      else
+        user.save!
+      end
     end
 
-    if invalid_data.count == 0
+    if @invalid_users.count == 0
       flash[:notice] = "멤버 입력을 성공 했습니다."
       redirect_to admin_users_path 
     else
-      flash[:notice] = "몇몇 멤버들은 입력에 실패했습니다."
+      flash[:notice] = "대부분의 멤버들은 입력을 성공했습니다. 하지만 몇몇 멤버들은 실패했습니다. "
       render 'new'
     end
 
