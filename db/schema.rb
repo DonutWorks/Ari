@@ -11,7 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140918180530) do
+ActiveRecord::Schema.define(version: 20140918204422) do
+
+  create_table "account_activations", force: true do |t|
+    t.integer  "user_id"
+    t.boolean  "activated",  default: false
+    t.string   "provider"
+    t.string   "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "account_activations", ["user_id"], name: "index_account_activations_on_user_id"
+
+  create_table "activation_tickets", force: true do |t|
+    t.string   "code"
+    t.integer  "account_activation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activation_tickets", ["account_activation_id"], name: "index_activation_tickets_on_account_activation_id"
 
   create_table "gates", force: true do |t|
     t.string   "title"
