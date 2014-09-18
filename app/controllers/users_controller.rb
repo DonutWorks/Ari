@@ -2,11 +2,23 @@ class UsersController < ApplicationController
   skip_before_filter :authenticate_user!, except: [:show]
 
   def new
-    @auth_hash = session['omniauth.auth']
+    @user = User.new
+    @user_info = auth_hash['info']
   end
 
   def create
-
+    email = params[:user][:email]
+    user = User.find_by_email(email)
+    activation = AccountActivation.where(user: user).first_or_initialize(user: user,
+     uid: auth_hash['uid'], provider: auth_hash['provider'])
+    ticket = ActivationTicket.where(account_activation: activation).first_or_initialize(account_activation: activation,
+     code: "testtest")
+    # send ticket
+    ActivationTicket.transaction do
+      activation.save!
+      ticket.save!
+    end
+    raise ticket.inspect
   end
 
   def show
@@ -43,7 +55,7 @@ class UsersController < ApplicationController
 
 private
   def auth_hash
-    request.env['omniauth.auth']
+    request.env['omniauth.auth'] || session['omniauth.auth']
   end
 
   def create_session!(user)

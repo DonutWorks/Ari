@@ -3,13 +3,12 @@
     <div class="col-md-12">
       <%= form_for @user, url: sign_up_users_path do |f|%>
         <legend>Email Verification</legend>
-
         <div class="form-group">
           <div>
-            <%= @auth_hash['info']['name'] %>
+            <%= @user_info['name'] %>
           </div>
           <div>
-            <%= image_tag(@auth_hash['info']['image']) %>
+            <%= image_tag(@user_info['image']) %>
           </div>
         </div>
 
