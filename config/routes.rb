@@ -1,10 +1,19 @@
 Rails.application.routes.draw do
-
   resources :sessions, only: [:new, :create, :show, :destroy]
-  
+
   root 'sessions#show', id: 1
 
-  resources :gates, only: [:show]
+  get '/auth/:provider/callback', to: 'users#auth'
+  resources :users, only: [] do
+    collection do
+      get 'show'
+      get 'sign_in', to: 'users#sign_in'
+      get 'sign_up', to: 'users#new'
+      post 'sign_up', to: 'users#create'
+      get 'email_sent', to: 'users#email_sent'
+      get 'verify', to: 'users#verify'
+    end
+  end
 
   namespace :admin do
     root 'application#index'
