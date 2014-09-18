@@ -37,6 +37,11 @@ class UsersController < ApplicationController
   end
 
   def verify
+    ticket = ActivationTicket.find_by_code(params[:code])
+    # TODO: handling for nil ticket
+    activation = ticket.account_activation
+    activation.activated = true
+    activation.save!
   end
 
   def auth

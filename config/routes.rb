@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       get 'sign_up', to: 'users#new'
       post 'sign_up', to: 'users#create'
       get 'email_sent', to: 'users#email_sent'
-      get 'verify', to: 'users#verify'
+      get 'verify/:code', to: 'users#verify'
     end
   end
 
