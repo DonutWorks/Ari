@@ -1,31 +1,26 @@
 <div class="form-container main_form">
   <div class="row">
     <div class="col-md-12">
-
-      <%= form_for @user, url: sessions_path, html: {role: "form", class: "form-horizontal "} do |f| %>
-        <div id = "notice-top">
-          <%= image_tag("snu_habitat.jpg", id: "emblem") %>
-          <legend>공지 확인 페이지</legend>
-
-        </div>
-        <div class="form-group form-group-lg">
-          <%= f.label :phone_number, "전화번호", class: "col-sm-2 control-label" %>
-
-          <div class="col-sm-10">
-            <%= f.telephone_field :phone_number, autofocus: true, class: "form-control" %>
-            <br>
-            <%= flash[:alert] %>
-          </div>
-
-        </div>
-
-        <div class="form-group form-group-lg">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-10">
-            <%= f.submit "보기", class: "btn btn-default btn-block"  %>
-          </div>
-        </div>
-      <% end %>
+      <div id="notice-top">
+        <%= image_tag("snu_habitat.jpg", id: "emblem") %>
+      </div>
+      <div class="col-sm-4 col-sm-offset-4">
+        <%= link_to image_tag("kakao_account_login_btn_large_wide.png", class: "btn btn-default btn-block"), '/auth/kakao' %>
+      </div>
     </div>
   </div>
 </div>
+
+<style>
+#notice-top {
+  text-align:center;
+  margin-bottom: 20px;
+}
+body{
+  background-color: rgb(209, 218, 201);
+}
+#emblem{
+  width:70%;
+  max-width:320px;
+}
+</style>

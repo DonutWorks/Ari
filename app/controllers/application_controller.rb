@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   def current_user
-    session[:current_user]
+    User.find_by_id(session[:current_user])
   end
 
 protected

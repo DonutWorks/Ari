@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :authenticate_user!, except: [:show]
+  skip_before_action :authenticate_user!, except: [:show]
 
   def new
     @user = User.new
@@ -19,22 +19,12 @@ class UsersController < ApplicationController
       ticket.save!
     end
 
-    redirect_to email_sent_users_path
-  end
-
-  def show
-  end
-
-  def sign_in
-  end
-
-  def sign_out
-    destroy_session!
-    # temporary
+    flash[:notice] = "Verification mail has been sent."
     redirect_to root_path
   end
 
-  def email_sent
+  def show
+    @user = current_user
   end
 
   def verify
@@ -43,37 +33,11 @@ class UsersController < ApplicationController
     activation = ticket.account_activation
     activation.activated = true
     activation.save!
-    authenticate!
-  end
-
-  def auth
-    authenticate!
+    redirect_to auth_users_path
   end
 
 private
   def auth_hash
     request.env['omniauth.auth'] || session['omniauth.auth']
-  end
-
-  def authenticate!
-# extendable?
-    activation = AccountActivation.find_by(provider: auth_hash['provider'],
-     uid: auth_hash['uid'])
-
-    if activation && activation.activated
-      create_session!(activation.user)
-      redirect_to session.delete(:return_to)
-    else
-      session['omniauth.auth'] = auth_hash
-      redirect_to sign_up_users_path
-    end
-  end
-
-  def create_session!(user)
-    session[:current_user] = user
-  end
-
-  def destroy_session!
-    session.delete(:current_user)
   end
 end
