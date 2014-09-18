@@ -28,7 +28,6 @@ class Admin::ImportController < Admin::ApplicationController
         user.email = data.cell(i, 9)
         user.habitat_id = data.cell(i, 10)
         user.member_type = data.cell(i, 11)
-        user.password = "testtest"
         user.save!
       end
     end

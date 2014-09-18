@@ -78,7 +78,6 @@ class Admin::GatesController < Admin::ApplicationController
           user.phone_number = data.cell(i, 2)
           user.email = data.cell(i, 3)
           user.major = data.cell(i, 4)
-          user.password = "testtest"
           user.save!
         end
       end
