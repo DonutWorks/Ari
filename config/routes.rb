@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :gates, only: [:show]
+
   namespace :admin do
     root 'application#index'
 

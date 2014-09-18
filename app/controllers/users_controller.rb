@@ -18,7 +18,8 @@ class UsersController < ApplicationController
       activation.save!
       ticket.save!
     end
-    raise ticket.inspect
+
+    redirect_to email_sent_users_path
   end
 
   def show
@@ -42,25 +43,30 @@ class UsersController < ApplicationController
     activation = ticket.account_activation
     activation.activated = true
     activation.save!
+    authenticate!
   end
 
   def auth
-    # extendable?
-    activation = AccountActivation.find_by(provider: auth_hash[:provider],
-     uid: auth_hash[:uid])
-
-    if activation && activation.activated
-      create_session!(activation.user)
-      authenticate_user!
-    else
-      session['omniauth.auth'] = auth_hash
-      redirect_to sign_up_users_path
-    end
+    authenticate!
   end
 
 private
   def auth_hash
     request.env['omniauth.auth'] || session['omniauth.auth']
+  end
+
+  def authenticate!
+# extendable?
+    activation = AccountActivation.find_by(provider: auth_hash['provider'],
+     uid: auth_hash['uid'])
+
+    if activation && activation.activated
+      create_session!(activation.user)
+      redirect_to session.delete(:return_to)
+    else
+      session['omniauth.auth'] = auth_hash
+      redirect_to sign_up_users_path
+    end
   end
 
   def create_session!(user)

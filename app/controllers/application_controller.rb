@@ -9,9 +9,7 @@ class ApplicationController < ActionController::Base
 protected
   def authenticate_user!
     session[:return_to] ||= request.fullpath
-    if current_user
-      redirect_to session.delete(:return_to)
-    else
+    if !current_user
       redirect_to sign_in_users_path
     end
   end
