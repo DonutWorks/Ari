@@ -72,7 +72,12 @@ class Admin::ImportController < Admin::ApplicationController
         @invalid_users.push(user)
         @invalid_ids.push(i)
       else
-        user.save!
+        user_already = User.find_by_phone_number(user.phone_number)
+        if user_already != nil
+          user_already.update_attributes(user.as_json(except: [:id]))
+        else
+          user.save!
+        end
       end
     end
 
