@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    phone_number = params[:user][:phone_number]
+    phone_number = params[:user][:phone_number].delete("-")
     if @user = User.find_by_phone_number(phone_number)
       session[:user_id] = @user.id
       redirect_to session[:referer] || session_path(@user)
