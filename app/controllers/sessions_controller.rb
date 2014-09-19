@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
   def create
     phone_number = params[:user][:phone_number]
     if @user = User.find_by_phone_number(phone_number)
-      session[:user] = @user.id
+      session[:user_id] = @user.id
       redirect_to session[:referer] || session_path(@user)
     else
       flash[:alert] = "등록되지 않은 전화번호 입니다"
@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user] = nil
+    session[:user_id] = nil
     redirect_to new_session_path
   end
 
