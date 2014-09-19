@@ -9,17 +9,19 @@ class UsersController < ApplicationController
   def create
     email = params[:user][:email]
     user = User.find_by_email(email)
-    activation = AccountActivation.where(user: user).first_or_initialize(user: user,
-     uid: auth_hash['uid'], provider: auth_hash['provider'])
-    ticket = ActivationTicket.where(account_activation: activation).first_or_initialize(account_activation: activation,
-     code: "testtest")
-    # send ticket
-    ActivationTicket.transaction do
-      activation.save!
-      ticket.save!
+
+    if user.nil?
+      flash[:error] = "Please check your email."
+      render 'new'
+      return
     end
 
-    flash[:notice] = "Verification mail has been sent."
+    activator = UserActivator.new
+    if activator.issue_ticket(user, auth_hash)
+      flash[:notice] = "Verification mail has been sent."
+    else
+      flash[:error] = "Failed to send verification mail. Please retry."
+    end
     redirect_to root_path
   end
 
@@ -28,11 +30,10 @@ class UsersController < ApplicationController
   end
 
   def verify
-    ticket = ActivationTicket.find_by_code(params[:code])
-    # TODO: handling for nil ticket
-    activation = ticket.account_activation
-    activation.activated = true
-    activation.save!
+    activator = UserActivator.new
+    if !activator.activate(params[:code])
+      flash[:error] = "Failed to activate account."
+    end
     redirect_to auth_users_path
   end
 
