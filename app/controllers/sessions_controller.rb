@@ -25,7 +25,7 @@ private
 
     if activation && activation.activated
       create_session!(activation.user)
-      redirect_to session.delete(:return_to)
+      redirect_to session.delete(:return_to) || root_path
     else
       session['omniauth.auth'] = auth_hash
       redirect_to sign_up_users_path
