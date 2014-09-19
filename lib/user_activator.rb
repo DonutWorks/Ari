@@ -5,10 +5,9 @@ class UserActivator
         user: user
       )
       ticket = ActivationTicket.where(account_activation: activation).first_or_create()
-      send_ticket_mail(ticket)
-      return true
+      return ticket
     end
-  rescue
+  rescue => e
     return false
   end
 
@@ -18,13 +17,17 @@ class UserActivator
 
     activation = ticket.account_activation
     activation.activate!
-    return activation.save
+
+    activation.transaction do
+      ticket.destroy!
+      activation.save!
+    end
+
+    return true
+
+  rescue => e
+    return false
   end
 
   # need bang methods
-
-private
-  def send_ticket_mail(ticket)
-
-  end
 end

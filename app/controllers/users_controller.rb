@@ -17,7 +17,8 @@ class UsersController < ApplicationController
     end
 
     activator = UserActivator.new
-    if activator.issue_ticket(user, auth_hash)
+    ticket = activator.issue_ticket(user, auth_hash)
+    if ticket && send_ticket_mail(ticket)
       flash[:notice] = "Verification mail has been sent."
     else
       flash[:error] = "Failed to send verification mail. Please retry."
@@ -40,5 +41,21 @@ class UsersController < ApplicationController
 private
   def auth_hash
     request.env['omniauth.auth'] || session['omniauth.auth']
+  end
+
+  def send_ticket_mail(ticket)
+    verify_url = verify_code_users_url(ticket.code)
+    mail = Mail.new do
+      from 'ari@donutworks.com'
+      to ticket.account_activation.user.email
+      subject 'Ari Account Activation'
+      body <<-BODY
+        To activate your account, click on the following link:
+        #{verify_url}
+      BODY
+    end
+
+    mail.delivery_method :sendmail
+    mail.deliver
   end
 end
