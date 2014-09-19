@@ -16,12 +16,6 @@ class PatternUtil
   end
 
   def column_names
-    column_names = []
-
-    @pattern.split('/').each do |e|
-      column_names.push e
-    end
-
-    return column_names
+    @pattern.split('/')
   end
 end
