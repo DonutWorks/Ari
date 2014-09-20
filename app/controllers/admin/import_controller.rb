@@ -22,53 +22,21 @@ class Admin::ImportController < Admin::ApplicationController
 
     (2..lastRow).each do |i|
       user = User.new
-      is_invalid = false
 
-      d = normalizer.normalize("기수", data.cell(i, 1))
-      if d == "Invalid"
-        is_invalid = true
-      else
-        user.group_id = d
-      end
-
+      user.group_id = normalizer.normalize("기수", data.cell(i, 1))
       user.major = data.cell(i, 2)
       user.student_id = data.cell(i, 3)
       user.sex = normalizer.normalize("성별", data.cell(i, 4))
       user.username = data.cell(i, 5)
-
-      d = normalizer.normalize("전화", data.cell(i, 6))
-      if d == "Invalid"
-        is_invalid = true
-      else
-        user.home_phone_number = d
-      end
-
-      d = normalizer.normalize("전화", data.cell(i, 7))
-      if d == "Invalid"
-        is_invalid = true
-      else
-        user.phone_number = d
-      end
-
-      d = normalizer.normalize("전화", data.cell(i, 8))
-      if d == "Invalid"
-        is_invalid = true
-      else
-        user.emergency_phone_number = d
-      end
-
-      d = normalizer.normalize("메일", data.cell(i, 9))
-      if d == "Invalid"
-        is_invalid = true
-      else
-        user.email = d
-      end
-
+      user.home_phone_number = normalizer.normalize("전화", data.cell(i, 6))
+      user.phone_number = normalizer.normalize("전화", data.cell(i, 7))
+      user.emergency_phone_number = normalizer.normalize("전화", data.cell(i, 8))
+      user.email = normalizer.normalize("메일", data.cell(i, 9))
       user.habitat_id = data.cell(i, 10)
       user.member_type = data.cell(i, 11)
       user.password = "testtest"
 
-      if is_invalid
+      if user.has_invalid_column?
         @invalid_users.push(user)
         @invalid_ids.push(i)
       else

@@ -12,6 +12,17 @@ class User < ActiveRecord::Base
 
   acts_as_reader
 
+  def has_invalid_column?
+    has_invalid = false
+    self.attributes.each do |attr_name, attr_value|
+      if attr_value == "Invalid"
+        has_invalid = true
+        break
+      end
+    end
+    has_invalid
+  end
+
 protected
 	def self.find_for_database_authentication(warden_conditions)
 	  conditions = warden_conditions.dup
@@ -22,9 +33,13 @@ protected
   def email_required?
   end
 
+
+
 private
   def normalize_phone_number
     normalizer = FormNormalizers::PhoneNumberNormalizer.new
     self.phone_number = normalizer.normalize(phone_number)
   end
+
+
 end
