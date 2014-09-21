@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_user!, except: [:show]
+  before_action :require_auth_hash, only: [:new, :create]
 
   def new
     @user = User.new
@@ -32,17 +33,15 @@ class UsersController < ApplicationController
 
   def verify
     activator = UserActivator.new
-    if !activator.activate(params[:code])
+    if activator.activate(params[:code])
+      flash[:notice] = "Activated account!"
+    else
       flash[:error] = "Failed to activate account."
     end
     redirect_to auth_users_path
   end
 
 private
-  def auth_hash
-    request.env['omniauth.auth'] || session['omniauth.auth']
-  end
-
   def send_ticket_mail(ticket)
     verify_url = verify_code_users_url(ticket.code)
     mail = Mail.new do
