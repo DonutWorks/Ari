@@ -5,7 +5,11 @@ module FormNormalizers
     end
 
     def normalize(term)
-      term.delete!(" ")
+      if term.blank?
+        return "Invalid"
+      else
+        term.delete!(" ")
+      end
       return term if term.include?("@")
       return "Invalid"
       #raise NormalizeError, "Invalid Email string: #{term}"
