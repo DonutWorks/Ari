@@ -8,7 +8,7 @@ class UserActivator
       return ticket
     end
   rescue => e
-    return false
+    return nil
   end
 
   def activate(code)

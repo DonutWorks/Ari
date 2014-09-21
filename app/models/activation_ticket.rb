@@ -4,7 +4,7 @@ class ActivationTicket < ActiveRecord::Base
 
 private
   def generate_code
-    self.code = loop do
+    self.code ||= loop do
       random_code = SecureRandom.urlsafe_base64(nil, false)
       break random_code unless ActivationTicket.exists?(code: random_code)
     end
