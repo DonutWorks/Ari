@@ -10,7 +10,7 @@ class Admin::ExportExcelController < Admin::ApplicationController
     begin
       url = CyworldURL.new(params[:notice_link].strip).to_comment_view_url
     rescue Exception => e
-      flash[:error] = "주소가 유효하지 않습니다. 다시 한번 확인해주세요."
+      flash[:error] = e.message
       redirect_to new_admin_export_excel_path
       return
     end
