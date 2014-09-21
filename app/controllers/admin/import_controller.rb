@@ -23,15 +23,15 @@ class Admin::ImportController < Admin::ApplicationController
     (2..lastRow).each do |i|
       user = User.new
 
-      user.group_id = normalizer.normalize("기수", data.cell(i, 1))
+      user.group_id = normalizer.normalize(data.cell(1, 1), data.cell(i, 1))
       user.major = data.cell(i, 2)
       user.student_id = data.cell(i, 3)
-      user.sex = normalizer.normalize("성별", data.cell(i, 4))
+      user.sex = normalizer.normalize(data.cell(1, 4), data.cell(i, 4))
       user.username = data.cell(i, 5)
-      user.home_phone_number = normalizer.normalize("전화", data.cell(i, 6))
-      user.phone_number = normalizer.normalize("전화", data.cell(i, 7))
-      user.emergency_phone_number = normalizer.normalize("전화", data.cell(i, 8))
-      user.email = normalizer.normalize("메일", data.cell(i, 9))
+      user.home_phone_number = normalizer.normalize(data.cell(1, 6), data.cell(i, 6))
+      user.phone_number = normalizer.normalize(data.cell(1, 7), data.cell(i, 7))
+      user.emergency_phone_number = normalizer.normalize(data.cell(1, 8), data.cell(i, 8))
+      user.email = normalizer.normalize(data.cell(1, 9), data.cell(i, 9))
       user.habitat_id = data.cell(i, 10)
       user.member_type = data.cell(i, 11)
       user.password = "testtest"

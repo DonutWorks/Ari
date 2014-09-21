@@ -1,7 +1,7 @@
 module FormNormalizers
   class EmailNormalizer < Normalizer
     def column_names
-      @column_names ||= ["메일", "이메일", "이메일주"]
+      @column_names ||= ["메일", "이메일", "이메일주소"]
     end
 
     def normalize(term)
