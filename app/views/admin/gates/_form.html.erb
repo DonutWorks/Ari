@@ -1,0 +1,23 @@
+<div class="form-group form-group-lg has-feedback <%= validation_state(@gate, :title) %>">
+  <%= f.label :title, "제목", class: "col-sm-1 control-label" %>
+  <div class="col-sm-11">
+    <%= f.text_field :title, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@gate, :title) %> form-control-feedback"></span>
+  </div>
+</div>
+
+<div class="form-group form-group-lg has-feedback <%= validation_state(@gate, :content) %>">
+  <%= f.label :content, "내용", class: "col-sm-1 control-label" %>
+  <div class="col-sm-11">
+    <%= f.text_field :content, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@gate, :content) %> form-control-feedback"></span>
+  </div>
+</div>
+
+<div class="form-group form-group-lg has-feedback <%= validation_state(@gate, :link) %>">
+  <%= f.label :link, "링크", class: "col-sm-1 control-label" %>
+  <div class="col-sm-11">
+    <%= f.text_field :link, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@gate, :link) %> form-control-feedback"></span>
+  </div>
+</div>
