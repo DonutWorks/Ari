@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_one :account_activation
+  has_one :account_activation, dependent: :destroy
 
   validates_presence_of :username, :phone_number
   validates_uniqueness_of :phone_number
