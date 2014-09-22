@@ -2,7 +2,7 @@
   <div class="row">
   	<div class="col-md-12">
   		<h2>등록하기</h2>
-      <%= form_for(@user, url: admin_user_index_path(@user)) do |f| %>
+      <%= form_for [:admin, @user] do |f| %>
         <%= flash[:alert] %>
         <div class="form-group">
           <%= f.label :username, "이름" %>
