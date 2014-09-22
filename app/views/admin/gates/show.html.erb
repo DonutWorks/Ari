@@ -1,13 +1,13 @@
 <div>
-  <h3 class="page-header">
-    <%= @gate.title %>
-    <div class="pull-right">
+  <div class="page-header clearfix">
+    <h3 class="pull-left"><%= @gate.title %></h3>
+    <div class="pull-right margin-top15">
       <%= link_to "수정", edit_admin_gate_path(@gate), class: "btn btn-default btn-sm" %>
       <%= link_to "삭제", admin_gate_path(@gate), method: :delete,
       data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger btn-sm" %>
+    </div>
   </div>
-  </h3>
-  <div class="clearfix"></div>
+
 
   <p>공지 내용 : <%= @gate.content %></p>
   <p>실제 공지 주소 : <%= link_to @gate.link, @gate.link, target: "_blank" %></p>
