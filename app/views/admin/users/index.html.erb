@@ -1,21 +1,24 @@
 <p id="notice"><%= flash[:notice] %></p>
-<h3 class="pull-left">회원 목록</h3>
 
-<div id="buttons-div" class="pull-right">
-  <%= link_to new_admin_user_path do %>
-    <button type="button" class="btn btn-default btn-sm">
-      회원 등록
-    </button>
-  <% end %>
-  <%= link_to new_admin_import_path do %>
-    <button type="button" class="btn btn-default btn-sm">
-      엑셀로 회원 등록
-    </button>
-  <% end %>
+<div class="page-header clearfix">
+  <h3 class="pull-left">회원 목록</h3>
+
+  <div id="buttons-div" class="pull-right">
+    <%= link_to new_admin_user_path do %>
+      <button type="button" class="btn btn-default btn-sm">
+        회원 등록
+      </button>
+    <% end %>
+    <%= link_to new_admin_import_path do %>
+      <button type="button" class="btn btn-default btn-sm">
+        엑셀로 회원 등록
+      </button>
+    <% end %>
+  </div>
 </div>
 
 <div class="table-responsive">
-  <table class="table table-condensed">
+  <table class="table table-condensed table-striped table-hover">
     <thead>
       <tr>
         <th>이름</th>
