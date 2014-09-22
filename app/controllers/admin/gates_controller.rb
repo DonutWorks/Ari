@@ -14,6 +14,8 @@ class Admin::GatesController < Admin::ApplicationController
       shortener = URLShortener.new
       @gate.shortenURL = shortener.shorten_url(gate_url(@gate))
       @gate.save!
+
+      SlackNotifier.notify("햇빛봉사단 게이트 추가 알림 : #{@gate.title}, #{@gate.shortenURL}")
       redirect_to admin_gate_path(@gate)
     else
       flash[:error] = @gate.errors.full_messages.join("<br/>").html_safe
