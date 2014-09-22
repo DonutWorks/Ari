@@ -41,10 +41,10 @@ class Admin::ImportController < Admin::ApplicationController
       else
         user.save!
         user_already = User.find_by_phone_number(user.phone_number)
-        if user_already != nil
-          user_already.update_attributes(user.as_json(except: [:id]))
-        else
+        if user_already.blank?
           user.save!
+        else
+          user_already.update_attributes(user.as_json(except: [:id]))
         end
       end
     end
