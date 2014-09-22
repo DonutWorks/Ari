@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
     if user.nil?
       flash[:error] = "Please check your email."
-      render 'new'
+      redirect_to sign_up_users_path
       return
     end
 
