@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   resources :sessions, only: [:new, :create, :show, :destroy]
-  
+
   root 'sessions#show', id: 1
 
   resources :gates, only: [:show]
