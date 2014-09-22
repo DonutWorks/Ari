@@ -1,29 +1,18 @@
 <div class="form-container">
   <div class="row">
   	<div class="col-md-12">
-  		<h2>등록하기</h2>
-      <%= form_for [:admin, @user] do |f| %>
-        <%= flash[:alert] %>
-        <div class="form-group">
-          <%= f.label :username, "이름" %>
-          <%= f.text_field :username, autofocus: true, class: "form-control" %>
+      <%= form_for [:admin, @user], html: {role: "form", class: "form-horizontal"} do |f| %>
+        <legend>새로운 회원 등록하기</legend>
+        <%= render partial: 'form', locals: {f: f} %>
+        <div class="pull-right">
+          <%= f.submit "등록", class: "btn btn-primary btn-lg"  %>
+          <%= link_to admin_users_path do %>
+            <button type="button" class="btn btn-default btn-lg">
+              취소
+            </button>
+          <% end %>
         </div>
-        <div class="form-group">
-          <%= f.label :email, "이메일" %>
-          <%= f.email_field :email, class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= f.label :phone_number, "핸드폰번호 (- 없이)" %>
-          <%= f.text_field :phone_number, class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= f.label :major, "전공" %>
-          <%= f.text_field :major, class: "form-control" %>
-        </div>
-
-        <div><%= f.submit "등록", class: "btn btn-default"  %></div>
       <% end %>
-
   </div>
 </div>
 </div>
