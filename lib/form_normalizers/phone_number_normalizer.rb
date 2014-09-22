@@ -8,9 +8,7 @@ module FormNormalizers
       begin
         Phoner::Phone.parse(term, country_code: "82").format("%A%f%l")
       rescue => e
-        return "-" if term == "없음"
-        return "Invalid"
-        #raise NormalizeError, "Invalid phone number string: #{term}"
+        raise NormalizeError, "Invalid phone number string: #{term}"
       end
     end
   end

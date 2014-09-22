@@ -7,8 +7,7 @@ module FormNormalizers
     def normalize(term)
       term.delete!(" ")
       return term if term.include?("@")
-      return "Invalid"
-      #raise NormalizeError, "Invalid Email string: #{term}"
+      raise NormalizeError, "Invalid Email string: #{term}"
     end
   end
 end
