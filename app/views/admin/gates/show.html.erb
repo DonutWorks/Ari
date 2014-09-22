@@ -25,7 +25,7 @@
       <% @gate.readers.each do |user| %>
       <tr>
         <td><%= user.username %></td>
-        <td><%= user.phone_number %></td>
+        <td><%= pretty_phone_number(user.phone_number) %></td>
         <td><%= user.email %></td>
         <td><%= user.major %></td>
         <td><%= user.read_at(@gate).localtime.strftime("%Y-%m-%d %T") %></td>
@@ -50,7 +50,7 @@
       <% @gate.unreaders.each do |user| %>
       <tr>
         <td><%= user.username %></td>
-        <td><%= user.phone_number %></td>
+        <td><%= pretty_phone_number(user.phone_number) %></td>
         <td><%= user.email %></td>
         <td><%= user.major %></td>
       </tr>

@@ -34,7 +34,6 @@ class Admin::ImportController < Admin::ApplicationController
       user.email = normalizer.normalize(data.cell(1, 9), data.cell(i, 9))
       user.habitat_id = data.cell(i, 10)
       user.member_type = data.cell(i, 11)
-      user.password = "testtest"
 
       if user.has_invalid_column?
         @invalid_users.push(user)
@@ -46,7 +45,7 @@ class Admin::ImportController < Admin::ApplicationController
 
     if @invalid_users.count == 0
       flash[:notice] = "멤버 입력을 성공 했습니다."
-      redirect_to admin_users_path 
+      redirect_to admin_users_path
     else
       flash[:notice] = "대부분의 멤버들은 입력을 성공했습니다. 하지만 몇몇 멤버들은 실패했습니다. "
       render 'new'
