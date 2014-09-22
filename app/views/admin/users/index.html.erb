@@ -28,7 +28,7 @@
       <% @users.each do |user| %>
       <tr>
         <td><%= user.username %></td>
-        <td><%= user.phone_number %></td>
+        <td><%= pretty_phone_number(user.phone_number) %></td>
         <td><%= user.email %></td>
         <td><%= user.major %></td>
         <td>

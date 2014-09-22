@@ -2,7 +2,8 @@ class FormNormalizer
   NORMALIZERS = [
     FormNormalizers::GenderNormalizer,
     FormNormalizers::PhoneNumberNormalizer,
-    FormNormalizers::GenerationNormalizer
+    FormNormalizers::GenerationNormalizer,
+    FormNormalizers::EmailNormalizer
   ]
 
   def initialize
