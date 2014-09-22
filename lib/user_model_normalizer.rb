@@ -1,5 +1,3 @@
-require 'roo'
-
 class UserModelNormalizer
   def self.normalize(normalizer, data, i)
     user = User.new
