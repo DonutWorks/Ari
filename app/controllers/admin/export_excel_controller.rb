@@ -15,12 +15,25 @@ class Admin::ExportExcelController < Admin::ApplicationController
       return
     end
 
-    @comments = HtmlCommentParser.import(pattern, url)
+    comments = HtmlCommentParser.import(pattern, url)
 
-    respond_to do |format|
-      format.html
-      format.csv { send_data ExcelExporter.export(@comments) }
-      format.xls
+    book = Spreadsheet::Workbook.new
+    sheet1 = book.create_worksheet
+
+    comments.first.keys.each do |key|
+      sheet1.row(0).push(key.to_s)
     end
+
+    comments.each_with_index do |comment, index|
+      comment.values.each do |value|
+        sheet1.row(index+1).push(value)
+      end
+    end
+
+    bookstring = StringIO.new 
+    book.write bookstring
+    
+    send_data bookstring.string, :filename => "comments-excel.xls", :type =>  "application/vnd.ms-excel" 
+    #redirect_to admin_root_path
   end
 end

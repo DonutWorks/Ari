@@ -36,6 +36,7 @@ gem 'spring',        group: :development
 
 # Use excel import gem
 gem 'roo', '~> 1.13.2'
+gem 'spreadsheet', '~> 1.0.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
