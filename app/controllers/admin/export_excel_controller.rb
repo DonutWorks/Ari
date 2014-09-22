@@ -8,7 +8,7 @@ class Admin::ExportExcelController < Admin::ApplicationController
     pattern = PatternUtil.new(params[:pattern])
 
     begin
-      url = CyworldURL.new(params[:notice_link]).to_comment_view_url
+      url = CyworldURL.new(params[:notice_link].strip).to_comment_view_url
     rescue Exception => e
       flash[:error] = e.message
       redirect_to new_admin_export_excel_path
