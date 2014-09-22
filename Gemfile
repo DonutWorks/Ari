@@ -64,3 +64,6 @@ gem 'phone', '~> 1.2.3'
 gem 'nokogiri', '~> 1.6.3.1'
 gem 'uri_template', '~> 0.7.0'
 gem 'read_activity', '~> 0.0.3'
+
+gem 'bootstrap-sass', '~> 3.2.0.2'
+gem 'autoprefixer-rails', '~> 3.1.0.20140911'
