@@ -44,17 +44,16 @@ class UsersController < ApplicationController
 private
   def send_ticket_mail(ticket)
     verify_url = verify_code_users_url(ticket.code)
-    mail = Mail.new do
-      from 'ari@donutworks.com'
-      to ticket.account_activation.user.email
-      subject 'Ari Account Activation'
-      body <<-BODY
+    mailgun = Mailgun()
+    parameters = {
+      :from => "ari@donutworks.com",
+      :to => ticket.account_activation.user.email,
+      :subject => "Ari Account Activation",
+      :text => <<-BODY
         To activate your account, click on the following link:
         #{verify_url}
       BODY
-    end
-
-    mail.delivery_method :sendmail
-    mail.deliver
+    }
+    mailgun.messages.send_email(parameters)
   end
 end
