@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   resources :sessions, only: [:new, :create, :show, :destroy]
-  
+
   root 'sessions#show', id: 1
 
   resources :gates, only: [:show]
@@ -9,8 +9,13 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'application#index'
 
-    resources :users, except: [:new, :create]
-    resource :import, controller: :import,  only: [:new, :create]
+    resources :users, except: [:new, :create] do
+      collection do
+        get :import, to: 'import#new'
+        post :import, to: 'import#create'
+      end
+    end
+
     resources :gates do
       collection do
         get 'download_roster_example'
