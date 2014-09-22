@@ -1,27 +1,38 @@
 class SessionsController < ApplicationController
-  skip_before_action :authenticated?, :only => [:new, :create]
+  skip_before_action :authenticate_user!
+  before_action :require_auth_hash, only: [:create]
 
   def new
-    @user = User.new
   end
 
   def create
-    phone_number = params[:user][:phone_number].delete("-")
-    if @user = User.find_by_phone_number(phone_number)
-      session[:user_id] = @user.id
-      redirect_to session[:referer] || session_path(@user)
-    else
-      flash[:alert] = "등록되지 않은 전화번호 입니다"
-      redirect_to new_session_path
-    end
+    authenticate!
   end
 
   def destroy
-    session[:user_id] = nil
-    redirect_to new_session_path
+    destroy_session!
+    redirect_to sign_in_users_path
   end
 
-  def show
-    @user = current_user
+private
+  def authenticate!
+  # extendable?
+    activation = AccountActivation.find_by(provider: auth_hash['provider'],
+     uid: auth_hash['uid'])
+
+    if activation && activation.activated
+      create_session!(activation.user)
+      redirect_to session.delete(:return_to) || root_path
+    else
+      redirect_to sign_up_users_path
+    end
+  end
+
+  def create_session!(user)
+    session[:current_user] = user.id
+  end
+
+  def destroy_session!
+    session.delete(:current_user)
   end
 end
