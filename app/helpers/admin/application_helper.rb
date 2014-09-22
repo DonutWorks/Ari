@@ -27,4 +27,8 @@ module Admin::ApplicationHelper
       end
     end
   end
+
+  def attribute_error_message(model_instance, attribute)
+    model_instance.errors[attribute].join('\n')
+  end
 end
