@@ -8,10 +8,15 @@ module FormNormalizers
     end
 
     def normalize(term)
-      term.delete!(" ")
+      if term.blank?
+        return "Invalid"
+      else
+        term.delete!(" ")
+      end
       return "남" if MALE_GROUP.include?(term)
       return "여" if FEMALE_GROUP.include?(term)
-      raise NormalizeError, "Invalid gender string: #{term}"
+      return "Invalid"
+      #raise NormalizeError, "Invalid gender string: #{term}"
     end
   end
 end

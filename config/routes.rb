@@ -1,11 +1,18 @@
 Rails.application.routes.draw do
-  devise_for :users, only: [:session]
-  get 'users/show'
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
   root 'users#show', id: 1
+
+  get '/auth/:provider/callback', as: 'oauth_callback', to: 'sessions#create'
+  resources :users, only: [] do
+    collection do
+      get 'show'
+      get 'sign_in', to: 'sessions#new'
+      get 'auth', to: 'sessions#create'
+      get 'sign_out', to: 'sessions#destroy'
+      get 'sign_up', to: 'users#new'
+      post 'sign_up', to: 'users#create'
+      get 'verify/:code', to: 'users#verify', as: 'verify_code'
+    end
+  end
 
   resources :gates, only: [:show]
 
