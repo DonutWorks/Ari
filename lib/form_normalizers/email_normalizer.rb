@@ -5,7 +5,11 @@ module FormNormalizers
     end
 
     def normalize(term)
-      term.delete!(" ")
+      if term.blank?
+        return "Invalid"
+      else
+        term.delete!(" ")
+      end
       return term if term.include?("@")
       raise NormalizeError, "Email이 형식에 맞지 않습니다. (#{term})"
     end
