@@ -3,6 +3,22 @@ class Admin::UsersController < Admin::ApplicationController
     @users = User.all
   end
 
+  def new
+    @user = User.new
+  end
+
+  def create
+    @user = User.new(user_params)
+
+    if @user.save
+      flash[:notice] = params[:user][:username] + "님 회원 등록 완료"
+      redirect_to admin_users_path
+    else
+      flash[:alert] = "정보가 유효하지 않습니다. 다시 확인해주세요."
+      render "new"
+    end
+  end
+
   def edit
     @user = User.find(params[:id])
   end
@@ -12,7 +28,7 @@ class Admin::UsersController < Admin::ApplicationController
 
     if @user.update(user_params)
       flash[:notice] = @user.username + "님의 회원 정보 수정에 성공했습니다"
-      redirect_to admin_users_path
+      redirect_to admin_user_path(@user)
     else
       render 'edit'
     end
@@ -25,6 +41,11 @@ class Admin::UsersController < Admin::ApplicationController
 
     redirect_to admin_users_path
   end
+
+  def show
+    @user = User.find(params[:id])
+  end
+
 
 private
   def user_params
