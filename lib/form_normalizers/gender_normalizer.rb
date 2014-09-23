@@ -8,7 +8,7 @@ module FormNormalizers
     end
 
     def normalize(term)
-      raise NormalizeError, "성별이 비어 있습니다." if term.blank?
+      return "" if term.blank?
       term.delete!(" ")
       return "남" if MALE_GROUP.include?(term)
       return "여" if FEMALE_GROUP.include?(term)
