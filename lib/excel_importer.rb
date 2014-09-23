@@ -1,5 +1,3 @@
-require 'roo'
-
 class ExcelImporter
   def self.import(filename)
     file = Tempfile.new(['data','.xlsx'])

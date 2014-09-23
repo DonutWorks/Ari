@@ -6,17 +6,29 @@ class HtmlCommentParser
     column_names = pattern.column_names
     comments = []
 
-    page.css('.replylist .obj_rslt').each do |val|
-      if pattern.compare(val.text)
+    reply_count = page.at_css('input#reply_cnt').attr('value').to_i
+    page_count = reply_count / 50 + 1
+    (1..page_count).each do |i|
+      page_url = url + "&replpag=#{i}"
+      page = Nokogiri::HTML(open(page_url).read, nil, 'utf-8')
+
+      page.css('.replylist .obj_rslt').each do |val|
         comment = {}
+
+        comment[:invalid] = !pattern.compare(val.text)
+
         val.text.split('/').each_with_index do |e, i|
-          comment[column_names[i].to_sym] = normalizer.normalize(column_names[i], e)
+          if column_names[i].blank?
+            comment[("invalid_data" + i.to_s).to_sym] = e
+          else
+            comment[column_names[i].to_sym] = normalizer.normalize(column_names[i], e)
+          end
         end
-      else
-        comment[:unvalid] = true
+
+        comments.push comment
       end
-      comments.push comment
     end
+
     comments
   end
 end

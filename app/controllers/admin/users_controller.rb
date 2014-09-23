@@ -3,16 +3,31 @@ class Admin::UsersController < Admin::ApplicationController
     @users = User.all
   end
 
+  def new
+    @user = User.new
+  end
+
+  def create
+    @user = User.new(user_params)
+
+    if @user.save
+      flash[:notice] = "\"#{@user.username}\"님의 회원 정보 생성에 성공했습니다."
+      redirect_to admin_users_path
+    else
+      render "new"
+    end
+  end
+
   def edit
     @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:user][:id])
+    @user = User.find(params[:id])
 
     if @user.update(user_params)
-      flash[:notice] = @user.username + "님의 회원 정보 수정에 성공했습니다"
-      redirect_to admin_users_path
+      flash[:notice] = "\"#{@user.username}\"님의 회원 정보 수정에 성공했습니다."
+      redirect_to admin_user_path(@user)
     else
       render 'edit'
     end
@@ -20,15 +35,19 @@ class Admin::UsersController < Admin::ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    flash[:notice] = @user.username + "님의 회원 정보 삭제에 성공했습니다"
     @user.destroy
 
+    flash[:notice] = "\"#{@user.username}\"님의 회원 정보 삭제에 성공했습니다."
     redirect_to admin_users_path
   end
 
-private
-  def user_params
-    params.require(:user).permit(:username, :email, :phone_number, :major)
+  def show
+    @user = User.find(params[:id])
   end
 
+
+private
+  def user_params
+    params.require(:user).permit(:username, :email, :phone_number, :major, :student_id, :sex, :home_phone_number, :emergency_phone_number, :habitat_id, :member_type, :generation_id, :birth)
+  end
 end

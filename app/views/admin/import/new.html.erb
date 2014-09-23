@@ -1,9 +1,20 @@
+<% if @error_message %>
+<div class="alert <%= flash_class(:error) %> alert-dismissable fade in">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <%= @error_message %>
+</div>
+<% end %>
 <div class="form-container">
   <div class="row">
     <div class="col-md-12">
-
-
-      <%= form_tag(admin_import_path, :multipart => true) do %>
+      <% if @invalid_messages.count > 0 %>
+        <div class="error_name_list">
+          <% @invalid_messages.map do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </div>
+      <% end %>
+      <%= form_tag(import_admin_users_path, :multipart => true) do %>
 
         <legend>엑셀 파일로 회원 등록</legend>
 
@@ -19,7 +30,7 @@
         </p>
 
         <p>
-          <%= submit_tag "Upload", class: "btn btn-default"   %>
+          <%= submit_tag "업로드", class: "btn btn-default"   %>
         </p>
       <% end %>
 

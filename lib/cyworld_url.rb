@@ -7,7 +7,7 @@ class CyworldURL
     shorten_url_template = URITemplate.new("http://club.cyworld.com{/segments*}")
     extracts = shorten_url_template.extract(@shorten_url)
 
-    raise "URL is invalid form. Use shorten cyworld url." unless valid_extracts?(extracts)
+    raise "주소가 유효하지 않습니다. 다시 한번 확인해주세요." unless valid_extracts?(extracts)
 
     params = extracts["segments"]
     query_params = {

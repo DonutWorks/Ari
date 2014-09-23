@@ -14,13 +14,42 @@ class Admin::GatesController < Admin::ApplicationController
       shortener = URLShortener.new
       @gate.shortenURL = shortener.shorten_url(gate_url(@gate))
       @gate.save!
+
+      SlackNotifier.notify("햇빛봉사단 게이트 추가 알림 : #{@gate.title}, #{@gate.shortenURL}")
       redirect_to admin_gate_path(@gate)
+    else
+      render 'new'
     end
+
   end
 
   def show
     @gate = Gate.find(params[:id])
   end
+
+  def edit
+    @gate = Gate.find(params[:id])
+  end
+
+  def update
+    @gate = Gate.find(params[:id])
+
+    if @gate.update(gate_params)
+      flash[:notice] = "\"#{@gate.title}\" 공지를 성공적으로 수정했습니다."
+      redirect_to admin_gate_path(@gate)
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @gate = Gate.find(params[:id])
+    @gate.destroy
+
+    flash[:notice] = "\"#{@gate.title}\" 공지를 성공적으로 삭제했습니다."
+    redirect_to admin_root_path
+  end
+
 
   def import
     render 'import'
@@ -49,13 +78,12 @@ class Admin::GatesController < Admin::ApplicationController
           user.phone_number = data.cell(i, 2)
           user.email = data.cell(i, 3)
           user.major = data.cell(i, 4)
-          user.password = "testtest"
           user.save!
         end
       end
-      flash[:notice] = "멤버 입력을 성공 했습니다."
+      flash[:notice] = "멤버 입력에 성공했습니다."
     rescue ActiveRecord::StatementInvalid
-      flash[:notice] = "멤버 입력에 실패 했습니다."
+      flash[:notice] = "멤버 입력에 실패했습니다."
     end
 
     redirect_to admin_root_path
