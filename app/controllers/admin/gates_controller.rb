@@ -16,7 +16,6 @@ class Admin::GatesController < Admin::ApplicationController
       @gate.save!
       redirect_to admin_gate_path(@gate)
     else
-      flash[:error] = @gate.errors.full_messages.join("<br/>").html_safe
       render 'new'
     end
 
@@ -37,7 +36,6 @@ class Admin::GatesController < Admin::ApplicationController
       flash[:notice] = @gate.title + " 공지 정보 수정 성공했습니다."
       redirect_to admin_gate_path(@gate)
     else
-      flash[:error] = @gate.errors.full_messages.join("<br/>").html_safe
       render 'edit'
     end
   end
