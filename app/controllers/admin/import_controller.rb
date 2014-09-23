@@ -1,29 +1,24 @@
 class Admin::ImportController < Admin::ApplicationController
 
   def new
-    @invalid_users = []
-    @invalid_ids = []
+    @invalid_messages = []
   end
 
   def create
-    @invalid_users = []
-    @invalid_ids = []
+    @invalid_messages = []
 
     if !params[:upload].blank?
       data = ExcelImporter.import(params[:upload][:file])
       data.default_sheet = data.sheets.first
 
-      lastRow = data.last_row
-      lastColumn = data.last_column
-
       normalizer = FormNormalizer.new
 
-      (2..lastRow).each do |i|
-        user = UserModelNormalizer.normalize(normalizer, data, i)
-
-        if user.has_invalid_column?
-          @invalid_users.push(user)
-          @invalid_ids.push(i)
+      (2..data.last_row).each do |i|
+        begin
+          user = UserModelNormalizer.normalize(normalizer, data, i)
+        rescue UserModelNormalizer::NormalizeError => e
+          messages = i.to_s + "행의 " + e.user.username + "님은 " + e.message
+          @invalid_messages.push(messages)
         else
           user_already = User.find_by_phone_number(user.phone_number)
           if user_already.blank?
@@ -32,9 +27,10 @@ class Admin::ImportController < Admin::ApplicationController
             user_already.update_attributes(user.as_json(except: [:id]))
           end
         end
+
       end
 
-      if @invalid_users.count == 0
+      if @invalid_messages.count == 0
         flash[:notice] = "멤버 입력을 성공 했습니다."
         redirect_to admin_users_path
       else

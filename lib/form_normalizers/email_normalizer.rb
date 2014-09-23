@@ -5,14 +5,10 @@ module FormNormalizers
     end
 
     def normalize(term)
-      if term.blank?
-        return "Invalid"
-      else
-        term.delete!(" ")
-      end
+      raise NormalizeError, "Email이 비어 있습니다." if term.blank?
+      term.delete!(" ")
       return term if term.include?("@")
-      return "Invalid"
-      #raise NormalizeError, "Invalid Email string: #{term}"
+      raise NormalizeError, "Email이 형식에 맞지 않습니다. (#{term})"
     end
   end
 end
