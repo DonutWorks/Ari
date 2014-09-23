@@ -24,7 +24,7 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def update
-    @user = User.find(params[:user][:id])
+    @user = User.find(params[:id])
 
     if @user.update(user_params)
       flash[:notice] = @user.username + "님의 회원 정보 수정에 성공했습니다"
