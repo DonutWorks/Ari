@@ -9,19 +9,47 @@
 
 <table class="table">
   <tr>
+    <td>기수</td>
+    <td><%= @user.group_id %></td>
+  </tr>
+  <tr>
   	<td>이름</td>
   	<td><%= @user.username %></td>
   </tr>
   <tr>
-  	<td>전화번호</td>
+    <td>성별</td>
+    <td><%= @user.sex %></td>
+  </tr>
+  <tr>
+    <td>전공</td>
+    <td><%= @user.major %></td>
+  </tr>
+  <tr>
+    <td>학번</td>
+    <td><%= @user.student_id %></td>
+  </tr>
+  <tr>
+  	<td>본인 연락처</td>
   	<td><%= pretty_phone_number(@user.phone_number) %></td>
+  </tr>
+  <tr>
+    <td>자택 전화번호</td>
+    <td><%= pretty_phone_number(@user.home_phone_number) %></td>
+  </tr>
+  <tr>
+    <td>응급시 연락처</td>
+    <td><%= pretty_phone_number(@user.emergency_phone_number) %></td>
   </tr>
   <tr>
   	<td>이메일</td>
   	<td><%= @user.email %></td>
   </tr>
   <tr>
-  	<td>전공</td>
-  	<td><%= @user.major %></td>
+    <td>해비타드 아이디</td>
+    <td><%= @user.habitat_id %></td>
+  </tr>
+  <tr>
+    <td>단원구분</td>
+    <td><%= @user.member_type %></td>
   </tr>
 </table>
