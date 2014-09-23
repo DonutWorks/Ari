@@ -49,10 +49,11 @@ private
       :from => "ari@donutworks.com",
       :to => ticket.account_activation.user.email,
       :subject => "Ari 계정 활성화 메일 보내드립니다.",
-      :text => <<-BODY
-        계정을 활성화 시키려면 아래의 링크를 클릭 해주세요! :
-        #{verify_url}
-      BODY
+      :html => "<div><h2>Ari의 계정을 활성화 시키려면 아래의 링크를 클릭 해주세요.</h2></div><div>#{verify_url}</div>"
+      # :text => <<-BODY
+      #   <h2>계정을 활성화 시키려면 아래의 링크를 클릭 해주세요!</h2> :
+      #   #{verify_url}
+      # BODY
     }
     mailgun.messages.send_email(parameters)
   end
