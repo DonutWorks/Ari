@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 private
   def normalize_phone_number
     normalizer = FormNormalizers::PhoneNumberNormalizer.new
-    self.phone_number = normalizer.normalize(phone_number)
+    self.phone_number = normalizer.normalize(phone_number) if !phone_number.blank?
   end
 
 end
