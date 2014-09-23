@@ -4,7 +4,7 @@ class Admin::Users::RegistrationsController < Admin::ApplicationController
   end
 
   def create
-    @user = User.new(user_params.merge(password: "testtest"))
+    @user = User.new(user_params)
 
     if @user.save
       flash[:notice] = params[:user][:username] + "님 회원 등록 완료"

@@ -1,5 +1,3 @@
-<p id="notice"><%= flash[:notice] %></p>
-
 <div class="page-header clearfix">
   <h3 class="pull-left">회원 목록</h3>
 
@@ -25,6 +23,7 @@
         <th>전화번호</th>
         <th>이메일</th>
         <th>전공</th>
+        <th>메뉴</th>
       </tr>
     </thead>
 
@@ -32,10 +31,11 @@
       <% @users.each do |user| %>
         <tr class="clickable-row" href="<%= admin_user_path(user) %>">
           <td><%= user.username %></td>
-          <td><%= user.phone_number %></td>
+          <td><%= pretty_phone_number(user.phone_number) %></td>
           <td><%= user.email %></td>
           <td><%= user.major %></td>
-        </tr>      
+          <td><%= link_to "자세히", admin_user_path(user), class: "btn btn-link btn-xs" %></td>
+        </tr>
       <% end %>
     </tbody>
   </table>
