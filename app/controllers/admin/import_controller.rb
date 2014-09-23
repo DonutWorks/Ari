@@ -8,7 +8,7 @@ class Admin::ImportController < Admin::ApplicationController
   def create
     @invalid_users = []
     @invalid_ids = []
-      
+
     if !params[:upload].blank?
       file = Tempfile.new(['data','.xlsx'])
       file.binmode
@@ -19,7 +19,6 @@ class Admin::ImportController < Admin::ApplicationController
 
       lastRow = data.last_row
       lastColumn = data.last_column
-
 
       normalizer = FormNormalizer.new
 
@@ -42,13 +41,18 @@ class Admin::ImportController < Admin::ApplicationController
           @invalid_users.push(user)
           @invalid_ids.push(i)
         else
-          user.save!
+          user_already = User.find_by_phone_number(user.phone_number)
+          if user_already.blank?
+            user.save!
+          else
+            user_already.update_attributes(user.as_json(except: [:id]))
+          end
         end
       end
 
       if @invalid_users.count == 0
         flash[:notice] = "멤버 입력을 성공 했습니다."
-        redirect_to admin_users_path 
+        redirect_to admin_users_path
       else
         flash[:notice] = "대부분의 멤버들은 입력을 성공했습니다. 하지만 몇몇 멤버들은 실패했습니다. "
         render 'new'
@@ -57,6 +61,5 @@ class Admin::ImportController < Admin::ApplicationController
       flash[:notice] = "첨부파일을 업로드 하세요. "
       render 'new'
     end
-
   end
 end
