@@ -7,8 +7,9 @@ module FormNormalizers
     def normalize(term)
       raise NormalizeError, "기수가 비어 있습니다." if term.blank?
       term.delete!(" ")
-      return term if term.end_with?("기")
-      return term << "기" if is_numeric?(term)
+      term.delete!("기")
+      return term
+
       raise NormalizeError, "기수가 형식에 맞지 않습니다. (#{term})"
     end
 
