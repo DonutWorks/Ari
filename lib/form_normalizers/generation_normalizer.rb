@@ -7,8 +7,7 @@ module FormNormalizers
     def normalize(term)
       return term if term.end_with?("기")
       return term << "기" if is_numeric?(term)
-      return "Invalid"
-      #raise NormalizeError, "Invalid generation string: #{term}"
+      raise NormalizeError, "기수가 형식에 맞지 않습니다. (#{term})"
     end
 
   private

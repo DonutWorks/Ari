@@ -11,8 +11,7 @@ module FormNormalizers
       term.delete!(" ")
       return "남" if MALE_GROUP.include?(term)
       return "여" if FEMALE_GROUP.include?(term)
-      return "Invalid"
-      #raise NormalizeError, "Invalid gender string: #{term}"
+      raise NormalizeError, "성별이 형식에 맞지 않습니다. (#{term})"
     end
   end
 end
