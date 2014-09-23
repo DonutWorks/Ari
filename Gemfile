@@ -43,6 +43,9 @@ gem 'roo', '~> 1.13.2'
 # Use unicorn as the app server
 # gem 'unicorn'
 
+# Slack notify
+gem 'slack-notify', '~> 0.3.2'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
