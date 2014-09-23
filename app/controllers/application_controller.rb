@@ -23,4 +23,9 @@ protected
   def auth_hash
     session['omniauth.auth'] ||= request.env['omniauth.auth']
   end
+
+  def set_flash
+    @flash = {}
+  end
+
 end
