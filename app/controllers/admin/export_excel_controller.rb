@@ -19,15 +19,23 @@ class Admin::ExportExcelController < Admin::ApplicationController
 
     book = Spreadsheet::Workbook.new
     sheet1 = book.create_worksheet
+    invalid_format = Spreadsheet::Format.new :color => :red,
+                                 :weight => :bold
 
-    comments.first.keys.each do |key|
-      sheet1.row(0).push(key.to_s)
+    comments.first.keys.each_with_index do |key, index|
+      sheet1.row(0).push(key.to_s) if index > 0
     end
 
-    comments.each_with_index do |comment, index|
-      comment.values.each do |value|
-        sheet1.row(index+1).push(value)
-      end
+    comments.each_with_index do |comment, index_out|
+      invalid = false
+      comment.values.each_with_index do |value, index_in|
+        if index_in == 0
+          invalid = value 
+        else
+          sheet1.row(index_out+1).default_format = invalid_format if invalid
+          sheet1.row(index_out+1).push(value)
+        end
+      end 
     end
 
     bookstring = StringIO.new 
