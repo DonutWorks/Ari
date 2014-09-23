@@ -10,7 +10,7 @@ class Admin::ExportExcelController < Admin::ApplicationController
     begin
       url = CyworldURL.new(params[:notice_link].strip).to_comment_view_url
     rescue Exception => e
-      @flash[:error] = e.message
+      flash[:error] = e.message
       redirect_to new_admin_export_excel_path
       return
     end
