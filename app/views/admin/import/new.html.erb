@@ -1,9 +1,15 @@
 <div class="form-container">
   <div class="row">
     <div class="col-md-12">
+      <% if @invalid_users.count > 0 %>
+        <div class="error_name_list">
+          <% @invalid_users.each_with_index do |user, index| %>
+            <div><%= @invalid_ids[index] %>열의 <%= user.username %>은 양식에 맞지 않아 등록되지 않았습니다.</div> 
+          <% end %>
+        </div>
+      <% end %>
 
-
-      <%= form_tag(admin_import_path, :multipart => true) do %>
+      <%= form_tag(import_admin_users_path, :multipart => true) do %>
 
         <legend>엑셀 파일로 회원 등록</legend>
 

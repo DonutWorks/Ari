@@ -11,7 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140915132537) do
+ActiveRecord::Schema.define(version: 20140918204422) do
+
+  create_table "account_activations", force: true do |t|
+    t.integer  "user_id"
+    t.boolean  "activated",  default: false
+    t.string   "provider"
+    t.string   "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "account_activations", ["user_id"], name: "index_account_activations_on_user_id"
+
+  create_table "activation_tickets", force: true do |t|
+    t.string   "code"
+    t.integer  "account_activation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activation_tickets", ["account_activation_id"], name: "index_activation_tickets_on_account_activation_id"
 
   create_table "gates", force: true do |t|
     t.string   "title"
@@ -34,15 +54,6 @@ ActiveRecord::Schema.define(version: 20140915132537) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: ""
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username",                            null: false
@@ -56,7 +67,5 @@ ActiveRecord::Schema.define(version: 20140915132537) do
     t.string   "habitat_id"
     t.string   "member_type"
   end
-
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

@@ -1,9 +1,5 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :authentication_keys => [:phone_number]
+  has_one :account_activation, dependent: :destroy
 
   validates_presence_of :username, :phone_number
   validates_uniqueness_of :phone_number
@@ -12,14 +8,15 @@ class User < ActiveRecord::Base
 
   acts_as_reader
 
-protected
-	def self.find_for_database_authentication(warden_conditions)
-	  conditions = warden_conditions.dup
-	  phone_number = conditions.delete(:phone_number)
-    find_by_phone_number(phone_number)
-	end
-
-  def email_required?
+  def has_invalid_column?
+    has_invalid = false
+    self.attributes.each do |attr_name, attr_value|
+      if attr_value == "Invalid"
+        has_invalid = true
+        break
+      end
+    end
+    has_invalid
   end
 
 private
@@ -27,4 +24,6 @@ private
     normalizer = FormNormalizers::PhoneNumberNormalizer.new
     self.phone_number = normalizer.normalize(phone_number)
   end
+
+
 end

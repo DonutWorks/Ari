@@ -44,6 +44,9 @@ gem 'spreadsheet', '~> 1.0.0'
 # Use unicorn as the app server
 # gem 'unicorn'
 
+# Slack notify
+gem 'slack-notify', '~> 0.3.2'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -59,9 +62,12 @@ group :development, :test do
   gem 'selenium-webdriver'
 end
 
-gem 'devise', '~> 3.3.0'
 gem 'addressable', '~> 2.3.6'
 gem 'phone', '~> 1.2.3'
 gem 'nokogiri', '~> 1.6.3.1'
 gem 'uri_template', '~> 0.7.0'
-gem 'read_activity', '~> 0.0.3'
+gem 'read_activity', '~> 0.0.4'
+gem 'omniauth-kakao', '~> 0.1.0'
+gem 'mailgun', '~> 0.8'
+gem 'bootstrap-sass', '~> 3.2.0.2'
+gem 'autoprefixer-rails', '~> 3.1.0.20140911'
