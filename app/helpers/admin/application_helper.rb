@@ -1,4 +1,5 @@
 module Admin::ApplicationHelper
+
   def flash_class(level)
     case level.intern
       when :notice then "alert alert-info"
