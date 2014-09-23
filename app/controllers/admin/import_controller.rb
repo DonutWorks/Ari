@@ -33,14 +33,14 @@ class Admin::ImportController < Admin::ApplicationController
       end
 
       if @invalid_messages.count == 0
-        @flash[:notice] = "멤버 입력을 성공 했습니다."
+        flash[:notice] = "멤버 입력에 성공했습니다."
         redirect_to admin_users_path
       else
-        @flash[:notice] = "대부분의 멤버들은 입력을 성공했습니다. 하지만 몇몇 멤버들은 실패했습니다. "
+        @error_message = "대부분의 멤버들은 입력에 성공했습니다. 하지만 몇몇 멤버들은 실패했습니다."
         render 'new'
       end
     else
-      @flash[:notice] = "첨부파일을 업로드 하세요. "
+      @error_message = "첨부파일을 업로드 하세요."
       render 'new'
     end
   end
