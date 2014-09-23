@@ -25,7 +25,7 @@
           <td><%= pretty_phone_number(user.phone_number) %></td>
           <td><%= user.email %></td>
           <td><%= user.major %></td>
-          <td><%= link_to "자세히", admin_user_path(user), class: "btn btn-link btn-xs" %></td>
+          <td class="menu"><%= link_to "자세히", admin_user_path(user), class: "btn btn-link btn-xs" %></td>
         </tr>
       <% end %>
     </tbody>
@@ -33,7 +33,10 @@
 </div>
 
 <script>
-  $(".clickable-row").click(function() {
-        window.document.location = $(this).attr("href");
+  $(document).ready(function() {
+    $(".clickable-row td:not(.menu)").on("click", function(e) {
+      var tr = $(this).parent();
+      window.document.location = $(tr).attr("href");
+    })
   });
 </script>
