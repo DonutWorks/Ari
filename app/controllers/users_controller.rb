@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     user = User.find_by_email(email)
 
     if user.nil?
-      flash[:error] = "Please check your email."
+      flash[:error] = "등록된 이메일이 아닙니다. 관리자에게 문의하세요."
       redirect_to sign_up_users_path
       return
     end
@@ -20,9 +20,9 @@ class UsersController < ApplicationController
     activator = UserActivator.new
     ticket = activator.issue_ticket(user, auth_hash)
     if ticket && send_ticket_mail(ticket)
-      flash[:notice] = "Verification mail has been sent."
+      flash[:notice] = "인증 메일이 전송되었습니다."
     else
-      flash[:error] = "Failed to send verification mail. Please retry."
+      flash[:error] = "인증 메일 전송에 실패했습니다. 다시 시도해주세요."
     end
     redirect_to root_path
   end
@@ -34,9 +34,9 @@ class UsersController < ApplicationController
   def verify
     activator = UserActivator.new
     if activator.activate(params[:code])
-      flash[:notice] = "Activated account!"
+      flash[:notice] = "카카오톡 인증에 성공하였습니다."
     else
-      flash[:error] = "Failed to activate account."
+      flash[:error] = "카카오톡 인증에 실패하였습니다."
     end
     redirect_to auth_users_path
   end
