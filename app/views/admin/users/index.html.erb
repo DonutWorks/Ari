@@ -30,7 +30,7 @@
 
     <tbody>
       <% @users.each do |user| %>
-        <tr class="clickableRow" href="<%= admin_user_path(user) %>">
+        <tr class="clickable-row" href="<%= admin_user_path(user) %>">
           <td><%= user.username %></td>
           <td><%= user.phone_number %></td>
           <td><%= user.email %></td>
@@ -42,7 +42,7 @@
 </div>
 
 <script>
-  $(".clickableRow").click(function() {
+  $(".clickable-row").click(function() {
         window.document.location = $(this).attr("href");
   });
 </script>
