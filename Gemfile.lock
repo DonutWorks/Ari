@@ -269,6 +269,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   selenium-webdriver
   slack-notify (~> 0.3.2)
+  spreadsheet (~> 1.0.0)
   spring
   sqlite3
   turbolinks
