@@ -3,9 +3,13 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #buttons-div{
-  margin-top:18px;
+  margin-top:15px;
 }
 
 #notice-container{
   margin-top:12px;
+}
+
+.clickable-row {
+	cursor:pointer;
 }
