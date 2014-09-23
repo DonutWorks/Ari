@@ -1,4 +1,5 @@
 class Admin::UsersController < Admin::ApplicationController
+
   def index
     @users = User.all
   end
@@ -11,10 +12,10 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      flash[:notice] = params[:user][:username] + "님 회원 등록 완료"
+      @flash[:notice] = params[:user][:username] + "님 회원 등록 완료"
       redirect_to admin_users_path
     else
-      flash[:alert] = "정보가 유효하지 않습니다. 다시 확인해주세요."
+      @flash[:alert] = "정보가 유효하지 않습니다. 다시 확인해주세요."
       render "new"
     end
   end
@@ -27,7 +28,7 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.find(params[:id])
 
     if @user.update(user_params)
-      flash[:notice] = @user.username + "님의 회원 정보 수정에 성공했습니다"
+      @flash[:notice] = @user.username + "님의 회원 정보 수정에 성공했습니다"
       redirect_to admin_user_path(@user)
     else
       render 'edit'
@@ -36,7 +37,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    flash[:notice] = @user.username + "님의 회원 정보 삭제에 성공했습니다"
+    @flash[:notice] = @user.username + "님의 회원 정보 삭제에 성공했습니다"
     @user.destroy
 
     redirect_to admin_users_path

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :set_flash
 
 protected
   def current_user
@@ -23,4 +23,9 @@ protected
   def auth_hash
     session['omniauth.auth'] ||= request.env['omniauth.auth']
   end
+
+  def set_flash
+    @flash = {}
+  end
+
 end

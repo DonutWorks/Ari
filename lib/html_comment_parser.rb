@@ -14,15 +14,17 @@ class HtmlCommentParser
 
       page.css('.replylist .obj_rslt').each do |val|
         comment = {}
-        if pattern.compare(val.text)
-          comment[:invalid] = false
-          val.text.split('/').each_with_index do |e, i|
+
+        comment[:invalid] = !pattern.compare(val.text)
+
+        val.text.split('/').each_with_index do |e, i|
+          if column_names[i].blank?
+            comment[("invalid_data" + i.to_s).to_sym] = e
+          else
             comment[column_names[i].to_sym] = normalizer.normalize(column_names[i], e)
           end
-        else
-          comment[:invalid] = true
-          comment[column_names[0].to_sym] = val.text
         end
+
         comments.push comment
       end
     end
