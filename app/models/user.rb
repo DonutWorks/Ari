@@ -11,7 +11,11 @@ class User < ActiveRecord::Base
 private
   def normalize_phone_number
     normalizer = FormNormalizers::PhoneNumberNormalizer.new
-    self.phone_number = normalizer.normalize(phone_number) if !phone_number.blank?
+    begin
+      self.phone_number = normalizer.normalize(phone_number) if !phone_number.blank?
+    rescue FormNormalizers::NormalizeError => e
+      errors.add(:phone_number, "가 잘못되었습니다.")
+    end
   end
 
 end

@@ -1,7 +1,7 @@
 module FormNormalizers
   class PhoneNumberNormalizer < Normalizer
     def column_names
-      @column_names ||= ["휴대전화", "휴대폰번호", "전화번호", "휴대폰", "폰번호", "폰", "전화", "본인연락처", "응급시연락처", "자택전화번호"]
+      @column_names ||= ["휴대전화", "휴대폰번호", "전화번호", "휴대폰", "폰번호", "폰", "휴대전화번호"]
     end
 
     def normalize(term)
