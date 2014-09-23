@@ -37,7 +37,6 @@ class Admin::ImportController < Admin::ApplicationController
         user.email = normalizer.normalize(data.cell(1, 9), data.cell(i, 9))
         user.habitat_id = data.cell(i, 10)
         user.member_type = data.cell(i, 11)
-        user.password = "testtest"
 
         if user.has_invalid_column?
           @invalid_users.push(user)

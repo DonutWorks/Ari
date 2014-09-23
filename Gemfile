@@ -58,9 +58,10 @@ group :development, :test do
   gem 'selenium-webdriver'
 end
 
-gem 'devise', '~> 3.3.0'
 gem 'addressable', '~> 2.3.6'
 gem 'phone', '~> 1.2.3'
 gem 'nokogiri', '~> 1.6.3.1'
 gem 'uri_template', '~> 0.7.0'
-gem 'read_activity', '~> 0.0.3'
+gem 'read_activity', '~> 0.0.4'
+gem 'omniauth-kakao', '~> 0.1.0'
+gem 'mailgun', '~> 0.8'
