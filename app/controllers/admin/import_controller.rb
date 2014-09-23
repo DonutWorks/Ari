@@ -36,7 +36,7 @@ class Admin::ImportController < Admin::ApplicationController
           user.habitat_id = data.cell(i, 10)
           user.member_type = data.cell(i, 11)
         rescue FormNormalizers::NormalizeError => e
-          messages = i.to_s + "열의 " + user.username + "은 " + e.message
+          messages = i.to_s + "열의 " + user.username + "은(는) " + e.message
           @invalid_messages.push(messages)
         else
           user.save!
