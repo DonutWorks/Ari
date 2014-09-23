@@ -10,11 +10,15 @@
 <table class="table">
   <tr>
     <td>기수</td>
-    <td><%= @user.generation_id %></td>
+    <td><%= pretty_generation_id(@user.generation_id) %></td>
   </tr>
   <tr>
   	<td>이름</td>
   	<td><%= @user.username %></td>
+  </tr>
+  <tr>
+    <td>생년월일</td>
+    <td><%= @user.birth %></td>
   </tr>
   <tr>
     <td>성별</td>
@@ -45,7 +49,7 @@
   	<td><%= @user.email %></td>
   </tr>
   <tr>
-    <td>해비타드 아이디</td>
+    <td>해비타트 아이디</td>
     <td><%= @user.habitat_id %></td>
   </tr>
   <tr>

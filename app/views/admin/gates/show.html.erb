@@ -28,9 +28,9 @@
           </tr>
         </thead>
         <tbody>
-          <% @gate.readers.sort{ |x,y| (y.generation_id ||= -1)<=>(x.generation_id ||= -1) }.each do |user| %>
+          <% @gate.readers.order(generation_id: :desc).each do |user| %>
           <tr>
-            <td class="text-right"><%= user.generation_id.to_s.gsub(".0","") + " 기" %></td>
+            <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
             <td><%= user.username %></td>
             <td><%= pretty_phone_number(user.phone_number) %></td>
             <td><%= user.email %></td>
@@ -58,9 +58,9 @@
           </tr>
         </thead>
         <tbody>
-          <% @gate.unreaders.sort{ |x,y| (y.generation_id ||= -1)<=>(x.generation_id ||= -1) }.each do |user| %>
+          <% @gate.unreaders.order(generation_id: :desc).each do |user| %>
           <tr>
-            <td><%= user.generation_id.to_s.gsub(".0","") + " 기" %></td>
+            <td><%= pretty_generation_id(user.generation_id) %></td>
             <td><%= user.username %></td>
             <td><%= pretty_phone_number(user.phone_number) %></td>
             <td><%= user.email %></td>
