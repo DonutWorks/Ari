@@ -6,11 +6,21 @@ class ChangeGenerationIdType < ActiveRecord::Migration
       new_generation_id = (user.generation_id||="").delete!("기")
       user.update(:generation_id => new_generation_id)
     end
-    change_column :users, :generation_id, :float
+    if Rails.env.development? or Rails.env.test?
+      change_column :users, :generation_id, :float
+    else
+      change_column :users, :generation_id, 'float USING CAST(generation_id AS float)'
+    end
+
   end
 
   def down
-    change_column :users, :generation_id, :string
+    if Rails.env.development? or Rails.env.test?
+      change_column :users, :generation_id, :string
+    else
+      change_column :users, :generation_id, 'string USING CAST(generation_id AS string)'
+    end
+
   end
 
 end
