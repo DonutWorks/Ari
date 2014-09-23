@@ -19,8 +19,13 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'application#index'
 
-    resources :users
-    resource :import, controller: :import,  only: [:new, :create]
+    resources :users do
+      collection do
+        get :import, to: 'import#new'
+        post :import, to: 'import#create'
+      end
+    end
+
     resources :gates do
       collection do
         get 'download_roster_example'

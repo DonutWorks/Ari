@@ -5,6 +5,11 @@ module FormNormalizers
     end
 
     def normalize(term)
+      if term.blank?
+        return "Invalid"
+      else
+        term.delete!(" ")
+      end
       return term if term.end_with?("기")
       return term << "기" if is_numeric?(term)
       return "Invalid"

@@ -36,12 +36,16 @@ gem 'spring',        group: :development
 
 # Use excel import gem
 gem 'roo', '~> 1.13.2'
+gem 'spreadsheet', '~> 1.0.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
 # gem 'unicorn'
+
+# Slack notify
+gem 'slack-notify', '~> 0.3.2'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -66,3 +70,5 @@ gem 'read_activity', '~> 0.0.4'
 gem 'omniauth-kakao', '~> 0.1.0'
 gem 'mailgun', '~> 0.8'
 gem 'rails-i18n', '~> 4.0.0'
+gem 'bootstrap-sass', '~> 3.2.0.2'
+gem 'autoprefixer-rails', '~> 3.1.0.20140911'
