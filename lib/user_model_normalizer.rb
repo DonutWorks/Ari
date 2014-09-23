@@ -10,7 +10,7 @@ class UserModelNormalizer
     user = User.new
 
     begin
-      user.group_id = normalizer.normalize(data.cell(1, 1), data.cell(i, 1))
+      user.generation_id = normalizer.normalize(data.cell(1, 1), data.cell(i, 1))
       user.major = data.cell(i, 2)
       user.student_id = data.cell(i, 3)
       user.sex = normalizer.normalize(data.cell(1, 4), data.cell(i, 4))

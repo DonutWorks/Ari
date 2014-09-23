@@ -53,13 +53,13 @@ ActiveRecord::Schema.define(version: 20140923182111) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  null: false
+    t.string   "email",                              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "username",               null: false
+    t.string   "username",                           null: false
     t.string   "phone_number"
     t.string   "major"
-    t.string   "group_id"
+    t.float    "generation_id",          limit: 255
     t.string   "student_id"
     t.string   "sex"
     t.string   "home_phone_number"

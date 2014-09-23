@@ -19,6 +19,7 @@
       <table class="table table-condensed">
         <thead>
           <tr>
+            <th>기수</th>
             <th>이름</th>
             <th>전화번호</th>
             <th>이메일</th>
@@ -27,8 +28,9 @@
           </tr>
         </thead>
         <tbody>
-          <% @gate.readers.each do |user| %>
+          <% @gate.readers.sort{ |x,y| (y.generation_id ||= -1)<=>(x.generation_id ||= -1) }.each do |user| %>
           <tr>
+            <td class="text-right"><%= user.generation_id.to_s.gsub(".0","") + " 기" %></td>
             <td><%= user.username %></td>
             <td><%= pretty_phone_number(user.phone_number) %></td>
             <td><%= user.email %></td>
@@ -47,6 +49,7 @@
       <table class="table table-condensed">
         <thead>
           <tr>
+            <th>기수</th>
             <th>이름</th>
             <th>전화번호</th>
             <th>이메일</th>
@@ -55,8 +58,9 @@
           </tr>
         </thead>
         <tbody>
-          <% @gate.unreaders.each do |user| %>
+          <% @gate.unreaders.sort{ |x,y| (y.generation_id ||= -1)<=>(x.generation_id ||= -1) }.each do |user| %>
           <tr>
+            <td><%= user.generation_id.to_s.gsub(".0","") + " 기" %></td>
             <td><%= user.username %></td>
             <td><%= pretty_phone_number(user.phone_number) %></td>
             <td><%= user.email %></td>
