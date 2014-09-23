@@ -9,6 +9,4 @@ class Admin::ApplicationController < ApplicationController
     @users = User.all
     @gates = Gate.all
   end
-
-
 end

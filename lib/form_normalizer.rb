@@ -20,7 +20,7 @@ class FormNormalizer
 private
   def find_normalizer(column_name)
     if column_name.blank?
-      @default_normalizer  
+      @default_normalizer
     else
       column_name.delete!(" ")
 

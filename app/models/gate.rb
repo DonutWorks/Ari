@@ -6,7 +6,7 @@ class Gate < ActiveRecord::Base
 
   validates_presence_of :title, :message => "공지 제목을 입력해주십시오."
   validates_presence_of :link, :message => "공지 링크를 입력해주십시오."
-  validates_presence_of :content, :message => "공지 내용를 입력해주십시오."
+  validates_presence_of :content, :message => "공지 내용을 입력해주십시오."
 
 private
   def make_redirectable_url!

@@ -8,4 +8,8 @@ module Admin::UsersHelper
 
     phone_number
   end
+
+  def pretty_generation_id(generation_id)
+    generation_id.to_s.gsub(".0", "") + " 기" if generation_id
+  end
 end

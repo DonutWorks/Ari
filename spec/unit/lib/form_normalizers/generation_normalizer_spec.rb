@@ -8,13 +8,13 @@ RSpec.describe FormNormalizers::GenerationNormalizer do
   describe ".normalize" do
     it "should append prefix if there is no prefix" do
       normalized = @normalizer.normalize("1기")
-      expect(normalized).to eq("1기")
+      expect(normalized).to eq("1")
 
       normalized = @normalizer.normalize("2.5기")
-      expect(normalized).to eq("2.5기")
+      expect(normalized).to eq("2.5")
 
       normalized = @normalizer.normalize("3.5")
-      expect(normalized).to eq("3.5기")
+      expect(normalized).to eq("3.5")
     end
   end
 

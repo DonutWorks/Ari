@@ -1,3 +1,27 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#user-activation {
+  max-width: 300px;
+  margin: 0 auto;
+
+  legend {
+    text-align: center;
+  }
+
+  .profile {
+    text-align: center;
+    margin: 100px 0 70px 0;
+
+    #name {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 120%;
+    }
+  }
+
+  #email-label {
+    display: none;
+  }
+}

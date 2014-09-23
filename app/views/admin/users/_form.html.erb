@@ -1,3 +1,12 @@
+<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :generation_id) %>">
+  <%= f.label :generation_id, "기수", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+    <%= f.text_field :generation_id, autofocus: true, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@user, :generation_id) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@user, :generation_id) %></span>
+  </div>
+</div>
+
 <div class="form-group form-group-lg has-feedback <%= validation_state(@user, :username) %>">
   <%= f.label :username, "이름", class: "col-sm-2 control-label" %>
   <div class="col-sm-10">
@@ -6,6 +15,70 @@
     <span class="help-block"><%= attribute_error_message(@user, :username) %></span>
   </div>
 </div>
+
+<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :birth) %>">
+  <%= f.label :birth, "생년월일", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+    <%= f.text_field :birth, autofocus: true, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@user, :birth) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@user, :birth) %></span>
+  </div>
+</div>
+
+<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :sex) %>">
+  <%= f.label :sex, "성별", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+    <%= f.text_field :sex, autofocus: true, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@user, :sex) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@user, :sex) %></span>
+  </div>
+</div>
+
+<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :major) %>">
+  <%= f.label :major, "전공", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+    <%= f.text_field :major, autofocus: true, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@user, :major) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@user, :major) %></span>
+  </div>
+</div>
+
+<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :student_id) %>">
+  <%= f.label :student_id, "학번", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+    <%= f.text_field :student_id, autofocus: true, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@user, :student_id) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@user, :student_id) %></span>
+  </div>
+</div>
+
+<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :phone_number) %>">
+  <%= f.label :phone_number, "본인 연락처", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+    <%= f.text_field :phone_number, value: pretty_phone_number(@user.phone_number), autofocus: true, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@user, :phone_number) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@user, :phone_number) %></span>
+  </div>
+</div>
+
+<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :home_phone_number) %>">
+  <%= f.label :home_phone_number, "자택 전화번호", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+    <%= f.text_field :home_phone_number, autofocus: true, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@user, :home_phone_number) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@user, :home_phone_number) %></span>
+  </div>
+</div>
+
+<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :emergency_phone_number) %>">
+  <%= f.label :emergency_phone_number, "응급시 연락처", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+    <%= f.text_field :emergency_phone_number, autofocus: true, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@user, :emergency_phone_number) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@user, :emergency_phone_number) %></span>
+  </div>
+</div>
+
 
 <div class="form-group form-group-lg has-feedback <%= validation_state(@user, :email) %>">
   <%= f.label :email, "이메일", class: "col-sm-2 control-label" %>
@@ -16,20 +89,20 @@
   </div>
 </div>
 
-<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :phone_number) %>">
-  <%= f.label :phone_number, "핸드폰 번호", class: "col-sm-2 control-label" %>
+<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :habitat_id) %>">
+  <%= f.label :habitat_id, "해비타트 아이디", class: "col-sm-2 control-label" %>
   <div class="col-sm-10">
-    <%= f.text_field :phone_number, value: pretty_phone_number(@user.phone_number), autofocus: true, class: "form-control" %>
-    <span class="glyphicon <%= validation_state_feedback(@user, :phone_number) %> form-control-feedback"></span>
-    <span class="help-block"><%= attribute_error_message(@user, :phone_number) %></span>
+    <%= f.text_field :habitat_id, autofocus: true, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@user, :habitat_id) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@user, :habitat_id) %></span>
   </div>
 </div>
 
-<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :major) %>">
-  <%= f.label :major, "전공", class: "col-sm-2 control-label" %>
+<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :member_type) %>">
+  <%= f.label :member_type, "단원구분", class: "col-sm-2 control-label" %>
   <div class="col-sm-10">
-    <%= f.text_field :major, autofocus: true, class: "form-control" %>
-    <span class="glyphicon <%= validation_state_feedback(@user, :major) %> form-control-feedback"></span>
-    <span class="help-block"><%= attribute_error_message(@user, :major) %></span>
+    <%= f.text_field :member_type, autofocus: true, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@user, :member_type) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@user, :member_type) %></span>
   </div>
 </div>

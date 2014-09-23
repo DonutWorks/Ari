@@ -18,7 +18,7 @@ RSpec.describe FormNormalizer do
 
     it "should normalize generation info for some terms" do
       normalized = @normalizer.normalize("기수", "4.5")
-      expect(normalized).to eq("4.5기")
+      expect(normalized).to eq("4.5")
     end
 
     it "should return term not modified if there is no responding normalizer" do

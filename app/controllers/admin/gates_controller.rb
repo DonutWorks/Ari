@@ -35,7 +35,7 @@ class Admin::GatesController < Admin::ApplicationController
     @gate = Gate.find(params[:id])
 
     if @gate.update(gate_params)
-      flash[:notice] = @gate.title + " 공지 정보 수정 성공했습니다."
+      flash[:notice] = "\"#{@gate.title}\" 공지를 성공적으로 수정했습니다."
       redirect_to admin_gate_path(@gate)
     else
       render 'edit'
@@ -44,9 +44,9 @@ class Admin::GatesController < Admin::ApplicationController
 
   def destroy
     @gate = Gate.find(params[:id])
-    flash[:notice] = @gate.title + "공지 삭제를 성공했습니다."
     @gate.destroy
 
+    flash[:notice] = "\"#{@gate.title}\" 공지를 성공적으로 삭제했습니다."
     redirect_to admin_root_path
   end
 
@@ -81,9 +81,9 @@ class Admin::GatesController < Admin::ApplicationController
           user.save!
         end
       end
-      flash[:notice] = "멤버 입력을 성공 했습니다."
+      flash[:notice] = "멤버 입력에 성공했습니다."
     rescue ActiveRecord::StatementInvalid
-      flash[:notice] = "멤버 입력에 실패 했습니다."
+      flash[:notice] = "멤버 입력에 실패했습니다."
     end
 
     redirect_to admin_root_path
