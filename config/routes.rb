@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'application#index'
 
-    resources :users, except: [:new, :create] do
+    resources :users do
       collection do
         get :import, to: 'import#new'
         post :import, to: 'import#create'
@@ -31,7 +31,6 @@ Rails.application.routes.draw do
         get 'download_roster_example'
       end
     end
-    resources :user, controller: "users/registrations", only: [:new, :create]
 
     resource :export_excel,  controller: :export_excel,  only: [:new, :create]
   end
