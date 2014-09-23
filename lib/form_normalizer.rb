@@ -19,12 +19,16 @@ class FormNormalizer
 
 private
   def find_normalizer(column_name)
-    column_name.delete!(" ")
+    if column_name.blank?
+      @default_normalizer  
+    else
+      column_name.delete!(" ")
 
-    normalizer = @normalizers.detect do |normalizer|
-      normalizer.column_names.include?(column_name)
+      normalizer = @normalizers.detect do |normalizer|
+        normalizer.column_names.include?(column_name)
+      end
+
+      normalizer || @default_normalizer
     end
-
-    normalizer || @default_normalizer
   end
 end
