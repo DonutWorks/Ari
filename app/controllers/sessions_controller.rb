@@ -29,10 +29,10 @@ private
   end
 
   def create_session!(user)
-    session[:current_user] = user.id
+    session[:user_id] = user.id
   end
 
   def destroy_session!
-    session.delete(:current_user)
+    session.delete(:user_id)
   end
 end
