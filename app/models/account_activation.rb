@@ -1,4 +1,7 @@
 class AccountActivation < ActiveRecord::Base
+	# Virtual attribute
+	attr_accessor :email
+
   belongs_to :user
   has_one :activation_ticket, dependent: :destroy
 
