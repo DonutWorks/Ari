@@ -6,6 +6,7 @@ class SessionsController < AuthenticatableController
 
   def destroy
     session.delete(:user_id)
+    session.delete(:return_to)
     redirect_to sign_in_users_path
   end
 end

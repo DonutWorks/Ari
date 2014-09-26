@@ -6,7 +6,8 @@ protected
 		end
   end
 
+  # need to dispatch for each provider (also view), but not now.
   def auth_hash
-    session['omniauth.auth'] ||= request.env['omniauth.auth']
+    session['omniauth.auth'] ||= request.env['omniauth.auth'].slice('provider', 'uid', 'info')
   end
 end

@@ -14,6 +14,7 @@ private
 
     if activation and activation.activated
       session[:user_id] = activation.user.id
+      session.delete('omniauth.auth')
       redirect_to session.delete(:return_to) || root_path
     else
       redirect_to new_activation_path
