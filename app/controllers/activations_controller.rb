@@ -19,7 +19,7 @@ class ActivationsController < AuthenticatableController
 
     activator = UserActivator.new
     ticket = activator.issue_ticket(user, auth_hash)
-    if ticket && send_ticket_mail(ticket)
+    if ticket and send_ticket_mail(ticket)
       flash[:notice] = "인증 메일이 전송되었습니다."
     else
       flash[:error] = "인증 메일 전송에 실패했습니다. 다시 시도해주세요."

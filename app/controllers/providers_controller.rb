@@ -12,7 +12,7 @@ private
     activation = AccountActivation.find_by(provider: auth_hash['provider'],
      uid: auth_hash['uid'])
 
-    if activation && activation.activated
+    if activation and activation.activated
       session[:user_id] = activation.user.id
       redirect_to session.delete(:return_to) || root_path
     else
