@@ -1,13 +1,12 @@
 class UserActivator
-  def issue_ticket(user, auth_hash)
+  def issue_ticket(user, provider_token)
     user.transaction do
-      activation = AccountActivation.find_or_initialize_by({
-        uid: auth_hash['uid'],
-        provider: auth_hash['provider']
-      })
+      activation = AccountActivation.find_or_initialize_by(
+        provider_token_id: provider_token.id
+      )
       activation.update_attributes!(user: user)
 
-      ticket = ActivationTicket.where(account_activation: activation).first_or_create()
+      ticket = ActivationTicket.where(account_activation: activation).first_or_create
       return ticket
     end
   rescue => e

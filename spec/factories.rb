@@ -11,4 +11,9 @@ FactoryGirl.define do
     content "google!"
     link "http://google.com"
   end
+
+  factory :provider_token do
+    provider "kakao"
+    uid "1234"
+  end
 end

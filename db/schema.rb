@@ -15,9 +15,10 @@ ActiveRecord::Schema.define(version: 20140928122400) do
 
   create_table "account_activations", force: true do |t|
     t.integer  "user_id"
-    t.boolean  "activated",  default: false
+    t.boolean  "activated",         default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "provider_token_id"
   end
 
   add_index "account_activations", ["user_id"], name: "index_account_activations_on_user_id"
@@ -45,12 +46,9 @@ ActiveRecord::Schema.define(version: 20140928122400) do
     t.string   "provider"
     t.string   "uid"
     t.text     "info"
-    t.integer  "account_activation_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "provider_tokens", ["account_activation_id"], name: "index_provider_tokens_on_account_activation_id"
 
   create_table "read_activity_marks", force: true do |t|
     t.integer  "reader_id",                 null: false

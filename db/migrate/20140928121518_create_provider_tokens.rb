@@ -4,7 +4,6 @@ class CreateProviderTokens < ActiveRecord::Migration
     	t.string :provider
     	t.string :uid
     	t.text :info
-      t.references :account_activation, index: true
 
       t.timestamps
     end

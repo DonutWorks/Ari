@@ -1,23 +1,15 @@
 class ProvidersController < AuthenticatableController
 	skip_before_action :authenticate_user!
-	before_action :require_auth_hash
 
 	def create
+    auth_hash = request.env['omniauth.auth']
+    provider_token = ProviderToken.find_or_create_by!({
+      provider: auth_hash['provider'],
+      uid: auth_hash['uid']
+    })
+    provider_token.update_attributes!(info: auth_hash['info'])
+
+    session[:provider_token_id] = provider_token.id
 		authenticate!
 	end
-
-private
-  def authenticate!
-  # extendable?
-    activation = AccountActivation.find_by(provider: auth_hash['provider'],
-     uid: auth_hash['uid'])
-
-    if activation and activation.activated
-      session[:user_id] = activation.user.id
-      session.delete('omniauth.auth')
-      redirect_to session.delete(:return_to) || root_path
-    else
-      redirect_to new_activation_path
-    end
-  end
 end

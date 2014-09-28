@@ -1,10 +1,10 @@
 class ActivationsController < AuthenticatableController
 	skip_before_action :authenticate_user!
-	before_action :require_auth_hash, except: :show
+	before_action :require_provider_token, except: :show
 
 	def new
 		@activation = AccountActivation.new
-    @user_info = auth_hash['info']
+    @user_info = provider_token.info
 	end
 
 	def create
@@ -18,7 +18,7 @@ class ActivationsController < AuthenticatableController
     end
 
     activator = UserActivator.new
-    ticket = activator.issue_ticket(user, auth_hash)
+    ticket = activator.issue_ticket(user, provider_token)
     if ticket and send_ticket_mail(ticket)
       flash[:notice] = "인증 메일이 전송되었습니다."
     else
