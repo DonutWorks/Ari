@@ -4,6 +4,7 @@ class AccountActivation < ActiveRecord::Base
 
   belongs_to :user
   has_one :activation_ticket, dependent: :destroy
+  has_one :provider_token, dependent: :destroy
 
   def activate!
     self.activated = true
