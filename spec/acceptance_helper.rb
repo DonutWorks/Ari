@@ -7,12 +7,11 @@ module AcceptanceHelper
     elsif page.driver.respond_to?(:browser) && page.driver.browser.respond_to?(:basic_authorize)
       page.driver.browser.basic_authorize(name, password)
     else
-      raise "I don't know how to login!"
+      raise "I don't know how to log in!"
     end
   end
 
   def authenticate_to_admin!
     authenticate("habitat", "iloveyou")
   end
-
 end
