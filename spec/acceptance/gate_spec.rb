@@ -21,7 +21,7 @@ RSpec.describe "gate", type: :feature do
     expect(find('.page-header.clearfix')).to have_content(@gate.title)
   end
 
-  it "sould let me add a new gate" do
+  it "should let me add a new gate" do
     visit("/admin/gates/new")
 
     fill_in 'gate_title', :with => 'Protoss gateway'
@@ -32,7 +32,7 @@ RSpec.describe "gate", type: :feature do
     expect(find('.page-header.clearfix')).to have_content('Protoss gateway')
   end
 
-  it "sould let me fail to add a new gate when I forget to fill in" do
+  it "should let me fail to add a new gate when I forget to fill in" do
     visit("/admin/gates/new")
 
     click_button "등록"
@@ -40,6 +40,33 @@ RSpec.describe "gate", type: :feature do
     expect(page).to have_selector('#new_gate')
     expect(page).to have_selector('.field_with_errors')
   end
+
+
+  it "should let me modify the new gate" do
+    visit("/admin/gates/#{@gate.id}/edit")
+
+    fill_in 'gate_title', :with => 'Protoss gateway'
+    fill_in 'gate_content', :with => 'Costs 150 mineral'
+    fill_in 'gate_link', :with => 'www.starcraft.com'
+    click_button "수정"
+
+    expect(find('.page-header.clearfix')).to have_content('Protoss gateway')
+  end
+
+  it "should let me fail to modify a new gate when I forget to fill in" do
+    visit("/admin/gates/#{@gate.id}/edit")
+
+    fill_in 'gate_title', :with => ''
+    fill_in 'gate_content', :with => ''
+    fill_in 'gate_link', :with => ''
+    click_button "수정"
+
+    select_query = "#edit_gate_#{@gate.id}"
+    expect(page).to have_selector(select_query)
+    expect(page).to have_selector('.field_with_errors')
+  end
+
+
 
 
   it "should let me check unreaders" do
