@@ -8,72 +8,68 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should show user list" do
-    visit("/admin/users")
+    visit admin_users_path
 
     expect(find('.table')).to have_content(@user.username)
   end
 
   it "should show detail information" do
-    visit("/admin/users")
-    click_link('자세히')
+    visit admin_users_path
+    click_link("자세히")
 
-    expect(find('.table')).to have_content(@user.username)
+    expect(find('.table')).to have_content(@user.member_type)
   end
 
   it "should create new user" do
-    visit("/admin/users/new")
+    visit new_admin_user_path
 
     fill_in 'user_username', :with => 'testtest'
     fill_in 'user_phone_number', :with => '01011111111'
     fill_in 'user_email', :with => 'test@testtt.com'
     click_button "등록"
 
-    expect(User.find(2).username).to eq('testtest')
+    expect(find('.alert-info')).to have_content('님의 회원 정보 생성에 성공했습니다')
   end
 
   it "should not create new user (phone_number is duplicated)" do
-    visit("/admin/users/new")
+    visit new_admin_user_path
 
     fill_in 'user_username', :with => 'testtest'
     fill_in 'user_phone_number', :with => @user.phone_number
     fill_in 'user_email', :with => 'test@testtt.com'
     click_button "등록"
 
-    expect(User.find(1).username).not_to eq('testtest')
+    expect(find('.glyphicon-remove').parent).to have_content('이미 존재합니다')
   end
 
   it "should not create new user (email is duplicated)" do
-    visit("/admin/users/new")
+    visit new_admin_user_path
 
     fill_in 'user_username', :with => 'testtest'
     fill_in 'user_phone_number', :with => '01011111111'
     fill_in 'user_email', :with => @user.email
     click_button "등록"
 
-    expect(User.find(1).username).not_to eq('testtest')
+    expect(find('.glyphicon-remove').parent).to have_content('이미 존재합니다')
   end
 
   it "should not create new user (blank)" do
-    visit("/admin/users/new")
-
-    expect(User.count).to eq(1)
+    visit new_admin_user_path
 
     click_button "등록"
 
-    expect(User.count).to eq(1)
+    expect(find('form')).to have_content('내용을 입력해 주세요')
   end
 
   it "should create user from excel" do
     visit import_admin_users_path
-
-    expect(User.count).to eq(1)
 
     file_path = Rails.root + "spec/acceptance/fixtures/RosterExample.xlsx"
     attach_file('upload_file', file_path)
 
     click_button "업로드"
 
-    expect(User.count).to eq(3)
+    expect(find('.alert-info')).to have_content('멤버 입력에 성공했습니다')
   end
 
   it "should create user from excel (contains duplicated user)" do
@@ -84,7 +80,7 @@ RSpec.describe "check user process", type: :feature do
 
     click_button "업로드"
 
-    expect(User.find_by_username("김태희").home_phone_number).to eq('031-222-1111')
+    expect(find('.alert-info')).to have_content('멤버 입력에 성공했습니다')
 
     visit import_admin_users_path
 
@@ -93,7 +89,7 @@ RSpec.describe "check user process", type: :feature do
 
     click_button "업로드"
 
-    expect(User.find_by_username("김태희").home_phone_number).to eq('031-222-2222')
+    expect(find('.alert-info')).to have_content('멤버 입력에 성공했습니다')
   end
 
   it "should not create user from excel (empty file)" do
@@ -105,70 +101,51 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should modify user" do
-    visit("/admin/users/1")
+    visit admin_user_path(@user)
 
-    expect(User.find(1).username).to eq(@user.username)
-    expect(User.find(1).phone_number).to eq(@user.phone_number)
-    expect(User.find(1).email).to eq(@user.email)
-
-    click_link('수정')
+    click_link "수정"
 
     fill_in 'user_username', :with => 'testtest'
     fill_in 'user_phone_number', :with => '01011111111'
     fill_in 'user_email', :with => 'test@testtt.com'
     click_button "수정"
 
-    expect(User.find(1).username).to eq('testtest')
-    expect(User.find(1).phone_number).to eq('01011111111')
-    expect(User.find(1).email).to eq('test@testtt.com')
+    expect(find('.alert-info')).to have_content('회원 정보 수정에 성공했습니다')
   end
 
   it "should not modify user (email is duplicated)" do
 
     User.create(username: 'testtest', phone_number: '01011111111', email: 'test@testtt.com')
 
-    visit("/admin/users/1")
+    visit admin_user_path(@user)
 
-    expect(User.find(1).username).to eq(@user.username)
-    expect(User.find(1).phone_number).to eq(@user.phone_number)
-    expect(User.find(1).email).to eq(@user.email)
-
-    click_link('수정')
+    click_link "수정"
 
     fill_in 'user_email', :with => 'test@testtt.com'
     click_button "수정"
 
-    expect(User.find(1).email).to eq(@user.email)
+    expect(find('.glyphicon-remove').parent).to have_content('이미 존재합니다.')
   end
 
   it "should not modify user (phone_number is duplicated)" do
 
     User.create(username: 'testtest', phone_number: '01011111111', email: 'test@testtt.com')
 
-    visit("/admin/users/1")
+    visit admin_user_path(@user)
 
-    expect(User.find(1).username).to eq(@user.username)
-    expect(User.find(1).phone_number).to eq(@user.phone_number)
-    expect(User.find(1).email).to eq(@user.email)
-
-    click_link('수정')
+    click_link "수정"
 
     fill_in 'user_phone_number', :with => '01011111111'
     click_button "수정"
 
-    expect(User.find(1).phone_number).to eq(@user.phone_number)
+    expect(find('.glyphicon-remove').parent).to have_content('이미 존재합니다.')
   end
 
   it "should delete user" do
-    visit("/admin/users/1")
+    visit admin_user_path(@user)
 
-    expect(User.count).to eq(1)
+    click_link "삭제"
 
-    method = find('.btn-danger')['data-method']
-    href = find('.btn-danger')['href']
-
-    page.driver.submit method, href, {}
-
-    expect(User.count).to eq(0)
+    expect(find('.alert-info')).to have_content('회원 정보 삭제에 성공했습니다')
   end
 end
