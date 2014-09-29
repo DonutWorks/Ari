@@ -9,7 +9,7 @@ class Admin::ImportController < Admin::ApplicationController
 
     if !params[:upload].blank?
       data = ExcelImporter.import(params[:upload][:file])
-      data.default_sheet = data.sheets.second
+      data.default_sheet = data.sheets.first
 
       normalizer = FormNormalizer.new
 
