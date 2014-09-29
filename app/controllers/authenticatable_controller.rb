@@ -1,7 +1,11 @@
 class AuthenticatableController < ApplicationController
 protected
   def require_provider_token
-  	redirect_to sign_in_users_path unless provider_token
+    if provider_token.nil?
+      session[:require_provider_token] = true
+      session[:return_to] ||= request.fullpath
+    	redirect_to sign_in_users_path
+    end
   end
 
   def provider_token
@@ -9,7 +13,6 @@ protected
   end
 
   def authenticate!
-    # extendable?
     # require_provider_token
     activation = AccountActivation.find_by(provider_token_id: provider_token.id)
 

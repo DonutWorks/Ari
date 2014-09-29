@@ -10,6 +10,10 @@ class ProvidersController < AuthenticatableController
     provider_token.update_attributes!(info: auth_hash['info'])
 
     session[:provider_token_id] = provider_token.id
-		authenticate!
+		if session.delete(:require_provider_token)
+      redirect_to session.delete(:return_to)
+    else
+      authenticate!
+    end
 	end
 end

@@ -1,6 +1,6 @@
 class ActivationsController < AuthenticatableController
 	skip_before_action :authenticate_user!
-	before_action :require_provider_token, except: :show
+	before_action :require_provider_token
 
 	def new
 		@activation = AccountActivation.new
@@ -28,10 +28,8 @@ class ActivationsController < AuthenticatableController
 	end
 
 	def show
-		# TODO: need to matching auth_hash (#184)
-
 		activator = UserActivator.new
-    if activator.activate(params[:code])
+    if activator.activate(params[:code], provider_token)
       flash[:notice] = "카카오톡 인증에 성공하였습니다."
     else
       flash[:error] = "카카오톡 인증에 실패하였습니다."

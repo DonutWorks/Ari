@@ -13,14 +13,16 @@ class UserActivator
     return nil
   end
 
-  def activate(code)
+  def activate(code, provider_token)
     ticket = ActivationTicket.find_by_code(code)
     return false if ticket.nil?
 
     activation = ticket.account_activation
-    activation.activate!
+    registered_token = ProviderToken.find_by_id(activation.provider_token_id)
+    return false if registered_token != provider_token
 
     activation.transaction do
+      activation.activate!
       ticket.destroy!
       activation.save!
     end
@@ -28,6 +30,7 @@ class UserActivator
     return true
 
   rescue => e
+    raise e.inspect
     return false
   end
 
