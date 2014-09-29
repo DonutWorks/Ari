@@ -53,6 +53,9 @@ gem 'slack-notify', '~> 0.3.2'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem 'fakeweb', '~> 1.3.0'
+
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.2'
   gem 'guard-rspec', '~> 4.3.1'
