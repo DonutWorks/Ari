@@ -8,9 +8,8 @@ protected
   end
 
   def authenticate_user!
-    # TODO: fix bug (#215)
-    session[:return_to] ||= request.fullpath
     if current_user.nil?
+      session[:return_to] ||= request.fullpath
       redirect_to sign_in_users_path
     end
   end
