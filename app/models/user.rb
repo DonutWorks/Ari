@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_one :account_activation, dependent: :destroy
+  has_and_belongs_to_many :message
 
   validates_presence_of :username, :phone_number, :email
   validates_uniqueness_of :phone_number, :email
