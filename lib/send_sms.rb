@@ -4,40 +4,51 @@ require "addressable/uri"
 
 class SendSMS
 
+  class SendSMSError < RuntimeError
+    attr_accessor :response
+    def initialize(response)
+      @response = response
+    end
+  end
+
   # should be replaced to real api
   # API_REQUEST_URL = "http://api.openapi.io/ppurio/1/message/sms/yhoonkim"
   # CLIENT_KEY = "MTg1NS0xNDExNzgxMjg0NTAyLTgwYzMwNTVjLTFkYzktNDM0Mi04MzA1LTVjMWRjOTAzNDJmMw=="
 
-  API_REQUEST_URL = "http://api.openapi.io/ppurio_test/1/message_test/sms/yhoonkim"
-  CLIENT_KEY = "MS0xMzY1NjY2MTAyNDk0LTA2MWE4ZDgyLTZhZmMtNGU5OS05YThkLTgyNmFmYzVlOTkzZQ=="
-  CONTENT_TYPE = "application/x-www-form-urlencoded"
+  API_REQUEST_URL = "http://api.coolsms.co.kr/sendmsg"
 
-  def send_sms(send_phone, dest_phone, msg_body)
-    uri = URI.parse(API_REQUEST_URL)
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = false
 
-    request = create_api_request(uri, send_phone, dest_phone, msg_body)
-    response = request_api_call(request, http)
+  def send_sms!(sms_info)
 
-    result = JSON.parse(response.body.to_s)
-    result
+
+    res = Net::HTTP.get_response(generate_request_url(sms_info))
+
+    response = {}
+    res.body.scan /([\w\-]+)\=(\w+)\n/ do |key, val|
+      response[key] = val
+    end
+
+    return response if response["RESULT-CODE"] == "00"
+    raise SendSMSError.new(response), "문자메시지 발송에 실패하였습니다."
+
   end
 
-private
-  def create_api_request(uri, send_phone, dest_phone, msg_body)
-    request = Net::HTTP::Post.new(uri.path, {'Content-Type' => CONTENT_TYPE})
-    request['x-waple-authorization'] = CLIENT_KEY;
-
-    uri = Addressable::URI.new
-    uri.query_values = { send_phone: "#{send_phone}", dest_phone: "#{dest_phone}", msg_body: "#{msg_body}" }
-    request.body = uri.query
-
-    request
+  def send_sms(sms_info)
+    begin
+      send_sms!(sms_info)
+      true
+    rescue SendSMSError => e
+      false
+    end
   end
 
-  def request_api_call(request, http)
-    http.request(request)
+  def generate_request_url(sms_info)
+
+    uri = URI(API_REQUEST_URL)
+
+    uri.query = URI.encode_www_form(sms_info)
+    uri
+
   end
 
 end
