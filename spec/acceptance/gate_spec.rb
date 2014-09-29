@@ -87,4 +87,20 @@ RSpec.describe "gate", type: :feature do
     expect(find('.gate-unreader')).not_to have_content(@user.username)
   end
 
+  it "should let me delete the gate" do
+  # it "should let me delete the gate" do
+
+    visit("/admin")
+    expect(find('#notice-container')).to have_content(@gate.title)
+
+    visit("/admin/gates/#{@gate.id}")
+
+    click_link('삭제')
+    # page.driver.browser.switch_to.alert.accept
+
+    expect(page).to have_selector('.alert')
+    expect(page).to have_selector('#notice-container')
+    expect(find('#notice-container')).not_to have_content(@gate.title)
+  end
+
 end
