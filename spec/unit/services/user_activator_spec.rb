@@ -22,11 +22,16 @@ RSpec.describe UserActivator do
       expect(AccountActivation.where(user: @user).count).to eq(1)
     end
 
-    it "should issue only one ticket for each user" do
+    it "should keep only one valid ticket for each user" do
       ticket1 = @activator.issue_ticket(@user, @provider_token)
+      expect(ticket1.expired).to eq(false)
+
       ticket2 = @activator.issue_ticket(@user, @provider_token)
 
-      expect(ticket1).to eq(ticket2)
+      ticket1.reload
+      expect(ticket1.destroyed?).to eq(false)
+      expect(ticket1).not_to eq(ticket2)
+      expect(ticket1.expired).to eq(true)
     end
 
     it "should not issue ticket for a invalid user" do
@@ -54,14 +59,26 @@ RSpec.describe UserActivator do
       expect(success).to eq(false)
     end
 
-    it "should destroy activated ticket" do
+    it "should not activate a user with expired ticket" do
+      ticket1 = @activator.issue_ticket(@user, @provider_token)
+      ticket2 = @activator.issue_ticket(@user, @provider_token)
+
+      success = @activator.activate(ticket1.code, @provider_token)
+      expect(success).to eq(false)
+
+      success = @activator.activate(ticket2.code, @provider_token)
+      expect(success).to eq(true)
+    end
+
+    it "should expire activated ticket" do
       ticket = @activator.issue_ticket(@user, @provider_token)
       activation = ticket.account_activation
 
       @activator.activate(ticket.code, @provider_token)
-      activation.reload
+      ticket.reload
 
-      expect(activation.activation_ticket).to eq(nil)
+      expect(ticket.destroyed?).to eq(false)
+      expect(ticket.expired).to eq(true)
     end
   end
 end

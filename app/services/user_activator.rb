@@ -6,7 +6,10 @@ class UserActivator
       )
       activation.update_attributes!(user: user)
 
-      ticket = ActivationTicket.where(account_activation: activation).first_or_create
+      ticket = ActivationTicket.where(account_activation: activation, expired: false).first
+      ticket.update_attributes!(expired: true) if ticket
+      ticket = ActivationTicket.create!(account_activation: activation)
+
       return ticket
     end
   rescue => e
@@ -15,7 +18,7 @@ class UserActivator
 
   def activate(code, provider_token)
     ticket = ActivationTicket.find_by_code(code)
-    return false if ticket.nil?
+    return false if ticket.nil? or ticket.expired
 
     activation = ticket.account_activation
     registered_token = ProviderToken.find_by_id(activation.provider_token_id)
@@ -23,7 +26,7 @@ class UserActivator
 
     activation.transaction do
       activation.activate!
-      ticket.destroy!
+      ticket.update_attributes!(expired: true)
       activation.save!
     end
 
