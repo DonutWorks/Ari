@@ -4,12 +4,12 @@ protected
     if provider_token.nil?
       session[:require_provider_token] = true
       session[:return_to] ||= request.fullpath
-    	redirect_to sign_in_users_path
+      redirect_to sign_in_users_path
     end
   end
 
   def provider_token
-  	@provider_token ||= ProviderToken.find_by_id(session[:provider_token_id])
+    @provider_token ||= ProviderToken.find_by_id(session[:provider_token_id])
   end
 
   def authenticate!

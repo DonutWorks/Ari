@@ -30,7 +30,6 @@ class UserActivator
     return true
 
   rescue => e
-    raise e.inspect
     return false
   end
 
