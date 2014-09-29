@@ -1,14 +1,14 @@
 class ActivationsController < AuthenticatableController
-	skip_before_action :authenticate_user!
-	before_action :require_provider_token, except: :show
+  skip_before_action :authenticate_user!
+  before_action :require_provider_token
 
-	def new
-		@activation = AccountActivation.new
+  def new
+    @activation = AccountActivation.new
     @user_info = provider_token.info
-	end
+  end
 
-	def create
-		email = params[:account_activation][:email]
+  def create
+    email = params[:account_activation][:email]
     user = User.find_by_email(email)
 
     if user.nil?
@@ -25,13 +25,11 @@ class ActivationsController < AuthenticatableController
       flash[:error] = "인증 메일 전송에 실패했습니다. 다시 시도해주세요."
     end
     redirect_to root_path
-	end
+  end
 
-	def show
-		# TODO: need to matching auth_hash (#184)
-
-		activator = UserActivator.new
-    if activator.activate(params[:code])
+  def show
+    activator = UserActivator.new
+    if activator.activate(params[:code], provider_token)
       flash[:notice] = "카카오톡 인증에 성공하였습니다."
     else
       flash[:error] = "카카오톡 인증에 실패하였습니다."
@@ -39,7 +37,7 @@ class ActivationsController < AuthenticatableController
 
     # TODO: redirect_to redirect_url (#216)
     redirect_to session.delete(:return_to) || root_path
-	end
+  end
 
 private
   def send_ticket_mail(ticket)

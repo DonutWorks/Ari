@@ -47,7 +47,7 @@ RSpec.describe UserActivator do
 
       expect(activation.activated).to eq(false)
 
-      success = @activator.activate(ticket.code)
+      success = @activator.activate(ticket.code, @provider_token)
       expect(success).to eq(true)
 
       activation.reload
@@ -55,7 +55,7 @@ RSpec.describe UserActivator do
     end
 
     it "should not activate a user with invalid activation code" do
-      success = @activator.activate(1234)
+      success = @activator.activate(1234, @provider_token)
       expect(success).to eq(false)
     end
 
@@ -63,10 +63,10 @@ RSpec.describe UserActivator do
       ticket1 = @activator.issue_ticket(@user, @provider_token)
       ticket2 = @activator.issue_ticket(@user, @provider_token)
 
-      success = @activator.activate(ticket1.code)
+      success = @activator.activate(ticket1.code, @provider_token)
       expect(success).to eq(false)
 
-      success = @activator.activate(ticket2.code)
+      success = @activator.activate(ticket2.code, @provider_token)
       expect(success).to eq(true)
     end
 
@@ -74,7 +74,7 @@ RSpec.describe UserActivator do
       ticket = @activator.issue_ticket(@user, @provider_token)
       activation = ticket.account_activation
 
-      @activator.activate(ticket.code)
+      @activator.activate(ticket.code, @provider_token)
       ticket.reload
 
       expect(ticket.destroyed?).to eq(false)

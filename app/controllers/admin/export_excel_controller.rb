@@ -5,13 +5,15 @@ class Admin::ExportExcelController < Admin::ApplicationController
   end
 
   def create
+    @link_url = params[:notice_link]
+
     pattern = PatternUtil.new(params[:pattern])
 
     begin
-      url = CyworldURL.new(params[:notice_link].strip).to_comment_view_url
+      url = CyworldURL.new(@link_url.strip).to_comment_view_url
     rescue Exception => e
-      flash[:error] = e.message
-      redirect_to new_admin_export_excel_path
+      @error_message = e.message
+      render "new"
       return
     end
 
