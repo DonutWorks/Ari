@@ -21,7 +21,12 @@
     <tbody>
       <% @users.each do |user| %>
         <tr class="clickable-row" href="<%= admin_user_path(user) %>">
-          <td><%= user.username %></td>
+          <td>
+            <%= user.username %>
+            <% if user.activated? %>
+              <span class="glyphicon glyphicon-ok"></span>
+            <% end %>
+          </td>
           <td><%= pretty_phone_number(user.phone_number) %></td>
           <td><%= user.email %></td>
           <td><%= user.major %></td>

@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
 
   acts_as_reader
 
+  def activated?
+    account_activation.activated
+  end
+
 private
   def normalize_phone_number
     normalizer = FormNormalizers::PhoneNumberNormalizer.new
@@ -17,5 +21,4 @@ private
       errors.add(:phone_number, "가 잘못되었습니다.")
     end
   end
-
 end
