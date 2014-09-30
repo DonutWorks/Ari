@@ -2,6 +2,7 @@ require 'open-uri'
 
 class Admin::ExportExcelController < Admin::ApplicationController
   def new
+    @is_test = params[:is_test] 
   end
 
   def create
@@ -39,10 +40,15 @@ class Admin::ExportExcelController < Admin::ApplicationController
       end
     end
 
-    bookstring = StringIO.new
-    book.write bookstring
+    if params[:is_test] == "true"
+      book.write "public/test/comments-excel.xls"
+      render "new"
+    else
+      bookstring = StringIO.new
+      book.write bookstring
 
-    send_data bookstring.string, :filename => "comments-excel.xls", :type =>  "application/vnd.ms-excel"
-    #redirect_to admin_root_path
+      send_data bookstring.string, :filename => "comments-excel.xls", :type =>  "application/vnd.ms-excel"
+      #redirect_to admin_root_path
+    end
   end
 end
