@@ -84,6 +84,25 @@ RSpec.describe "download exported excel", type: :feature do
 
   end
 
+    it "should let me show invalid format when setting format is invalid" do
+
+    file_path = Rails.root.join("public", "test", "comments-excel.xls")
+
+    visit("/admin/export_excel/new?is_test=true")
+
+    fill_in 'notice_link', :with => 'http://club.cyworld.com/52252462136/157156013'
+    fill_in 'pattern', :with => '이름'
+    click_button '저장하기'
+
+    data = Roo::Spreadsheet.open("./public/test/comments-excel.xls")
+    data.default_sheet = data.sheets.first
+
+    expect(data.cell(1,2)).to eq("invalid_data1")
+
+    File.delete(file_path) if File.exist?(file_path)
+
+  end
+
   it "should let me show data when count of data is more than 50" do
 
     file_path = Rails.root.join("public", "test", "comments-excel.xls")
