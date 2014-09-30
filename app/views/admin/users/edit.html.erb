@@ -6,7 +6,7 @@
         <%= render partial: 'form', locals: {f: f} %>
         <div class="pull-right">
           <%= f.submit "수정", class: "btn btn-primary btn-lg"  %>
-          <%= link_to users_path do %>
+          <%= link_to admin_user_path(@user) do %>
             <button type="button" class="btn btn-default btn-lg">
               취소
             </button>
