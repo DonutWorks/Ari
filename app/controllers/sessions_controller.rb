@@ -12,6 +12,7 @@ class SessionsController < AuthenticatableController
 
     user = User.find_by_phone_number(phone_number)
     if user.nil?
+      flash[:error] = "전화번호가 잘못되었습니다."
       redirect_to sign_in_users_path
       return
     end
@@ -20,6 +21,7 @@ class SessionsController < AuthenticatableController
     redirect_to session.delete(:return_to) || root_path
 
   rescue FormNormalizers::NormalizeError => e
+    flash[:error] = "전화번호가 잘못되었습니다."
     redirect_to sign_in_users_path
   end
 
