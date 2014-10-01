@@ -11,15 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140923182111) do
+ActiveRecord::Schema.define(version: 20140928122400) do
 
   create_table "account_activations", force: true do |t|
     t.integer  "user_id"
-    t.boolean  "activated",  default: false
-    t.string   "provider"
-    t.string   "uid"
+    t.boolean  "activated",         default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "provider_token_id"
   end
 
   add_index "account_activations", ["user_id"], name: "index_account_activations_on_user_id"
@@ -41,6 +40,14 @@ ActiveRecord::Schema.define(version: 20140923182111) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "shortenURL"
+  end
+
+  create_table "provider_tokens", force: true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.text     "info"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "read_activity_marks", force: true do |t|
