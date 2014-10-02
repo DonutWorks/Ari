@@ -59,13 +59,6 @@ ActiveRecord::Schema.define(version: 20140929165900) do
     t.datetime "updated_at"
   end
 
-  create_table "messages_users", id: false, force: true do |t|
-    t.integer  "message_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "read_activity_marks", force: true do |t|
     t.integer  "reader_id",                 null: false
     t.integer  "readable_id"
