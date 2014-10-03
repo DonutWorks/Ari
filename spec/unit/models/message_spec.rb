@@ -5,25 +5,25 @@ RSpec.describe Message, :type => :model do
     user = FactoryGirl.build(:user)
     user.save
 
-    user.message.create(text: "hihi")
+    user.messages.create(content: "hihi")
 
-    expect(user.message.size).to eq(1)
-    expect(user.message[0].text).to eq("hihi")
+    expect(user.messages.size).to eq(1)
+    expect(user.messages[0].content).to eq("hihi")
 
 
-    user.message.create(text: "good")
-    expect(user.message.size).to eq(2)
+    user.messages.create(content: "good")
+    expect(user.messages.size).to eq(2)
 
-    m = Message.where(text: "hihi").first
+    m = Message.where(content: "hihi").first
 
-    expect(m.user.size).to eq(1)
-    expect(m.user[0]).to eq(user)
+    expect(m.users.size).to eq(1)
+    expect(m.users[0]).to eq(user)
 
     user2 = User.new(username: "testtt", phone_number: "01000000000", email: "test@test.com")
 
-    m.user.push user2
+    m.users.push user2
 
-    expect(m.user.size).to eq(2)
-    expect(m.user[1]).to eq(user2)
+    expect(m.users.size).to eq(2)
+    expect(m.users[1]).to eq(user2)
   end
 end

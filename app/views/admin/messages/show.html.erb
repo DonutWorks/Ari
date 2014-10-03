@@ -3,11 +3,11 @@
     <h3 class="pull-left">SMS 전송 내역</h3>
   </div>
 
-  <p>문자 내용 : <%= @message.text %></p>
+  <p>문자 내용 : <%= @message.content %></p>
   <p>전송 시간 : <%= @message.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
 
   <div>
-    <h3>전송된 회원 <small>(총 <%= @message.user.size %>명)</small></h3>
+    <h3>전송된 회원 <small>(총 <%= @message.users.size %>명)</small></h3>
     <div class="table-responsive">
       <table class="table table-condensed">
         <thead>
@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @message.user.order(generation_id: :desc).each do |user| %>
+          <% @message.users.order_by_gid.each do |user| %>
           <tr>
             <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
             <td><%= user.username %></td>
