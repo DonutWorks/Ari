@@ -13,63 +13,115 @@
   <p>실제 공지 주소 : <%= link_to @gate.link, @gate.link, target: "_blank" %></p>
   <p>통합 공지 주소 : <%= link_to @gate.shortenURL, @gate.shortenURL, target: "_blank" %></p>
   <p>만든 시간 : <%= @gate.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
-  <div class="gate-reader">
-    <h3>읽은 회원 <small>(총 <%= @gate.readers.count %>명)</small></h3>
-    <div class="table-responsive">
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th>기수</th>
-            <th>이름</th>
-            <th>전화번호</th>
-            <th>이메일</th>
-            <th>전공</th>
-            <th>읽은 시간</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @gate.readers.order(generation_id: :desc).each do |user| %>
-          <tr>
-            <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
-            <td><%= user.username %></td>
-            <td><%= pretty_phone_number(user.phone_number) %></td>
-            <td><%= user.email %></td>
-            <td><%= user.major %></td>
-            <td><%= user.read_at(@gate).localtime.strftime("%Y-%m-%d %T") %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
 
-  <div class="gate-unreader">
-    <h3>안 읽은 회원 <small>(총 <%= @gate.unreaders.count %>명)</small></h3>
-    <div class="table-responsive">
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th>기수</th>
-            <th>이름</th>
-            <th>전화번호</th>
-            <th>이메일</th>
-            <th>전공</th>
-            <th>읽은 시간</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @gate.unreaders.order(generation_id: :desc).each do |user| %>
-          <tr>
-            <td><%= pretty_generation_id(user.generation_id) %></td>
-            <td><%= user.username %></td>
-            <td><%= pretty_phone_number(user.phone_number) %></td>
-            <td><%= user.email %></td>
-            <td><%= user.major %></td>
-            <td>-</td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
+  <div class="clearfix"></div>
+
+  <%= form_tag(admin_messages_path, method: "post") do %>
+
+    <div class="gate-reader">
+      <h3>읽은 회원 <small>(총 <%= @gate.readers.count %>명)</small></h3>
+      <div class="table-responsive">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>기수</th>
+              <th>이름</th>
+              <th>전화번호</th>
+              <th>이메일</th>
+              <th>전공</th>
+              <th>읽은 시간</th>
+              <th>문자(전체선택 <%= check_box_tag 'sms_read_all', nil, false %>)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @gate.readers.order(generation_id: :desc).each_with_index do |user, index| %>
+            <tr>
+              <td><%= pretty_generation_id(user.generation_id) %></td>
+              <td><%= user.username %></td>
+              <td><%= pretty_phone_number(user.phone_number) %></td>
+              <td><%= user.email %></td>
+              <td><%= user.major %></td>
+              <td><%= user.read_at(@gate).localtime.strftime("%Y-%m-%d %T") %></td>
+              <td><%= check_box_tag 'sms_read_' + user.id.to_s, nil, false, class: 'sms_read' %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
+
+    <div class="gate-unreader">
+      <h3>안 읽은 회원 <small>(총 <%= @gate.unreaders.count %>명)</small></h3>
+      <div class="table-responsive">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>기수</th>
+              <th>이름</th>
+              <th>전화번호</th>
+              <th>이메일</th>
+              <th>전공</th>
+              <th>읽은 시간</th>
+              <th>문자(전체선택 <%= check_box_tag 'sms_unread_all', nil, false %>)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @gate.unreaders.order(generation_id: :desc).each_with_index do |user, index| %>
+            <tr>
+              <td><%= pretty_generation_id(user.generation_id) %></td>
+              <td><%= user.username %></td>
+              <td><%= pretty_phone_number(user.phone_number) %></td>
+              <td><%= user.email %></td>
+              <td><%= user.major %></td>
+              <td>-</td>
+              <td><%= check_box_tag 'sms_unread_' + user.id.to_s, nil, false, class: 'sms_unread' %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sms-text">
+      <h3>문자 보내기</h3>
+      <p id="phone_numbers">총 0명이 선택 되었습니다.</p>
+      <%= text_area_tag 'sms_contents', nil, class: 'form-control' %>
+      <div class="pull-right margin-top15">  
+        <button id="send_sms" type="submit" class="btn btn-primary btn-sm">전송</button>
+      </div>
+    </div>
+
+  <% end %>
+
 </div>
+
+<script>
+  var phone_numbers = [];
+
+  $(document).ready(function() {
+
+    $('#sms_unread_all, #sms_read_all').change(function() {
+      var id = (this).id.replace('_all','');
+
+      if((this).checked == false) $('.' + id).prop("checked", false);
+      else $('.' + id).prop("checked", true);
+
+      add_phone_number_to_array();
+    });
+
+    $('.sms_unread, .sms_read').change(function() {
+      add_phone_number_to_array();
+    });
+
+  });
+
+  function add_phone_number_to_array() {
+    phone_numbers.length = 0;
+
+    $('.sms_unread, .sms_read').each(function() {
+      if((this).checked == true) phone_numbers.push($(this).id);
+    });
+
+    $('#phone_numbers').text("총 " + phone_numbers.length + "명이 선택 되었습니다.");
+  }
+</script>

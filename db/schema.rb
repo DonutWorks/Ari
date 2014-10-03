@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140929114903) do
+ActiveRecord::Schema.define(version: 20140929165900) do
 
   create_table "account_activations", force: true do |t|
     t.integer  "user_id"
@@ -42,6 +42,16 @@ ActiveRecord::Schema.define(version: 20140929114903) do
     t.datetime "updated_at"
     t.string   "shortenURL"
   end
+
+  create_table "message_histories", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "message_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "message_histories", ["message_id"], name: "index_message_histories_on_message_id"
+  add_index "message_histories", ["user_id"], name: "index_message_histories_on_user_id"
 
   create_table "provider_tokens", force: true do |t|
     t.string   "provider"
