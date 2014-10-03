@@ -1,7 +1,7 @@
 <h3 class="pull-left">공지사항 관리</h3>
 
 <div id="buttons-div" class="pull-right">
-  <%= link_to new_admin_gate_path do %>
+  <%= link_to new_admin_notice_path do %>
     <button type="button" class="btn btn-primary btn-sm ">
       새 공지
     </button>
@@ -13,11 +13,11 @@
 <div id="notice-container" class="panel panel-default">
   <div class="panel-heading">공지사항 목록</div>
   <ul class="list-group">
-    <% @gates.each do |gate| %>
-      <%= link_to admin_gate_path(gate), class: "list-group-item" do %>
-        <span><%= gate.title %></span>
+    <% @notices.each do |notice| %>
+      <%= link_to admin_notice_path(notice), class: "list-group-item" do %>
+        <span><%= notice.title %></span>
         <span class="badge">
-          <%= "#{gate.readers.count} / #{User.all.count}" %>
+          <%= "#{notice.readers.count} / #{User.all.count}" %>
         </span>
       <% end %>
     <% end %>
