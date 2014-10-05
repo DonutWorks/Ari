@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   acts_as_reader
 
   def activated?
+    return false unless account_activation
     account_activation.activated
   end
 
