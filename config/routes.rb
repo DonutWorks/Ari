@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :gates, only: [:show]
+  resources :notices, only: [:show]
 
   namespace :admin do
     root 'application#index'
@@ -28,7 +28,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :gates do
+    resources :notices do
       collection do
         get 'download_roster_example'
       end

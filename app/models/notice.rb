@@ -1,6 +1,6 @@
 require 'addressable/uri'
 
-class Gate < ActiveRecord::Base
+class Notice < ActiveRecord::Base
   acts_as_readable
   before_save :make_redirectable_url!
 

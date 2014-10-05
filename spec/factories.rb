@@ -6,7 +6,7 @@ FactoryGirl.define do
     major "CS"
   end
 
-  factory :gate do
+  factory :notice do
     title "goto google.com"
     content "google!"
     link "http://google.com"

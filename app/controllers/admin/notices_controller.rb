@@ -1,22 +1,22 @@
 require 'tempfile'
 require 'net/http'
 
-class Admin::GatesController < Admin::ApplicationController
+class Admin::NoticesController < Admin::ApplicationController
 
   def new
-    @gate = Gate.new
+    @notice = Notice.new
   end
 
   def create
-    @gate = Gate.new(gate_params)
+    @notice = Notice.new(notice_params)
 
-    if @gate.save
+    if @notice.save
       shortener = URLShortener.new
-      @gate.shortenURL = shortener.shorten_url(gate_url(@gate))
-      @gate.save!
+      @notice.shortenURL = shortener.shorten_url(notice_url(@notice))
+      @notice.save!
 
-      SlackNotifier.notify("햇빛봉사단 게이트 추가 알림 : #{@gate.title}, #{@gate.shortenURL}")
-      redirect_to admin_gate_path(@gate)
+      SlackNotifier.notify("햇빛봉사단 게이트 추가 알림 : #{@notice.title}, #{@notice.shortenURL}")
+      redirect_to admin_notice_path(@notice)
     else
       render 'new'
     end
@@ -24,29 +24,29 @@ class Admin::GatesController < Admin::ApplicationController
   end
 
   def show
-    @gate = Gate.find(params[:id])
+    @notice = Notice.find(params[:id])
   end
 
   def edit
-    @gate = Gate.find(params[:id])
+    @notice = Notice.find(params[:id])
   end
 
   def update
-    @gate = Gate.find(params[:id])
+    @notice = Notice.find(params[:id])
 
-    if @gate.update(gate_params)
-      flash[:notice] = "\"#{@gate.title}\" 공지를 성공적으로 수정했습니다."
-      redirect_to admin_gate_path(@gate)
+    if @notice.update(notice_params)
+      flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 수정했습니다."
+      redirect_to admin_notice_path(@notice)
     else
       render 'edit'
     end
   end
 
   def destroy
-    @gate = Gate.find(params[:id])
-    @gate.destroy
+    @notice = Notice.find(params[:id])
+    @notice.destroy
 
-    flash[:notice] = "\"#{@gate.title}\" 공지를 성공적으로 삭제했습니다."
+    flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 삭제했습니다."
     redirect_to admin_root_path
   end
 
@@ -90,7 +90,7 @@ class Admin::GatesController < Admin::ApplicationController
   end
 
 private
-  def gate_params
-    params.require(:gate).permit(:title, :link, :content)
+  def notice_params
+    params.require(:notice).permit(:title, :link, :content)
   end
 end
