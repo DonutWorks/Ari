@@ -1,5 +1,12 @@
 class SmsSender
-  def send(content, user_ids)
+  class SMSSenderError < RuntimeError
+    attr_accessor :message
+    def initialize(message)
+      @messgae = message
+    end
+  end
+
+  def send_message(content, user_ids)
     message = Message.new
     message.content = content
 
@@ -17,21 +24,24 @@ class SmsSender
         }
 
         sms_sender = SendSMS.new
-        sms_sender.send_sms(sms_info)
+        begin
+          sms_sender.send_sms(sms_info)
+        rescue SendSMS::SendSMSError => e
+          raise SMSSenderError.new(message), e.message
+        else
+          message_histories = MessageHistory.new
+          message_histories.user_id = user.id
+          message_histories.message_id = message.id
 
-        message_histories = MessageHistory.new
-        message_histories.user_id = user.id
-        message_histories.message_id = message.id
-
-        message_histories.save
+          message_histories.save
+        end
       end
 
       return message
     else
-      return false
+      raise SMSSenderError.new(message), "현재 message를 보낼 수 없습니다. 다음에 다시 시도해주세요."
     end
-  rescue => e
-    return false
+
   end
 
 end

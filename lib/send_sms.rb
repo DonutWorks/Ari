@@ -33,12 +33,12 @@ class SendSMS
   end
 
   def send_sms(sms_info)
-    begin
+    # begin
       send_sms!(sms_info)
-      true
-    rescue SendSMSError => e
-      false
-    end
+    #   true
+    # rescue SendSMSError => e
+    #   e.message
+    # end
   end
 
   def generate_request_url(sms_info)

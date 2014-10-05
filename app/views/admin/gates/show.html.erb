@@ -43,7 +43,7 @@
               <td><%= user.email %></td>
               <td><%= user.major %></td>
               <td><%= user.read_at(@gate).localtime.strftime("%Y-%m-%d %T") %></td>
-              <td><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: 'sms_read' %></td>
+              <td><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: 'sms_check sms_read' %></td>
             </tr>
             <% end %>
           </tbody>
@@ -75,7 +75,7 @@
               <td><%= user.email %></td>
               <td><%= user.major %></td>
               <td>-</td>
-              <td><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: 'sms_unread' %></td>
+              <td><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: 'sms_check sms_unread' %></td>
             </tr>
             <% end %>
           </tbody>
@@ -95,34 +95,3 @@
   <% end %>
 
 </div>
-
-<script>
-  var phone_numbers = [];
-
-  $(document).ready(function() {
-
-    $('#sms_unread_all, #sms_read_all').change(function() {
-      var id = (this).id.replace('_all','');
-
-      if((this).checked == false) $('.' + id).prop("checked", false);
-      else $('.' + id).prop("checked", true);
-
-      add_phone_number_to_array();
-    });
-
-    $('.sms_unread, .sms_read').change(function() {
-      add_phone_number_to_array();
-    });
-
-  });
-
-  function add_phone_number_to_array() {
-    phone_numbers.length = 0;
-
-    $('.sms_unread, .sms_read').each(function() {
-      if((this).checked == true) phone_numbers.push($(this).id);
-    });
-
-    $('#phone_numbers').text("총 " + phone_numbers.length + "명이 선택 되었습니다.");
-  }
-</script>
