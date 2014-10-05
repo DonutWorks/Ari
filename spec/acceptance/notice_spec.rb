@@ -8,7 +8,6 @@ RSpec.describe "notice", type: :feature do
   end
 
   it "should let me see a notice lists" do
-
     visit("/admin")
 
     expect(find('#notice-container')).to have_content(@notice.title)

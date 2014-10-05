@@ -16,7 +16,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :notices, only: [:show]
+  resources :notices, only: [:show] do
+    resources :responses, only: [:new, :create]
+  end
 
   namespace :admin do
     root 'application#index'

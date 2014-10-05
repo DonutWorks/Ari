@@ -1,0 +1,32 @@
+<div class="table-responsive">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>기수</th>
+        <th>이름</th>
+        <th>전화번호</th>
+        <th>이메일</th>
+        <th>전공</th>
+        <th>읽은 시간</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.each do |user| %>
+      <tr>
+        <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
+        <td><%= user.username %></td>
+        <td><%= pretty_phone_number(user.phone_number) %></td>
+        <td><%= user.email %></td>
+        <td><%= user.major %></td>
+        <td>
+          <% if user.read_at(@notice) # need to decorate %>
+            <%= user.read_at(@notice).localtime.strftime("%Y-%m-%d %T") %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

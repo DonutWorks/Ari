@@ -8,68 +8,43 @@
     </div>
   </div>
 
-
   <p>공지 내용 : <%= @notice.content %></p>
   <p>실제 공지 주소 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
   <p>통합 공지 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %></p>
   <p>만든 시간 : <%= @notice.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
-  <div class="notice-reader">
-    <h3>읽은 회원 <small>(총 <%= @notice.readers.count %>명)</small></h3>
-    <div class="table-responsive">
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th>기수</th>
-            <th>이름</th>
-            <th>전화번호</th>
-            <th>이메일</th>
-            <th>전공</th>
-            <th>읽은 시간</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @notice.readers.order(generation_id: :desc).each do |user| %>
-          <tr>
-            <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
-            <td><%= user.username %></td>
-            <td><%= pretty_phone_number(user.phone_number) %></td>
-            <td><%= user.email %></td>
-            <td><%= user.major %></td>
-            <td><%= user.read_at(@notice).localtime.strftime("%Y-%m-%d %T") %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
 
-  <div class="notice-unreader">
-    <h3>안 읽은 회원 <small>(총 <%= @notice.unreaders.count %>명)</small></h3>
-    <div class="table-responsive">
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th>기수</th>
-            <th>이름</th>
-            <th>전화번호</th>
-            <th>이메일</th>
-            <th>전공</th>
-            <th>읽은 시간</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @notice.unreaders.order(generation_id: :desc).each do |user| %>
-          <tr>
-            <td><%= pretty_generation_id(user.generation_id) %></td>
-            <td><%= user.username %></td>
-            <td><%= pretty_phone_number(user.phone_number) %></td>
-            <td><%= user.email %></td>
-            <td><%= user.major %></td>
-            <td>-</td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#read-unread" role="tab" data-toggle="tab">읽음 확인</a></li>
+    <li><a href="#survey-result" role="tab" data-toggle="tab">수요 조사</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div class="tab-pane active" id="read-unread">
+      <div class="notice-reader">
+        <h3>읽은 회원 <small>(총 <%= @notice.readers.count %>명)</small></h3>
+        <%= render partial: "table", locals: { users: @notice.readers.generation_sorted_desc } %>
+      </div>
+
+      <div class="notice-unreader">
+        <h3>안 읽은 회원 <small>(총 <%= @notice.unreaders.count %>명)</small></h3>
+        <%= render partial: "table", locals: { users: @notice.unreaders.generation_sorted_desc } %>
+      </div>
+    </div>
+    <div class="tab-pane" id="survey-result">
+      <div>
+        <h3>참가 <small>(총 <%= User.responsed_yes(@notice).count %>명)</small></h3>
+        <%= render partial: "table", locals: { users: User.responsed_yes(@notice).generation_sorted_desc } %>
+      </div>
+      <div>
+        <h3>불확실 <small>(총 <%= User.responsed_maybe(@notice).count %>명)</small></h3>
+        <%= render partial: "table", locals: { users: User.responsed_maybe(@notice).generation_sorted_desc } %>
+      </div>
+      <div>
+        <h3>불참 <small>(총 <%= User.responsed_no(@notice).count %>명)</small></h3>
+        <%= render partial: "table", locals: { users: User.responsed_no(@notice).generation_sorted_desc } %>
+      </div>
     </div>
   </div>
 </div>
