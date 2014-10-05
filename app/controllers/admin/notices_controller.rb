@@ -20,7 +20,6 @@ class Admin::NoticesController < Admin::ApplicationController
     else
       render 'new'
     end
-
   end
 
   def show
@@ -91,6 +90,6 @@ class Admin::NoticesController < Admin::ApplicationController
 
 private
   def notice_params
-    params.require(:notice).permit(:title, :link, :content)
+    params.require(:notice).permit(:title, :link, :content, :notice_type)
   end
 end

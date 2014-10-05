@@ -10,6 +10,7 @@ FactoryGirl.define do
     title "goto google.com"
     content "google!"
     link "http://google.com"
+    notice_type "external"
   end
 
   factory :provider_token do
