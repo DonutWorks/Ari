@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141003170615) do
+ActiveRecord::Schema.define(version: 20141005140812) do
 
   create_table "account_activations", force: true do |t|
     t.integer  "user_id"
@@ -32,22 +32,6 @@ ActiveRecord::Schema.define(version: 20141003170615) do
   end
 
   add_index "activation_tickets", ["account_activation_id"], name: "index_activation_tickets_on_account_activation_id"
-
-  create_table "message_histories", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "message_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "message_histories", ["message_id"], name: "index_message_histories_on_message_id"
-  add_index "message_histories", ["user_id"], name: "index_message_histories_on_user_id"
-
-  create_table "messages", force: true do |t|
-    t.string   "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "notices", force: true do |t|
     t.string   "title"
@@ -73,6 +57,14 @@ ActiveRecord::Schema.define(version: 20141003170615) do
     t.integer  "readable_id"
     t.string   "readable_type"
     t.integer  "mark",          default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "responses", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "notice_id"
+    t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
