@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140929114903) do
+ActiveRecord::Schema.define(version: 20141003095652) do
 
   create_table "account_activations", force: true do |t|
     t.integer  "user_id"
@@ -43,6 +43,22 @@ ActiveRecord::Schema.define(version: 20140929114903) do
     t.string   "shortenURL"
   end
 
+  create_table "message_histories", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "message_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "message_histories", ["message_id"], name: "index_message_histories_on_message_id"
+  add_index "message_histories", ["user_id"], name: "index_message_histories_on_user_id"
+
+  create_table "messages", force: true do |t|
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "provider_tokens", force: true do |t|
     t.string   "provider"
     t.string   "uid"
@@ -61,19 +77,19 @@ ActiveRecord::Schema.define(version: 20140929114903) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                              null: false
+    t.string   "email",                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "username",                           null: false
+    t.string   "username",               null: false
     t.string   "phone_number"
     t.string   "major"
-    t.float    "generation_id",          limit: 255
     t.string   "student_id"
     t.string   "sex"
     t.string   "home_phone_number"
     t.string   "emergency_phone_number"
     t.string   "habitat_id"
     t.string   "member_type"
+    t.float    "generation_id"
     t.string   "birth"
   end
 

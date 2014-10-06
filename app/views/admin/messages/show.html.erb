@@ -1,0 +1,37 @@
+<div>
+  <div class="page-header clearfix">
+    <h3 class="pull-left">SMS 전송 내역</h3>
+  </div>
+
+  <p>문자 내용 : <%= @message.content %></p>
+  <p>전송 시간 : <%= @message.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
+
+  <div>
+    <h3>전송된 회원 <small>(총 <%= @message.users.size %>명)</small></h3>
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>기수</th>
+            <th>이름</th>
+            <th>전화번호</th>
+            <th>이메일</th>
+            <th>전공</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @message.users.order_by_gid.each do |user| %>
+          <tr>
+            <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
+            <td><%= user.username %></td>
+            <td><%= pretty_phone_number(user.phone_number) %></td>
+            <td><%= user.email %></td>
+            <td><%= user.major %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
