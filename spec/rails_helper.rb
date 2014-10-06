@@ -48,3 +48,13 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 end
+
+OmniAuth.config.test_mode = true
+OmniAuth.config.add_mock(:kakao, {
+  provider: "kakao",
+  uid: "1234",
+  info: {
+    name: "John Doe",
+    image: "http://donut-ari.herokuapp.com"
+  }
+})

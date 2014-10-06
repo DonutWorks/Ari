@@ -2,7 +2,14 @@ require "rails_helper"
 
 RSpec.describe "kakao auth process", type: :feature do
   it "lets me fail to kakao log in"
-  it "leads me to email verification page at first log in"
+
+  it "leads me to email verification page at first log in" do
+    visit("/")
+    find("#login-form a").click
+    expect(page).to have_content("John Doe")
+    expect(page).to have_selector("#account_activation_email")
+  end
+
   it "sends activation ticket to me"
   it "show me error message when I submitted an invalid email"
   it "lets me activate my account to click activation link"
