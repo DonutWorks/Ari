@@ -1,3 +1,13 @@
 // Place all the styles related to the admin/gates controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.sms-text {
+  padding-bottom:20px;
+}
+
+.fix-bottom {
+  position: fixed;
+  bottom: 0;
+  background-color:white;
+}
