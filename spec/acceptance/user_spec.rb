@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe "check user process", type: :feature do
   before(:each) do
     authenticate_to_admin!
-    @gate = FactoryGirl.create(:gate)
     @user = FactoryGirl.create(:user)
   end
 

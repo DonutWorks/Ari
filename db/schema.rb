@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141003095652) do
+ActiveRecord::Schema.define(version: 20141003170615) do
 
   create_table "account_activations", force: true do |t|
     t.integer  "user_id"
@@ -33,16 +33,6 @@ ActiveRecord::Schema.define(version: 20141003095652) do
 
   add_index "activation_tickets", ["account_activation_id"], name: "index_activation_tickets_on_account_activation_id"
 
-  create_table "gates", force: true do |t|
-    t.string   "title"
-    t.string   "content"
-    t.string   "link"
-    t.datetime "duedate"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "shortenURL"
-  end
-
   create_table "message_histories", force: true do |t|
     t.integer  "user_id"
     t.integer  "message_id"
@@ -57,6 +47,17 @@ ActiveRecord::Schema.define(version: 20141003095652) do
     t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "notices", force: true do |t|
+    t.string   "title"
+    t.string   "content"
+    t.string   "link"
+    t.datetime "duedate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "shortenURL"
+    t.string   "notice_type"
   end
 
   create_table "provider_tokens", force: true do |t|

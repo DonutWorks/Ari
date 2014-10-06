@@ -7,6 +7,6 @@ class Admin::ApplicationController < ApplicationController
 
   def index
     @users = User.all
-    @gates = Gate.all
+    @notices = Notice.all
   end
 end

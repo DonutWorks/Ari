@@ -7,7 +7,7 @@ FactoryGirl.define do
     member_type "정단원"
   end
 
-  factory :gate do
+  factory :notice do
     title "goto google.com"
     content "google!"
     link "http://google.com"

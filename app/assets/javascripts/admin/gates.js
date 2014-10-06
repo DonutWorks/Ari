@@ -1,7 +1,7 @@
 $(document).on('ready page:load', function () {
 
   $('.sms-text').width($('.container').width());
-  $('.gate-full-page').css('margin-bottom', $('.sms-text').height()+ 20);
+  $('.notice-full-page').css('margin-bottom', $('.sms-text').height()+ 20);
 
   $('.sms_all').change(function() {
     var id = (this).id.replace('_all','');
@@ -26,6 +26,5 @@ $(document).on('ready page:load', function () {
     $('#phone_numbers').text("총 " + phone_numbers_cnt + "명이 선택 되었습니다.");
   }
 
-});  
+});
 
-  

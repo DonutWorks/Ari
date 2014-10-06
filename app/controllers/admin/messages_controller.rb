@@ -16,6 +16,6 @@ class Admin::MessagesController < Admin::ApplicationController
 
     rescue SmsSender::SMSSenderError => e
       flash[:alert] = e.message
-      redirect_to admin_gate_path(params[:gate_id])
+      redirect_to admin_notice_path(params[:notice_id])
   end
 end
