@@ -62,12 +62,6 @@ RSpec.describe "kakao auth process", type: :feature do
         expect(page).to have_content("인증 메일이 전송되었습니다.")
       end
 
-      it "lets me activate my account to click activation link" do
-        visit(@activation_url)
-        # need actual test, because need auth hash to activate an account actually.
-        expect(page).to have_content("카카오톡 인증에 성공하였습니다.")
-      end
-
       it "shows me error message when I clicked an invalid activation link" do
         visit(@activation_url + "invalid")
         expect(page).to have_content("카카오톡 인증에 실패하였습니다.")
@@ -83,9 +77,28 @@ RSpec.describe "kakao auth process", type: :feature do
         expect(page).to have_content("인증 메일이 전송되었습니다.")
         expect(activation_url_original).not_to eq(@activation_url)
       end
+
+      context "when user is activated" do
+        before(:each) do
+          visit(@activation_url)
+        end
+
+        it "lets me activate my account to click activation link" do
+          # need actual test, because need auth hash to activate an account actually.
+          expect(page).to have_content("카카오톡 인증에 성공하였습니다.")
+        end
+
+        context "when user logged in" do
+          it "leads me to not auth page when I logged in" do
+            find("#login-form a").click
+
+            visit("/")
+            expect(current_path).to eq("/")
+          end
+        end
+      end
     end
   end
 
-  it "leads me to not auth page when I logged in"
   it "lets me correct connection between kakao account and email"
 end
