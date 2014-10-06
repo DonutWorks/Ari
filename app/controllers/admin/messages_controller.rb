@@ -8,18 +8,14 @@ class Admin::MessagesController < Admin::ApplicationController
   end
 
   def create
-    sms_sender = SmsSender.new 
+    sms_sender = SmsSender.new
+    message = sms_sender.send_message(params[:sms_content], params[:sms_user].keys)
 
-    begin
-      message = sms_sender.send_message(params[:sms_content], params[:sms_user].keys)  
+    flash[:notice] = "회원들에게 문자를 전송 했습니다!"
+    redirect_to admin_message_path(message)
+
     rescue SmsSender::SMSSenderError => e
-      flash[:notice] = e.message
+      flash[:alert] = e.message
       redirect_to admin_gate_path(params[:gate_id])
-    else
-      flash[:notice] = "회원들에게 문자를 전송 했습니다!"
-      redirect_to admin_message_path(message)
-    end
-    
   end
-
 end

@@ -31,7 +31,7 @@
               <th>이메일</th>
               <th>전공</th>
               <th>읽은 시간</th>
-              <th>문자(전체선택 <%= check_box_tag 'sms_read_all', nil, false %>)</th>
+              <th>문자(전체선택 <%= check_box_tag 'sms_read_all', nil, false, class: 'sms_all' %>)</th>
             </tr>
           </thead>
           <tbody>
@@ -63,7 +63,7 @@
               <th>이메일</th>
               <th>전공</th>
               <th>읽은 시간</th>
-              <th>문자(전체선택 <%= check_box_tag 'sms_unread_all', nil, false %>)</th>
+              <th>문자(전체선택 <%= check_box_tag 'sms_unread_all', nil, false, class: 'sms_all' %>)</th>
             </tr>
           </thead>
           <tbody>

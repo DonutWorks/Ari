@@ -1,6 +1,6 @@
 $(document).on('ready page:load', function () {
 
-  $('#sms_unread_all, #sms_read_all').change(function() {
+  $('.sms_all').change(function() {
     var id = (this).id.replace('_all','');
 
     $('.' + id).prop("checked", this.checked);
