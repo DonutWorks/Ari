@@ -15,11 +15,10 @@ ActiveRecord::Schema.define(version: 20141003095652) do
 
   create_table "account_activations", force: true do |t|
     t.integer  "user_id"
-    t.boolean  "activated",  default: false
-    t.string   "provider"
-    t.string   "uid"
+    t.boolean  "activated",         default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "provider_token_id"
   end
 
   add_index "account_activations", ["user_id"], name: "index_account_activations_on_user_id"
@@ -29,6 +28,7 @@ ActiveRecord::Schema.define(version: 20141003095652) do
     t.integer  "account_activation_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "expired",               default: false
   end
 
   add_index "activation_tickets", ["account_activation_id"], name: "index_activation_tickets_on_account_activation_id"
@@ -55,6 +55,14 @@ ActiveRecord::Schema.define(version: 20141003095652) do
 
   create_table "messages", force: true do |t|
     t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "provider_tokens", force: true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.text     "info"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

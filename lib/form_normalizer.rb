@@ -3,6 +3,7 @@ class FormNormalizer
     FormNormalizers::GenderNormalizer,
     FormNormalizers::PhoneNumberNormalizer,
     FormNormalizers::GenerationNormalizer,
+    FormNormalizers::BirthNormalizer,
     FormNormalizers::EmailNormalizer
   ]
 

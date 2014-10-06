@@ -1,38 +1,32 @@
-class SessionsController < ApplicationController
+class SessionsController < AuthenticatableController
   skip_before_action :authenticate_user!
-  before_action :require_auth_hash, only: [:create]
 
   def new
+    @user = User.new
   end
 
+  # log in with phone number
   def create
-    authenticate!
-  end
+    normalizer = FormNormalizers::PhoneNumberNormalizer.new
+    phone_number = normalizer.normalize(params[:user][:phone_number])
 
-  def destroy
-    destroy_session!
+    user = User.find_by_phone_number(phone_number)
+    if user.nil?
+      flash[:error] = "전화번호가 잘못되었습니다."
+      redirect_to sign_in_users_path
+      return
+    end
+
+    session[:user_id] = user.id
+    redirect_to session.delete(:return_to) || root_path
+
+  rescue FormNormalizers::NormalizeError => e
+    flash[:error] = "전화번호가 잘못되었습니다."
     redirect_to sign_in_users_path
   end
 
-private
-  def authenticate!
-  # extendable?
-    activation = AccountActivation.find_by(provider: auth_hash['provider'],
-     uid: auth_hash['uid'])
-
-    if activation && activation.activated
-      create_session!(activation.user)
-      redirect_to session.delete(:return_to) || root_path
-    else
-      redirect_to sign_up_users_path
-    end
-  end
-
-  def create_session!(user)
-    session[:current_user] = user.id
-  end
-
-  def destroy_session!
-    session.delete(:current_user)
+  def destroy
+    session.delete(:user_id)
+    redirect_to sign_in_users_path
   end
 end

@@ -6,4 +6,3 @@ class GatesController < ApplicationController
     redirect_to @gate.link
   end
 end
-
