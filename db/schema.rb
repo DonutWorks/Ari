@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140928122400) do
+ActiveRecord::Schema.define(version: 20140929114903) do
 
   create_table "account_activations", force: true do |t|
     t.integer  "user_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20140928122400) do
     t.integer  "account_activation_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "expired",               default: false
   end
 
   add_index "activation_tickets", ["account_activation_id"], name: "index_activation_tickets_on_account_activation_id"
@@ -60,19 +61,19 @@ ActiveRecord::Schema.define(version: 20140928122400) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  null: false
+    t.string   "email",                              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "username",               null: false
+    t.string   "username",                           null: false
     t.string   "phone_number"
     t.string   "major"
+    t.float    "generation_id",          limit: 255
     t.string   "student_id"
     t.string   "sex"
     t.string   "home_phone_number"
     t.string   "emergency_phone_number"
     t.string   "habitat_id"
     t.string   "member_type"
-    t.float    "generation_id"
     t.string   "birth"
   end
 
