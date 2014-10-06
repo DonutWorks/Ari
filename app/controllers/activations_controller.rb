@@ -19,7 +19,7 @@ class ActivationsController < AuthenticatableController
 
     activator = UserActivator.new
     ticket = activator.issue_ticket(user, provider_token)
-    if ticket and send_ticket_mail(ticket)
+    if ticket and activator.send_ticket_mail(user, activation_url(ticket.code))
       flash[:notice] = "인증 메일이 전송되었습니다."
     else
       flash[:error] = "인증 메일 전송에 실패했습니다. 다시 시도해주세요."
@@ -37,22 +37,5 @@ class ActivationsController < AuthenticatableController
 
     # TODO: redirect_to redirect_url (#216)
     redirect_to session.delete(:return_to) || root_path
-  end
-
-private
-  def send_ticket_mail(ticket)
-    verify_url = activation_url(ticket.code)
-    mailgun = Mailgun()
-    parameters = {
-      :from => "ari@donutworks.com",
-      :to => ticket.account_activation.user.email,
-      :subject => "서울대 햇빛봉사단의 계정 활성화를 위한 메일입니다.",
-      :html => "<div><h2>서울대 햇빛봉사단 계정을 활성화 시키려면 아래의 링크를 클릭 해주세요.</h2></div><div>#{verify_url}</div>"
-      # :text => <<-BODY
-      #   <h2>계정을 활성화 시키려면 아래의 링크를 클릭 해주세요!</h2> :
-      #   #{verify_url}
-      # BODY
-    }
-    mailgun.messages.send_email(parameters)
   end
 end
