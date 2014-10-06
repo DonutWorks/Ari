@@ -14,7 +14,12 @@
   </tr>
   <tr>
   	<td>이름</td>
-  	<td><%= @user.username %></td>
+  	<td>
+      <%= @user.username %>
+      <% if @user.activated? %>
+        <span class="glyphicon glyphicon-ok"></span>
+      <% end %>
+    </td>
   </tr>
   <tr>
     <td>생년월일</td>

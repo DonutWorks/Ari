@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     collection do
       get 'show'
       get 'sign_in', to: 'sessions#new'
-      get 'auth', to: 'sessions#create'
+      post 'auth', to: 'sessions#create'
       get 'sign_out', to: 'sessions#destroy'
     end
   end
@@ -35,5 +35,7 @@ Rails.application.routes.draw do
     end
 
     resource :export_excel,  controller: :export_excel,  only: [:new, :create]
+
+    resources :messages
   end
 end
