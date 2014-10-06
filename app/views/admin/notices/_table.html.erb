@@ -2,16 +2,17 @@
   <table class="table table-condensed">
     <thead>
       <tr>
-        <th>기수</th>
-        <th>이름</th>
-        <th>전화번호</th>
-        <th>이메일</th>
-        <th>전공</th>
-        <th>읽은 시간</th>
+        <th width="5%">기수</th>
+        <th width="7%">이름</th>
+        <th width="13%">전화번호</th>
+        <th width="20%">이메일</th>
+        <th width="25%">전공</th>
+        <th width="15%">읽은 시간</th>
+        <th class="text-center" width="15%">문자(전체선택 <%= check_box_tag 'sms_read_all', nil, false, class: 'sms_all' %>)</th>
       </tr>
     </thead>
     <tbody>
-      <% users.each do |user| %>
+      <% users.each_with_index do |user, index| %>
       <tr>
         <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
         <td><%= user.username %></td>
@@ -25,6 +26,7 @@
             -
           <% end %>
         </td>
+        <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: 'sms_check sms_read' %></td>
       </tr>
       <% end %>
     </tbody>

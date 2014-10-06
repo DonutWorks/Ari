@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   has_one :account_activation, dependent: :destroy
   has_many :responses
+  has_many :message_histories
+  has_many :messages, through: :message_histories
 
   scope :generation_sorted_desc, -> { order(generation_id: :desc) }
 
@@ -14,10 +16,17 @@ class User < ActiveRecord::Base
 
   before_validation :normalize_phone_number
 
+  scope :order_by_gid, -> {order(generation_id: :desc)}
+
   acts_as_reader
 
   def responsed_to?(notice)
     responses.where(notice: notice).exists?
+  end
+
+  def activated?
+    return false unless account_activation
+    account_activation.activated
   end
 
 private

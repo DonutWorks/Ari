@@ -4,6 +4,7 @@ FactoryGirl.define do
     username "John"
     phone_number "01012341234"
     major "CS"
+    member_type "정단원"
   end
 
   factory :notice do

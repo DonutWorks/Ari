@@ -1,4 +1,3 @@
-require "rails_helper"
 require "net/http"
 require "addressable/uri"
 
@@ -39,6 +38,7 @@ class SendSMS
       true
     rescue SendSMSError => e
       false
+      # e.message
     end
   end
 

@@ -1,4 +1,4 @@
-<div>
+<div class="notice-full-page">
   <div class="page-header clearfix">
     <h3 class="pull-left"><%= @notice.title %></h3>
     <div class="pull-right margin-top15">
@@ -13,38 +13,52 @@
   <p>통합 공지 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %></p>
   <p>만든 시간 : <%= @notice.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
 
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="active"><a href="#read-unread" role="tab" data-toggle="tab">읽음 확인</a></li>
-    <li><a href="#survey-result" role="tab" data-toggle="tab">수요 조사</a></li>
-  </ul>
+  <div class="clearfix"></div>
 
-  <!-- Tab panes -->
-  <div class="tab-content">
-    <div class="tab-pane active" id="read-unread">
-      <div class="notice-reader">
-        <h3>읽은 회원 <small>(총 <%= @notice.readers.count %>명)</small></h3>
-        <%= render partial: "table", locals: { users: @notice.readers.generation_sorted_desc } %>
+  <%= form_tag(admin_messages_path, method: "post") do %>
+    <%= hidden_field_tag 'notice_id', @notice.id %>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="active"><a href="#read-unread" role="tab" data-toggle="tab">읽음 확인</a></li>
+      <li><a href="#survey-result" role="tab" data-toggle="tab">수요 조사</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="read-unread">
+        <div class="notice-reader">
+          <h3>읽은 회원 <small>(총 <%= @notice.readers.count %>명)</small></h3>
+          <%= render partial: "table", locals: { users: @notice.readers.generation_sorted_desc } %>
+        </div>
+
+        <div class="notice-unreader">
+          <h3>안 읽은 회원 <small>(총 <%= @notice.unreaders.count %>명)</small></h3>
+          <%= render partial: "table", locals: { users: @notice.unreaders.generation_sorted_desc } %>
+        </div>
       </div>
-
-      <div class="notice-unreader">
-        <h3>안 읽은 회원 <small>(총 <%= @notice.unreaders.count %>명)</small></h3>
-        <%= render partial: "table", locals: { users: @notice.unreaders.generation_sorted_desc } %>
+      <div class="tab-pane" id="survey-result">
+        <div>
+          <h3>참가 <small>(총 <%= User.responsed_yes(@notice).count %>명)</small></h3>
+          <%= render partial: "table", locals: { users: User.responsed_yes(@notice).generation_sorted_desc } %>
+        </div>
+        <div>
+          <h3>불확실 <small>(총 <%= User.responsed_maybe(@notice).count %>명)</small></h3>
+          <%= render partial: "table", locals: { users: User.responsed_maybe(@notice).generation_sorted_desc } %>
+        </div>
+        <div>
+          <h3>불참 <small>(총 <%= User.responsed_no(@notice).count %>명)</small></h3>
+          <%= render partial: "table", locals: { users: User.responsed_no(@notice).generation_sorted_desc } %>
+        </div>
       </div>
     </div>
-    <div class="tab-pane" id="survey-result">
-      <div>
-        <h3>참가 <small>(총 <%= User.responsed_yes(@notice).count %>명)</small></h3>
-        <%= render partial: "table", locals: { users: User.responsed_yes(@notice).generation_sorted_desc } %>
-      </div>
-      <div>
-        <h3>불확실 <small>(총 <%= User.responsed_maybe(@notice).count %>명)</small></h3>
-        <%= render partial: "table", locals: { users: User.responsed_maybe(@notice).generation_sorted_desc } %>
-      </div>
-      <div>
-        <h3>불참 <small>(총 <%= User.responsed_no(@notice).count %>명)</small></h3>
-        <%= render partial: "table", locals: { users: User.responsed_no(@notice).generation_sorted_desc } %>
+    <div class="sms-text fix-bottom">
+      <h3>문자 보내기</h3>
+      <p id="phone_numbers">총 0명이 선택 되었습니다.</p>
+      <%= text_area_tag 'sms_content', nil, class: 'form-control', placeholder: '문자 내용을 입력하세요!' %>
+      <div class="pull-right margin-top15">
+        <button id="send_sms" type="submit" class="btn btn-primary btn-sm">전송</button>
       </div>
     </div>
-  </div>
+  <% end %>
 </div>
