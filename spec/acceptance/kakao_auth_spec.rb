@@ -46,7 +46,15 @@ RSpec.describe "kakao auth process", type: :feature do
     expect(url.path.split("/")[1]).to eq("activations")
   end
 
-  it "show me error message when I submitted an invalid email"
+  it "show me error message when I submitted an invalid email" do
+    visit("/")
+    find("#login-form a").click
+    fill_in 'account_activation_email', with: "invalid email"
+    click_button "인증 메일 보내기"
+
+    expect(page).to have_content("등록된 이메일이 아닙니다.")
+  end
+
   it "lets me activate my account to click activation link"
   it "shows me error message when I clicked an invalid activation link"
   it "sends activation ticket whenever I requested a ticket"
