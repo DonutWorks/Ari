@@ -15,6 +15,7 @@ RSpec.describe "kakao auth process", type: :feature do
   end
 
   it "lets me fail to kakao log in" do
+    pending("not implemented feature, see issue #201. If you resolve issue #201, then remove pending")
     OmniAuth.config.mock_auth[:kakao] = :invalid_credentials
     visit("/")
     find("#login-form a").click
