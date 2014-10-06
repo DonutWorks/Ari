@@ -18,76 +18,47 @@
   <%= form_tag(admin_messages_path, method: "post") do %>
     <%= hidden_field_tag 'notice_id', @notice.id %>
 
-    <div class="notice-reader">
-      <h3>읽은 회원 <small>(총 <%= @notice.readers.count %>명)</small></h3>
-      <div class="table-responsive">
-        <table class="table table-condensed">
-          <thead>
-            <tr>
-              <th width="5%">기수</th>
-              <th width="7%">이름</th>
-              <th width="13%">전화번호</th>
-              <th width="20%">이메일</th>
-              <th width="25%">전공</th>
-              <th width="15%">읽은 시간</th>
-              <th class="text-center" width="15%">문자(전체선택 <%= check_box_tag 'sms_read_all', nil, false, class: 'sms_all' %>)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @notice.readers.order(generation_id: :desc).each_with_index do |user, index| %>
-            <tr>
-              <td><%= pretty_generation_id(user.generation_id) %></td>
-              <td><%= user.username %></td>
-              <td><%= pretty_phone_number(user.phone_number) %></td>
-              <td><%= user.email %></td>
-              <td><%= user.major %></td>
-              <td><%= user.read_at(@notice).localtime.strftime("%Y-%m-%d %T") %></td>
-              <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: 'sms_check sms_read' %></td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="active"><a href="#read-unread" role="tab" data-toggle="tab">읽음 확인</a></li>
+      <li><a href="#survey-result" role="tab" data-toggle="tab">수요 조사</a></li>
+    </ul>
 
-    <div class="notice-unreader">
-      <h3>안 읽은 회원 <small>(총 <%= @notice.unreaders.count %>명)</small></h3>
-      <div class="table-responsive">
-        <table class="table table-condensed">
-          <thead>
-            <tr>
-              <th width="5%">기수</th>
-              <th width="7%">이름</th>
-              <th width="13%">전화번호</th>
-              <th width="20%">이메일</th>
-              <th width="25%">전공</th>
-              <th width="15%">읽은 시간</th>
-              <th class="text-center" width="15%">문자(전체선택 <%= check_box_tag 'sms_unread_all', nil, false, class: 'sms_all' %>)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @notice.unreaders.order(generation_id: :desc).each_with_index do |user, index| %>
-            <tr>
-              <td><%= pretty_generation_id(user.generation_id) %></td>
-              <td><%= user.username %></td>
-              <td><%= pretty_phone_number(user.phone_number) %></td>
-              <td><%= user.email %></td>
-              <td><%= user.major %></td>
-              <td>-</td>
-              <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: 'sms_check sms_unread' %></td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="read-unread">
+        <div class="notice-reader">
+          <h3>읽은 회원 <small>(총 <%= @notice.readers.count %>명)</small></h3>
+          <%= render partial: "table", locals: { users: @notice.readers.generation_sorted_desc } %>
+        </div>
+
+        <div class="notice-unreader">
+          <h3>안 읽은 회원 <small>(총 <%= @notice.unreaders.count %>명)</small></h3>
+          <%= render partial: "table", locals: { users: @notice.unreaders.generation_sorted_desc } %>
+        </div>
+      </div>
+      <div class="tab-pane" id="survey-result">
+        <div>
+          <h3>참가 <small>(총 <%= User.responsed_yes(@notice).count %>명)</small></h3>
+          <%= render partial: "table", locals: { users: User.responsed_yes(@notice).generation_sorted_desc } %>
+        </div>
+        <div>
+          <h3>불확실 <small>(총 <%= User.responsed_maybe(@notice).count %>명)</small></h3>
+          <%= render partial: "table", locals: { users: User.responsed_maybe(@notice).generation_sorted_desc } %>
+        </div>
+        <div>
+          <h3>불참 <small>(총 <%= User.responsed_no(@notice).count %>명)</small></h3>
+          <%= render partial: "table", locals: { users: User.responsed_no(@notice).generation_sorted_desc } %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="sms-text fix-bottom">
-    <h3>문자 보내기</h3>
-    <p id="phone_numbers">총 0명이 선택 되었습니다.</p>
-    <%= text_area_tag 'sms_content', nil, class: 'form-control', placeholder: '문자 내용을 입력하세요!' %>
-    <div class="pull-right margin-top15">
-      <button id="send_sms" type="submit" class="btn btn-primary btn-sm">전송</button>
+    <div class="sms-text fix-bottom">
+      <h3>문자 보내기</h3>
+      <p id="phone_numbers">총 0명이 선택 되었습니다.</p>
+      <%= text_area_tag 'sms_content', nil, class: 'form-control', placeholder: '문자 내용을 입력하세요!' %>
+      <div class="pull-right margin-top15">
+        <button id="send_sms" type="submit" class="btn btn-primary btn-sm">전송</button>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>

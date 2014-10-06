@@ -1,0 +1,9 @@
+<div>
+  <div class="page-header clearfix">
+    <h3 class="pull-left"><%= @notice.title %></h3>
+  </div>
+
+  <p>내용 : <%= @notice.content %></p>
+  <p>링크 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
+  <p>시간 : <%= @notice.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
+</div>

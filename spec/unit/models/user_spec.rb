@@ -14,6 +14,18 @@ RSpec.describe User, :type => :model do
     expect(user.phone_number).to eq("0101231234")
   end
 
+  describe "#responsed_to?" do
+    it "should return whether users responsed to notice" do
+      user = FactoryGirl.create(:user)
+      notice = FactoryGirl.create(:notice)
+
+      expect(user.responsed_to?(notice)).to eq(false)
+
+      response = Response.create!(user: user, notice: notice, status: "yes")
+      expect(user.responsed_to?(notice)).to eq(true)
+    end
+  end
+
   describe "#activated?" do
     context "user not attempted to sign in" do
       it "should return false for user not attempted to sign in" do
