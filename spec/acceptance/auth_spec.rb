@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "the signin process", :type => :feature do
+RSpec.describe "the signin process", type: :feature do
   before(:each) do
     authenticate_to_admin!
   end
