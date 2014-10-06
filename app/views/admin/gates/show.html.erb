@@ -1,4 +1,4 @@
-<div>
+<div class="gate-full-page">
   <div class="page-header clearfix">
     <h3 class="pull-left"><%= @gate.title %></h3>
     <div class="pull-right margin-top15">
@@ -25,13 +25,13 @@
         <table class="table table-condensed">
           <thead>
             <tr>
-              <th>기수</th>
-              <th>이름</th>
-              <th>전화번호</th>
-              <th>이메일</th>
-              <th>전공</th>
-              <th>읽은 시간</th>
-              <th>문자(전체선택 <%= check_box_tag 'sms_read_all', nil, false, class: 'sms_all' %>)</th>
+              <th width="5%">기수</th>
+              <th width="7%">이름</th>
+              <th width="13%">전화번호</th>
+              <th width="20%">이메일</th>
+              <th width="25%">전공</th>
+              <th width="15%">읽은 시간</th>
+              <th class="text-center" width="15%">문자(전체선택 <%= check_box_tag 'sms_read_all', nil, false, class: 'sms_all' %>)</th>
             </tr>
           </thead>
           <tbody>
@@ -43,7 +43,7 @@
               <td><%= user.email %></td>
               <td><%= user.major %></td>
               <td><%= user.read_at(@gate).localtime.strftime("%Y-%m-%d %T") %></td>
-              <td><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: 'sms_check sms_read' %></td>
+              <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: 'sms_check sms_read' %></td>
             </tr>
             <% end %>
           </tbody>
@@ -57,13 +57,13 @@
         <table class="table table-condensed">
           <thead>
             <tr>
-              <th>기수</th>
-              <th>이름</th>
-              <th>전화번호</th>
-              <th>이메일</th>
-              <th>전공</th>
-              <th>읽은 시간</th>
-              <th>문자(전체선택 <%= check_box_tag 'sms_unread_all', nil, false, class: 'sms_all' %>)</th>
+              <th width="5%">기수</th>
+              <th width="7%">이름</th>
+              <th width="13%">전화번호</th>
+              <th width="20%">이메일</th>
+              <th width="25%">전공</th>
+              <th width="15%">읽은 시간</th>
+              <th class="text-center" width="15%">문자(전체선택 <%= check_box_tag 'sms_unread_all', nil, false, class: 'sms_all' %>)</th>
             </tr>
           </thead>
           <tbody>
@@ -75,18 +75,18 @@
               <td><%= user.email %></td>
               <td><%= user.major %></td>
               <td>-</td>
-              <td><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: 'sms_check sms_unread' %></td>
+              <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: 'sms_check sms_unread' %></td>
             </tr>
             <% end %>
           </tbody>
         </table>
       </div>
     </div>
-
-    <div class="sms-text">
+</div>
+    <div class="sms-text fix-bottom">
       <h3>문자 보내기</h3>
       <p id="phone_numbers">총 0명이 선택 되었습니다.</p>
-      <%= text_area_tag 'sms_content', nil, class: 'form-control' %>
+      <%= text_area_tag 'sms_content', nil, class: 'form-control', placeholder: '문자 내용을 입력하세요!' %>
       <div class="pull-right margin-top15">  
         <button id="send_sms" type="submit" class="btn btn-primary btn-sm">전송</button>
       </div>
@@ -94,4 +94,3 @@
 
   <% end %>
 
-</div>

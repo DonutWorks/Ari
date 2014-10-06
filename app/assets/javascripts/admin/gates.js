@@ -1,5 +1,8 @@
 $(document).on('ready page:load', function () {
 
+  $('.sms-text').width($('.container').width());
+  $('.gate-full-page').css('margin-bottom', $('.sms-text').height()+ 20);
+
   $('.sms_all').change(function() {
     var id = (this).id.replace('_all','');
 
