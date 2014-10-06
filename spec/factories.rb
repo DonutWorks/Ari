@@ -1,8 +1,12 @@
 FactoryGirl.define do
+  sequence :phone_number do |n|
+    "010%08d" % n
+  end
+
   factory :user do
-    email "John@donutworks.com"
     username "John"
-    phone_number "01012341234"
+    email { "#{username}@donutworks.com" }
+    phone_number
     major "CS"
   end
 

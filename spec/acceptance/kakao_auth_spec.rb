@@ -16,6 +16,7 @@ RSpec.describe "kakao auth process", type: :feature do
 
   it "lets me fail to kakao log in" do
     pending("not implemented feature, see issue #201. If you resolve issue #201, then remove pending")
+
     OmniAuth.config.mock_auth[:kakao] = :invalid_credentials
     visit("/")
     find("#login-form a").click
@@ -79,6 +80,19 @@ RSpec.describe "kakao auth process", type: :feature do
         expect(activation_url_original).not_to eq(@activation_url)
       end
 
+      it "lets me correct connection between kakao account and email" do
+        activation_url_original = @activation_url
+        another_user = FactoryGirl.create(:user, username: "Mary")
+
+        find("#login-form a").click
+        fill_in 'account_activation_email', with: another_user.email
+        click_button "인증 메일 보내기"
+
+        expect(page).to have_content("인증 메일이 전송되었습니다.")
+        expect(@mail_receiver).to eq(another_user)
+        expect(activation_url_original).not_to eq(@activation_url)
+      end
+
       context "when user is activated" do
         before(:each) do
           visit(@activation_url)
@@ -100,6 +114,4 @@ RSpec.describe "kakao auth process", type: :feature do
       end
     end
   end
-
-  it "lets me correct connection between kakao account and email"
 end
