@@ -69,17 +69,6 @@ RSpec.describe "kakao auth process", type: :feature do
         expect(page).to have_content("카카오톡 인증에 실패하였습니다.")
       end
 
-      it "sends activation ticket whenever I requested a ticket" do
-        activation_url_original = @activation_url
-
-        find("#login-form a").click
-        fill_in 'account_activation_email', with: @user.email
-        click_button "인증 메일 보내기"
-
-        expect(page).to have_content("인증 메일이 전송되었습니다.")
-        expect(activation_url_original).not_to eq(@activation_url)
-      end
-
       it "lets me correct connection between kakao account and email" do
         activation_url_original = @activation_url
         another_user = FactoryGirl.create(:user, username: "Mary")
@@ -91,6 +80,27 @@ RSpec.describe "kakao auth process", type: :feature do
         expect(page).to have_content("인증 메일이 전송되었습니다.")
         expect(@mail_receiver).to eq(another_user)
         expect(activation_url_original).not_to eq(@activation_url)
+      end
+
+      context "when requested a ticket twice+" do
+        before(:each) do
+          @activation_url_original = @activation_url
+
+          find("#login-form a").click
+          fill_in 'account_activation_email', with: @user.email
+          click_button "인증 메일 보내기"
+        end
+
+        it "sends activation ticket whenever I requested a ticket" do
+          expect(page).to have_content("인증 메일이 전송되었습니다.")
+          expect(@activation_url_original).not_to eq(@activation_url)
+        end
+
+        it "shows me error message when I clicked expired activation link" do
+          visit(@activation_url_original)
+
+          expect(page).to have_content("카카오톡 인증에 실패하였습니다.")
+        end
       end
 
       context "when user is activated" do
