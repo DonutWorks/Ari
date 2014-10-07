@@ -1,0 +1,33 @@
+
+  <div class="page-header clearfix">
+    <h3 class="pull-left"><%= @gate.title %></h3>
+    <div class="pull-right margin-top15">
+      <%= link_to "수정", edit_admin_gate_path(@gate), class: "btn btn-default btn-sm" %>
+      <%= link_to "삭제", admin_gate_path(@gate), method: :delete,
+      data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger btn-sm" %>
+    </div>
+  </div>
+
+
+  <p>공지 내용 : <%= @gate.content %></p>
+  <p>실제 공지 주소 : <%= link_to @gate.link, @gate.link, target: "_blank" %></p>
+  <p>통합 공지 주소 : <%= link_to @gate.shortenURL, @gate.shortenURL, target: "_blank" %></p>
+  <p>만든 시간 : <%= @gate.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
+
+  <div class="right-tabs clearfix">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="secondary-nav"><a href="#survey-result" role="tab" data-toggle="tab">수요조사 결과</a></li>
+      <li class="secondary-nav active"><a href="#check-read" role="tab" data-toggle="tab">읽음 확인</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="check-read">
+        <%= render partial: 'check_read', locals: {gate: @gate} %>
+      </div>
+      <div class="tab-pane" id="survey-result">
+        <%= render partial: 'survey_result', locals: {gate: @gate} %>
+      </div>
+    </div>
+  </div>
+
+
