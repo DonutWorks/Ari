@@ -3,7 +3,7 @@ protected
   def require_provider_token
     if provider_token.nil?
       session[:require_provider_token] = true
-      params[:redirect_url] ||= request.fullpath
+      params[:redirect_url] = request.fullpath
       redirect_to sign_in_users_path
     end
   end
