@@ -39,5 +39,7 @@ Rails.application.routes.draw do
     resource :export_excel,  controller: :export_excel,  only: [:new, :create]
 
     resources :messages
+    
+    get 'gates/:id', to: 'notice#show'
   end
 end
