@@ -5,3 +5,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     provider :kakao, "1120cdc5280d18aee720bc31b274b1c4"
   end
 end
+
+OmniAuth.config.on_failure = Proc.new do |env|
+  ProvidersController.action(:failure).call(env)
+end
