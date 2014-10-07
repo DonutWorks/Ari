@@ -7,8 +7,8 @@
         <th width="13%">전화번호</th>
         <th width="20%">이메일</th>
         <th width="25%">전공</th>
-        <th width="15%">읽은 시간</th>
-        <th class="text-center" width="15%">문자(전체선택 <%= check_box_tag 'sms_read_all', nil, false, class: 'sms_all' %>)</th>
+        <th width="15%"><%= type == "read" || type == "unread" ? "읽은 시간" : "기록 시간" %></th>
+        <th class="text-center" width="15%">문자(전체선택 <%= check_box_tag "sms_#{type}_all", nil, false, class: 'sms_all' %>)</th>
       </tr>
     </thead>
     <tbody>
@@ -20,13 +20,19 @@
         <td><%= user.email %></td>
         <td><%= user.major %></td>
         <td>
-          <% if user.read_at(@notice) # need to decorate %>
-            <%= user.read_at(@notice).localtime.strftime("%Y-%m-%d %T") %>
+
+          <% if type == "read" || type == "unread" %>
+            <% if user.read_at(@notice) # need to decorate %>
+              <%= user.read_at(@notice).localtime.strftime("%Y-%m-%d %T") %>
+            <% else %>
+              -
+            <% end %>
           <% else %>
-            -
+            <%= user.responses.time(@notice) %>
           <% end %>
+          
         </td>
-        <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: 'sms_check sms_read' %></td>
+        <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_#{type}" %></td>
       </tr>
       <% end %>
     </tbody>

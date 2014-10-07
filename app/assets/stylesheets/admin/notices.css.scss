@@ -3,11 +3,36 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .sms-text {
-  padding-bottom:20px;
+  padding:0 20px 20px;
 }
 
 .fix-bottom {
   position: fixed;
   bottom: 0;
   background-color:white;
+  left:0;
+  width:100%
+}
+
+.nav-tabs .secondary-nav {
+  float:right;
+  margin-left:10px;
+  margin-right:0;
+}
+
+.sms-text{
+  border-top:1px solid #ccc;
+  display:none;
+}
+
+.show-sms {
+  margin-bottom:250px;
+}
+
+.notice-unreader {
+  margin-top: 80px
+}
+
+.margin-top15 {
+  margin-top: 15px
 }

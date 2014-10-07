@@ -1,8 +1,4 @@
 $(document).on('ready page:load', function () {
-
-  $('.sms-text').width($('.container').width());
-  $('.notice-full-page').css('margin-bottom', $('.sms-text').height()+ 20);
-
   $('.sms_all').change(function() {
     var id = (this).id.replace('_all','');
 
@@ -23,8 +19,15 @@ $(document).on('ready page:load', function () {
       if((this).checked === true) phone_numbers_cnt++;
     });
 
-    $('#phone_numbers').text("총 " + phone_numbers_cnt + "명이 선택 되었습니다.");
+    if(phone_numbers_cnt >= 1){
+      $('.notice-full-page').addClass('show-sms');
+      $('.sms-text').slideDown();      
+      $('#phone_numbers').text("총 " + phone_numbers_cnt + "명이 선택 되었습니다.");
+    }
+    else if (phone_numbers_cnt == 0){
+      $('.sms-text').slideUp();
+      $('.notice-full-page').removeClass('show-sms');
+    }
   }
 
 });
-

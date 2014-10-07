@@ -18,37 +18,35 @@
   <%= form_tag(admin_messages_path, method: "post") do %>
     <%= hidden_field_tag 'notice_id', @notice.id %>
 
-    <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-      <li class="active"><a href="#read-unread" role="tab" data-toggle="tab">읽음 확인</a></li>
-      <li><a href="#survey-result" role="tab" data-toggle="tab">수요 조사</a></li>
+      <li class="secondary-nav"><a href="#survey-result" role="tab" data-toggle="tab">수요 조사</a></li>
+      <li class="secondary-nav active"><a href="#read-unread" role="tab" data-toggle="tab">읽음 확인</a></li>
     </ul>
 
-    <!-- Tab panes -->
     <div class="tab-content">
-      <div class="tab-pane active" id="read-unread">
+      <div class="tab-pane fade in active" id="read-unread">
         <div class="notice-reader">
           <h3>읽은 회원 <small>(총 <%= @notice.readers.count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: @notice.readers.generation_sorted_desc } %>
+          <%= render partial: "table", locals: { users: @notice.readers.generation_sorted_desc, type: "read" } %>
         </div>
 
         <div class="notice-unreader">
           <h3>안 읽은 회원 <small>(총 <%= @notice.unreaders.count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: @notice.unreaders.generation_sorted_desc } %>
+          <%= render partial: "table", locals: { users: @notice.unreaders.generation_sorted_desc, type: "unread" } %>
         </div>
       </div>
-      <div class="tab-pane" id="survey-result">
+      <div class="tab-pane fade" id="survey-result">
         <div>
           <h3>참가 <small>(총 <%= User.responsed_yes(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: User.responsed_yes(@notice).generation_sorted_desc } %>
+          <%= render partial: "table", locals: { users: User.responsed_yes(@notice).generation_sorted_desc, type: "yes" } %>
         </div>
         <div>
           <h3>불확실 <small>(총 <%= User.responsed_maybe(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: User.responsed_maybe(@notice).generation_sorted_desc } %>
+          <%= render partial: "table", locals: { users: User.responsed_maybe(@notice).generation_sorted_desc, type: "maybe" } %>
         </div>
         <div>
           <h3>불참 <small>(총 <%= User.responsed_no(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: User.responsed_no(@notice).generation_sorted_desc } %>
+          <%= render partial: "table", locals: { users: User.responsed_no(@notice).generation_sorted_desc, type: "no" } %>
         </div>
       </div>
     </div>
