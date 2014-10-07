@@ -18,7 +18,7 @@ class SessionsController < AuthenticatableController
     end
 
     session[:user_id] = user.id
-    redirect_to session.delete(:return_to) || root_path
+    redirect_to params.delete(:redirect_url) || root_path
 
   rescue FormNormalizers::NormalizeError => e
     flash[:error] = "전화번호가 잘못되었습니다."

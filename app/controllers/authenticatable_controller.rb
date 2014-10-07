@@ -3,7 +3,7 @@ protected
   def require_provider_token
     if provider_token.nil?
       session[:require_provider_token] = true
-      session[:return_to] ||= request.fullpath
+      params[:redirect_url] ||= request.fullpath
       redirect_to sign_in_users_path
     end
   end
@@ -19,7 +19,7 @@ protected
     if activation and activation.activated
       session[:user_id] = activation.user.id
       session.delete(:provider_token_id)
-      redirect_to session.delete(:return_to) || root_path
+      redirect_to params.delete(:redirect_url) || root_path
     else
       redirect_to new_activation_path
     end
