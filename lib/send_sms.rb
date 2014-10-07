@@ -18,8 +18,6 @@ class SendSMS
 
 
   def send_sms!(sms_info)
-
-
     res = Net::HTTP.get_response(generate_request_url(sms_info))
 
     response = {}
@@ -45,7 +43,6 @@ class SendSMS
   def generate_request_url(sms_info)
 
     uri = URI(API_REQUEST_URL)
-
     uri.query = URI.encode_www_form(sms_info)
     uri
 

@@ -7,25 +7,24 @@ class SmsSender
     message.content = content
 
     if message.save
-      user_ids.each do |user_id|
 
-        user = User.find(user_id)
 
-        sms_info = {
-          from: "114", #보내는 사람
-          to: user.phone_number, #받는 사람
-          user: "donutworks",
-          password: "donutwork1!",
-          text: "[서울대 햇빛봉사단]" + message.content #SMS내용
-        }
+      users = User.where(id: user_ids)
 
-        sms_sender = SendSMS.new
+      sms_info = {
+        from: "114", #보내는 사람
+        to: users.pluck(:phone_number).join(","), #받는 사람
+        text: "[서울대 햇빛봉사단]" + message.content #SMS내용
+      }
 
-        begin
-          sms_sender.send_sms(sms_info)
-        rescue SendSMS::SendSMSError => e
-          raise SMSSenderError, e.message
-        else
+      sms_sender = SendSMS2.new
+
+      begin
+        sms_sender.send_sms(sms_info)
+      rescue SendSMS2::SendSMSError => e
+        raise SMSSenderError, e.message
+      else
+        users.each do |user|
           message_histories = MessageHistory.new
           message_histories.user_id = user.id
           message_histories.message_id = message.id
@@ -33,6 +32,7 @@ class SmsSender
           message_histories.save
         end
       end
+
 
       return message
     else
