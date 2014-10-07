@@ -28,7 +28,7 @@ class ActivationsController < AuthenticatableController
   end
 
   def show
-    redirect_url = params[:redirect_url]
+    session[:return_to] = params[:redirect_url]
 
     activator = UserActivator.new
     if activator.activate(params[:code], provider_token)
@@ -37,13 +37,14 @@ class ActivationsController < AuthenticatableController
       flash[:error] = "카카오톡 인증에 실패하였습니다."
     end
 
-    redirect_to redirect_url || session.delete(:return_to) || root_path
+    authenticate!
   end
 
 private
   def send_ticket_mail(ticket)
     verify_url = URI(activation_url(ticket.code))
-    verify_url.query = "redirect_url=#{session[:return_to]}"
+    redirect_url = URI.encode(session.delete(:return_to))
+    verify_url.query = "redirect_url=#{redirect_url}"
 
     mailgun = Mailgun()
     parameters = {
