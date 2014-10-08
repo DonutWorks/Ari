@@ -9,7 +9,7 @@
         <%= f.submit "전화번호로 로그인", :type => :image, :src => "/assets/phone_number_login_btn_large_wide.png", class: "login-img-button"  %>
 
       <% end %>
-      <%= link_to image_tag("kakao_account_login_btn_large_wide.png", class: "btn btn-link login-img-button"), '/auth/kakao' %>
+      <%= link_to image_tag("kakao_account_login_btn_large_wide.png", class: "btn btn-link login-img-button"), "/auth/kakao?redirect_url=#{params[:redirect_url]}" %>
     </div>
   </div>
 </div>

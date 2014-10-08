@@ -19,7 +19,7 @@ class ActivationsController < AuthenticatableController
 
     activator = UserActivator.new
     ticket = activator.issue_ticket(user, provider_token)
-    if ticket and activator.send_ticket_mail(user, activation_url(ticket.code))
+    if ticket and activator.send_ticket_mail(user, activation_url(ticket.code, redirect_url: params[:redirect_url]))
       flash[:notice] = "인증 메일이 전송되었습니다."
     else
       flash[:error] = "인증 메일 전송에 실패했습니다. 다시 시도해주세요."
@@ -28,8 +28,6 @@ class ActivationsController < AuthenticatableController
   end
 
   def show
-    session[:return_to] = params[:redirect_url]
-
     activator = UserActivator.new
     if activator.activate(params[:code], provider_token)
       flash[:notice] = "카카오톡 인증에 성공하였습니다."
