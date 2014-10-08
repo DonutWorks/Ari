@@ -19,7 +19,8 @@ class ProvidersController < AuthenticatableController
   end
 
   def failure
+    params.merge!(request.env['omniauth.params'])
     flash[:error] = "인증에 실패하였습니다."
-    redirect_to session[:return_to] || root_path
+    redirect_to params[:redirect_url] || root_path
   end
 end
