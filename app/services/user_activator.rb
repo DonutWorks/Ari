@@ -37,4 +37,15 @@ class UserActivator
   end
 
   # need bang methods
+
+  def send_ticket_mail(user, activation_url)
+    mailgun = Mailgun()
+    parameters = {
+      :from => "ari@donutworks.com",
+      :to => user.email,
+      :subject => "서울대 햇빛봉사단의 계정 활성화를 위한 메일입니다.",
+      :html => "<div><h2>서울대 햇빛봉사단 계정을 활성화 시키려면 아래의 링크를 클릭 해주세요.</h2></div><div>#{activation_url}</div>"
+    }
+    mailgun.messages.send_email(parameters)
+  end
 end
