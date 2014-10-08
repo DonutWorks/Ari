@@ -1,4 +1,6 @@
 class AuthenticatableController < ApplicationController
+  skip_before_action :authenticate_user!
+
 protected
   def require_provider_token
     if provider_token.nil?
