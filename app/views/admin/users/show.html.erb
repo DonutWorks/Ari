@@ -3,7 +3,7 @@
 
   <div id="buttons-div" class="pull-right">
     <%= link_to "수정", edit_admin_user_path(@user), class: "btn btn-default" %>
-	<%= link_to "삭제", admin_user_path(@user), method: :delete, data: { confirm: "정말 삭제하시겠어요?" }, class: "btn btn-danger" %>
+  	<%= link_to "삭제", admin_user_path(@user), method: :delete, data: { confirm: "정말 삭제하시겠어요?" }, class: "btn btn-danger" %>
   </div>
 </div>
 
@@ -14,7 +14,12 @@
   </tr>
   <tr>
   	<td>이름</td>
-  	<td><%= @user.username %></td>
+  	<td>
+      <%= @user.username %>
+      <% if @user.activated? %>
+        <span class="glyphicon glyphicon-ok"></span>
+      <% end %>
+    </td>
   </tr>
   <tr>
     <td>생년월일</td>

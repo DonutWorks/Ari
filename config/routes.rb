@@ -11,12 +11,14 @@ Rails.application.routes.draw do
     collection do
       get 'show'
       get 'sign_in', to: 'sessions#new'
-      get 'auth', to: 'sessions#create'
+      post 'auth', to: 'sessions#create'
       get 'sign_out', to: 'sessions#destroy'
     end
   end
 
-  resources :gates, only: [:show]
+  resources :notices, only: [:show] do
+    resources :responses, only: [:new, :create]
+  end
 
   namespace :admin do
     root 'application#index'
@@ -28,12 +30,16 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :gates do
+    resources :notices do
       collection do
         get 'download_roster_example'
       end
     end
 
     resource :export_excel,  controller: :export_excel,  only: [:new, :create]
+
+    resources :messages
   end
+  get '/gates/:id', to:  redirect('/notices/%{id}')
+
 end

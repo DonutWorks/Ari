@@ -16,4 +16,9 @@ class ProvidersController < AuthenticatableController
       authenticate!
     end
   end
+
+  def failure
+    flash[:error] = "인증에 실패하였습니다."
+    redirect_to session[:return_to] || root_path
+  end
 end

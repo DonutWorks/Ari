@@ -1,0 +1,18 @@
+<div class="form-container">
+  <div class="row">
+    <div class="col-md-12">
+      <%= form_for [:admin, @notice], html: {role: "form", class: "form-horizontal"} do |f|%>
+        <legend>공지사항 수정하기</legend>
+        <%= render partial: 'form', locals: {f: f} %>
+        <p class="pull-right">
+          <%= f.submit "수정", class: "btn btn-primary btn-lg"  %>
+          <%= link_to [:admin, @notice] do %>
+            <button type="button" class="btn btn-default btn-lg">
+              취소
+            </button>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

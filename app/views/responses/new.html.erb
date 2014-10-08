@@ -1,0 +1,8 @@
+<%= render template: 'notices/show' %>
+<% if current_user.responsed_to?(@notice) %>
+  <div class="alert alert-success" role="alert">이미 응답하셨습니다.</div>
+<% else %>
+  <%= link_to "참가", notice_responses_path(status: "yes"), method: :post, class: "btn btn-default" %>
+  <%= link_to "불확실", notice_responses_path(status: "maybe"), method: :post, class: "btn btn-default" %>
+  <%= link_to "불참", notice_responses_path(status: "no"), method: :post, class: "btn btn-default" %>
+<% end %>

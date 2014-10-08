@@ -28,6 +28,8 @@ class ActivationsController < AuthenticatableController
   end
 
   def show
+    session[:return_to] = params[:redirect_url]
+
     activator = UserActivator.new
     if activator.activate(params[:code], provider_token)
       flash[:notice] = "카카오톡 인증에 성공하였습니다."
@@ -35,7 +37,6 @@ class ActivationsController < AuthenticatableController
       flash[:error] = "카카오톡 인증에 실패하였습니다."
     end
 
-    # TODO: redirect_to redirect_url (#216)
-    redirect_to session.delete(:return_to) || root_path
+    authenticate!
   end
 end

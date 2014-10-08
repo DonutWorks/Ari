@@ -8,12 +8,14 @@ FactoryGirl.define do
     email { "#{username}@donutworks.com" }
     phone_number
     major "CS"
+    member_type "정단원"
   end
 
-  factory :gate do
+  factory :notice do
     title "goto google.com"
     content "google!"
     link "http://google.com"
+    notice_type "external"
   end
 
   factory :provider_token do

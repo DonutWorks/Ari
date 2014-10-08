@@ -1,0 +1,47 @@
+<div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :title) %>">
+  <%= f.label :title, "제목", class: "col-sm-1 control-label" %>
+  <div class="col-sm-11">
+    <%= f.text_field :title, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@notice, :title) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@notice, :title) %></span>
+  </div>
+</div>
+
+<div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :content) %>">
+  <%= f.label :content, "내용", class: "col-sm-1 control-label" %>
+  <div class="col-sm-11">
+    <%= f.text_field :content, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@notice, :content) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@notice, :content) %></span>
+  </div>
+</div>
+
+<div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :link) %>">
+  <%= f.label :link, "링크", class: "col-sm-1 control-label" %>
+  <div class="col-sm-11">
+    <%= f.text_field :link, class: "form-control" %>
+    <span class="glyphicon <%= validation_state_feedback(@notice, :link) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@notice, :link) %></span>
+  </div>
+</div>
+
+<div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :notice_type) %>">
+  <%= f.label :notice_type, "유형", class: "col-sm-1 control-label" %>
+  <div class="col-sm-11">
+    <%= f.label :notice_type_external, class: "radio-inline control-label" do %>
+      <%= f.radio_button :notice_type, "external", checked: true %>
+      외부 공지
+    <% end %>
+    <%= f.label :notice_type_plain, class: "radio-inline control-label" do %>
+      <%= f.radio_button :notice_type, "plain" %>
+      내부 공지
+    <% end %>
+    <%= f.label :notice_type_survey, class: "radio-inline control-label" do %>
+      <%= f.radio_button :notice_type, "survey" %>
+      수요조사
+    <% end %>
+
+    <span class="glyphicon <%= validation_state_feedback(@notice, :notice_type) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@notice, :notice_type) %></span>
+  </div>
+</div>
