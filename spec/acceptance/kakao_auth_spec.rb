@@ -114,6 +114,10 @@ RSpec.describe "kakao auth process", type: :feature do
           expect(page).to have_content("카카오톡 인증에 성공하였습니다.")
         end
 
+        it "redirects me to redirect_url of activation link" do
+          expect(current_path).to eq("/")
+        end
+
         context "when user logged in" do
           it "leads me to not auth page when I logged in" do
             visit("/")
