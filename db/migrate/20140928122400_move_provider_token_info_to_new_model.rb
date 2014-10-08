@@ -1,5 +1,6 @@
 class MoveProviderTokenInfoToNewModel < ActiveRecord::Migration
 	class AccountActivation < ActiveRecord::Base
+    has_one :provider_token
 	end
 
 	class ProviderToken < ActiveRecord::Base
@@ -20,9 +21,10 @@ class MoveProviderTokenInfoToNewModel < ActiveRecord::Migration
   def down
   	add_column :account_activations, :provider, :string
   	add_column :account_activations, :uid, :string
+    add_index :account_activations, [:provider, :uid]
 
   	AccountActivation.all.each do |activation|
-  		token = activation.provider_token
+  		token = ProviderToken.find_by_id(activation.provider_token_id)
   		activation.update_attributes!(uid: token.uid, provider: token.provider)
   	end
 
