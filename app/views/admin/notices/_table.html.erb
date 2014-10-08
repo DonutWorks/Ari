@@ -2,18 +2,19 @@
   <table class="table table-condensed">
     <thead>
       <tr>
+        <th class="text-center" width="5%">문자 <%= check_box_tag "sms_#{type}_all", nil, false, class: 'sms_all' %></th>
         <th width="5%">기수</th>
         <th width="7%">이름</th>
         <th width="13%">전화번호</th>
-        <th width="20%">이메일</th>
+        <th width="30%">이메일</th>
         <th width="25%">전공</th>
         <th width="15%"><%= type == "read" || type == "unread" ? "읽은 시간" : "기록 시간" %></th>
-        <th class="text-center" width="15%">문자(전체선택 <%= check_box_tag "sms_#{type}_all", nil, false, class: 'sms_all' %>)</th>
       </tr>
     </thead>
     <tbody>
       <% users.each_with_index do |user, index| %>
       <tr>
+        <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_#{type}" %></td>
         <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
         <td><%= user.username %></td>
         <td><%= pretty_phone_number(user.phone_number) %></td>
@@ -30,9 +31,7 @@
           <% else %>
             <%= user.responses.time(@notice) %>
           <% end %>
-          
         </td>
-        <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_#{type}" %></td>
       </tr>
       <% end %>
     </tbody>
