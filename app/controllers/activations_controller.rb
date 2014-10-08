@@ -1,4 +1,5 @@
 class ActivationsController < AuthenticatableController
+  skip_before_action :authenticate!
   before_action :require_provider_token
 
   def new
@@ -23,6 +24,8 @@ class ActivationsController < AuthenticatableController
     else
       flash[:error] = "인증 메일 전송에 실패했습니다. 다시 시도해주세요."
     end
+
+    clear_provider_token!
     redirect_to root_path
   end
 

@@ -1,4 +1,6 @@
 class SessionsController < AuthenticatableController
+  skip_before_action :authenticate!, except: [:new]
+
   def new
     @user = User.new
   end
@@ -25,6 +27,7 @@ class SessionsController < AuthenticatableController
 
   def destroy
     session.delete(:user_id)
+    clear_sign_in_cookie!
     redirect_to sign_in_users_path
   end
 end

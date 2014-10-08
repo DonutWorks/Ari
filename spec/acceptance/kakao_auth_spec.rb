@@ -66,7 +66,10 @@ RSpec.describe "kakao auth process", type: :feature do
       it "shows me error message when I clicked an invalid activation link" do
         activation_url = URI(@activation_url)
         activation_url.path += "invalid"
+
         visit(activation_url.to_s)
+        find("#login-form a").click
+
         expect(page).to have_content("카카오톡 인증에 실패하였습니다.")
       end
 
@@ -99,6 +102,7 @@ RSpec.describe "kakao auth process", type: :feature do
 
         it "shows me error message when I clicked expired activation link" do
           visit(@activation_url_original)
+          find("#login-form a").click
 
           expect(page).to have_content("카카오톡 인증에 실패하였습니다.")
         end
@@ -107,10 +111,11 @@ RSpec.describe "kakao auth process", type: :feature do
       context "when user is activated" do
         before(:each) do
           visit(@activation_url)
+          # to login
+          find("#login-form a").click
         end
 
         it "lets me activate my account to click activation link" do
-          # need actual test, because need auth hash to activate an account actually.
           expect(page).to have_content("카카오톡 인증에 성공하였습니다.")
         end
 

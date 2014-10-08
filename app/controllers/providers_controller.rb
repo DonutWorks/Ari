@@ -1,4 +1,6 @@
 class ProvidersController < AuthenticatableController
+  skip_before_action :authenticate!
+
   def create
     params.merge!(request.env['omniauth.params'])
     auth_hash = request.env['omniauth.auth']
