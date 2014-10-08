@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:FeGs/omniauth-kakao.git
+  remote: https://github.com/FeGs/omniauth-kakao.git
   revision: a76ac9771d4a8b918ed2e1760080490b2296e220
   branch: bug/not-testable
   specs:
