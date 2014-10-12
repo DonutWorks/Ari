@@ -68,10 +68,10 @@ ActiveRecord::Schema.define(version: 20141012150938) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  null: false
+    t.string   "email",                                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "username",               null: false
+    t.string   "username",                               null: false
     t.string   "phone_number"
     t.string   "major"
     t.string   "student_id"
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20141012150938) do
     t.string   "member_type"
     t.float    "generation_id"
     t.string   "birth"
-    t.boolean  "activated"
+    t.boolean  "activated",              default: false
     t.string   "provider"
     t.string   "uid"
     t.text     "extra_info"

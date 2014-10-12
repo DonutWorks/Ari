@@ -1,42 +1,54 @@
 class ActivationsController < AuthenticatableController
-  skip_before_action :authenticate!
-  before_action :require_provider_token
+  skip_before_action :require_activated
+  before_action :require_signed_in, except: [:create]
 
   def new
-    @activation = AccountActivation.new
-    @user_info = provider_token.info
+    @user = current_user
   end
 
   def create
-    email = params[:account_activation][:email]
-    user = User.find_by_email(email)
+    @user = User.new(user_params)
+    @user.extra_info = YAML.load(params[:user][:extra_info]).to_hash
 
-    if user.nil?
-      flash[:error] = "등록된 이메일이 아닙니다. 관리자에게 문의하세요."
-      redirect_to new_activation_path
+    create_invitation_service = Authenticates::CreateInvitationService.new
+    out = create_invitation_service.execute(current_user, @user)
+
+    case out[:status]
+    when :invalid_email
+      @error_message = "등록된 이메일이 아닙니다. 관리자에게 문의하세요."
+      render 'new'
       return
-    end
-
-    activator = UserActivator.new
-    ticket = activator.issue_ticket(user, provider_token)
-    if ticket and activator.send_ticket_mail(user, activation_url(ticket.code, redirect_url: params[:redirect_url]))
+    when :failure
+      @error_message = "인증 메일 전송에 실패했습니다. 다시 시도해주세요."
+      render 'new'
+      return
+    when :success
+      session.delete(:user_id)
+      create_invitation_service.send_invitation_mail(@user.email,
+       activation_url(out[:code], redirect_url: params[:redirect_url]))
       flash[:notice] = "인증 메일이 전송되었습니다."
-    else
-      flash[:error] = "인증 메일 전송에 실패했습니다. 다시 시도해주세요."
     end
 
-    clear_provider_token!
-    redirect_to root_path
+    proceed
   end
 
   def show
-    activator = UserActivator.new
-    if activator.activate(params[:code], provider_token)
-      flash[:notice] = "카카오톡 인증에 성공하였습니다."
-    else
+    code = params[:code]
+
+    out = Authenticates::ActivateUserService.new.execute(current_user, code)
+
+    case out[:status]
+    when :failure
       flash[:error] = "카카오톡 인증에 실패하였습니다."
+    when :success
+      flash[:notice] = "카카오톡 인증에 성공하였습니다."
     end
 
-    authenticate!
+    proceed
+  end
+
+private
+  def user_params
+    params.require(:user).permit(:email, :uid, :provider)
   end
 end

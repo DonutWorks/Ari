@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
-  has_one :account_activation, dependent: :destroy
+  has_many :activation_tickets
   has_many :responses
   has_many :message_histories
   has_many :messages, through: :message_histories
+  serialize :extra_info
 
   scope :generation_sorted_desc, -> { order(generation_id: :desc) }
 
@@ -25,8 +26,7 @@ class User < ActiveRecord::Base
   end
 
   def activated?
-    return false unless account_activation
-    account_activation.activated
+    activated
   end
 
 private

@@ -1,12 +1,23 @@
+<% if @error_message %>
+<div class="alert <%= flash_class(:error) %> alert-dismissable fade in">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <%= @error_message %>
+</div>
+<% end %>
+
 <div class="form-container" id="user-activation">
   <div class="row">
     <div class="col-md-12">
-      <%= form_for @activation, url: activations_path do |f|%>
+      <%= form_for @user, url: activations_path, method: :create do |f|%>
         <legend>이메일 주소를 입력해주세요</legend>
         <div class="profile">
-          <%= image_tag(@user_info['image'], class: "img-thumbnail") %>
-          <p id="name"><%= @user_info['name'] %></p>
+          <%= image_tag(@user.extra_info['image'], class: "img-thumbnail") %>
+          <p id="name"><%= @user.extra_info['name'] %></p>
         </div>
+
+        <%= f.hidden_field :uid %>
+        <%= f.hidden_field :provider %>
+        <%= f.hidden_field :extra_info, value: @user.extra_info.to_yaml %>
 
         <div class="form-group">
           <%= f.label :email, id: "email-label" %><br>

@@ -1,5 +1,5 @@
 class ActivationTicket < ActiveRecord::Base
-  belongs_to :account_activation
+  belongs_to :user
   before_create :generate_code
 
 private

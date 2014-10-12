@@ -21,7 +21,7 @@ class MergeAccountActivationsAndProviderTokensIntoUsers < ActiveRecord::Migratio
   end
 
   def up
-    add_column :users, :activated, :boolean
+    add_column :users, :activated, :boolean, default: false
     add_column :users, :provider, :string
     add_column :users, :uid, :string
     # from provider
