@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "kakao auth process", type: :feature do
+RSpec.describe "user auth process", type: :feature do
   before(:each) do
     @user = FactoryGirl.create(:user)
     OmniAuth.config.test_mode = true
@@ -17,14 +17,14 @@ RSpec.describe "kakao auth process", type: :feature do
   it "lets me fail to kakao log in" do
     OmniAuth.config.mock_auth[:kakao] = :invalid_credentials
     visit("/")
-    find("#login-form a").click
+    find("#kakao-login-btn").click
     expect(page).to have_content("인증에 실패하였습니다.")
   end
 
   context "when try to log in w/kakao" do
     before(:each) do
       visit("/")
-      find("#login-form a").click
+      find("#kakao-login-btn").click
     end
 
     it "leads me to email verification page at first log in" do
@@ -68,7 +68,7 @@ RSpec.describe "kakao auth process", type: :feature do
         activation_url.path += "invalid"
 
         visit(activation_url.to_s)
-        find("#login-form a").click
+        find("#kakao-login-btn").click
 
         expect(page).to have_content("카카오톡 인증에 실패하였습니다.")
       end
@@ -77,7 +77,7 @@ RSpec.describe "kakao auth process", type: :feature do
         activation_url_original = @activation_url
         another_user = FactoryGirl.create(:user, username: "Mary")
 
-        find("#login-form a").click
+        find("#kakao-login-btn").click
         fill_in 'account_activation_email', with: another_user.email
         click_button "인증 메일 보내기"
 
@@ -90,7 +90,7 @@ RSpec.describe "kakao auth process", type: :feature do
         before(:each) do
           @activation_url_original = @activation_url
 
-          find("#login-form a").click
+          find("#kakao-login-btn").click
           fill_in 'account_activation_email', with: @user.email
           click_button "인증 메일 보내기"
         end
@@ -102,7 +102,7 @@ RSpec.describe "kakao auth process", type: :feature do
 
         it "shows me error message when I clicked expired activation link" do
           visit(@activation_url_original)
-          find("#login-form a").click
+          find("#kakao-login-btn").click
 
           expect(page).to have_content("카카오톡 인증에 실패하였습니다.")
         end
@@ -111,20 +111,36 @@ RSpec.describe "kakao auth process", type: :feature do
       context "when user is activated" do
         before(:each) do
           visit(@activation_url)
-          # to login
-          find("#login-form a").click
         end
 
-        it "lets me activate my account to click activation link" do
-          expect(page).to have_content("카카오톡 인증에 성공하였습니다.")
+        context "when user logged in without remember me" do
+          before(:each) do
+            find("#kakao-login-btn").click
+          end
+
+          it "lets me activate my account to click activation link" do
+            expect(page).to have_content("카카오톡 인증에 성공하였습니다.")
+          end
+
+          it "redirects me to redirect_url of activation link" do
+            expect(current_path).to eq("/")
+          end
+
+          context "when user logged in" do
+            it "leads me to not auth page when I logged in" do
+              visit("/")
+              expect(current_path).to eq("/")
+            end
+          end
         end
 
-        it "redirects me to redirect_url of activation link" do
-          expect(current_path).to eq("/")
-        end
+        context "when user logged in with remember me" do
+          it "keeps me logged in when restarting browser" do
+            find("#remember-me").set(true)
+            fill_in(:user_phone_number, with: @user.phone_number)
+            click_button("전화번호로 로그인")
 
-        context "when user logged in" do
-          it "leads me to not auth page when I logged in" do
+            expire_cookies
             visit("/")
             expect(current_path).to eq("/")
           end
