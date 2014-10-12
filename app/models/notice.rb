@@ -1,7 +1,7 @@
 require 'addressable/uri'
 
 class Notice < ActiveRecord::Base
-  NOTICE_TYPES = %w(external plain survey)
+  NOTICE_TYPES = %w(external plain survey to)
 
   has_many :responses
 

@@ -1,4 +1,6 @@
 $(document).on('ready page:load', function () {
+  $('#to-option').hide();
+
   $('.sms_all').change(function() {
     var id = (this).id.replace('_all','');
 
@@ -29,5 +31,15 @@ $(document).on('ready page:load', function () {
       $('.notice-full-page').removeClass('show-sms');
     }
   }
+
+  $('.notice-type-option').change(function() {
+    switch($(this).val()){
+      case 'to':
+        $('#to-option').fadeIn('fast');
+        break;
+      default:
+        $('#to-option').fadeOut('fast');
+    }
+  });
 
 });
