@@ -3,6 +3,8 @@ class ProvidersController < AuthenticatableController
 
   def create
     params.merge!(request.env['omniauth.params'])
+    remember_me = params[:remember_me]
+
     auth_hash = request.env['omniauth.auth']
     provider_token = ProviderToken.find_or_create_by!({
       provider: auth_hash['provider'],
@@ -14,7 +16,7 @@ class ProvidersController < AuthenticatableController
     if session.delete(:require_provider_token)
       redirect_to params.delete(:redirect_url) || root_path
     else
-      authenticate!
+      authenticate!(remember_me: remember_me)
     end
   end
 
