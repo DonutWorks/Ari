@@ -9,6 +9,7 @@ class SessionsController < AuthenticatableController
   def create
     normalizer = FormNormalizers::PhoneNumberNormalizer.new
     phone_number = normalizer.normalize(params[:user][:phone_number])
+    remember_me = params[:user][:remember_me] == "1"
 
     user = User.find_by_phone_number(phone_number)
     if user.nil?
@@ -18,7 +19,7 @@ class SessionsController < AuthenticatableController
     end
 
     session[:user_id] = user.id
-    redirect_to params.delete(:redirect_url) || root_path
+    authenticate!(remember_me: remember_me)
 
   rescue FormNormalizers::NormalizeError => e
     flash[:error] = "전화번호가 잘못되었습니다."

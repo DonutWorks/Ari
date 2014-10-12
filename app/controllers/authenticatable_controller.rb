@@ -12,6 +12,10 @@ protected
     @provider_token = nil
   end
 
+  def store_sign_in_cookie!(value)
+    cookies.permanent.signed[:remember_me] = value
+  end
+
   def sign_in_cookie
     cookies.signed[:remember_me]
   end
@@ -33,8 +37,10 @@ protected
     end
   end
 
-  def authenticate!
+  def authenticate!(options = {})
     if current_user || authenticate_with_cookie! || authenticate_with_provider_token!
+      store_sign_in_cookie!(current_user.id) if options[:remember_me]
+
       session.delete(:provider_token_id)
       redirect_to params.delete(:redirect_url) || root_path
       return true
