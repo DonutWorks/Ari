@@ -54,7 +54,7 @@
   <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :to) %>">
     <%= f.label :to, "모집 인원", class: "col-sm-1 control-label" %>
     <div class="col-sm-11">
-      <%= f.select(:to, options_for_select(1..200),{}, {class: 'form-control'}) %>
+      <%= f.number_field :to, min: 1, class: "form-control" %>
       <span class="glyphicon <%= validation_state_feedback(@notice, :to) %> form-control-feedback"></span>
       <span class="help-block"><%= attribute_error_message(@notice, :to) %></span>
     </div>
