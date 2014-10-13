@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141008144402) do
+ActiveRecord::Schema.define(version: 20141013154141) do
 
   create_table "account_activations", force: true do |t|
     t.integer  "user_id"
@@ -53,11 +53,12 @@ ActiveRecord::Schema.define(version: 20141008144402) do
     t.string   "title"
     t.string   "content"
     t.string   "link"
-    t.datetime "duedate"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "shortenURL"
     t.string   "notice_type"
+    t.integer  "to"
+    t.datetime "due_date"
   end
 
   create_table "provider_tokens", force: true do |t|
