@@ -30,4 +30,28 @@ $(document).on('ready page:load', function () {
     }
   }
 
+  $('#sms_content').keyup(change_sms_text_size);
+
 });
+
+function change_sms_text_size(){
+  var string = $('#sms_content').val();
+
+  var utf8length = 0;
+  for (var n = 0; n < string.length; n++) {
+      var c = string.charCodeAt(n);
+      if (c < 128) {
+          utf8length++;
+      }
+      else {
+          utf8length = utf8length+2;
+      }
+  }
+
+  if(utf8length > 90)
+    $('#current-text-check').text('전송 가능한 최대 길이를 초과하였습니다.');
+  else
+    $('#current-text-check').text('');
+  
+  $('#current-text-size').text(utf8length); 
+}
