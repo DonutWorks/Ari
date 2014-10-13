@@ -4,6 +4,7 @@ class Notice < ActiveRecord::Base
   NOTICE_TYPES = %w(external plain survey)
 
   has_many :responses
+  has_many :messages
 
   acts_as_readable
   before_save :make_redirectable_url!
