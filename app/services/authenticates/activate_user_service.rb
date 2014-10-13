@@ -1,5 +1,5 @@
 module Authenticates
-  class ActivateUserService
+  class ActivateUserService < BaseService
     def execute(signed_in_user, code)
       ticket = Invitation.find_by(code: code)
       return failure if ticket.nil? or ticket.expired
@@ -13,15 +13,6 @@ module Authenticates
       end
 
       return success
-    end
-
-  private
-    def success
-      { status: :success }
-    end
-
-    def failure
-      { status: :failure }
     end
   end
 end

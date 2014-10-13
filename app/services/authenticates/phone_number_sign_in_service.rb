@@ -1,12 +1,12 @@
 module Authenticates
-  class PhoneNumberSignInService
+  class PhoneNumberSignInService < BaseService
     def execute(session, phone_number)
       normalizer = FormNormalizers::PhoneNumberNormalizer.new
 
       begin
         phone_number = normalizer.normalize(phone_number)
       rescue FormNormalizers::NormalizeError => e
-        return invalid_phone_number
+        return failure({ status: :invalid_phone_number })
       end
 
       user = User.find_by(phone_number: phone_number)
@@ -22,10 +22,6 @@ module Authenticates
   private
     def invalid_phone_number
       { status: :invalid_phone_number }
-    end
-
-    def success(params)
-      params.merge!({ status: :success })
     end
   end
 end

@@ -1,5 +1,5 @@
 module Authenticates
-  class KakaoSignInService
+  class KakaoSignInService < BaseService
     def execute(session, auth_hash)
       user = User.find_by({
         provider: auth_hash['provider'],
@@ -7,7 +7,7 @@ module Authenticates
       })
 
       if user.nil?
-        return need_to_register
+        return failure({ status: :need_to_register })
       end
 
       # update user info
@@ -15,15 +15,6 @@ module Authenticates
 
       session[:user_id] = user.id
       return success({ user: user })
-    end
-
-  private
-    def need_to_register
-      { status: :need_to_register }
-    end
-
-    def success(params)
-      params.merge!({ status: :success })
     end
   end
 end
