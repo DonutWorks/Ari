@@ -1,5 +1,6 @@
 $(document).on('ready page:load', function () {
-  $('#to-option').hide();
+  if($('.notice-type-option:checked').val() != "to")
+    $('#to-option').hide();
 
   $('.sms_all').change(function() {
     var id = (this).id.replace('_all','');
