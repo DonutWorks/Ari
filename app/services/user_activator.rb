@@ -48,4 +48,13 @@ class UserActivator
     }
     mailgun.messages.send_email(parameters)
   end
+
+  def send_ticket_sms(user, activation_url)
+    shortener = URLShortener.new
+    url = shortener.shorten_url(activation_url)
+
+    sms_content = "[인증 url] => " + url
+    sms_sender = SmsSender.new
+    sms_sender.send_message(sms_content, user.id)
+  end
 end

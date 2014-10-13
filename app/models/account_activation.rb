@@ -1,6 +1,6 @@
 class AccountActivation < ActiveRecord::Base
 	# Virtual attribute
-	attr_accessor :email
+	attr_accessor :phone_number
 
   belongs_to :user
   has_many :activation_ticket, dependent: :destroy

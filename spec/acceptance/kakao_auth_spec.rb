@@ -27,31 +27,31 @@ RSpec.describe "kakao auth process", type: :feature do
       find("#login-form a").click
     end
 
-    it "leads me to email verification page at first log in" do
+    it "leads me to phone_number verification page at first log in" do
       expect(page).to have_content("John Doe")
-      expect(page).to have_selector("#account_activation_email")
+      expect(page).to have_selector("#account_activation_phone_number")
     end
 
-    context "when try to activate an account w/ invalid email" do
-      it "show me error message when I submitted an invalid email" do
-        fill_in 'account_activation_email', with: "invalid email"
-        click_button "인증 메일 보내기"
+    context "when try to activate an account w/ invalid phone_number" do
+      it "show me error message when I submitted an invalid phone_number" do
+        fill_in 'account_activation_phone_number', with: "invalid phone_number"
+        click_button "인증 문자 보내기"
 
-        expect(page).to have_content("등록된 이메일이 아닙니다.")
+        expect(page).to have_content("등록된 전화번호가 아닙니다.")
       end
     end
 
-    context "when try to activate an account w/ valid email" do
+    context "when try to activate an account w/ valid phone_number" do
       before(:each) do
         @mail_receiver = nil
         @activation_url = nil
-        allow_any_instance_of(UserActivator).to receive(:send_ticket_mail) do |activator, user, url|
+        allow_any_instance_of(UserActivator).to receive(:send_ticket_sms) do |activator, user, url|
           @mail_receiver = user
           @activation_url = url
         end
 
-        fill_in 'account_activation_email', with: @user.email
-        click_button "인증 메일 보내기"
+        fill_in 'account_activation_phone_number', with: @user.phone_number
+        click_button "인증 문자 보내기"
       end
 
       it "sends activation ticket to me" do
@@ -60,7 +60,7 @@ RSpec.describe "kakao auth process", type: :feature do
         url = URI(@activation_url)
         expect(url.path.split("/")[1]).to eq("activations")
 
-        expect(page).to have_content("인증 메일이 전송되었습니다.")
+        expect(page).to have_content("인증 문자가 전송되었습니다.")
       end
 
       it "shows me error message when I clicked an invalid activation link" do
@@ -75,10 +75,10 @@ RSpec.describe "kakao auth process", type: :feature do
         another_user = FactoryGirl.create(:user, username: "Mary")
 
         find("#login-form a").click
-        fill_in 'account_activation_email', with: another_user.email
-        click_button "인증 메일 보내기"
+        fill_in 'account_activation_phone_number', with: another_user.phone_number
+        click_button "인증 문자 보내기"
 
-        expect(page).to have_content("인증 메일이 전송되었습니다.")
+        expect(page).to have_content("인증 문자가 전송되었습니다.")
         expect(@mail_receiver).to eq(another_user)
         expect(activation_url_original).not_to eq(@activation_url)
       end
@@ -88,12 +88,12 @@ RSpec.describe "kakao auth process", type: :feature do
           @activation_url_original = @activation_url
 
           find("#login-form a").click
-          fill_in 'account_activation_email', with: @user.email
-          click_button "인증 메일 보내기"
+          fill_in 'account_activation_phone_number', with: @user.phone_number
+          click_button "인증 문자 보내기"
         end
 
         it "sends activation ticket whenever I requested a ticket" do
-          expect(page).to have_content("인증 메일이 전송되었습니다.")
+          expect(page).to have_content("인증 문자가 전송되었습니다.")
           expect(@activation_url_original).not_to eq(@activation_url)
         end
 
