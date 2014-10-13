@@ -11,10 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+ActiveRecord::Schema.define(version: 20141013175644) do
 
-ActiveRecord::Schema.define(version: 20141012150938) do
-
-  create_table "activation_tickets", force: true do |t|
+  create_table "invitations", force: true do |t|
     t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"

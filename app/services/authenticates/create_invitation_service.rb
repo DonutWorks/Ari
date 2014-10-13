@@ -26,8 +26,8 @@ module Authenticates
 
       # send a ticket
       begin
-        ActivationTicket.where(user: user).update_all(expired: true)
-        ticket = ActivationTicket.create!(user: user)
+        Invitation.where(user: user).update_all(expired: true)
+        ticket = Invitation.create!(user: user)
       rescue ActiveRecord::RecordInvalid => e
         return failure
       end
@@ -35,13 +35,13 @@ module Authenticates
       return success({ code: ticket.code })
     end
 
-    def send_invitation_mail(email, activation_url)
+    def send_invitation_mail(email, invitation_url)
       mailgun = Mailgun()
       parameters = {
         :from => "ari@donutworks.com",
         :to => email,
         :subject => "서울대 햇빛봉사단의 계정 활성화를 위한 메일입니다.",
-        :html => "<div><h2>서울대 햇빛봉사단 계정을 활성화 시키려면 아래의 링크를 클릭 해주세요.</h2></div><div>#{activation_url}</div>"
+        :html => "<div><h2>서울대 햇빛봉사단 계정을 활성화 시키려면 아래의 링크를 클릭 해주세요.</h2></div><div>#{invitation_url}</div>"
       }
       mailgun.messages.send_email(parameters)
     end

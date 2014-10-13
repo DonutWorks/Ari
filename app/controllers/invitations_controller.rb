@@ -1,4 +1,5 @@
-class ActivationsController < AuthenticatableController
+
+class InvitationsController < AuthenticatableController
   skip_before_action :require_activated
   before_action :require_signed_in, except: [:create]
 
@@ -25,7 +26,7 @@ class ActivationsController < AuthenticatableController
     when :success
       session.delete(:user_id)
       create_invitation_service.send_invitation_mail(@user.email,
-       activation_url(out[:code], redirect_url: params[:redirect_url]))
+       invitation_url(out[:code], redirect_url: params[:redirect_url]))
       flash[:notice] = "인증 메일이 전송되었습니다."
     end
 

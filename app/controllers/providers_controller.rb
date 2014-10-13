@@ -15,7 +15,7 @@ class ProvidersController < AuthenticatableController
         provider: auth_hash['provider'],
         extra_info: auth_hash['info']
       })
-      render 'activations/new'
+      render 'invitations/new'
       return
     when :success
       cookies.permanent.signed[:remember_me] = out[:user].id if remember_me

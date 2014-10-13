@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :activation_tickets
+  has_many :invitations
   has_many :responses
   has_many :message_histories
   has_many :messages, through: :message_histories

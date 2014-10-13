@@ -44,37 +44,37 @@ RSpec.describe "user auth process", type: :feature do
     context "when try to activate an account w/ valid email" do
       before(:each) do
         @mail_receiver = nil
-        @activation_url = nil
+        @invitation_url = nil
         allow_any_instance_of(Authenticates::CreateInvitationService).to receive(:send_invitation_mail) do |service, email, url|
           @mail_receiver = email
-          @activation_url = url
+          @invitation_url = url
         end
 
         fill_in 'user_email', with: @user.email
         click_button "인증 메일 보내기"
       end
 
-      it "sends activation ticket to me" do
+      it "sends invitation to me" do
         expect(@mail_receiver).to eq(@user.email)
 
-        url = URI(@activation_url)
-        expect(url.path.split("/")[1]).to eq("activations")
+        url = URI(@invitation_url)
+        expect(url.path.split("/")[1]).to eq("invitations")
 
         expect(page).to have_content("인증 메일이 전송되었습니다.")
       end
 
-      it "shows me error message when I clicked an invalid activation link" do
-        activation_url = URI(@activation_url)
-        activation_url.path += "invalid"
+      it "shows me error message when I clicked an invalid invitation link" do
+        invitation_url = URI(@invitation_url)
+        invitation_url.path += "invalid"
 
-        visit(activation_url.to_s)
+        visit(invitation_url.to_s)
         find("#kakao-login-btn").click
 
         expect(page).to have_content("카카오톡 인증에 실패하였습니다.")
       end
 
       it "lets me correct connection between kakao account and email" do
-        activation_url_original = @activation_url
+        invitation_url_original = @invitation_url
         another_user = FactoryGirl.create(:user, username: "Mary")
 
         find("#kakao-login-btn").click
@@ -83,25 +83,25 @@ RSpec.describe "user auth process", type: :feature do
 
         expect(page).to have_content("인증 메일이 전송되었습니다.")
         expect(@mail_receiver).to eq(another_user.email)
-        expect(activation_url_original).not_to eq(@activation_url)
+        expect(invitation_url_original).not_to eq(@invitation_url)
       end
 
       context "when requested a ticket twice+" do
         before(:each) do
-          @activation_url_original = @activation_url
+          @invitation_url_original = @invitation_url
 
           find("#kakao-login-btn").click
           fill_in 'user_email', with: @user.email
           click_button "인증 메일 보내기"
         end
 
-        it "sends activation ticket whenever I requested a ticket" do
+        it "sends invitation whenever I requested a ticket" do
           expect(page).to have_content("인증 메일이 전송되었습니다.")
-          expect(@activation_url_original).not_to eq(@activation_url)
+          expect(@invitation_url_original).not_to eq(@invitation_url)
         end
 
-        it "shows me error message when I clicked expired activation link" do
-          visit(@activation_url_original)
+        it "shows me error message when I clicked expired invitation link" do
+          visit(@invitation_url_original)
           find("#kakao-login-btn").click
 
           expect(page).to have_content("카카오톡 인증에 실패하였습니다.")
@@ -110,7 +110,7 @@ RSpec.describe "user auth process", type: :feature do
 
       context "when user is activated" do
         before(:each) do
-          visit(@activation_url)
+          visit(@invitation_url)
         end
 
         context "when user logged in without remember me" do
@@ -118,11 +118,11 @@ RSpec.describe "user auth process", type: :feature do
             find("#kakao-login-btn").click
           end
 
-          it "lets me activate my account to click activation link" do
+          it "lets me activate my account to click invitation link" do
             expect(page).to have_content("카카오톡 인증에 성공하였습니다.")
           end
 
-          it "redirects me to redirect_url of activation link" do
+          it "redirects me to redirect_url of invitation link" do
             expect(current_path).to eq("/")
           end
 
