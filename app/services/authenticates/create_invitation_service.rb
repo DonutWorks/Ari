@@ -1,6 +1,8 @@
 module Authenticates
   class CreateInvitationService
     def execute(signed_in_user, user_params)
+      return failure unless user_params
+
       user = User.find_by(email: user_params.email)
       return invalid_email if user.nil?
 
