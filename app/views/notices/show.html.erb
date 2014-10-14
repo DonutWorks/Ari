@@ -9,7 +9,9 @@
   <% if @notice.notice_type == "external" %>
     <p>링크 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
   <% elsif @notice.notice_type == "to"  %>
-    <p>TO : <%= @notice.to %>명 중 <%= @notice_to.count %> 명 참석예정</p>
+    <p>총 TO : <%= @notice.to %>명</p>
+    <p>현재 신청자 : <%= @notice.responses.where(status: "go").count %>명</p>
+    <p>현재 대기자 : <%= @notice.responses.where(status: "wait").count %>명</p>
   <% elsif @notice.notice_type == "survey" %>
 
   <% end %>
