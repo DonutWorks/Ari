@@ -21,6 +21,8 @@ class HtmlCommentParser
           if column_names[i].blank?
             comment[("invalid_data" + i.to_s).to_sym] = e
           else
+
+
             comment[column_names[i].to_sym] = normalizer.normalize(column_names[i], e)
           end
         end
