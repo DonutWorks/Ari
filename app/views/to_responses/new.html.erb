@@ -1,0 +1,6 @@
+<%= render template: 'notices/show' %>
+<% if current_user.responsed_to?(@notice) %>
+  <div>결과페이지</div>
+<% else %>
+  <%= link_to "참가", notice_to_responses_path, method: :post, class: "btn btn-default" %>
+<% end %>

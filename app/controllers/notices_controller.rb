@@ -4,10 +4,14 @@ class NoticesController < ApplicationController
     current_user.read!(@notice)
 
     case @notice.notice_type
-    when "external"
-      redirect_to @notice.link
-    when "survey"
-      redirect_to new_notice_response_path(@notice)
+      when "external"
+        redirect_to @notice.link
+      when "survey"
+        redirect_to new_notice_response_path(@notice)
+      when "to"
+        redirect_to new_notice_to_response_path(@notice)
+      else
+        
     end
 
     # plain -> notices/show

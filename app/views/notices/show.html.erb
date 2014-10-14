@@ -4,6 +4,13 @@
   </div>
 
   <p>내용 : <%= @notice.content %></p>
-  <p>링크 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
   <p>시간 : <%= @notice.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
+
+  <% if @notice.notice_type == "external" %>
+    <p>링크 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
+  <% elsif @notice.notice_type == "to"  %>
+    <p>TO : <%= @notice.to %>명 중 <%= @notice_to.count %> 명 참석예정</p>
+  <% elsif @notice.notice_type == "survey" %>
+
+  <% end %>
 </div>
