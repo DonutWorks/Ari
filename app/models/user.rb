@@ -11,6 +11,9 @@ class User < ActiveRecord::Base
   scope :responsed_maybe, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "maybe")) }
   scope :responsed_no, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "no")) }
 
+  scope :responsed_go, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "go")) }
+  scope :responsed_wait, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "wait")) }
+
   validates_presence_of :username, :phone_number, :email
   validates_uniqueness_of :phone_number, :email
 
