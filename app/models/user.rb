@@ -5,27 +5,21 @@ class User < ActiveRecord::Base
   has_many :messages, through: :message_histories
 
   scope :generation_sorted_desc, -> { order(generation_id: :desc) }
-
   scope :responsed_to_notice, -> (notice) { joins(:responses).merge(Response.where(notice: notice)) }
-  scope :responsed_yes, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "yes")) }
-  scope :responsed_maybe, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "maybe")) }
-  scope :responsed_no, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "no")) }
+  Response::STATUSES.each do |status|
+    scope "responsed_#{status}", -> (notice) { responsed_to_notice(notice).merge(Response.where(status: status)) }
+  end
+  scope :order_by_gid, -> {order(generation_id: :desc)}
+  scope :order_by_responsed_at, -> {order('responses.created_at DESC')}
+  scope :order_by_read_at, -> {order('read_activity_marks.created_at DESC')}
+
+  acts_as_reader
 
   validates_presence_of :username, :phone_number, :email
   validates_uniqueness_of :phone_number, :email
 
   before_validation :normalize_phone_number
 
-  scope :order_by_gid, -> {order(generation_id: :desc)}
-  scope :order_by_responsed_at, -> {order('responses.created_at DESC')}
-  # scope :order_by_read_at, -> {joins(<<-SQL
-  #   LEFT OUTER JOIN read_activity_marks as A
-  #   ON A.reader_id = users.
-  #   SQL
-  #   ).order('read_activity_marks.created_at')}
-
-  acts_as_reader
-  scope :order_by_read_at, -> {order('read_activity_marks.created_at DESC')}
 
   def responsed_to?(notice)
     responses.where(notice: notice).exists?

@@ -2,7 +2,14 @@ require 'addressable/uri'
 
 class Notice < ActiveRecord::Base
   NOTICE_TYPES = %w(external plain survey to)
+  NOTICE_TYPES.each do |type|
+    define_method("#{type}_notice?") do
+      notice_type == type
+    end
+  end
+
   validates :to, numericality: { greater_than_or_equal_to: 1 }, if: :to_notice?
+  validate :to_adjustable?, if: :to_notice?
 
   has_many :responses
   has_many :messages
@@ -16,18 +23,6 @@ class Notice < ActiveRecord::Base
   validates :notice_type, presence: { message: "유형을 선택해주십시오." },
    inclusion: { in: NOTICE_TYPES, message: "올바르지 않은 유형입니다." }
 
-  def external?
-    notice_type == "external"
-  end
-
-  def plain?
-    notice_type == "plain"
-  end
-
-  def survey?
-    notice_type == "survey"
-  end
-
 private
   def make_redirectable_url!
     unless link.blank?
@@ -38,7 +33,10 @@ private
     end
   end
 
-  def to_notice?
-    notice_type == "to"
+  def to_adjustable?
+    go_responses = responses.where(status: "go")
+    if to < go_responses.count
+      errors.add(:to, "현재 참석자가 설정된 모집 인원보다 많습니다. 일부 참석자를 대기자로 변경한 후 다시 시도해주세요.")
+    end
   end
 end
