@@ -1,0 +1,29 @@
+<div class="notice-full-page">
+  <div class="page-header clearfix">
+    <h3 class="pull-left">"<%= @notice.title %>"공지 응답관리</h3>
+  </div>
+
+  <p>공지 내용 : <%= @notice.content %></p>
+  <p>실제 공지 주소 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
+  <p>통합 공지 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %></p>
+  <p>만든 시간 : <%= @notice.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
+
+  <div class="clearfix"></div>
+
+  <%= form_tag(admin_notice_responses_path, method: "post") do %>
+    <%= hidden_field_tag 'notice_id', @notice.id %>
+    <div>
+      <h3>참가 <small>(총 <%= User.responsed_go(@notice).count %>명)</small></h3>
+      <%= render partial: "table", locals: { users: User.responsed_go(@notice).order_by_responsed_at, type: "yes" } %>
+    </div>
+    <div>
+      <h3>대기 <small>(총 <%= User.responsed_wait(@notice).count %>명)</small></h3>
+      <%= render partial: "table", locals: { users: User.responsed_wait(@notice).order_by_responsed_at, type: "wait" } %>
+    </div>
+    <div>
+      <h3>미응답 <small>(총 <%= User.responsed_not_to_notice(@notice).count %>명)</small></h3>
+      <%= render partial: "table", locals: { users: User.responsed_not_to_notice(@notice), type: "not" } %>
+    </div>
+
+  <% end %>
+</div>

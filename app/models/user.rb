@@ -10,6 +10,15 @@ class User < ActiveRecord::Base
   scope :responsed_yes, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "yes")) }
   scope :responsed_maybe, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "maybe")) }
   scope :responsed_no, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "no")) }
+  scope :responsed_go, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "go")) }
+  scope :responsed_wait, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "wait")) }
+
+
+  scope :responsed_not_to_notice, -> (notice) {
+    SQL = %{LEFT OUTER JOIN (SELECT * FROM responses WHERE responses.notice_id = #{notice.id} ) A
+        ON users.id = A.user_id
+        WHERE A.status is null}
+    joins(SQL) }
 
   validates_presence_of :username, :phone_number, :email
   validates_uniqueness_of :phone_number, :email
@@ -23,6 +32,7 @@ class User < ActiveRecord::Base
   #   ON A.reader_id = users.
   #   SQL
   #   ).order('read_activity_marks.created_at')}
+
 
   acts_as_reader
   scope :order_by_read_at, -> {order('read_activity_marks.created_at DESC')}
