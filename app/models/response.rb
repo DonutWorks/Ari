@@ -1,5 +1,5 @@
 class Response < ActiveRecord::Base
-  STATUSES = %w(yes maybe no)
+  STATUSES = %w(yes maybe no go wait)
 
   belongs_to :notice
   belongs_to :user
