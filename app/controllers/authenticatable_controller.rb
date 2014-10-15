@@ -18,7 +18,7 @@ protected
 
   def require_activated
     return true if require_signed_in
-    if !current_user.activated
+    if !current_user.activated?
       redirect_to new_invitation_path
       return true
     end

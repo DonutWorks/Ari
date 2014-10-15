@@ -17,7 +17,7 @@ protected
     if current_user.nil?
       params[:redirect_url] ||= request.fullpath
       redirect_to sign_in_users_path
-    elsif !current_user.activated
+    elsif !current_user.activated?
       params[:redirect_url] ||= request.fullpath
       redirect_to new_invitation_path
     end

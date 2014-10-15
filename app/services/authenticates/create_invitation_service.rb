@@ -7,7 +7,7 @@ module Authenticates
       return failure({ status: :invalid_email }) if user.nil?
 
       # move provider info to new user
-      if user != signed_in_user and !user.activated
+      if user != signed_in_user and !user.activated?
         begin
           user.transaction do
             user.update_attributes!({
