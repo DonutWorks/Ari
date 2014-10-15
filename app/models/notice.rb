@@ -8,6 +8,12 @@ class Notice < ActiveRecord::Base
     end
   end
 
+  Response::STATUSES.each do |status|
+    define_method("#{status}_responses") do
+      responses.where(status: status)
+    end
+  end
+
   validates :to, numericality: { greater_than_or_equal_to: 1 }, if: :to_notice?
   validate :to_adjustable?, if: :to_notice?
 
@@ -34,7 +40,6 @@ private
   end
 
   def to_adjustable?
-    go_responses = responses.where(status: "go")
     if to < go_responses.count
       errors.add(:to, "현재 참석자가 설정된 모집 인원보다 많습니다. 일부 참석자를 대기자로 변경한 후 다시 시도해주세요.")
     end
