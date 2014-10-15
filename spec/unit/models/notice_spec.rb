@@ -33,6 +33,38 @@ RSpec.describe Notice, :type => :model do
       expect { @to_notice.save! }.not_to raise_error
     end
   end
+
+  describe "#change_candidates_status" do
+    before(:each) do
+      @to_notice = FactoryGirl.create(:to_notice, to: 1)
+    end
+
+    it "should change waiting user to going user when TO is increased" do
+      @going_users = FactoryGirl.create_list(:user, 1)
+      @waiting_users = FactoryGirl.create_list(:user, 2)
+
+      @going_users.each do |user|
+        Response.create!(user: user, notice: @to_notice, status: "go")
+      end
+
+      # reverse, test for created_at asc.
+      @waiting_users.reverse.each do |user|
+        Response.create!(user: user, notice: @to_notice, status: "wait")
+      end
+
+      expect(@to_notice.go_responses.count).to eq(1)
+      expect { @to_notice.update_attributes!(to: 2) }.not_to raise_error
+      expect(@to_notice.go_responses.count).to eq(2)
+      expect(@to_notice.wait_responses.count).to eq(1)
+
+      wait_response = @to_notice.wait_responses.first
+      @to_notice.go_responses.each do |go_response|
+        expect(go_response.created_at).to be <= wait_response.created_at
+      end
+
+      expect(wait_response.user).to eq(@waiting_users.first)
+    end
+  end
 end
 
 

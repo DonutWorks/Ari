@@ -22,6 +22,7 @@ class Notice < ActiveRecord::Base
 
   acts_as_readable
   before_save :make_redirectable_url!
+  before_save :change_candidates_status, if: :to_notice?
 
   validates :title, presence: { message: "공지 제목을 입력해주십시오." }
   validates :link, presence: { message: "공지 링크를 입력해주십시오." }
@@ -43,5 +44,11 @@ private
     if to < go_responses.count
       errors.add(:to, "현재 참석자가 설정된 모집 인원보다 많습니다. 일부 참석자를 대기자로 변경한 후 다시 시도해주세요.")
     end
+  end
+
+  def change_candidates_status
+    candidates_count = to - go_responses.count
+    candidates = wait_responses.order(created_at: :asc).limit(candidates_count)
+    candidates.update_all(status: "go")
   end
 end
