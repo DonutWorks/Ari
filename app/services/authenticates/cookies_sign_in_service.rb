@@ -5,7 +5,8 @@ module Authenticates
       user_from_cookies = user_cookies.user
 
       if user_from_cookies
-        UserSession.create_from_user!(session, user_cookies.user)
+        user_session = UserSession.new(session)
+        user_session.create!(user_from_cookies, user_from_cookies.regard_as_activated)
         return success
       end
 

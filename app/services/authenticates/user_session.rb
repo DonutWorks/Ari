@@ -16,11 +16,6 @@ module Authenticates
       @session = session
     end
 
-    def self.create_from_user!(session, user)
-      user_session = UserSession.new(session)
-      user_session.create!(user, user.regard_as_activated)
-    end
-
     def create!(user, regard_as_activated = false)
       self.user_id = user.id
       self.regard_as_activated = regard_as_activated
