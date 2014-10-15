@@ -9,7 +9,7 @@ class NoticesController < ApplicationController
       when "survey"
         redirect_to new_notice_response_path(@notice)
       when "to"
-        redirect_to new_notice_to_response_path(@notice)
+        redirect_to notice_to_responses_path(@notice)
       else
         
     end
