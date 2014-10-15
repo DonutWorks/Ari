@@ -13,7 +13,7 @@ module Authenticates
       # update user info
       user.update_attributes!(extra_info: auth_hash['info'])
 
-      session[:user_id] = user.id
+      UserSession.new(session).create!(user, false)
       return success({ user: user })
     end
   end

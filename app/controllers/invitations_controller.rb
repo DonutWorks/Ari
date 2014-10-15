@@ -1,4 +1,3 @@
-
 class InvitationsController < AuthenticatableController
   skip_before_action :require_activated
   before_action :require_signed_in, except: [:create]
@@ -24,7 +23,7 @@ class InvitationsController < AuthenticatableController
       render 'new'
       return
     when :success
-      session.delete(:user_id)
+      Authenticates::UserSession.new(session).destroy!
       create_invitation_service.send_invitation_mail(@user.email,
        invitation_url(out[:code], redirect_url: params[:redirect_url]))
       flash[:notice] = "인증 메일이 전송되었습니다."

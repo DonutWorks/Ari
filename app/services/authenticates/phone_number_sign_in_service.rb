@@ -15,7 +15,7 @@ module Authenticates
         return invalid_phone_number
       end
 
-      session[:user_id] = user.id
+      UserSession.new(session).create!(user, true)
       return success({ user: user })
     end
 

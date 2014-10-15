@@ -18,7 +18,7 @@ class ProvidersController < AuthenticatableController
       render 'invitations/new'
       return
     when :success
-      cookies.permanent.signed[:remember_me] = out[:user].id if remember_me
+      Authenticates::UserCookies.new(cookies).create!(out[:user], false) if remember_me
       proceed
     end
   end

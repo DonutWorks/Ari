@@ -17,14 +17,14 @@ class SessionsController < AuthenticatableController
       flash[:error] = "전화번호가 잘못되었습니다."
       redirect_to sign_in_users_path
     when :success
-      cookies.permanent.signed[:remember_me] = out[:user].id if remember_me
+      Authenticates::UserCookies.new(cookies).create!(out[:user], true) if remember_me
       proceed
     end
   end
 
   def destroy
-    session.delete(:user_id)
-    clear_sign_in_cookie!
+    Authenticates::UserSession.new(session).destroy!
+    Authenticates::UserCookies.new(cookies).destroy!
     proceed
   end
 end

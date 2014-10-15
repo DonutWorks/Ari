@@ -21,12 +21,14 @@ class User < ActiveRecord::Base
 
   acts_as_reader
 
+  attr_accessor :regard_as_activated
+
   def responsed_to?(notice)
     responses.where(notice: notice).exists?
   end
 
   def activated?
-    activated
+    activated || regard_as_activated == true
   end
 
 private
