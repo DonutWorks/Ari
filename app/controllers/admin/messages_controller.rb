@@ -1,6 +1,6 @@
 class Admin::MessagesController < Admin::ApplicationController
   def index
-    @messages = Message.order(created_at: :desc).all
+    @messages = Message.created_at_sorted_desc
   end
 
   def show
