@@ -6,13 +6,15 @@
       </div>
       <%= form_for @user, url: auth_users_path, html: {role: "form"} do |f| %>
         <%= render partial: 'form', locals: {f: f} %>
-        <%= f.label :remember_me do %>
-          <%= f.check_box :remember_me, checked: false, id: "remember-me" %>
-            나를 기억하기
-        <% end %>
         <%= f.submit "전화번호로 로그인", type: :image, src: asset_path("phone_number_login_btn_large_wide.png"), class: "login-img-button"  %>
+        <%= link_to image_tag("kakao_account_login_btn_large_wide.png", class: "btn btn-link login-img-button"), "/auth/kakao?redirect_url=#{params[:redirect_url]}", id: "kakao-login-btn" %>
+        <div class="checkbox">
+          <%= f.label :remember_me, class: "pull-right" do %>
+            <%= f.check_box :remember_me, checked: false, id: "remember-me" %>
+              로그인 상태 유지
+          <% end %>
+        </div>
       <% end %>
-      <%= link_to image_tag("kakao_account_login_btn_large_wide.png", class: "btn btn-link login-img-button"), "/auth/kakao?redirect_url=#{params[:redirect_url]}", id: "kakao-login-btn" %>
     </div>
   </div>
 </div>
