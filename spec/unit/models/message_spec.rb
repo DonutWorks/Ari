@@ -26,4 +26,18 @@ RSpec.describe Message, :type => :model do
     expect(m.users.size).to eq(2)
     expect(m.users[1]).to eq(user2)
   end
+
+  it "should check validation" do
+    expect(Message.new.save).to eq(false)
+
+    expect(Message.new(content: "hi").save).to eq(true)    
+  end
+
+  it "should use correct scope" do
+    10.times {
+        Message.create(content: Random.rand(10).to_s)
+    }
+
+    expect(Message.created_at_sorted_desc).to eq(Message.all.order(created_at: :desc))
+  end
 end
