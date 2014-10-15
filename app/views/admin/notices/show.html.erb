@@ -53,8 +53,9 @@
     <div class="sms-text fix-bottom">
       <h3>문자 보내기</h3>
       <p id="phone_numbers">총 0명이 선택 되었습니다.</p>
-      <%= text_area_tag 'sms_content', nil, class: 'form-control', placeholder: '문자 내용을 입력하세요!' %>
+      <%= text_area_tag 'sms_content', "[서울대 햇빛봉사단]", class: 'form-control' %>
       <div class="pull-right margin-top15">
+        (<span id="current-text-size">19</span>/90 bytes)
         <button id="send_sms" type="submit" class="btn btn-primary btn-sm">전송</button>
       </div>
     </div>

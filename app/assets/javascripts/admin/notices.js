@@ -35,14 +35,40 @@ $(document).on('ready page:load', function () {
     }
   }
 
+  $('#sms_content').keyup(change_sms_text_size);
+
+});
+
+function change_sms_text_size(){
+  var string = $('#sms_content').val();
+
+  var utf8length = 0;
+
+  for (var n = 0; n < string.length; n++) {
+    var c = string.charCodeAt(n);
+    if (c < 128) {
+      utf8length++;
+    }
+    else {
+      utf8length = utf8length+2;
+    }
+
+    if (utf8length >= 90){
+      var new_str = string.substr(0,n)
+      $('#sms_content').val(new_str);
+      break;
+    }
+  }
+  
+  $('#current-text-size').text(utf8length); 
+  
   $('.notice-type-option').change(function() {
     switch($(this).val()){
       case 'to':
-        $('#to-option').fadeIn('fast');
-        break;
+      $('#to-option').fadeIn('fast');
+      break;
       default:
-        $('#to-option').fadeOut('fast');
+      $('#to-option').fadeOut('fast');
     }
   });
-
-});
+}
