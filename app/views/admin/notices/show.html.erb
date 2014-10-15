@@ -27,7 +27,7 @@
       <div class="tab-pane fade in active" id="read-unread">
         <div class="notice-reader">
           <h3>읽은 회원 <small>(총 <%= @notice.readers.count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: @notice.readers.generation_sorted_desc, type: "read" } %>
+          <%= render partial: "table", locals: { users: @notice.readers.order_by_read_at, type: "read" } %>
         </div>
 
         <div class="notice-unreader">
@@ -38,23 +38,24 @@
       <div class="tab-pane fade" id="survey-result">
         <div>
           <h3>참가 <small>(총 <%= User.responsed_yes(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: User.responsed_yes(@notice).generation_sorted_desc, type: "yes" } %>
+          <%= render partial: "table", locals: { users: User.responsed_yes(@notice).order_by_responsed_at, type: "yes" } %>
         </div>
         <div>
           <h3>불확실 <small>(총 <%= User.responsed_maybe(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: User.responsed_maybe(@notice).generation_sorted_desc, type: "maybe" } %>
+          <%= render partial: "table", locals: { users: User.responsed_maybe(@notice).order_by_responsed_at, type: "maybe" } %>
         </div>
         <div>
           <h3>불참 <small>(총 <%= User.responsed_no(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: User.responsed_no(@notice).generation_sorted_desc, type: "no" } %>
+          <%= render partial: "table", locals: { users: User.responsed_no(@notice).order_by_responsed_at, type: "no" } %>
         </div>
       </div>
     </div>
     <div class="sms-text fix-bottom">
       <h3>문자 보내기</h3>
       <p id="phone_numbers">총 0명이 선택 되었습니다.</p>
-      <%= text_area_tag 'sms_content', nil, class: 'form-control', placeholder: '문자 내용을 입력하세요!' %>
+      <%= text_area_tag 'sms_content', "[서울대 햇빛봉사단]", class: 'form-control' %>
       <div class="pull-right margin-top15">
+        (<span id="current-text-size">19</span>/90 bytes)
         <button id="send_sms" type="submit" class="btn btn-primary btn-sm">전송</button>
       </div>
     </div>

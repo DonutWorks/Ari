@@ -13,9 +13,9 @@ class SmsSender
       users = User.where(id: user_ids)
 
       sms_info = {
-        from: "114", #보내는 사람
+        from: "01044127987", #보내는 사람
         to: users.pluck(:phone_number).join(","), #받는 사람
-        text: "[서울대 햇빛봉사단]" + message.content #SMS내용
+        text: message.content #SMS내용
       }
 
       sms_sender = SendSMS2.new
