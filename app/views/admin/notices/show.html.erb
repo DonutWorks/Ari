@@ -9,7 +9,9 @@
   </div>
 
   <p>공지 내용 : <%= @notice.content %></p>
-  <p>실제 공지 주소 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
+  <% if @notice.external? %>
+    <p>실제 공지 주소 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
+  <% end %>
   <p>통합 공지 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %></p>
   <p>만든 시간 : <%= @notice.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
 
