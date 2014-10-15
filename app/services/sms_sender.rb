@@ -2,9 +2,10 @@ class SmsSender
   class SMSSenderError < RuntimeError
   end
 
-  def send_message(content, user_ids)
+  def send_message(content, notice_id, user_ids)
     message = Message.new
     message.content = content
+    message.notice_id = notice_id
 
     if message.save
 

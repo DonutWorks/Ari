@@ -5,6 +5,7 @@ class Notice < ActiveRecord::Base
   validates :to, numericality: { greater_than_or_equal_to: 1 }, if: :to_notice?
 
   has_many :responses
+  has_many :messages
 
   acts_as_readable
   before_save :make_redirectable_url!

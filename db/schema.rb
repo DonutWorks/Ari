@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20141013154141) do
     t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "notice_id"
   end
 
   create_table "notices", force: true do |t|

@@ -11,7 +11,11 @@
   <ul class="list-group">
     <% @messages.each do |message| %>
       <%= link_to admin_message_path(message), class: "list-group-item" do %>
-        <span><%= message.content %></span>
+        <% unless message.notice.blank? %>
+          <span>[<%= message.notice.title %>] <%= message.content %></span>
+        <% else %>
+          <span><%= message.content %></span>
+        <% end %>
         <div class="pull-right">
         <span><%= message.created_at.localtime.strftime("%Y-%m-%d %T") %></span>
         </div>
