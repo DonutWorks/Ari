@@ -1,4 +1,9 @@
 $(document).on('ready page:load', function () {
+  if($('.notice-type-option:checked').val() != "to")
+    $('#to-option').hide();
+
+  $('.selectpicker').selectpicker();
+
   $('.sms_all').change(function() {
     var id = (this).id.replace('_all','');
 
@@ -42,10 +47,10 @@ function change_sms_text_size(){
   for (var n = 0; n < string.length; n++) {
     var c = string.charCodeAt(n);
     if (c < 128) {
-        utf8length++;
+      utf8length++;
     }
     else {
-        utf8length = utf8length+2;
+      utf8length = utf8length+2;
     }
 
     if (utf8length >= 90){
@@ -56,4 +61,14 @@ function change_sms_text_size(){
   }
   
   $('#current-text-size').text(utf8length); 
+  
+  $('.notice-type-option').change(function() {
+    switch($(this).val()){
+      case 'to':
+      $('#to-option').fadeIn('fast');
+      break;
+      default:
+      $('#to-option').fadeOut('fast');
+    }
+  });
 }

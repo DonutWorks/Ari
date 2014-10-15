@@ -90,6 +90,6 @@ class Admin::NoticesController < Admin::ApplicationController
 
 private
   def notice_params
-    params.require(:notice).permit(:title, :link, :content, :notice_type)
+    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date)
   end
 end
