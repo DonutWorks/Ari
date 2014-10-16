@@ -5,8 +5,9 @@ class ToResponsesController < ApplicationController
 
   def create
     notice = Notice.find_by_id(params[:notice_id]) or not_found
+    responses_go = Response.responsed_to_go(notice)
 
-    if notice.to.to_i > notice.responses.where(status: "go").count
+    if notice.to > responses_go.count
       status = "go"
     else
       status = "wait"
