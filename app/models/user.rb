@@ -25,12 +25,6 @@ class User < ActiveRecord::Base
 
   scope :order_by_gid, -> {order(generation_id: :desc)}
   scope :order_by_responsed_at, -> {order('responses.created_at DESC')}
-  # scope :order_by_read_at, -> {joins(<<-SQL
-  #   LEFT OUTER JOIN read_activity_marks as A
-  #   ON A.reader_id = users.
-  #   SQL
-  #   ).order('read_activity_marks.created_at')}
-
 
   acts_as_reader
   scope :order_by_read_at, -> {order('read_activity_marks.created_at DESC')}
