@@ -15,10 +15,18 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :phone_number, :email
 
   before_validation :normalize_phone_number
+  before_save :strip!
 
   scope :order_by_gid, -> {order(generation_id: :desc)}
+  scope :order_by_responsed_at, -> {order('responses.created_at DESC')}
+  # scope :order_by_read_at, -> {joins(<<-SQL
+  #   LEFT OUTER JOIN read_activity_marks as A
+  #   ON A.reader_id = users.
+  #   SQL
+  #   ).order('read_activity_marks.created_at')}
 
   acts_as_reader
+  scope :order_by_read_at, -> {order('read_activity_marks.created_at DESC')}
 
   def responsed_to?(notice)
     responses.where(notice: notice).exists?
@@ -27,6 +35,11 @@ class User < ActiveRecord::Base
   def activated?
     return false unless account_activation
     account_activation.activated
+  end
+
+  def strip!
+    strip_to = [:username, :email, :major, :student_id, :sex, :home_phone_number, :emergency_phone_number, :habitat_id, :member_type, :birth ]
+    strip_to.each{|column| self[column].strip! if self[column]}
   end
 
 private

@@ -18,31 +18,24 @@ class Admin::ExportExcelController < Admin::ApplicationController
     end
 
     comments = HtmlCommentParser.import(pattern, url)
-    book = Spreadsheet::Workbook.new
-    sheet1 = book.create_worksheet
-    invalid_format = Spreadsheet::Format.new :color => :red,
-                                 :weight => :bold
 
-    comments.first.keys.each_with_index do |key, index|
-      sheet1.row(0).push(key.to_s) if index > 0
-    end
-
-    comments.each_with_index do |comment, index_out|
-      invalid = false
-      comment.values.each_with_index do |value, index_in|
-        if index_in == 0
-          invalid = value
-        else
-          sheet1.row(index_out+1).default_format = invalid_format if invalid
-          sheet1.row(index_out+1).push(value)
-        end
-      end
-    end
-
-    bookstring = StringIO.new
-    book.write bookstring
-
-    send_data bookstring.string, :filename => "comments-excel.xls", :type =>  "application/vnd.ms-excel"
+    habitat_format_header = nil
+    if params[:export_type] == "habitat"
+      habitat_format_header = {"이름" => :username,
+                               "주민등록번호" => :identi,
+                               "집전화번호" => :home_phone_number,
+                               "휴대전화번호" => :phone_number,
+                               "응급시 연락처" => :emergency_phone_number,
+                               "e-mail" => :email,
+                               "지회명" => :local_name,
+                               "봉사 시작 일자" => :start_date,
+                               "봉사 종료 일자" => :end_date,
+                               "단체명" => :organization_name,
+                               "단체 아이디" => :habitat_id  }
+   end
+    send_data ExcelBuilder.build_excel_file(comments, habitat_format_header), :filename => "comments-excel.xls", :type =>  "application/vnd.ms-excel"
     #redirect_to admin_root_path
   end
+
+
 end

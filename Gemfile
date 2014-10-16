@@ -64,6 +64,7 @@ group :development, :test do
   gem 'capybara', '~> 2.4.1'
   gem 'selenium-webdriver', '~> 2.43.0'
   gem 'database_cleaner', '~> 1.3.0'
+  gem 'show_me_the_cookies', '~> 2.5.0'
 end
 
 gem 'addressable', '~> 2.3.6'

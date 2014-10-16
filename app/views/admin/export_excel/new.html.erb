@@ -30,6 +30,23 @@
           - 입력된 양식에 맞추어 엑셀파일로 저장합니다.<br>
           - 구분자는 / 를 이용해주세요.
         </p>
+
+
+        <div class="form-group">
+          <%= label_tag "엑셀 양식" %>
+          <div>
+            <%= label_tag do %>
+              <%= radio_button_tag :export_type, "normal", checked: true %>
+              댓글 양식
+            <% end %>
+            <%= label_tag do %>
+              <%= radio_button_tag :export_type, "habitat" %>
+              해비타트 제출용
+            <% end %>
+          </div>
+
+        </div>
+
         <%= submit_tag "저장하기", class: "btn btn-default"   %>
 
       <% end %>
