@@ -14,4 +14,11 @@ module AcceptanceHelper
   def authenticate_to_admin!
     authenticate("habitat", "iloveyou")
   end
+
+  def authenticate_to_member!
+    visit("/users/sign_in")
+    fill_in 'user_phone_number', :with => '01011112222'
+
+    click_button "전화번호로 로그인"
+  end
 end
