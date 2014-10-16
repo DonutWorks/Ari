@@ -28,6 +28,10 @@ class Notice < ActiveRecord::Base
     notice_type == "survey"
   end
 
+  def to_notice?
+    notice_type == "to"
+  end
+
 private
   def make_redirectable_url!
     unless link.blank?
@@ -38,7 +42,5 @@ private
     end
   end
 
-  def to_notice?
-    notice_type == "to"
-  end
+  
 end

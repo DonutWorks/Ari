@@ -18,9 +18,6 @@ class User < ActiveRecord::Base
         WHERE A.status is null}
     joins(SQL) }
 
-  scope :responsed_go, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "go")) }
-  scope :responsed_wait, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "wait")) }
-
   validates_presence_of :username, :phone_number, :email
   validates_uniqueness_of :phone_number, :email
 

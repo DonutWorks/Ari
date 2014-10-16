@@ -1,7 +1,12 @@
 <div>
   <div class="page-header clearfix">
     <h3 class="text-center"><%= @notice.title %></h3>
-    <h5 class="pull-right"><%= @notice.created_at.localtime.strftime("%Y-%m-%d %T") %></h5>
+    <h5 class="pull-right">
+    
+      <p>행사 날짜 : <%= @notice.due_date.localtime.strftime("%Y-%m-%d %T") %></p>
+      <p>모집 시한 : <%= (@notice.due_date - 3.days).localtime.strftime("%Y-%m-%d %T") %></p>
+      
+    </h5>
   </div>
 
   <div class="content">
