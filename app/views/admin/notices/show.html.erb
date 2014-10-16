@@ -3,6 +3,9 @@
     <h3 class="pull-left"><%= @notice.title %></h3>
     <div class="pull-right margin-top15">
       <%= link_to "수정", edit_admin_notice_path(@notice), class: "btn btn-default btn-sm" %>
+      <%if @notice.notice_type =="to" %>
+        <%= link_to "TO관리", admin_notice_responses_path(@notice), class: "btn btn-info btn-sm" %>
+      <% end %>
       <%= link_to "삭제", admin_notice_path(@notice), method: :delete,
       data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger btn-sm" %>
     </div>

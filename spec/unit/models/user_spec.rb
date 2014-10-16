@@ -41,6 +41,39 @@ RSpec.describe User, :type => :model do
     end
   end
 
+
+
+  describe "#response_status" do
+    context "user didn't response to notice" do
+      it "should return satus, users responsed to notice" do
+        user = FactoryGirl.create(:user)
+        notice = FactoryGirl.create(:notice)
+
+        expect(user.response_status(notice)).to eq("not")
+
+      end
+    end
+    context "user responsed 'go' to notice" do
+      it "should return satus, users responsed to notice" do
+        user = FactoryGirl.create(:user)
+        notice = FactoryGirl.create(:notice)
+        response = Response.create!(user: user, notice: notice, status: "go")
+        expect(user.response_status(notice)).to eq("go")
+
+      end
+    end
+    context "user responsed 'go' to notice but he/she had to be 'wait'" do
+      it "should return satus, users responsed to notice" do
+        user = FactoryGirl.create(:user)
+        notice = FactoryGirl.create(:notice)
+        response = Response.create!(user: user, notice: notice, status: "wait")
+        expect(user.response_status(notice)).to eq("wait")
+
+      end
+    end
+  end
+
+
   describe "#activated?" do
     context "user not attempted to sign in" do
       it "should return false for user not attempted to sign in" do
@@ -69,4 +102,5 @@ RSpec.describe User, :type => :model do
       end
     end
   end
+
 end
