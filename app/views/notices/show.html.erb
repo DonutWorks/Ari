@@ -1,18 +1,30 @@
 <div>
   <div class="page-header clearfix">
-    <h3 class="pull-left"><%= @notice.title %></h3>
+    <h3 class="text-center"><%= @notice.title %></h3>
+    <h5 class="pull-right">
+    
+      <p>행사 날짜 : <%= @notice.due_date.localtime.strftime("%Y-%m-%d %T") %></p>
+      <p>모집 시한 : <%= (@notice.due_date - 3.days).localtime.strftime("%Y-%m-%d %T") %></p>
+      
+    </h5>
   </div>
 
-  <p>내용 : <%= @notice.content %></p>
-  <p>시간 : <%= @notice.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
+  <div class="content">
+    <h4>내용</h4>
+    <p class="bg-content"><%= @notice.content %></p>
+  </div>
 
-  <% if @notice.notice_type == "external" %>
-    <p>링크 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
-  <% elsif @notice.notice_type == "to"  %>
-    <p class="to_p">총 TO : <%= @notice.to %>명</p>
-    <p>현재 신청자 : <%= @notice.responses.where(status: "go").count %>명</p>
-    <p>현재 대기자 : <%= @notice.responses.where(status: "wait").count %>명</p>
-  <% elsif @notice.notice_type == "survey" %>
+  <div class="details">
+    <% if @notice.notice_type == "external" %>
+      <h4 class="title">링크</h4>
+      <p><%= link_to @notice.link, @notice.link, target: "_blank" %></p>
+    <% elsif @notice.notice_type == "to"  %>
+      <h4 class="title">TO공지 신청 현황</h4>
+      <progress id="to_progress" value="<%= @notice.responses.where(status: "go").count %>" max="<%= @notice.to %>"></progress>
+      <p class="text-center ment"><strong><%= @notice.to %></strong>명 중 <strong><%= @notice.responses.where(status: "go").count %></strong>명이 신청 하였습니다.</p>
+      <p class="text-center">현재 대기자는 <%= @notice.responses.where(status: "wait").count %>명 입니다.</p>
+    <% elsif @notice.notice_type == "survey" %>
 
-  <% end %>
+    <% end %>
+  </div>
 </div>
