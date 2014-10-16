@@ -1,6 +1,4 @@
-<div class="form-group form-group-lg has-feedback <%= validation_state(@user, :phone_number) %>">
+<div class="form-group form-group-lg">
   <%= f.label :phone_number, "전화번호", class: "control-label" %>
-    <%= f.text_field :phone_number, class: "form-control" %>
-    <span class="glyphicon <%= validation_state_feedback(@user, :phone_number) %> form-control-feedback"></span>
-    <span class="help-block"><%= attribute_error_message(@user, :phone_number) %></span>
+  <%= f.text_field :phone_number, class: "form-control" %>
 </div>
