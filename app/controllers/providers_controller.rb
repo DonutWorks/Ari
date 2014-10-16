@@ -1,8 +1,10 @@
 class ProvidersController < AuthenticatableController
-  skip_before_action :authenticate_user!
+  skip_before_action :authenticate!
+  before_action :merge_omniauth_params
 
   def create
-    params.merge!(request.env['omniauth.params'])
+    remember_me = params[:remember_me]
+
     auth_hash = request.env['omniauth.auth']
     provider_token = ProviderToken.find_or_create_by!({
       provider: auth_hash['provider'],
@@ -14,13 +16,18 @@ class ProvidersController < AuthenticatableController
     if session.delete(:require_provider_token)
       redirect_to params.delete(:redirect_url) || root_path
     else
-      authenticate!
+      authenticate!(remember_me: remember_me)
     end
   end
 
   def failure
-    params.merge!(request.env['omniauth.params'])
     flash[:error] = "인증에 실패하였습니다."
     redirect_to params[:redirect_url] || root_path
+  end
+
+private
+  def merge_omniauth_params
+    omniauth_params = request.env['omniauth.params']
+    params.merge!(omniauth_params) if omniauth_params
   end
 end

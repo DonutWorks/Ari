@@ -1,0 +1,10 @@
+<%= render template: 'notices/show' %>
+
+<% if @notice.due_date - 3.days < Date.today %>
+  <div>마감ㅋㅋㅋㅋㅋ </div>
+<% elsif current_user.responsed_to?(@notice) %>
+  <div>너 이미 신청했어. </div>
+  <%= link_to "참가취소", notice_to_response_path(@notice, @notice.responses.find_by_user_id(current_user)), method: :delete, class: "btn btn-alert" %>
+<% else %>
+  <%= link_to "참가", notice_to_responses_path(@notice), method: :post, class: "btn btn-default" %>
+<% end %>

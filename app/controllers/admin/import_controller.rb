@@ -20,14 +20,12 @@ class Admin::ImportController < Admin::ApplicationController
           messages = i.to_s + "행(" + (e.user.username||="알수없음") + "님)은 " + e.message
           @invalid_messages.push(messages)
         else
-          user_already = User.find_by_phone_number(user.phone_number)
-          if user_already.blank?
-            unless user.save
-              messages = i.to_s + "행(" + (user.username||="알수없음") + "님)은 꼭 필요한 데이터를 입력하지 않았습니다. "
-              @invalid_messages.push(messages)
-            end
-          else
-            user_already.update_attributes(user.as_json(except: [:id]))
+          new_user = User.find_or_initialize_by(phone_number: user.phone_number)
+          new_user.attributes = user.as_json(except: [:id])
+
+          unless new_user.save
+            messages = i.to_s + "행(" + (new_user.username||="알수없음") + "님)은 꼭 필요한 데이터를 입력하지 않았습니다. "
+            @invalid_messages.push(messages)
           end
         end
       end

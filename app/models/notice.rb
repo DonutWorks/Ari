@@ -1,9 +1,11 @@
 require 'addressable/uri'
 
 class Notice < ActiveRecord::Base
-  NOTICE_TYPES = %w(external plain survey)
+  NOTICE_TYPES = %w(external plain survey to)
+  validates :to, numericality: { greater_than_or_equal_to: 1 }, if: :to_notice?
 
   has_many :responses
+  has_many :messages
 
   acts_as_readable
   before_save :make_redirectable_url!
@@ -34,5 +36,9 @@ private
     unless shortenURL.blank?
       self.shortenURL = Addressable::URI.heuristic_parse(shortenURL).to_s
     end
+  end
+
+  def to_notice?
+    notice_type == "to"
   end
 end

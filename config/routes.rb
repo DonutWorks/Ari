@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   resources :notices, only: [:show] do
     resources :responses, only: [:new, :create]
+    resources :to_responses
   end
 
   namespace :admin do

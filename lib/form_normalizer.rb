@@ -23,10 +23,9 @@ private
     if column_name.blank?
       @default_normalizer
     else
-      column_name.delete!(" ")
 
       normalizer = @normalizers.detect do |normalizer|
-        normalizer.column_names.include?(column_name)
+        normalizer.column_names.include?(column_name.delete(" "))
       end
 
       normalizer || @default_normalizer

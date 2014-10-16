@@ -18,13 +18,14 @@ class HtmlCommentParser
         comment[:invalid] = !pattern.compare(val.text)
 
         val.text.split('/').each_with_index do |e, i|
+
           if column_names[i].blank?
             comment[("invalid_data" + i.to_s).to_sym] = e
           else
             comment[column_names[i].to_sym] = normalizer.normalize(column_names[i], e)
           end
-        end
 
+        end
         comments.push comment
       end
     end
