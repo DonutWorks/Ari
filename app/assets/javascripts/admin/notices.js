@@ -21,11 +21,19 @@ $(document).on('ready page:load', function () {
 
   $('.notice-type-option').change(function() {
     switch($(this).val()){
+      case 'plain':
+         $("#notice_link").attr("disabled",true);
+        break;
+      case 'survey':
+        $("#notice_link").attr("disabled",true);
+        break;
       case 'to':
-      $('#to-option').fadeIn('fast');
-      break;
+        $('#to-option').fadeIn('fast');
+        $("#notice_link").attr("disabled",true);
+        break;
       default:
-      $('#to-option').fadeOut('fast');
+        $("#notice_link").attr("disabled",false);
+        $('#to-option').fadeOut('fast');
     }
   });
 });
