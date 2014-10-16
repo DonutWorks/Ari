@@ -38,7 +38,7 @@ Rails.application.routes.draw do
       resources :responses, only: [] do
         collection do
           get '/', to: :index
-          post '/', to: :edit
+          post '/', to: :update
         end
       end
 

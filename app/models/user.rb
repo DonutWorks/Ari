@@ -12,8 +12,6 @@ class User < ActiveRecord::Base
   scope :responsed_no, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "no")) }
   scope :responsed_go, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "go")) }
   scope :responsed_wait, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "wait")) }
-
-
   scope :responsed_not_to_notice, -> (notice) {
     SQL = %{LEFT OUTER JOIN (SELECT * FROM responses WHERE responses.notice_id = #{notice.id} ) A
         ON users.id = A.user_id
@@ -39,6 +37,15 @@ class User < ActiveRecord::Base
 
   def responsed_to?(notice)
     responses.where(notice: notice).exists?
+  end
+  def response_status(notice)
+    response = responses.where(notice: notice).first
+    if response
+      response.status
+    else
+      "not"
+    end
+
   end
 
   def activated?

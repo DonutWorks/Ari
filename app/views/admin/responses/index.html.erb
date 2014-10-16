@@ -1,12 +1,16 @@
 <div class="notice-full-page">
   <div class="page-header clearfix">
-    <h3 class="pull-left">"<%= @notice.title %>"공지 응답관리</h3>
+    <h3 class="pull-left">"<%= @notice.title %>"공지 TO관리</h3>
+    <div class="pull-right margin-top15">
+      <%= link_to "취소", admin_notice_path(@notice), class: "btn btn-default" %>
+    </div>
   </div>
 
   <p>공지 내용 : <%= @notice.content %></p>
   <p>실제 공지 주소 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
   <p>통합 공지 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %></p>
   <p>만든 시간 : <%= @notice.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
+  <p>TO 개수 : <%= @notice.to %></p>
 
   <div class="clearfix"></div>
 
@@ -14,7 +18,7 @@
     <%= hidden_field_tag 'notice_id', @notice.id %>
     <div>
       <h3>참가 <small>(총 <%= User.responsed_go(@notice).count %>명)</small></h3>
-      <%= render partial: "table", locals: { users: User.responsed_go(@notice).order_by_responsed_at, type: "yes" } %>
+      <%= render partial: "table", locals: { users: User.responsed_go(@notice).order_by_responsed_at, type: "go" } %>
     </div>
     <div>
       <h3>대기 <small>(총 <%= User.responsed_wait(@notice).count %>명)</small></h3>
@@ -24,6 +28,9 @@
       <h3>미응답 <small>(총 <%= User.responsed_not_to_notice(@notice).count %>명)</small></h3>
       <%= render partial: "table", locals: { users: User.responsed_not_to_notice(@notice), type: "not" } %>
     </div>
-
+    <div>
+      <%= submit_tag "변경", class: "btn btn-primary"  %>
+      <%= link_to "취소", admin_notice_path(@notice), class: "btn btn-default" %>
+    <div>
   <% end %>
 </div>

@@ -4,21 +4,21 @@
       <tr>
         <th class="text-center" width="3%">참가</th>
         <th class="text-center" width="3%">대기</th>
-        <th class="text-center" width="6%">미응답</th>
+        <th class="text-center" width="4%">미답</th>
         <th width="5%">기수</th>
         <th width="7%">이름</th>
         <th width="13%">전화번호</th>
         <th width="26%">이메일</th>
-        <th width="22%">전공</th>
+        <th width="24%">전공</th>
         <th width="15%">기록 시간</th>
       </tr>
     </thead>
     <tbody>
       <% users.each do |user| %>
       <tr>
-        <td class="text-center"><%= radio_button_tag 'user[' + user.id.to_s + ']', nil, false %></td>
-        <td class="text-center"><%= radio_button_tag 'user[' + user.id.to_s + ']', nil, false %></td>
-        <td class="text-center"><%= radio_button_tag 'user[' + user.id.to_s + ']', nil, false %></td>
+        <td class="text-center"><%= radio_button_tag 'user[' + user.id.to_s + ']', 'go', type == "go" ? true : false %></td>
+        <td class="text-center"><%= radio_button_tag 'user[' + user.id.to_s + ']', 'wait', type == "wait" ? true : false %></td>
+        <td class="text-center"><%= radio_button_tag 'user[' + user.id.to_s + ']', 'not', type == "not" ? true : false %></td>
         <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
         <td><%= user.username %></td>
         <td><%= pretty_phone_number(user.phone_number) %></td>
