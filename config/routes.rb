@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   resources :notices, only: [:show] do
-    resources :responses, only: [:new, :create]
+    resources :responses
     resources :to_responses
   end
 
