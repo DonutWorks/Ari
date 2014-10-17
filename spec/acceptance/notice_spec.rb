@@ -87,8 +87,6 @@ RSpec.describe "notice", type: :feature do
   end
 
   it "should let me delete the notice" do
-  # it "should let me delete the notice" do
-
     visit("/admin")
     expect(find('#notice-container')).to have_content(@notice.title)
 
@@ -102,4 +100,39 @@ RSpec.describe "notice", type: :feature do
     expect(find('#notice-container')).not_to have_content(@notice.title)
   end
 
+  context "when I update a TO notice" do
+    before(:each) do
+      @to_notice = FactoryGirl.create(:to_notice, to: 3, title: "TO notice")
+      @users = FactoryGirl.create_list(:user, 2)
+
+      @users.each do |user|
+        Response.create!(user: user, notice: @to_notice, status: "go")
+      end
+
+      visit("/admin")
+      click_link(@to_notice.title)
+      click_link("수정")
+    end
+
+    it "should let me decrease TO (greater than responses)" do
+      fill_in :notice_to, with: 2
+      click_button("수정")
+
+      expect(page).to have_content("성공적으로 수정했습니다.")
+    end
+
+    it "should show errors when I decrease TO (less than responses)" do
+      fill_in :notice_to, with: 1
+      click_button("수정")
+
+      expect(page).to have_content("현재 참석자가 설정된 모집 인원보다 많습니다.")
+    end
+
+    it "should let me increase TO" do
+      fill_in :notice_to, with: 4
+      click_button("수정")
+
+      expect(page).to have_content("성공적으로 수정했습니다.")
+    end
+  end
 end

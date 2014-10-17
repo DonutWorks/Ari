@@ -6,30 +6,27 @@ class User < ActiveRecord::Base
   serialize :extra_info
 
   scope :generation_sorted_desc, -> { order(generation_id: :desc) }
-
   scope :responsed_to_notice, -> (notice) { joins(:responses).merge(Response.where(notice: notice)) }
-  scope :responsed_yes, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "yes")) }
-  scope :responsed_maybe, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "maybe")) }
-  scope :responsed_no, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "no")) }
-  scope :responsed_go, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "go")) }
-  scope :responsed_wait, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "wait")) }
+  Response::STATUSES.each do |status|
+    scope "responsed_#{status}", -> (notice) { responsed_to_notice(notice).merge(Response.where(status: status)) }
+  end
   scope :responsed_not_to_notice, -> (notice) {
-    SQL = %{LEFT OUTER JOIN (SELECT * FROM responses WHERE responses.notice_id = #{notice.id} ) A
-        ON users.id = A.user_id
-        WHERE A.status is null}
-    joins(SQL) }
+  SQL = %{LEFT OUTER JOIN (SELECT * FROM responses WHERE responses.notice_id = #{notice.id} ) A
+      ON users.id = A.user_id
+      WHERE A.status is null}
+  joins(SQL) }
+
+  scope :order_by_gid, -> {order(generation_id: :desc)}
+  scope :order_by_responsed_at, -> {order('responses.created_at DESC')}
+  scope :order_by_read_at, -> {order('read_activity_marks.created_at DESC')}
+
+  acts_as_reader
 
   validates_presence_of :username, :phone_number, :email
   validates_uniqueness_of :phone_number, :email
 
   before_validation :normalize_phone_number
   before_save :strip!
-
-  scope :order_by_gid, -> {order(generation_id: :desc)}
-  scope :order_by_responsed_at, -> {order('responses.created_at DESC')}
-
-  acts_as_reader
-  scope :order_by_read_at, -> {order('read_activity_marks.created_at DESC')}
 
   attr_accessor :regard_as_activated
 

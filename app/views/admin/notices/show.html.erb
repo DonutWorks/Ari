@@ -12,7 +12,7 @@
   </div>
 
   <p>공지 내용 : <%= @notice.content %></p>
-  <% if @notice.external? %>
+  <% if @notice.external_notice? %>
     <p>실제 공지 주소 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
   <% end %>
   <p>통합 공지 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %></p>
