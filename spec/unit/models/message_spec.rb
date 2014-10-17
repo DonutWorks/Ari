@@ -27,17 +27,23 @@ RSpec.describe Message, :type => :model do
     expect(m.users[1]).to eq(user2)
   end
 
-  it "should check validation" do
-    expect(Message.new.save).to eq(false)
+  describe 'validation check' do
+    it "should check presence validation for content" do
+      expect(Message.new.save).to eq(false)
 
-    expect(Message.new(content: "hi").save).to eq(true)    
-  end
+      expect(Message.new(content: "hi").save).to eq(true)    
+    end
+  end  
 
-  it "should use correct scope" do
-    10.times {
-        Message.create(content: Random.rand(10).to_s)
-    }
+  describe "#created_at_sorted_desc" do
+    it "should descending by created_at" do
+      now = DateTime.now
 
-    expect(Message.created_at_sorted_desc).to eq(Message.all.order(created_at: :desc))
+      message1 = Message.create!(content: "message1", created_at: now - 1.day)
+      message2 = Message.create!(content: "message2", created_at: now - 3.day)
+      message3 = Message.create!(content: "message3", created_at: now - 2.day)
+
+      expect(Message.created_at_sorted_desc).to eq([message1, message3, message2])
+    end
   end
 end
