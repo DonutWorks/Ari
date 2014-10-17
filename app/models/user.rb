@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   joins(SQL) }
 
   scope :order_by_gid, -> {order(generation_id: :desc)}
-  scope :order_by_responsed_at, -> {order('responses.created_at DESC')}
+  scope :order_by_responsed_at, -> {order('responses.created_at ASC')}
   scope :order_by_read_at, -> {order('read_activity_marks.created_at DESC')}
 
   acts_as_reader
