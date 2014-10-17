@@ -34,9 +34,10 @@ RSpec.describe Notice, :type => :model do
     it "should check presence validation for notice_type" do
       expect(Notice.new.save).to eq(false)
       expect(FactoryGirl.build(:notice, notice_type: "").save).to eq(false)
+      expect(FactoryGirl.build(:notice, notice_type: "none").save).to eq(false)
     end
 
-    it "should check numericality validation for to if external?" do
+    it "should check numericality validation for to" do
       expect(Notice.new.save).to eq(false)
       expect(FactoryGirl.build(:notice, notice_type: 'to', to: "hi").save).to eq(false)
 
