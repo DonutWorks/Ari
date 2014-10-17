@@ -17,9 +17,4 @@ FactoryGirl.define do
     link "http://google.com"
     notice_type "external"
   end
-
-  factory :provider_token do
-    provider "kakao"
-    uid "1234"
-  end
 end

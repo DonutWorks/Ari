@@ -85,10 +85,6 @@ RSpec.describe User, :type => :model do
     context "user attempted to sign in" do
       before(:each) do
         @user = FactoryGirl.create(:user)
-        @token = FactoryGirl.create(:provider_token)
-
-        @activator = UserActivator.new
-        @ticket = @activator.issue_ticket(@user, @token)
       end
 
       it "should return false for user not activated" do
@@ -96,7 +92,8 @@ RSpec.describe User, :type => :model do
       end
 
       it "should return true for activated user" do
-        @activator.activate(@ticket.code, @token)
+        out = Authenticates::CreateInvitationService.new.execute(nil, @user)
+        out = Authenticates::ActivateUserService.new.execute(@user, out[:code])
         @user.reload
         expect(@user.activated?).to eq(true)
       end

@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
-  has_one :account_activation, dependent: :destroy
+  has_many :invitations
   has_many :responses
   has_many :message_histories
   has_many :messages, through: :message_histories
+  serialize :extra_info
 
   scope :generation_sorted_desc, -> { order(generation_id: :desc) }
 
@@ -30,6 +31,8 @@ class User < ActiveRecord::Base
   acts_as_reader
   scope :order_by_read_at, -> {order('read_activity_marks.created_at DESC')}
 
+  attr_accessor :regard_as_activated
+
   def responsed_to?(notice)
     responses.where(notice: notice).exists?
   end
@@ -44,8 +47,7 @@ class User < ActiveRecord::Base
   end
 
   def activated?
-    return false unless account_activation
-    account_activation.activated
+    activated || regard_as_activated == true
   end
 
   def strip!
