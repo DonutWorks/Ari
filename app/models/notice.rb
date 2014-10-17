@@ -41,6 +41,7 @@ private
   end
 
   def to_adjustable?
+    return if to.nil?
     if to < go_responses.count
       errors.add(:to, "현재 참석자가 설정된 모집 인원보다 많습니다. 일부 참석자를 대기자로 변경한 후 다시 시도해주세요.")
     end
