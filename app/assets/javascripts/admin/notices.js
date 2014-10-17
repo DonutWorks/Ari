@@ -19,27 +19,33 @@ $(document).on('ready page:load', function () {
 
   $('#sms_content').keyup(change_sms_text_size);
 
+  option_selecter($('#notice_type').val());
+
   $('.notice-type-option').change(function() {
-    switch($(this).val()){
-      case 'external':
-        $('#external-option').fadeIn('fast');
-        $('#to-option').fadeOut('fast');
-        break;
-      case 'plain':
-        $('#external-option').fadeOut('fast');
-        $('#to-option').fadeOut('fast');
-        break;
-      case 'survey':
-        $('#external-option').fadeOut('fast');
-        $('#to-option').fadeOut('fast');
-        break;
-      case 'to':
-        $('#external-option').fadeOut('fast');
-        $('#to-option').fadeIn('fast');
-        break;
-    }
+      option_selecter($(this).val());
   });
 });
+
+function option_selecter(val) {
+  switch(val){
+    case 'external':
+      $('#external-option').fadeIn('fast');
+      $('#to-option').fadeOut('fast');
+      break;
+    case 'plain':
+      $('#external-option').fadeOut('fast');
+      $('#to-option').fadeOut('fast');
+      break;
+    case 'survey':
+      $('#external-option').fadeOut('fast');
+      $('#to-option').fadeOut('fast');
+      break;
+    case 'to':
+      $('#external-option').fadeOut('fast');
+      $('#to-option').fadeIn('fast');
+      break;
+  }
+}
 
 function add_phone_number_to_array() {
   var phone_numbers_cnt = 0;
