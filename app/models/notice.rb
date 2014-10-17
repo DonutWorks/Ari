@@ -25,7 +25,7 @@ class Notice < ActiveRecord::Base
   before_save :change_candidates_status, if: :to_notice?
 
   validates :title, presence: { message: "공지 제목을 입력해주십시오." }
-  validates :link, presence: { message: "공지 링크를 입력해주십시오." }
+  validates :link, presence: { message: "공지 링크를 입력해주십시오." }, if: :external_notice?
   validates :content, presence: { message: "공지 내용을 입력해주십시오." }
   validates :notice_type, presence: { message: "유형을 선택해주십시오." },
    inclusion: { in: NOTICE_TYPES, message: "올바르지 않은 유형입니다." }

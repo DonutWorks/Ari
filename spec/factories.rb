@@ -27,9 +27,4 @@ FactoryGirl.define do
       due_date 100.years.from_now
     end
   end
-
-  factory :provider_token do
-    provider "kakao"
-    uid "1234"
-  end
 end

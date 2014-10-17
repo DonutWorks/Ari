@@ -11,27 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141013154141) do
+ActiveRecord::Schema.define(version: 20141016054636) do
 
-  create_table "account_activations", force: true do |t|
-    t.integer  "user_id"
-    t.boolean  "activated",         default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "provider_token_id"
-  end
-
-  add_index "account_activations", ["user_id"], name: "index_account_activations_on_user_id"
-
-  create_table "activation_tickets", force: true do |t|
+  create_table "invitations", force: true do |t|
     t.string   "code"
-    t.integer  "account_activation_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "expired",               default: false
+    t.boolean  "expired",    default: false
+    t.integer  "user_id"
   end
-
-  add_index "activation_tickets", ["account_activation_id"], name: "index_activation_tickets_on_account_activation_id"
 
   create_table "message_histories", force: true do |t|
     t.integer  "user_id"
@@ -62,14 +50,6 @@ ActiveRecord::Schema.define(version: 20141013154141) do
     t.datetime "due_date"
   end
 
-  create_table "provider_tokens", force: true do |t|
-    t.string   "provider"
-    t.string   "uid"
-    t.text     "info"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "read_activity_marks", force: true do |t|
     t.integer  "reader_id",                 null: false
     t.integer  "readable_id"
@@ -88,10 +68,10 @@ ActiveRecord::Schema.define(version: 20141013154141) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  null: false
+    t.string   "email",                                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "username",               null: false
+    t.string   "username",                               null: false
     t.string   "phone_number"
     t.string   "major"
     t.string   "student_id"
@@ -102,6 +82,10 @@ ActiveRecord::Schema.define(version: 20141013154141) do
     t.string   "member_type"
     t.float    "generation_id"
     t.string   "birth"
+    t.boolean  "activated",              default: false
+    t.string   "provider"
+    t.string   "uid"
+    t.text     "extra_info"
   end
 
 end

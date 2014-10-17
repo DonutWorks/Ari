@@ -4,18 +4,15 @@ class ToResponsesController < ApplicationController
   end
 
   def create
-    notice = Notice.find_by_id(params[:notice_id]) or not_found
+    notice = Notice.find_by_id(params[:notice_id])
 
-    if notice.to.to_i > notice.responses.where(status: "go").count
-      status = "go"
-    else
-      status = "wait"
-    end
+    notice_to_checker = NoticeToChecker.new
+    status = notice_to_checker.check(notice)
 
-    response = Response.new(user: current_user, notice: notice, status: status)
+    response = Response.new(user: current_user, notice: notice, status: status.to_s)
     if response.save
-      flash[:notice] = "참석자로 등록 되었습니다." if status == "go"
-      flash[:notice] = "대기자로 등록 되었습니다." if status == "wait"
+      flash[:notice] = "참석자로 등록 되었습니다." if status == :go
+      flash[:notice] = "대기자로 등록 되었습니다." if status == :wait
     else
       flash[:error] = "잘못된 응답입니다."
     end
