@@ -14,6 +14,22 @@ RSpec.describe "user auth process", type: :feature do
     })
   end
 
+  it "lets me sign in with phone number" do
+    visit("/")
+    fill_in :user_phone_number, with: @user.phone_number
+    click_button "전화번호로 로그인"
+
+    expect(current_path).to eq("/")
+  end
+
+  it "shows me an error message when try to sign in with invalid phone number" do
+    visit("/")
+    fill_in :user_phone_number, with: "00000000000"
+    click_button "전화번호로 로그인"
+
+    expect(page).to have_content("전화번호가 잘못되었습니다.")
+  end
+
   it "lets me fail to kakao log in" do
     OmniAuth.config.mock_auth[:kakao] = :invalid_credentials
     visit("/")
@@ -126,6 +142,11 @@ RSpec.describe "user auth process", type: :feature do
             expect(current_path).to eq("/")
           end
 
+          it "lets me sign out" do
+            click_link("Logout")
+            expect(current_path).to eq(sign_in_users_path)
+          end
+
           context "when user logged in" do
             it "leads me to not auth page when I logged in" do
               visit("/")
@@ -135,14 +156,21 @@ RSpec.describe "user auth process", type: :feature do
         end
 
         context "when user logged in with remember me" do
-          it "keeps me logged in when restarting browser" do
+          before(:each) do
             find("#remember-me").set(true)
             fill_in(:user_phone_number, with: @user.phone_number)
             click_button("전화번호로 로그인")
+          end
 
+          it "keeps me logged in when restarting browser" do
             expire_cookies
             visit("/")
             expect(current_path).to eq("/")
+          end
+
+          it "lets me sign out" do
+            click_link("Logout")
+            expect(current_path).to eq(sign_in_users_path)
           end
         end
       end
