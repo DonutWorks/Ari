@@ -14,13 +14,16 @@ RSpec.describe SmsSender do
     user2.phone_number = "010-3232-5374"
     user2.save!
 
+    notice = FactoryGirl.build(:notice)
+    notice.save!
+
     #to be sure, test it without fakeweb
     request_url = "https://api.coolsms.co.kr/1/send"
     body = '{"result_code":"00"}'
     FakeWeb.register_uri(:post, request_url, :body => body)
 
     sms_sender = SmsSender.new
-    message = sms_sender.send_message("Service, SmsSender Test", [user.id, user2.id])
+    message = sms_sender.send_message("Service, SmsSender Test", notice.id, [user.id, user2.id])
 
     expect(message.nil?).to eq(false)
 

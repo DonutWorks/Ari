@@ -4,6 +4,7 @@
   </div>
 
   <p>문자 내용 : <%= @message.content %></p>
+  <p>공지글 제목 : <%= @message.notice.title unless @message.notice.blank?  %></p>
   <p>전송 시간 : <%= @message.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
 
   <div>

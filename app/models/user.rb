@@ -11,24 +11,48 @@ class User < ActiveRecord::Base
   scope :responsed_yes, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "yes")) }
   scope :responsed_maybe, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "maybe")) }
   scope :responsed_no, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "no")) }
+  scope :responsed_go, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "go")) }
+  scope :responsed_wait, -> (notice) { responsed_to_notice(notice).merge(Response.where(status: "wait")) }
+  scope :responsed_not_to_notice, -> (notice) {
+    SQL = %{LEFT OUTER JOIN (SELECT * FROM responses WHERE responses.notice_id = #{notice.id} ) A
+        ON users.id = A.user_id
+        WHERE A.status is null}
+    joins(SQL) }
 
   validates_presence_of :username, :phone_number, :email
   validates_uniqueness_of :phone_number, :email
 
   before_validation :normalize_phone_number
+  before_save :strip!
 
   scope :order_by_gid, -> {order(generation_id: :desc)}
+  scope :order_by_responsed_at, -> {order('responses.created_at DESC')}
 
   acts_as_reader
+  scope :order_by_read_at, -> {order('read_activity_marks.created_at DESC')}
 
   attr_accessor :regard_as_activated
 
   def responsed_to?(notice)
     responses.where(notice: notice).exists?
   end
+  def response_status(notice)
+    response = responses.where(notice: notice).first
+    if response
+      response.status
+    else
+      "not"
+    end
+
+  end
 
   def activated?
     activated || regard_as_activated == true
+  end
+
+  def strip!
+    strip_to = [:username, :email, :major, :student_id, :sex, :home_phone_number, :emergency_phone_number, :habitat_id, :member_type, :birth ]
+    strip_to.each{|column| self[column].strip! if self[column]}
   end
 
 private

@@ -33,4 +33,10 @@ private
     omniauth_params = request.env['omniauth.params']
     params.merge!(omniauth_params) if omniauth_params
   end
+
+private
+  def merge_omniauth_params
+    omniauth_params = request.env['omniauth.params']
+    params.merge!(omniauth_params) if omniauth_params
+  end
 end

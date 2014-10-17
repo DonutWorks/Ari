@@ -71,6 +71,19 @@ RSpec.describe "check user process", type: :feature do
     expect(find('.alert-info')).to have_content('멤버 입력에 성공했습니다')
   end
 
+  it "should create user from excel with striping" do
+    visit import_admin_users_path
+
+    file_path = Rails.root + "spec/acceptance/fixtures/RosterExample.xlsx"
+    attach_file('upload_file', file_path)
+
+    click_button "업로드"
+    visit admin_users_path
+
+    expect(/임수정/).to match(find('.table').text)
+    expect(/ 임수정/).to match(find('.table').text)
+  end
+
   it "should create user from excel (contains duplicated user)" do
     visit import_admin_users_path
 
