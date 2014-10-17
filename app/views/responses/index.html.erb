@@ -1,0 +1,12 @@
+<%= render template: 'notices/show' %>
+
+<div>
+  <% if current_user.responsed_to?(@notice) %>
+    <h3 class="text-center"><%= @status %></h3>
+    <%= link_to "응답취소", notice_response_path(@notice, @notice.responses.find_by_user_id(current_user)), method: :delete, class: "btn btn-danger pull-right" %>
+  <% else %>
+    <%= link_to "불참", notice_responses_path(status: "no"), method: :post, class: "btn btn-danger pull-right" %>
+    <%= link_to "불확실", notice_responses_path(status: "maybe"), method: :post, class: "btn btn-warning pull-right margin-right-10" %>
+    <%= link_to "참가", notice_responses_path(status: "yes"), method: :post, class: "btn btn-primary pull-right margin-right-10" %>
+  <% end %>
+</div>

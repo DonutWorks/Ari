@@ -26,6 +26,7 @@ class ToResponsesController < ApplicationController
     response = notice.responses.find_by_user_id(current_user)
     response.destroy
 
+    flash[:error] = "응답이 취소 되었습니다."
     redirect_to notice_to_responses_path(notice)
   end
 
