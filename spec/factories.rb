@@ -6,7 +6,7 @@ FactoryGirl.define do
   factory :user do
     username "John"
     email { "#{username}@donutworks.com" }
-    phone_number
+    phone_number "010-1111-2222"
     major "CS"
     member_type "정단원"
   end
