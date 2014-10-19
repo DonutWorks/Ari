@@ -1,6 +1,6 @@
 class Admin::MessagesController < Admin::ApplicationController
   def index
-    @messages = Message.all
+    @messages = Message.created_at_sorted_desc
   end
 
   def show
@@ -9,7 +9,7 @@ class Admin::MessagesController < Admin::ApplicationController
 
   def create
     sms_sender = SmsSender.new
-    message = sms_sender.send_message(params[:sms_content], params[:sms_user].keys)
+    message = sms_sender.send_message(params[:sms_content], params[:notice_id], params[:sms_user].keys)
 
     flash[:notice] = "회원들에게 문자를 전송 했습니다!"
     redirect_to admin_message_path(message)

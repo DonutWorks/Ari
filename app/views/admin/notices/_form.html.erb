@@ -1,3 +1,28 @@
+<div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :notice_type) %>">
+  <%= f.label :notice_type, "유형", class: "col-sm-1 control-label" %>
+  <div class="col-sm-11">
+    <%= f.label :notice_type_external, class: "radio-inline control-label" do %>
+      <%= f.radio_button :notice_type, "external", checked: true, class: "notice-type-option" %>
+      외부 공지
+    <% end %>
+    <%= f.label :notice_type_plain, class: "radio-inline control-label" do %>
+      <%= f.radio_button :notice_type, "plain", class: "notice-type-option" %>
+      내부 공지
+    <% end %>
+    <%= f.label :notice_type_survey, class: "radio-inline control-label" do %>
+      <%= f.radio_button :notice_type, "survey", class: "notice-type-option" %>
+      수요조사
+    <% end %>
+    <%= f.label :notice_type_to, class: "radio-inline control-label" do %>
+      <%= f.radio_button :notice_type, "to", class: "notice-type-option" %>
+      TO 공지
+    <% end %>
+
+    <span class="glyphicon <%= validation_state_feedback(@notice, :notice_type) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@notice, :notice_type) %></span>
+  </div>
+</div>
+
 <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :title) %>">
   <%= f.label :title, "제목", class: "col-sm-1 control-label" %>
   <div class="col-sm-11">
@@ -10,38 +35,41 @@
 <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :content) %>">
   <%= f.label :content, "내용", class: "col-sm-1 control-label" %>
   <div class="col-sm-11">
-    <%= f.text_field :content, class: "form-control" %>
+    <%= f.text_area :content, rows: 5, class: "form-control" %>
     <span class="glyphicon <%= validation_state_feedback(@notice, :content) %> form-control-feedback"></span>
     <span class="help-block"><%= attribute_error_message(@notice, :content) %></span>
   </div>
 </div>
 
-<div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :link) %>">
-  <%= f.label :link, "링크", class: "col-sm-1 control-label" %>
-  <div class="col-sm-11">
-    <%= f.text_field :link, class: "form-control" %>
-    <span class="glyphicon <%= validation_state_feedback(@notice, :link) %> form-control-feedback"></span>
-    <span class="help-block"><%= attribute_error_message(@notice, :link) %></span>
+<div id="external-option">
+  <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :link) %>">
+    <%= f.label :link, "링크", class: "col-sm-1 control-label" %>
+    <div class="col-sm-11">
+      <%= f.text_field :link, class: "form-control" %>
+      <span class="glyphicon <%= validation_state_feedback(@notice, :link) %> form-control-feedback"></span>
+      <span class="help-block"><%= attribute_error_message(@notice, :link) %></span>
+    </div>
   </div>
 </div>
 
-<div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :notice_type) %>">
-  <%= f.label :notice_type, "유형", class: "col-sm-1 control-label" %>
-  <div class="col-sm-11">
-    <%= f.label :notice_type_external, class: "radio-inline control-label" do %>
-      <%= f.radio_button :notice_type, "external", checked: true %>
-      외부 공지
-    <% end %>
-    <%= f.label :notice_type_plain, class: "radio-inline control-label" do %>
-      <%= f.radio_button :notice_type, "plain" %>
-      내부 공지
-    <% end %>
-    <%= f.label :notice_type_survey, class: "radio-inline control-label" do %>
-      <%= f.radio_button :notice_type, "survey" %>
-      수요조사
-    <% end %>
+<div id="to-option">
+  <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :to) %>">
+    <%= f.label :to, "모집 인원", class: "col-sm-1 control-label" %>
+    <div class="col-sm-11">
+      <%= f.number_field :to, min: 1, class: "form-control" %>
+      <span class="glyphicon <%= validation_state_feedback(@notice, :to) %> form-control-feedback"></span>
+      <span class="help-block"><%= attribute_error_message(@notice, :to) %></span>
+    </div>
+  </div>
 
-    <span class="glyphicon <%= validation_state_feedback(@notice, :notice_type) %> form-control-feedback"></span>
-    <span class="help-block"><%= attribute_error_message(@notice, :notice_type) %></span>
+  <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :due_date) %>">
+    <%= f.label :due_date, "행사 날짜", class: "col-sm-1 control-label" %>
+    <div class="col-sm-11 margin-top15">
+      <%= f.date_select :due_date, {start_year: Date.today.year, default: 4.days.from_now }, {class: "selectpicker"} %>
+      <p class="text-success">날짜 3일 전까지 공개 모집이 가능합니다</p>
+
+      <span class="glyphicon <%= validation_state_feedback(@notice, :due_date) %> form-control-feedback"></span>
+      <span class="help-block"><%= attribute_error_message(@notice, :due_date) %></span>
+    </div>
   </div>
 </div>

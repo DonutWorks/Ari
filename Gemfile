@@ -64,6 +64,7 @@ group :development, :test do
   gem 'capybara', '~> 2.4.1'
   gem 'selenium-webdriver', '~> 2.43.0'
   gem 'database_cleaner', '~> 1.3.0'
+  gem 'show_me_the_cookies', '~> 2.5.0'
 end
 
 gem 'addressable', '~> 2.3.6'
@@ -71,8 +72,7 @@ gem 'phone', '~> 1.2.3'
 gem 'nokogiri', '~> 1.6.3.1'
 gem 'uri_template', '~> 0.7.0'
 gem 'read_activity', '~> 0.0.4'
-gem 'omniauth-kakao', git: 'https://github.com/FeGs/omniauth-kakao.git', branch: 'bug/not-testable'
-# gem 'omniauth-kakao', '~> 0.1.0'
+gem 'omniauth-kakao', '~> 0.1.2'
 gem 'mailgun', '~> 0.8'
 gem 'rails-i18n', '~> 4.0.0'
 gem 'bootstrap-sass', '~> 3.2.0.2'

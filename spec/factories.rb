@@ -3,8 +3,12 @@ FactoryGirl.define do
     "010%08d" % n
   end
 
+  sequence :username do |n|
+    "John#{n}"
+  end
+
   factory :user do
-    username "John"
+    username
     email { "#{username}@donutworks.com" }
     phone_number
     major "CS"
@@ -16,10 +20,11 @@ FactoryGirl.define do
     content "google!"
     link "http://google.com"
     notice_type "external"
-  end
 
-  factory :provider_token do
-    provider "kakao"
-    uid "1234"
+    factory :to_notice do
+      notice_type "to"
+      to 10
+      due_date 100.years.from_now
+    end
   end
 end

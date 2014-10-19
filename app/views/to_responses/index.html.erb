@@ -1,0 +1,17 @@
+<%= render template: 'notices/show' %>
+
+<div class="mention">
+  <% if @notice.due_date - 3.days < Date.today %>
+    <h3 class="text-center">신청이 마감 되었습니다..</h3>
+  <% elsif current_user.response_status(@notice) == "go" %>
+    <h3 class="text-center">지금 참가자 명단에 있습니다.</h3>
+    <%= link_to "참가취소", notice_to_response_path(@notice, @notice.responses.find_by_user_id(current_user)), method: :delete, class: "btn btn-danger pull-right" %>
+  <% elsif current_user.response_status(@notice) == "wait" %>
+    <h3 class="text-center">지금 대기 명단에 있습니다.</h3>
+    <%= link_to "참가취소", notice_to_response_path(@notice, @notice.responses.find_by_user_id(current_user)), method: :delete, class: "btn btn-danger pull-right" %>
+  <% else %>
+    <h3 class="text-center">지금 등록하세요!</h3>
+    <%= link_to "참가신청", notice_to_responses_path(@notice), method: :post, class: "btn btn-primary pull-right" %>
+  <% end %>
+  <div class="clearfix"></div>
+</div>
