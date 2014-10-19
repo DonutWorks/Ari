@@ -3,8 +3,16 @@ module Authenticates
     def execute(signed_in_user, user_params)
       return failure unless user_params
 
-      user = User.find_by(email: user_params.email)
-      return failure({ status: :invalid_email }) if user.nil?
+      normalizer = FormNormalizers::PhoneNumberNormalizer.new
+
+      begin
+        user_phone_number = normalizer.normalize(user_params.phone_number)
+      rescue FormNormalizers::NormalizeError => e
+        return invalid_phone_number
+      end
+
+      user = User.find_by(phone_number: user_phone_number)
+      return invalid_phone_number if user.nil?
 
       # move provider info to new user
       if user != signed_in_user and !user.activated?
@@ -37,15 +45,36 @@ module Authenticates
       return success({ code: ticket.code })
     end
 
-    def send_invitation_mail(email, invitation_url)
-      mailgun = Mailgun()
-      parameters = {
-        :from => "ari@donutworks.com",
-        :to => email,
-        :subject => "서울대 햇빛봉사단의 계정 활성화를 위한 메일입니다.",
-        :html => "<div><h2>서울대 햇빛봉사단 계정을 활성화 시키려면 아래의 링크를 클릭 해주세요.</h2></div><div>#{invitation_url}</div>"
+    def send_invitation_sms(user, invitation_url)
+      shortener = URLShortener.new
+      url = shortener.shorten_url(invitation_url)
+
+      normalizer = FormNormalizers::PhoneNumberNormalizer.new
+
+      begin
+        user_phone_number = normalizer.normalize(user.phone_number)
+      rescue FormNormalizers::NormalizeError => e
+        return false
+      end
+
+      sms_info = {
+        from: "01044127987",
+        to: user_phone_number,
+        text: "[인증 url] => " + url
       }
-      mailgun.messages.send_email(parameters)
+
+      sms_sender = SendSMS2.new
+      begin
+        sms_sender.send_sms(sms_info)
+      rescue SendSMS2::SendSMSError => e
+        return false
+      end
+      return true
+    end
+
+  private
+    def invalid_phone_number
+      failure({ status: :invalid_phone_number })
     end
   end
 end

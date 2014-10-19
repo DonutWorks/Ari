@@ -14,19 +14,19 @@ class InvitationsController < AuthenticatableController
     out = create_invitation_service.execute(current_user, @user)
 
     case out[:status]
-    when :invalid_email
-      @error_message = "등록된 이메일이 아닙니다. 관리자에게 문의하세요."
+    when :invalid_phone_number
+      @error_message = "등록된 전화번호가 아닙니다. 관리자에게 문의하세요."
       render 'new'
       return
     when :failure
-      @error_message = "인증 메일 전송에 실패했습니다. 다시 시도해주세요."
+      @error_message = "인증 문자 전송에 실패했습니다. 다시 시도해주세요."
       render 'new'
       return
     when :success
       Authenticates::UserSession.new(session).destroy!
-      create_invitation_service.send_invitation_mail(@user.email,
+      create_invitation_service.send_invitation_sms(@user,
        invitation_url(out[:code], redirect_url: params[:redirect_url]))
-      flash[:notice] = "인증 메일이 전송되었습니다."
+      flash[:notice] = "인증 문자가 전송되었습니다."
     end
 
     proceed
@@ -49,6 +49,6 @@ class InvitationsController < AuthenticatableController
 
 private
   def user_params
-    params.require(:user).permit(:email, :uid, :provider)
+    params.require(:user).permit(:phone_number, :uid, :provider)
   end
 end
