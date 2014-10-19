@@ -63,10 +63,10 @@ module Authenticates
         text: "[인증 url] => " + url
       }
 
-      sms_sender = SendSMS2.new
+      sms_sender = SMSSender.new
       begin
         sms_sender.send_sms(sms_info)
-      rescue SendSMS2::SendSMSError => e
+      rescue SMSSender::SMSSenderError => e
         return false
       end
       return true
