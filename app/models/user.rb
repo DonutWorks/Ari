@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
     responses.where(notice: notice).exists?
   end
   def response_status(notice)
-    response = responses.where(notice: notice).first
+    response = responses.find_by(notice: notice)
     if response
       response.status
     else
