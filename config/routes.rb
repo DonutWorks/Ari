@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :responses
     resources :to_responses
     resources :checklists, shallow: true do 
+      get 'finish'
       resources :assignee_comments
     end
   end

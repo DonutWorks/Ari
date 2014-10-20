@@ -68,11 +68,13 @@ var assignee_comment = {
   },
 
   editable_comment: function(e){
-    $('.new-comment-form').hide();
-    $('.comment-form').each(function(){
-      $(this).hide().prev().show();
-    });
-    $(e.target).hide().next().css('display','table');
+    if(!$(this).data('finish')){
+      $('.new-comment-form').hide();
+      $('.comment-form').each(function(){
+        $(this).hide().prev().show();
+      });
+      $(e.target).hide().next().css('display','table');
+    }
   }
 }
 
