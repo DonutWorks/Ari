@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020131616) do
+ActiveRecord::Schema.define(version: 20141020140636) do
 
   create_table "admins", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -26,10 +26,19 @@ ActiveRecord::Schema.define(version: 20141020131616) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "club_id"
   end
 
+  add_index "admins", ["club_id"], name: "index_admins_on_club_id"
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+
+  create_table "clubs", force: true do |t|
+    t.string   "name",       null: false
+    t.string   "logo_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "invitations", force: true do |t|
     t.string   "code"
@@ -37,7 +46,10 @@ ActiveRecord::Schema.define(version: 20141020131616) do
     t.datetime "updated_at"
     t.boolean  "expired",    default: false
     t.integer  "user_id"
+    t.integer  "club_id"
   end
+
+  add_index "invitations", ["club_id"], name: "index_invitations_on_club_id"
 
   create_table "message_histories", force: true do |t|
     t.integer  "user_id"
@@ -54,7 +66,10 @@ ActiveRecord::Schema.define(version: 20141020131616) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "notice_id"
+    t.integer  "club_id"
   end
+
+  add_index "messages", ["club_id"], name: "index_messages_on_club_id"
 
   create_table "notices", force: true do |t|
     t.string   "title"
@@ -66,7 +81,10 @@ ActiveRecord::Schema.define(version: 20141020131616) do
     t.string   "notice_type"
     t.integer  "to"
     t.datetime "due_date"
+    t.integer  "club_id"
   end
+
+  add_index "notices", ["club_id"], name: "index_notices_on_club_id"
 
   create_table "read_activity_marks", force: true do |t|
     t.integer  "reader_id",                 null: false
@@ -83,7 +101,10 @@ ActiveRecord::Schema.define(version: 20141020131616) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "club_id"
   end
+
+  add_index "responses", ["club_id"], name: "index_responses_on_club_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                                  null: false
@@ -104,6 +125,9 @@ ActiveRecord::Schema.define(version: 20141020131616) do
     t.string   "provider"
     t.string   "uid"
     t.text     "extra_info"
+    t.integer  "club_id"
   end
+
+  add_index "users", ["club_id"], name: "index_users_on_club_id"
 
 end

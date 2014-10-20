@@ -19,6 +19,7 @@ class Notice < ActiveRecord::Base
 
   has_many :responses
   has_many :messages
+  belongs_to :club
 
   acts_as_readable
   before_save :make_redirectable_url!

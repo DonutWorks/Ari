@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :responses
   has_many :message_histories
   has_many :messages, through: :message_histories
+  belongs_to :club
   serialize :extra_info
 
   scope :generation_sorted_desc, -> { order(generation_id: :desc) }
