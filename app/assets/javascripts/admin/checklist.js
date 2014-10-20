@@ -1,6 +1,7 @@
 $(document).on('ready page:load', function () {
   user_modal.init();
   checklist.init();
+  assignee_comment.init();
 });
 
 var user_modal = {
@@ -58,6 +59,20 @@ var checklist = {
       if($(this).val().length >= 1)
         form.next().fadeIn('fast');
     });
+  }
+}
+
+var assignee_comment = {
+  init: function(){
+    $('.comment-value').click(this.editable_comment);
+  },
+
+  editable_comment: function(e){
+    $('.new-comment-form').hide();
+    $('.comment-form').each(function(){
+      $(this).hide().prev().show();
+    });
+    $(e.target).hide().next().css('display','table');
   }
 }
 
