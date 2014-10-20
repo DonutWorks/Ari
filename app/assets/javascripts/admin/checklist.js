@@ -14,7 +14,7 @@ var user_modal = {
 
     $('.all-users-modal').on('hidden.bs.modal', function (e) {
       $(this.target).text(user_modal.user.name);
-      $(this.target).siblings('input[type="hidden"]').val(user_modal.user.phone_number);
+      $(this.target).siblings('input[type="hidden"]').val(user_modal.user.phone_number.replace(/-/g, ""));
       $(this.target).removeClass("btn-warning").addClass('btn-success');
     });
 
