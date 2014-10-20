@@ -5,6 +5,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def new
     @notice = Notice.new
+    20.times { @notice.checklists.build}
   end
 
   def create
