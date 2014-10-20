@@ -5,13 +5,30 @@
 
     <% checklists.each do |checklist| %>
       <% user = User.find_by_phone_number(checklist.assignee) %>
-      <a href="#" class="list-group-item <%= 'list-group-item-warning' if user.phone_number == current_user.phone_number %>">
+      <div class="list-group-item <%= 'list-group-item-warning' if user.phone_number == current_user.phone_number %>">
         <h4 class="list-group-item-heading"><%= checklist.task %>
           <span class="pull-right"><%= user.username %>
-            <span class="badge assignee-comment">0</span>
+            <span class="badge assignee-comment"><%= checklist.assignee_comments.count %></span>
           </span>
         </h4>
-      </a>
+        <hr>
+
+        <% checklist.assignee_comments.each do |ac| %>
+          <p><%= ac.comment %> <span class="pull-right"><%= ac.created_at.strftime("%Y-%m-%d %T") %></span></p>
+        <% end %>
+
+        <% if user.phone_number == current_user.phone_number %>
+          <%= form_for [notice, checklist, @assignee_comment] do |f| %>
+            <div class="input-group">
+              <%= f.text_field :comment, class: "form-control" %>
+              <span class="input-group-btn">
+                <%= f.submit "등록", class: "btn btn-default" %>
+              </span>
+            </div>
+          <% end %>
+        <% end %>
+
+      </div>
     <% end %>
   </div>
 </div>

@@ -27,7 +27,7 @@
     <% elsif @notice.notice_type == "survey" %>
 
     <% elsif @notice.notice_type == "checklist" %>
-      <%= render partial: 'checklists', locals: {checklists: @notice.checklists} %>
+      <%= render partial: 'checklists', locals: {notice: @notice, checklists: @notice.checklists} %>
     <% end %>
   </div>
 </div>

@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   resources :notices, only: [:show] do
     resources :responses
     resources :to_responses
+    resources :checklists, shallow: true do 
+      resources :assignee_comments
+    end
   end
 
   namespace :admin do
