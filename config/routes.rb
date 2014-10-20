@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :admins
   root 'users#show', id: 1
 
   resources :invitations, only: [:new, :create, :show], param: :code # email activation

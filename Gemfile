@@ -55,7 +55,6 @@ gem 'slack-notify', '~> 0.3.2'
 
 gem 'fakeweb', '~> 1.3.0'
 
-
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.2'
   gem 'guard-rspec', '~> 4.3.1'
@@ -78,3 +77,4 @@ gem 'rails-i18n', '~> 4.0.0'
 gem 'bootstrap-sass', '~> 3.2.0.2'
 gem 'autoprefixer-rails', '~> 3.1.0.20140911'
 gem 'newrelic_rpm', '~> 3.9.4.245'
+gem 'devise', '~> 3.4.0'
