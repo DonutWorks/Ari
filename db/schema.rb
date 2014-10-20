@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141016054636) do
+ActiveRecord::Schema.define(version: 20141020131252) do
 
   create_table "invitations", force: true do |t|
     t.string   "code"
@@ -67,6 +67,19 @@ ActiveRecord::Schema.define(version: 20141016054636) do
     t.datetime "updated_at"
   end
 
+  create_table "user_tags", force: true do |t|
+    t.string   "tag_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_user_tags", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "user_tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                                  null: false
     t.datetime "created_at"
@@ -86,6 +99,13 @@ ActiveRecord::Schema.define(version: 20141016054636) do
     t.string   "provider"
     t.string   "uid"
     t.text     "extra_info"
+  end
+
+  create_table "users_user_tags", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "user_tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

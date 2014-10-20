@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_many :responses
   has_many :message_histories
   has_many :messages, through: :message_histories
+  has_many :user_user_tags
+  has_many :tags, through: :user_user_tags, source: :user_tag
   serialize :extra_info
 
   scope :generation_sorted_desc, -> { order(generation_id: :desc) }
