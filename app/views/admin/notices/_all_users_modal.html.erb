@@ -1,4 +1,4 @@
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade all-users-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="table-responsive">
@@ -17,13 +17,13 @@
             <% User.all.each do |user| %>
               <tr class="clickable-row" href="<%= admin_user_path(user) %>">
                 <td><%= pretty_generation_id(user.generation_id) %></td>
-                <td>
+                <td id="user-name">
                   <%= user.username %>
                   <% if user.activated? %>
                     <span class="glyphicon glyphicon-ok"></span>
                   <% end %>
                 </td>
-                <td><%= pretty_phone_number(user.phone_number) %></td>
+                <td id="user-phone-number"><%= pretty_phone_number(user.phone_number) %></td>
                 <td><%= user.email %></td>
                 <td><%= user.major %></td>
               </tr>

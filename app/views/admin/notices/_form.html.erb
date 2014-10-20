@@ -89,7 +89,8 @@
         <span class="help-block"><%= attribute_error_message(@notice, :task) %></span>
 
         <span class="input-group-btn">
-          <button class="btn btn-primary assign-btn" type="button" data-toggle="modal" data-target=".bs-example-modal-lg">회원 선택</button>
+          <button class="btn btn-warning assign-btn" type="button" data-toggle="modal" data-target=".all-users-modal">회원 선택</button>
+          <%= checklist_form.hidden_field :assignee, value: 'nil' %>
         </span>
       </div>
     </div>
