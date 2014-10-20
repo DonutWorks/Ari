@@ -91,6 +91,6 @@ class Admin::NoticesController < Admin::ApplicationController
 
 private
   def notice_params
-    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date)
+    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date, checklists_attributes: [:task, :assignee])
   end
 end
