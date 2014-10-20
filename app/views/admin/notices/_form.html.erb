@@ -89,9 +89,11 @@
         <span class="help-block"><%= attribute_error_message(@notice, :task) %></span>
 
         <span class="input-group-btn">
-          <button class="btn btn-primary assign-btn" type="button">회원 선택</button>
+          <button class="btn btn-primary assign-btn" type="button" data-toggle="modal" data-target=".bs-example-modal-lg">회원 선택</button>
         </span>
       </div>
     </div>
   <% end %>
+
+  <%= render partial: 'all_users_modal' %>
 </div>
