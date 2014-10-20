@@ -1,7 +1,4 @@
 $(document).on('ready page:load', function () {
-  if($('.notice-type-option:checked').val() != "to")
-    $('#to-option').hide();
-
   $('.selectpicker').selectpicker();
 
   $('.sms_all').change(function() {
@@ -31,19 +28,28 @@ function option_selecter(val) {
     case 'external':
       $('#external-option').fadeIn('fast');
       $('#to-option').fadeOut('fast');
+      $('#checklist-option').fadeOut('fast');
       break;
     case 'plain':
       $('#external-option').fadeOut('fast');
       $('#to-option').fadeOut('fast');
+      $('#checklist-option').fadeOut('fast');
       break;
     case 'survey':
       $('#external-option').fadeOut('fast');
       $('#to-option').fadeOut('fast');
+      $('#checklist-option').fadeOut('fast');
       break;
     case 'to':
       $('#external-option').fadeOut('fast');
       $('#to-option').fadeIn('fast');
+      $('#checklist-option').fadeOut('fast');
       break;
+    case 'checklist':
+      $('#external-option').fadeOut('fast');
+      $('#to-option').fadeOut('fast');
+      $('#checklist-option').fadeIn('fast');
+
   }
 }
 

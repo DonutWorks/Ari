@@ -1,7 +1,7 @@
 require 'addressable/uri'
 
 class Notice < ActiveRecord::Base
-  NOTICE_TYPES = %w(external plain survey to)
+  NOTICE_TYPES = %w(external plain survey to checklist)
   NOTICE_TYPES.each do |type|
     define_method("#{type}_notice?") do
       notice_type == type
@@ -19,6 +19,8 @@ class Notice < ActiveRecord::Base
 
   has_many :responses
   has_many :messages
+  has_many :checklists
+  accepts_nested_attributes_for :checklists
 
   acts_as_readable
   before_save :make_redirectable_url!

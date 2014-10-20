@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141016054636) do
+ActiveRecord::Schema.define(version: 20141020044924) do
+
+  create_table "checklists", force: true do |t|
+    t.text     "task"
+    t.text     "assignee"
+    t.integer  "notice_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "checklists", ["notice_id"], name: "index_checklists_on_notice_id"
 
   create_table "invitations", force: true do |t|
     t.string   "code"
