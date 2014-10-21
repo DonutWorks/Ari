@@ -68,7 +68,7 @@ var assignee_comment = {
   },
 
   editable_comment: function(e){
-    if(!$(this).data('finish')){
+    if($(this).parents().hasClass('list-group-item-warning')){
       $('.new-comment-form').hide();
       $('.comment-form').each(function(){
         $(this).hide().prev().show();
