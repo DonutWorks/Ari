@@ -1,14 +1,18 @@
-.comment-value {
-  cursor:pointer;
+.checklist-container{
+  margin-top: 20px;
+
+  .comment-value {
+    cursor:pointer;
+  }
+
+  .comment-form{
+    display:none; 
+  }
+
+  .assignee-comment {
+    vertical-align: top;
+    margin-left: 5px;
+  }
 }
 
-.comment-form{
-  display:none; 
-}
 
-
-
-.assignee-comment {
-  vertical-align: top;
-  margin-left: 5px;
-}

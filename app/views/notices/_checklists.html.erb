@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-default checklist-container">
   <div class="panel-heading">이번에 해야 할 일</div>
 
   <div class="list-group">
@@ -32,7 +32,7 @@
         <% end %>
 
         <div class="new-comment-form">
-          <% if user.phone_number == current_user.phone_number %>
+          <% if current_user && user.phone_number == current_user.phone_number %>
             <%= form_for [notice, checklist, @assignee_comment] do |f| %>
               <div class="input-group">
                 <%= f.text_field :comment, class: "form-control", placeholder: "완료하려면 최소 한 개 이상의 댓글이 필요합니다" %>
