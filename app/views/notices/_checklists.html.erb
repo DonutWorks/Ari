@@ -9,7 +9,7 @@
       <%= if checklist.finish? then ' list-group-item-info' elsif current_user && user.phone_number == current_user.phone_number then ' list-group-item-warning' end %>">
         <h4 class="list-group-item-heading"><%= checklist.task %>
           <span class="pull-right"><%= user.username %>
-            <span class="badge assignee-comment"><%= checklist.assignee_comments.count %></span>
+            <%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_assignee" %>
           </span>
         </h4>
         <hr>
