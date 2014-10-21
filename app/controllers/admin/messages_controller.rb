@@ -18,4 +18,9 @@ class Admin::MessagesController < Admin::ApplicationController
       flash[:alert] = e.message
       redirect_to admin_notice_path(params[:notice_id])
   end
+  def new
+    @message = Message.new
+    @users = User.all
+  end
+
 end

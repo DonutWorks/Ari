@@ -29,6 +29,7 @@ Rails.application.routes.draw do
         get :import, to: 'import#new'
         post :import, to: 'import#create'
         get '/tags/(:tag_name)', to: :tags, defaults: {format: 'json'}
+        get '/search/(:search_word)', to: :search, defaults: {format: 'json'}
       end
     end
 

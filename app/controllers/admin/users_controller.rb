@@ -60,6 +60,20 @@ class Admin::UsersController < Admin::ApplicationController
     tags = UserTag.fetch_list_by_tag_name(params[:tag_name], 5)
     respond_with tags
   end
+  def search
+
+    search_word = params[:search_word]
+
+    respond_with User.all if search_word==""
+    user_arel = User.arel_table
+
+    user_tag_arel = UserTag.arel_table
+    searched_users1 = User.joins(:tags).where(user_tag_arel[:tag_name].matches("%#{search_word}%"))
+    searched_users2 = User.where(user_arel[:username].matches("%#{search_word}%"))
+
+    respond_with (searched_users1 | searched_users2 )
+  end
+
 
 private
   def user_params
