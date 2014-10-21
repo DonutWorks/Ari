@@ -15,6 +15,7 @@ module Admin::UsersHelper
 
   def pretty_tags(tags)
 
-    tags.pluck(:tag_name).join('; ') if tags
+    tags.map { |tag| '#'+"#{tag.tag_name}" }.join(" ")
+
   end
 end

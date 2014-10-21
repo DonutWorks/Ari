@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       collection do
         get :import, to: 'import#new'
         post :import, to: 'import#create'
+        get '/tags/(:tag_name)', to: :tags, defaults: {format: 'json'}
       end
     end
 

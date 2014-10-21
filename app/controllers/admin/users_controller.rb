@@ -1,4 +1,6 @@
 class Admin::UsersController < Admin::ApplicationController
+  respond_to :json
+
   def index
     @users = User.all
   end
@@ -54,6 +56,10 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.find(params[:id])
   end
 
+  def tags
+    tags = UserTag.fetch_list_by_tag_name(params[:tag_name], 5)
+    respond_with tags
+  end
 
 private
   def user_params
@@ -72,12 +78,14 @@ private
 
   def extract_tags(user, content)
 
-    referenced = content.strip.split(';')
+    referenced = content.strip.split('#')
 
     referenced.map! do |term|
+      next if term.blank?
       term.strip!
       user_tag = UserTag.find_by_tag_name(term) || UserTag.create(tag_name: term)
     end if !referenced.empty?
+    referenced.compact
 
   end
 
