@@ -6,7 +6,7 @@
     <% checklists.each do |checklist| %>
       <% user = User.find_by_phone_number(checklist.assignee) %>
       <div class="list-group-item
-      <%= if checklist.finish? then ' list-group-item-info' elsif user.phone_number == current_user.phone_number then ' list-group-item-warning' end %>">
+      <%= if checklist.finish? then ' list-group-item-info' elsif current_user && user.phone_number == current_user.phone_number then ' list-group-item-warning' end %>">
         <h4 class="list-group-item-heading"><%= checklist.task %>
           <span class="pull-right"><%= user.username %>
             <span class="badge assignee-comment"><%= checklist.assignee_comments.count %></span>
