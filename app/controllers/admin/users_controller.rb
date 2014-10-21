@@ -71,14 +71,12 @@ private
   end
 
   def extract_tags(user, content)
-    pattern = /(\w+);/
 
-    referenced = content.scan(pattern)
+    referenced = content.strip.split(';')
 
-    referenced.flatten!.map! do |term|
-
-      UserTag.find_by_tag_name(term)
-
+    referenced.map! do |term|
+      term.strip!
+      user_tag = UserTag.find_by_tag_name(term) || UserTag.create(tag_name: term)
     end if !referenced.empty?
 
   end
