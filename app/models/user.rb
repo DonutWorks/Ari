@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   attr_accessor :regard_as_activated
 
   def responsed_to?(notice)
-    responses.where(notice: notice).exists?
+    responses.exists?(notice: notice)
   end
   def response_status(notice)
     response = responses.find_by(notice: notice)
