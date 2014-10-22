@@ -4,7 +4,7 @@ class Admin < ActiveRecord::Base
   devise :database_authenticatable, #:registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  validates_presence_of :club_id
+  validates_presence_of :club_id, :name, :phone_number
 
   belongs_to :club
 end

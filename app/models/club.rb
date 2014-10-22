@@ -8,4 +8,8 @@ class Club < ActiveRecord::Base
   has_many :notices
   has_many :responses
   has_many :users
+
+  def representive
+    Admin.find_by(club: self)
+  end
 end
