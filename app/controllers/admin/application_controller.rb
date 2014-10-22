@@ -14,5 +14,4 @@ protected
   def admin?
     true
   end
-  helper_method :admin?
 end

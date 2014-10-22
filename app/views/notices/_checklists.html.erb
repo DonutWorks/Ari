@@ -9,7 +9,7 @@
       <%= if checklist.finish? then ' list-group-item-info' elsif current_user && user.phone_number == current_user.phone_number then ' list-group-item-warning' end %>">
         <h4 class="list-group-item-heading"><%= checklist.task %>
           <span class="pull-right"><%= user.username %>
-            <%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_assignee" %>
+            <%= check_box_tag('sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_assignee") if admin? %>
           </span>
         </h4>
         <hr>
