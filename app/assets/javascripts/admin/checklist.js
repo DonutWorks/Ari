@@ -9,22 +9,37 @@ var user_modal = {
   user: null,
 
   init: function(){
+    this.already_selected();
+
     $('.all-users-modal').on('shown.bs.modal', function (e) {
       this.target = e.relatedTarget;
     });
 
     $('.all-users-modal').on('hidden.bs.modal', function (e) {
-      $(this.target).text(user_modal.user.name);
-      $(this.target).siblings('input[type="hidden"]').val(user_modal.user.phone_number.replace(/-/g, ""));
+      $(this.target).text(user_modal.user.username);
+      $(this.target).siblings('.assignee-phone-number').val(user_modal.user.phone_number);
+      $(this.target).siblings('.assignee-username').val(user_modal.user.username);
       $(this.target).removeClass("btn-warning").addClass('btn-success');
     });
 
     $(".clickable-row td:not(.menu)").on("click", function(e) {
       var tr = $(this).parent();
-      var user = {name: $(tr).children('#user-name').text().trim(),
-                  phone_number: $(tr).children('#user-phone-number').text().trim()};
+      var user = {username: $(tr).children('.user-username').text().trim(),
+                  phone_number: $(tr).children('.user-phone-number').text().trim()};
       user_modal.user = user;
+
       $('.all-users-modal').modal('hide');
+    });
+  },
+
+  already_selected: function(){
+    $('.assignee-phone-number').each(function(){
+      if($(this).val() != ""){
+        td = $('.user-phone-number:contains("' + $(this).val() + '")');
+        name = $(td).siblings('.user-username').text();
+        $(this).siblings('.assign-btn').text(name);
+        $(this).siblings('.assign-btn').removeClass("btn-warning").addClass('btn-success');
+      }
     });
   }
 }
@@ -49,11 +64,11 @@ var checklist = {
   hide_unused_input: function(){
     $('.checklist-form input[type="text"]').each(function(index){
       form = $(this).parents('.checklist-form');
-      phone = form.find('input[type="hidden"]').val();
+      assignee = form.find('input[type="hidden"]').val();
 
       prev_input = form.prev().find('input[type="text"]').val();
       
-      if($(this).val() == ""  && prev_input == "" && phone == "nil")
+      if($(this).val() == ""  && prev_input == "" && assignee == "")
         form.hide();
 
       if($(this).val().length >= 1)

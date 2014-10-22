@@ -1,4 +1,4 @@
-<div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :notice_type) %>">
+<div class="form-group form-group-lg has-feedback %>">
   <%= f.label :notice_type, "유형", class: "col-sm-1 control-label" %>
   <div class="col-sm-11">
     <%= f.label :notice_type_external, class: "radio-inline control-label" do %>
@@ -21,9 +21,6 @@
       <%= f.radio_button :notice_type, "checklist", class: "notice-type-option" %>
       체크리스트 공지
     <% end %>
-
-    <span class="glyphicon <%= validation_state_feedback(@notice, :notice_type) %> form-control-feedback"></span>
-    <span class="help-block"><%= attribute_error_message(@notice, :notice_type) %></span>
   </div>
 </div>
 
@@ -78,18 +75,21 @@
   </div>
 </div>
 
-
 <div id="checklist-option">
   <%= f.fields_for :checklists do |checklist_form| %>
-    <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :task) %> checklist-form">
+    <% checklist = checklist_form.object %>
+    <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :task) %> <%= validation_state(checklist, :task) %> <%= validation_state(checklist, :assignee) %> checklist-form">
       <%= checklist_form.label :task, "할일", class: "col-sm-1 control-label" %>
       <div class="col-sm-11 input-group">
         <%= checklist_form.text_field :task, class: "form-control" %>
-        <span class="glyphicon <%= validation_state_feedback(@notice, :task) %> form-control-feedback"></span>
+        <span class="glyphicon <%= validation_state_feedback(@notice, :task) %> <%= validation_state_feedback(checklist, :task) %> <%= validation_state_feedback(checklist, :assignee) %> form-control-feedback"></span>
         <span class="help-block"><%= attribute_error_message(@notice, :task) %></span>
+        <span class="help-block"><%= attribute_error_message(checklist, :task) %></span>
+        <span class="help-block"><%= attribute_error_message(checklist, :assignee) %></span>
         <span class="input-group-btn">
+
           <button class="btn btn-warning assign-btn" type="button" data-toggle="modal" data-target=".all-users-modal">회원 선택</button>
-          <%= checklist_form.hidden_field :assignee, value: 'nil' %>
+          <%= checklist_form.hidden_field :assignee, value: pretty_phone_number(checklist.assignee), class: "assignee-phone-number" %>
         </span>
       </div>
     </div>

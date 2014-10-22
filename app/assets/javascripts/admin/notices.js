@@ -16,7 +16,7 @@ $(document).on('ready page:load', function () {
 
   $('#sms_content').keyup(change_sms_text_size);
 
-  option_selecter($('#notice_type').val());
+  option_selecter($('.notice-type-option:checked').val());
 
   $('.notice-type-option').change(function() {
       option_selecter($(this).val());
@@ -26,30 +26,30 @@ $(document).on('ready page:load', function () {
 function option_selecter(val) {
   switch(val){
     case 'external':
-      $('#external-option').fadeIn('fast');
-      $('#to-option').fadeOut('fast');
-      $('#checklist-option').fadeOut('fast');
+      $('#external-option').show();
+      $('#to-option').hide();
+      $('#checklist-option').hide();
       break;
     case 'plain':
-      $('#external-option').fadeOut('fast');
-      $('#to-option').fadeOut('fast');
-      $('#checklist-option').fadeOut('fast');
+      $('#external-option').hide();
+      $('#to-option').hide();
+      $('#checklist-option').hide();
       break;
     case 'survey':
-      $('#external-option').fadeOut('fast');
-      $('#to-option').fadeOut('fast');
-      $('#checklist-option').fadeOut('fast');
+      $('#external-option').hide();
+      $('#to-option').hide();
+      $('#checklist-option').hide();
       break;
     case 'to':
-      $('#external-option').fadeOut('fast');
-      $('#to-option').fadeIn('fast');
-      $('#checklist-option').fadeOut('fast');
+      $('#external-option').hide();
+      $('#to-option').show();
+      $('#checklist-option').hide();
       break;
     case 'checklist':
-      $('#external-option').fadeOut('fast');
-      $('#to-option').fadeOut('fast');
-      $('#checklist-option').fadeIn('fast');
-
+      $('#external-option').hide();
+      $('#to-option').hide();
+      $('#checklist-option').show();
+      break;
   }
 }
 

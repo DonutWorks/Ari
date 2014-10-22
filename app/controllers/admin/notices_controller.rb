@@ -19,6 +19,7 @@ class Admin::NoticesController < Admin::ApplicationController
       SlackNotifier.notify("햇빛봉사단 게이트 추가 알림 : #{@notice.title}, #{@notice.shortenURL}")
       redirect_to admin_notice_path(@notice)
     else
+      20.times { @notice.checklists.build}
       render 'new'
     end
   end
