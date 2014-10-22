@@ -1,14 +1,14 @@
 class Admin::UsersController < Admin::ApplicationController
   def index
-    @users = User.all
+    @users = current_club.users.all
   end
 
   def new
-    @user = User.new
+    @user = current_club.users.new
   end
 
   def create
-    @user = User.new(user_params)
+    @user = current_club.users.new(user_params)
 
     if @user.save
       flash[:notice] = "\"#{@user.username}\"님의 회원 정보 생성에 성공했습니다."
@@ -19,11 +19,11 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = current_club.users.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = current_club.users.find(params[:id])
 
     if @user.update(user_params)
       flash[:notice] = "\"#{@user.username}\"님의 회원 정보 수정에 성공했습니다."
@@ -34,7 +34,7 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
+    @user = current_club.users.find(params[:id])
     @user.destroy
 
     flash[:notice] = "\"#{@user.username}\"님의 회원 정보 삭제에 성공했습니다."
@@ -42,7 +42,7 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = current_club.users.find(params[:id])
   end
 
 

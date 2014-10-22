@@ -21,13 +21,15 @@ protected
   helper_method :current_user
 
   def authenticate_user!
-    Authenticates::CookiesSignInService.new.execute(session, cookies)
+    Authenticates::CookiesSignInService.new(current_club).execute(session, cookies)
     if current_user.nil?
       params[:redirect_url] ||= request.fullpath
       redirect_to club_sign_in_path(current_club)
     elsif !current_user.activated?
       params[:redirect_url] ||= request.fullpath
       redirect_to new_club_invitation_path(current_club)
+    elsif current_user.club != current_club
+      not_found
     end
   end
 

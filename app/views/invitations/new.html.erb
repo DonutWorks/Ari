@@ -8,7 +8,7 @@
 <div class="form-container" id="user-invitation">
   <div class="row">
     <div class="col-md-12">
-      <%= form_for [current_club, @user], url: club_invitations_path, method: :create do |f|%>
+      <%= form_for [current_club, @user], url: club_invitations_path(current_club), method: :create do |f|%>
         <legend>휴대폰 번호를 입력해주세요</legend>
         <div class="profile">
           <%= image_tag(@user.extra_info['image'], class: "img-thumbnail") %>

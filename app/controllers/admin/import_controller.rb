@@ -20,7 +20,7 @@ class Admin::ImportController < Admin::ApplicationController
           messages = i.to_s + "행(" + (e.user.username||="알수없음") + "님)은 " + e.message
           @invalid_messages.push(messages)
         else
-          new_user = User.find_or_initialize_by(phone_number: user.phone_number)
+          new_user = current_club.users.find_or_initialize_by(phone_number: user.phone_number)
           new_user.attributes = user.as_json(except: [:id])
 
           unless new_user.save

@@ -1,6 +1,6 @@
 class ResponsesController < ApplicationController
   def index
-    @notice = Notice.find_by_id(params[:notice_id]) or not_found
+    @notice = current_club.notices.find_by_id(params[:notice_id]) or not_found
 
     if current_user.responsed_to?(@notice)
       case @notice.responses.find_by_user_id(current_user).status
@@ -15,10 +15,10 @@ class ResponsesController < ApplicationController
   end
 
   def create
-    notice = Notice.find_by_id(params[:notice_id]) or not_found
+    notice = current_club.notices.find_by_id(params[:notice_id]) or not_found
 
-    response = Response.find_by_user_id_and_notice_id(current_user.id, notice.id)
-    response = Response.new(user: current_user, notice: notice) unless response
+    response = current_club.responses.find_by_user_id_and_notice_id(current_user.id, notice.id)
+    response = current_club.responses.new(user: current_user, notice: notice) unless response
 
     response.status = params[:status]
 
@@ -31,7 +31,7 @@ class ResponsesController < ApplicationController
   end
 
   def destroy
-    notice = Notice.find_by_id(params[:notice_id]) or not_found
+    notice = current_club.notices.find_by_id(params[:notice_id]) or not_found
 
     response = notice.responses.find_by_user_id(current_user)
     response.destroy

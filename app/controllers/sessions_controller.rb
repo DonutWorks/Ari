@@ -10,7 +10,7 @@ class SessionsController < AuthenticatableController
     phone_number = params[:user][:phone_number]
     remember_me = params[:user][:remember_me] == "1"
 
-    out = Authenticates::PhoneNumberSignInService.new.execute(session, phone_number)
+    out = Authenticates::PhoneNumberSignInService.new(current_club).execute(session, phone_number)
 
     case out[:status]
     when :invalid_phone_number

@@ -1,12 +1,14 @@
 class ProvidersController < AuthenticatableController
+  skip_before_action :capture_club
   skip_before_action :require_activated
   before_action :merge_omniauth_params
 
   def create
+    @current_club = Club.find_by_id(params[:club_id]) or not_found
     remember_me = params[:remember_me]
     auth_hash = request.env['omniauth.auth']
 
-    out = Authenticates::KakaoSignInService.new.execute(session, auth_hash)
+    out = Authenticates::KakaoSignInService.new(current_club).execute(session, auth_hash)
 
     case out[:status]
     when :need_to_register

@@ -4,11 +4,11 @@ require 'net/http'
 class Admin::NoticesController < Admin::ApplicationController
 
   def new
-    @notice = Notice.new
+    @notice = current_club.notices.new
   end
 
   def create
-    @notice = Notice.new(notice_params)
+    @notice = current_club.notices.new(notice_params)
 
     if @notice.save
       shortener = URLShortener.new
@@ -23,15 +23,15 @@ class Admin::NoticesController < Admin::ApplicationController
   end
 
   def show
-    @notice = Notice.find(params[:id])
+    @notice = current_club.notices.find(params[:id])
   end
 
   def edit
-    @notice = Notice.find(params[:id])
+    @notice = current_club.notices.find(params[:id])
   end
 
   def update
-    @notice = Notice.find(params[:id])
+    @notice = current_club.notices.find(params[:id])
 
     if @notice.update(notice_params)
       flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 수정했습니다."
@@ -42,7 +42,7 @@ class Admin::NoticesController < Admin::ApplicationController
   end
 
   def destroy
-    @notice = Notice.find(params[:id])
+    @notice = current_club.notices.find(params[:id])
     @notice.destroy
 
     flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 삭제했습니다."
@@ -72,7 +72,7 @@ class Admin::NoticesController < Admin::ApplicationController
     begin
       User.transaction do
         (2..lastRow).each do |i|
-          user = User.new
+          user = current_club.users.new
           user.username = data.cell(i, 1)
           user.phone_number = data.cell(i, 2)
           user.email = data.cell(i, 3)

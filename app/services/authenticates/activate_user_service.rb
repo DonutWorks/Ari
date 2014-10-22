@@ -1,7 +1,7 @@
 module Authenticates
   class ActivateUserService < BaseService
     def execute(signed_in_user, code)
-      ticket = Invitation.find_by(code: code)
+      ticket = current_club.invitations.find_by(code: code)
       return failure if ticket.nil? or ticket.expired
 
       user = ticket.user

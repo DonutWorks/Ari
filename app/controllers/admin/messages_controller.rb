@@ -1,10 +1,10 @@
 class Admin::MessagesController < Admin::ApplicationController
   def index
-    @messages = Message.created_at_sorted_desc
+    @messages = current_club.messages.created_at_sorted_desc
   end
 
   def show
-    @message = Message.find(params[:id])
+    @message = current_club.messages.find(params[:id])
   end
 
   def create

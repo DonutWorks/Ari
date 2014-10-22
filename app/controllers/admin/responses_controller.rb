@@ -21,18 +21,18 @@ class Admin::ResponsesController < Admin::ApplicationController
     else
 
       params[:user].each do |key,value|
-        user = User.find_by_id(key)
+        user = current_club.users.find_by_id(key)
 
         if user.response_status(@notice) == "not"
           if value != "not"
-            response = Response.new(user: user, notice: @notice, status: value)
+            response = current_club.responses.new(user: user, notice: @notice, status: value)
             if response.save
               change_history[value] += 1
             end
           end
 
         else
-          response = Response.find_by(user: user, notice: @notice)
+          response = current_club.responses.find_by(user: user, notice: @notice)
 
           if value=="not"
             if response.destroy
@@ -54,6 +54,6 @@ class Admin::ResponsesController < Admin::ApplicationController
   end
 private
   def find_notice
-    @notice = Notice.find_by_id(params[:notice_id])
+    @notice = current_club.notices.find_by_id(params[:notice_id])
   end
 end

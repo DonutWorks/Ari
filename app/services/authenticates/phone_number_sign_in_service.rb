@@ -9,7 +9,7 @@ module Authenticates
         return failure({ status: :invalid_phone_number })
       end
 
-      user = User.find_by(phone_number: phone_number)
+      user = current_club.users.find_by(phone_number: phone_number)
 
       if user.nil?
         return invalid_phone_number
