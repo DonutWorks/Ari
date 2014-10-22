@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
 
-  devise_for :admins, path: ':club_id/admin'
+  devise_for :admin_users, path: ':club_id/admin'
   resources :clubs, only: [:show], path: '/' do
     resources :invitations, only: [:new, :create, :show], param: :code
 

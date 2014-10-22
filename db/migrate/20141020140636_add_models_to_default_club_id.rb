@@ -1,5 +1,5 @@
 class AddModelsToDefaultClubId < ActiveRecord::Migration
-  class Admin < ActiveRecord::Base
+  class AdminUser < ActiveRecord::Base
   end
 
   class Club < ActiveRecord::Base
@@ -20,7 +20,7 @@ class AddModelsToDefaultClubId < ActiveRecord::Migration
   class User < ActiveRecord::Base
   end
 
-  BELONGS_TO_CLUB = [Admin, Invitation, Message, Notice, Response, User]
+  BELONGS_TO_CLUB = [AdminUser, Invitation, Message, Notice, Response, User]
 
   def up
     habitat_club = Club.create!(name: "SNU-Habitat", logo_url: "")

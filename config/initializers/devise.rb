@@ -240,7 +240,7 @@ Devise.setup do |config|
   #
   config.warden do |manager|
     manager.intercept_401 = false
-    manager.default_strategies(scope: :admin).unshift :club_scoped_authenticatable
+    manager.default_strategies(scope: :admin_user).unshift :club_scoped_authenticatable
   end
 
   # ==> Mountable engine configurations

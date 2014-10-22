@@ -11,9 +11,9 @@ class Admin::ApplicationController < ApplicationController
   end
 
 protected
-  def club_scoped_authenticate_admin!
-    authenticate_admin!
-    if current_admin && current_admin.club != current_club
+  def club_scoped_authenticate_admin_user!
+    authenticate_admin_user!
+    if current_admin_user && current_admin_user.club != current_club
       # need a flash message?
       not_found
     end
