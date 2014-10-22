@@ -28,8 +28,8 @@ Rails.application.routes.draw do
       collection do
         get :import, to: 'import#new'
         post :import, to: 'import#create'
-        get '/tags/(:tag_name)', to: :tags, defaults: {format: 'json'}
-        get '/search/(:search_word)', to: :search, defaults: {format: 'json'}
+        get '/tags/(:tag_name)', to: :tags, defaults: {format: 'json'}, constraints: { search_word: /.*/ }
+        get '/search/(:search_word)', to: :search, defaults: {format: 'json'}, constraints: { search_word: /.*/ }
       end
     end
 
