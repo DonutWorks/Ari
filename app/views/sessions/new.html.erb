@@ -2,7 +2,7 @@
   <div class="row">
     <div id="login-form">
       <div id="notice-top">
-        <%= image_tag("snu_habitat.jpg", id: "emblem", class: "img-thumbnail") %>
+        <%= image_tag(current_club.logo_url, id: "emblem", class: "img-thumbnail") %>
       </div>
       <%= form_for @user, url: club_auth_path(current_club), html: {role: "form"} do |f| %>
         <%= render partial: 'form', locals: {f: f} %>
