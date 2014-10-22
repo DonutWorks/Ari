@@ -31,6 +31,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def edit
     @notice = Notice.find(params[:id])
+    20.times { @notice.checklists.build}
   end
 
   def update
@@ -40,6 +41,7 @@ class Admin::NoticesController < Admin::ApplicationController
       flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 수정했습니다."
       redirect_to admin_notice_path(@notice)
     else
+      20.times { @notice.checklists.build}
       render 'edit'
     end
   end
@@ -93,6 +95,6 @@ class Admin::NoticesController < Admin::ApplicationController
 
 private
   def notice_params
-    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date, checklists_attributes: [:task, :assignee])
+    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date, checklists_attributes: [:id, :task, :assignee])
   end
 end
