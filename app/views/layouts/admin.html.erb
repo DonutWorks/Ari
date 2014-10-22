@@ -18,23 +18,23 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <%= link_to "SNU-Habitat", admin_root_path, class: "navbar-brand" %>
+        <%= link_to "SNU-Habitat", club_admin_root_path(current_club), class: "navbar-brand" %>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <%= link_to "공지", admin_root_path %>
+            <%= link_to "공지", club_admin_root_path(current_club) %>
           </li>
           <li>
-            <%= link_to "회원", admin_users_path %>
+            <%= link_to "회원", club_admin_users_path(current_club) %>
           </li>
           <li>
-            <%= link_to "설문조사", new_admin_export_excel_path %>
+            <%= link_to "설문조사", new_club_admin_export_excel_path(current_club) %>
           </li>
           <li>
-            <%= link_to "SMS", admin_messages_path %>
+            <%= link_to "SMS", club_admin_messages_path(current_club) %>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->

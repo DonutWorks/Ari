@@ -12,11 +12,11 @@ class Admin::NoticesController < Admin::ApplicationController
 
     if @notice.save
       shortener = URLShortener.new
-      @notice.shortenURL = shortener.shorten_url(notice_url(@notice))
+      @notice.shortenURL = shortener.shorten_url(club_notice_url(current_club, @notice))
       @notice.save!
 
       SlackNotifier.notify("햇빛봉사단 게이트 추가 알림 : #{@notice.title}, #{@notice.shortenURL}")
-      redirect_to admin_notice_path(@notice)
+      redirect_to club_admin_notice_path(current_club, @notice)
     else
       render 'new'
     end
@@ -35,7 +35,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
     if @notice.update(notice_params)
       flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 수정했습니다."
-      redirect_to admin_notice_path(@notice)
+      redirect_to club_admin_notice_path(current_club, @notice)
     else
       render 'edit'
     end
@@ -46,7 +46,7 @@ class Admin::NoticesController < Admin::ApplicationController
     @notice.destroy
 
     flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 삭제했습니다."
-    redirect_to admin_root_path
+    redirect_to club_admin_root_path(current_club)
   end
 
 
@@ -85,7 +85,7 @@ class Admin::NoticesController < Admin::ApplicationController
       flash[:notice] = "멤버 입력에 실패했습니다."
     end
 
-    redirect_to admin_root_path
+    redirect_to club_admin_root_path(current_club)
   end
 
 private

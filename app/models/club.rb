@@ -1,4 +1,7 @@
 class Club < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name
+
   has_many :admins
   has_many :invitations
   has_many :messages

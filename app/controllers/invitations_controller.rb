@@ -25,7 +25,7 @@ class InvitationsController < AuthenticatableController
     when :success
       Authenticates::UserSession.new(session).destroy!
       create_invitation_service.send_invitation_sms(@user,
-       invitation_url(out[:code], redirect_url: params[:redirect_url]))
+       club_invitation_url(current_club, out[:code], redirect_url: params[:redirect_url]))
       flash[:notice] = "인증 문자가 전송되었습니다."
     end
 

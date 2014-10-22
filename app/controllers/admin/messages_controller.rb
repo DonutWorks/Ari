@@ -16,10 +16,10 @@ class Admin::MessagesController < Admin::ApplicationController
     case out[:status]
     when :failure
       flash[:error] = "현재 message를 보낼 수 없습니다. 다음에 다시 시도해주세요."
-      redirect_to admin_notice_path(notice_id)
+      redirect_to club_admin_notice_path(current_club, notice_id)
     when :success
       flash[:notice] = "회원들에게 문자를 전송 했습니다!"
-      redirect_to admin_message_path(out[:message])
+      redirect_to club_admin_message_path(current_club, out[:message])
     end
   end
 end

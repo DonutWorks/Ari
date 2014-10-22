@@ -17,7 +17,7 @@ class Admin::ResponsesController < Admin::ApplicationController
 
     if input_to > @notice.to
       flash[:alert] = "TO를 초과하였습니다."
-      redirect_to admin_notice_responses_path(@notice)
+      redirect_to club_admin_notice_responses_path(current_club, @notice)
     else
 
       params[:user].each do |key,value|
@@ -48,7 +48,7 @@ class Admin::ResponsesController < Admin::ApplicationController
       end
 
       flash[:notice] = "응답이 수정되었습니다. ( 참가 : #{change_history['go']} / 대기 : #{change_history['wait']} / 미답 : #{change_history['not']} )"
-      redirect_to admin_notice_path(@notice)
+      redirect_to club_admin_notice_path(current_club, @notice)
     end
 
   end

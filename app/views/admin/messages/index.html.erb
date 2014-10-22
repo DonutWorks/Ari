@@ -1,7 +1,7 @@
 <h3 class="pull-left">SMS 관리</h3>
 
 <div id="buttons-div" class="pull-right">
-  
+
 </div>
 
 <div class="clearfix"></div>
@@ -10,7 +10,7 @@
   <div class="panel-heading">SMS 전송 목록</div>
   <ul class="list-group">
     <% @messages.each do |message| %>
-      <%= link_to admin_message_path(message), class: "list-group-item" do %>
+      <%= link_to club_admin_message_path(current_club, message), class: "list-group-item" do %>
         <% unless message.notice.blank? %>
           <span>[<%= message.notice.title %>] <%= message.content %></span>
         <% else %>

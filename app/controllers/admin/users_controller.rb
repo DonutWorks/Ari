@@ -12,7 +12,7 @@ class Admin::UsersController < Admin::ApplicationController
 
     if @user.save
       flash[:notice] = "\"#{@user.username}\"님의 회원 정보 생성에 성공했습니다."
-      redirect_to admin_users_path
+      redirect_to club_admin_users_path(current_club)
     else
       render "new"
     end
@@ -27,7 +27,7 @@ class Admin::UsersController < Admin::ApplicationController
 
     if @user.update(user_params)
       flash[:notice] = "\"#{@user.username}\"님의 회원 정보 수정에 성공했습니다."
-      redirect_to admin_user_path(@user)
+      redirect_to club_admin_user_path(current_club, @user)
     else
       render 'edit'
     end
@@ -38,7 +38,7 @@ class Admin::UsersController < Admin::ApplicationController
     @user.destroy
 
     flash[:notice] = "\"#{@user.username}\"님의 회원 정보 삭제에 성공했습니다."
-    redirect_to admin_users_path
+    redirect_to club_admin_users_path(current_club)
   end
 
   def show

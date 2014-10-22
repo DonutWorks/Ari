@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  before_action :capture_club
   before_action :authenticate_user!
 
   def default_url_options(options={})
@@ -7,6 +8,12 @@ class ApplicationController < ActionController::Base
   end
 
 protected
+  # TODO: need to convert into before_action method because of legacy url.
+  def current_club
+    @current_club
+  end
+  helper_method :current_club
+
   def current_user
     @user_session ||= Authenticates::UserSession.new(session)
     return @user_session.user
@@ -17,11 +24,21 @@ protected
     Authenticates::CookiesSignInService.new.execute(session, cookies)
     if current_user.nil?
       params[:redirect_url] ||= request.fullpath
-      redirect_to sign_in_users_path
+      redirect_to club_sign_in_path(current_club)
     elsif !current_user.activated?
       params[:redirect_url] ||= request.fullpath
-      redirect_to new_invitation_path
+      redirect_to new_club_invitation_path(current_club)
     end
+  end
+
+  def capture_club
+    if controller_name == "clubs"
+      @current_club ||= Club.friendly.find(params[:id])
+    else
+      @current_club ||= Club.friendly.find(params[:club_id])
+    end
+  rescue ActiveRecord::RecordNotFound => e
+    not_found
   end
 
   def not_found

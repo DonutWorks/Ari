@@ -1,7 +1,7 @@
 <h3 class="pull-left">공지사항 관리</h3>
 
 <div id="buttons-div" class="pull-right">
-  <%= link_to new_admin_notice_path do %>
+  <%= link_to new_club_admin_notice_path do %>
     <button type="button" class="btn btn-primary btn-sm ">
       새 공지
     </button>
@@ -14,7 +14,7 @@
   <div class="panel-heading">공지사항 목록</div>
   <ul class="list-group">
     <% @notices.each do |notice| %>
-      <%= link_to admin_notice_path(notice), class: "list-group-item" do %>
+      <%= link_to club_admin_notice_path(current_club, notice), class: "list-group-item" do %>
         <span><%= notice.title %></span>
         <span class="badge">
           <%= "#{notice.readers.count} / #{User.all.count}" %>

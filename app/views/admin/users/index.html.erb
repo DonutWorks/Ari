@@ -1,8 +1,8 @@
 <div class="page-header clearfix">
   <h3 class="pull-left">회원 목록</h3>
   <div id="buttons-div" class="pull-right">
-    <%= link_to "회원 등록", new_admin_user_path, class: "btn btn-default btn-sm" %>
-    <%= link_to "엑셀로 회원 등록", import_admin_users_path, class: "btn btn-default btn-sm" %>
+    <%= link_to "회원 등록", new_club_admin_user_path(current_club), class: "btn btn-default btn-sm" %>
+    <%= link_to "엑셀로 회원 등록", import_club_admin_users_path(current_club), class: "btn btn-default btn-sm" %>
   </div>
 </div>
 
@@ -21,7 +21,7 @@
 
     <tbody>
       <% @users.each do |user| %>
-        <tr class="clickable-row" href="<%= admin_user_path(user) %>">
+        <tr class="clickable-row" href="<%= club_admin_user_path(current_club, user) %>">
           <td><%= pretty_generation_id(user.generation_id) %></td>
           <td>
             <%= user.username %>
@@ -32,7 +32,7 @@
           <td><%= pretty_phone_number(user.phone_number) %></td>
           <td><%= user.email %></td>
           <td><%= user.major %></td>
-          <td class="menu"><%= link_to "자세히", admin_user_path(user), class: "btn btn-link btn-xs" %></td>
+          <td class="menu"><%= link_to "자세히", club_admin_user_path(current_club, user), class: "btn btn-link btn-xs" %></td>
         </tr>
       <% end %>
     </tbody>

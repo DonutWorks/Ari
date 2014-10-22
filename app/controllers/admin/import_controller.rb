@@ -32,7 +32,7 @@ class Admin::ImportController < Admin::ApplicationController
 
       if @invalid_messages.count == 0
         flash[:notice] = "멤버 입력에 성공했습니다."
-        redirect_to admin_users_path
+        redirect_to club_admin_users_path(current_club)
       else
         @error_message = "대부분의 멤버들은 입력에 성공했습니다. 하지만 몇몇 멤버들은 실패했습니다."
         render 'new'

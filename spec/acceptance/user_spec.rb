@@ -7,13 +7,13 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should show user list" do
-    visit admin_users_path
+    visit club_admin_users_path(current_club)
 
     expect(find('.table')).to have_content(@user.username)
   end
 
   it "should show detail information" do
-    visit admin_users_path
+    visit club_admin_users_path(current_club)
     click_link("자세히")
 
     expect(find('.table')).to have_content(@user.member_type)
@@ -61,7 +61,7 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should create user from excel" do
-    visit import_admin_users_path
+    visit import_club_admin_users_path(current_club)
 
     file_path = Rails.root + "spec/acceptance/fixtures/RosterExample.xlsx"
     attach_file('upload_file', file_path)
@@ -72,20 +72,20 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should create user from excel with striping" do
-    visit import_admin_users_path
+    visit import_club_admin_users_path(current_club)
 
     file_path = Rails.root + "spec/acceptance/fixtures/RosterExample.xlsx"
     attach_file('upload_file', file_path)
 
     click_button "업로드"
-    visit admin_users_path
+    visit club_admin_users_path(current_club)
 
     expect(/임수정/).to match(find('.table').text)
     expect(/ 임수정/).to match(find('.table').text)
   end
 
   it "should create user from excel (contains duplicated user)" do
-    visit import_admin_users_path
+    visit import_club_admin_users_path(current_club)
 
     file_path = Rails.root + "spec/acceptance/fixtures/RosterExample.xlsx"
     attach_file('upload_file', file_path)
@@ -94,7 +94,7 @@ RSpec.describe "check user process", type: :feature do
 
     expect(find('.alert-info')).to have_content('멤버 입력에 성공했습니다')
 
-    visit import_admin_users_path
+    visit import_club_admin_users_path(current_club)
 
     file_path = Rails.root + "spec/acceptance/fixtures/RosterExample_duplicated.xlsx"
     attach_file('upload_file', file_path)
@@ -105,7 +105,7 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should not create user from excel (empty file)" do
-    visit import_admin_users_path
+    visit import_club_admin_users_path(current_club)
 
     click_button "업로드"
 

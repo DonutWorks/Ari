@@ -15,7 +15,7 @@ class SessionsController < AuthenticatableController
     case out[:status]
     when :invalid_phone_number
       flash[:error] = "전화번호가 잘못되었습니다."
-      redirect_to sign_in_users_path
+      redirect_to club_sign_in_path(current_club)
     when :success
       Authenticates::UserCookies.new(cookies).create!(out[:user], true) if remember_me
       proceed

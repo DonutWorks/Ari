@@ -27,7 +27,7 @@ class ResponsesController < ApplicationController
     else
       flash[:error] = "잘못된 응답입니다."
     end
-    redirect_to notice_responses_path(notice)
+    redirect_to club_notice_responses_path(current_club, notice)
   end
 
   def destroy
@@ -37,6 +37,6 @@ class ResponsesController < ApplicationController
     response.destroy
 
     flash[:error] = "응답이 취소 되었습니다."
-    redirect_to notice_responses_path(notice)
+    redirect_to club_notice_responses_path(current_club, notice)
   end
 end

@@ -34,7 +34,7 @@ class Admin::ExportExcelController < Admin::ApplicationController
                                "단체 아이디" => :habitat_id  }
    end
     send_data ExcelBuilder.build_excel_file(comments, habitat_format_header), :filename => "comments-excel.xls", :type =>  "application/vnd.ms-excel"
-    #redirect_to admin_root_path
+    # redirect_to club_admin_root_path(current_club)
   end
 
 
