@@ -67,11 +67,11 @@
       <div class="tab-pane fade" id="to-result">
         <div>
           <h3>참가 <small>(총 <%= User.responsed_go(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: User.responsed_go(@notice).order_by_responsed_at, type: "go" } %>
+          <%= render partial: "table_to_response", locals: { users: User.responsed_go(@notice).order_by_responsed_at, type: "go" } %>
         </div>
         <div>
           <h3>대기 <small>(총 <%= User.responsed_wait(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: User.responsed_wait(@notice).order_by_responsed_at, type: "wait" } %>
+          <%= render partial: "table_to_response", locals: { users: User.responsed_wait(@notice).order_by_responsed_at, type: "wait" } %>
         </div>
       </div>
     </div>

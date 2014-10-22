@@ -87,3 +87,27 @@ function change_sms_text_size(){
   }
   $('#current-text-size').text(utf8length);
 }
+
+function update_check_status(notice_id, response_id, check) {
+  $.getJSON('/admin/notices/' + notice_id + '/responses/update_check?response_id=' + response_id + "&check=" + check)
+    .done(function (res) {
+      if(check == "absence") {
+        if(res.absence == 1) $('#absence_btn').addClass("btn-success");
+        else $('#absence_btn').removeClass("btn-success");
+      }
+      else if(check == "dues") {
+        if(res.dues == 1) $('#dues_btn').addClass("btn-primary");
+        else $('#dues_btn').removeClass("btn-primary");
+      }
+      else {
+        if(res.memo != "") $('#memo_btn').addClass("btn-warning");
+        else $('#memo_btn').removeClass("btn-warning");
+      }
+      
+    })
+    .fail(function (res) {
+      alert(res + "fail");
+    });
+}
+
+

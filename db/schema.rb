@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141016054636) do
+ActiveRecord::Schema.define(version: 20141022133150) do
 
   create_table "invitations", force: true do |t|
     t.string   "code"
@@ -65,6 +65,9 @@ ActiveRecord::Schema.define(version: 20141016054636) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "absence",    default: 0
+    t.integer  "dues",       default: 0
+    t.string   "memo"
   end
 
   create_table "users", force: true do |t|
