@@ -23,8 +23,8 @@ class User < ActiveRecord::Base
 
   acts_as_reader
 
-  validates_presence_of :username, :phone_number, :email
-  validates_uniqueness_of :phone_number, :email
+  validates_presence_of :username, :phone_number, :email, :club_id
+  validates_uniqueness_of :phone_number, :email, scope: :club_id
 
   before_validation :normalize_phone_number
   before_save :strip!
