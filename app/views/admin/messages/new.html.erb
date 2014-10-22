@@ -15,7 +15,7 @@
     <table id="table-receiver" class="table table-condensed">
       <thead>
         <tr>
-          <th class="text-center" width="5%">문자 <%= check_box_tag "sms_all", nil, false, class: 'sms_all' %></th>
+          <th class="text-center" width="5%">문자 <%= check_box_tag "sms_all_searched", nil, false, class: 'sms_all_searched' %></th>
           <th width="5%">기수</th>
           <th width="7%">이름</th>
           <th width="13%">전화번호</th>
@@ -25,8 +25,8 @@
       </thead>
       <tbody>
         <% @users.each_with_index do |user, index| %>
-        <tr id="tr-user-id-<%= user.id %>">
-          <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms" %></td>
+        <tr id="tr-user-id-<%= user.id %>" >
+          <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms found" %></td>
           <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
           <td><%= user.username %></td>
           <td><%= pretty_phone_number(user.phone_number) %></td>

@@ -1,10 +1,10 @@
 $(document).on('ready page:load', function () {
 
 
-  $('.sms_all').change(function() {
-    var id = (this).id.replace('_all','');
+  $('.sms_all_searched').change(function() {
+    var id = (this).id.replace('_all_searched','');
 
-    $('.' + id).prop("checked", this.checked);
+    $('.' + id + '.found').prop("checked", this.checked);
 
     add_phone_number_to_array();
   });
@@ -25,10 +25,12 @@ $(document).on('ready page:load', function () {
         .done(function (res) {
 
           $("#table-receiver").find("tr:gt(0)").css("display","none");
+          $("#table-receiver").find(".sms.found").removeClass('found');
 
           for (var i in res) {
             var user = res[i];
             $("#tr-user-id-" + user.id).css("display","");
+            $("#tr-user-id-" + user.id).find(".sms").addClass('found');
           }
 
           callback([]);
