@@ -2,9 +2,9 @@ require "net/http"
 require "addressable/uri"
 require 'json'
 
-class SendSMS2
+class SMSSender
 
-  class SendSMSError < RuntimeError
+  class SMSSenderError < RuntimeError
     attr_accessor :response
     def initialize(response)
       @response = response
@@ -29,7 +29,7 @@ class SendSMS2
 
 
     return response if response["result_code"] == "00"
-    raise SendSMSError.new(response), "문자메시지 발송에 실패하였습니다."
+    raise SMSSenderError.new(response), "문자메시지 발송에 실패하였습니다."
 
   end
 
@@ -37,7 +37,7 @@ class SendSMS2
     begin
       send_sms!(sms_info)
       true
-    rescue SendSMSError => e
+    rescue SMSSenderError => e
       false
     end
   end
