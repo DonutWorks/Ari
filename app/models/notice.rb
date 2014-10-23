@@ -30,6 +30,17 @@ class Notice < ActiveRecord::Base
   validates :notice_type, presence: { message: "유형을 선택해주십시오." },
    inclusion: { in: NOTICE_TYPES, message: "올바르지 않은 유형입니다." }
 
+
+  def self.deadline_send_sms
+    sms_sender = SmsSender.new
+
+    Notice.where("notice_type = ? AND due_date < ?", "to", Date.today + 3.days).find_each do |notice|
+      Response.responsed_to_go(notice).find_each do |response|
+        sms_sender.send_message("[" + notice.title + "] 공지의 신청이 마감 되었습니다.", notice.id, response.user.id)
+      end
+    end
+  end
+
 private
   def make_redirectable_url!
     unless link.blank?
