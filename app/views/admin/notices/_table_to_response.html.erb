@@ -18,9 +18,27 @@
         <td><%= user.username %></td>
         <td><%= pretty_phone_number(user.phone_number) %></td>
         <td>
-          <button type="button" id="absence_btn" class="btn btn-default <%= user.responses.find_by_notice_id(@notice).absence == 0 ? '' : 'btn-success' %>", onclick="javascript:update_check_status(<%=@notice.id %>, <%= user.responses.find_by_notice_id(@notice).id %>, 'absence')">출석</button>
-          <button type="button" id="dues_btn" class="btn btn-default <%= user.responses.find_by_notice_id(@notice).dues == 0 ? '' : 'btn-primary' %>", onclick="javascript:update_check_status(<%=@notice.id %>, <%= user.responses.find_by_notice_id(@notice).id %>, 'dues')">회비</button>
-          <button type="button" id="memo_btn" class="btn btn-default <%= user.responses.find_by_notice_id(@notice).memo.blank? ? '' : 'btn-warning' %>", onclick="javascript:update_check_status(<%=@notice.id %>, <%= user.responses.find_by_notice_id(@notice).id %>, 'memo')">메모</button>
+          <div class="button-group">
+            <button type="button" id="absence_btn" class="btn btn-default <%= user.responses.find_by_notice_id(@notice).absence == 0 ? '' : 'btn-success' %>", onclick="javascript:update_check_status(<%=@notice.id %>, <%= user.responses.find_by_notice_id(@notice).id %>, 'absence')">출석</button>
+
+            <button type="button" id="dues_btn" class="btn btn-default <%= user.responses.find_by_notice_id(@notice).dues == 0 ? '' : 'btn-primary' %>", onclick="javascript:update_check_status(<%=@notice.id %>, <%= user.responses.find_by_notice_id(@notice).id %>, 'dues')">회비</button>
+
+            <button type="button" id="memo_btn" class="btn btn-default <%= user.responses.find_by_notice_id(@notice).memo.blank? ? '' : 'btn-warning' %>", onclick="javascript:open_memo()">메모</button>
+          </div>
+          <div class="memo">
+            <div id="memo_in" class="<%= user.responses.find_by_notice_id(@notice).memo.blank? ? 'hide_memo' : 'show_memo' %>">
+              <p id="memo_div"><%= user.responses.find_by_notice_id(@notice).memo %></p>
+              <div class="glyphicon-group">
+                <span class="glyphicon glyphicon-remove" onclick="javascript:update_check_status(<%=@notice.id %>, <%= user.responses.find_by_notice_id(@notice).id %>, 'memo')"></span>
+                <span class="glyphicon glyphicon-edit" onclick="javascript:edit_memo(<%=@notice.id %>, <%= user.responses.find_by_notice_id(@notice).id %>, 'memo')"></span>
+                </div>
+            </div>
+            
+            <div id="memo_not_in" class="hide_memo">
+              <input type="text" id="memo_edit" />
+              <button type="button" class="btn btn-default", onclick="javascript:update_check_status(<%=@notice.id %>, <%= user.responses.find_by_notice_id(@notice).id %>, 'memo')">등록</button>
+            </div>
+          <div>
         </td>
         <td>
           <%= user.responses.time(@notice) %>

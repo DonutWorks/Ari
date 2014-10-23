@@ -36,3 +36,33 @@
 .margin-top15 {
   margin-top: 15px
 }
+
+.show_memo {
+  display: inline-block;
+}
+
+.hide_memo {
+  display: none;
+}
+
+.memo {
+  display: inline;
+  margin-left:10px;
+}
+
+#memo_edit {
+  width:300px;
+}
+
+#memo_div {
+  display: inline-block;
+}
+
+.button-group {
+  display: inline-block;
+}
+
+.glyphicon-group {
+  display: inline;
+  margin-left:10px;
+}

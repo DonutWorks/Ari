@@ -15,7 +15,7 @@ class Admin::ResponsesController < Admin::ApplicationController
     when "dues"
       response.dues == 0 ? response.update(dues: 1) : response.update(dues: 0)
     when "memo"
-      response.memo.blank? ? response.update(memo: "ssss") : response.update(memo: "")
+      response.update(memo: params[:memo])
     end
     respond_with response
   end
