@@ -36,6 +36,7 @@ class Notice < ActiveRecord::Base
   validates :content, presence: { message: "공지 내용을 입력해주십시오." }
   validates :notice_type, presence: { message: "유형을 선택해주십시오." },
    inclusion: { in: NOTICE_TYPES, message: "올바르지 않은 유형입니다." }
+  validates :club_id, presence: true
   validates :to, numericality: { greater_than_or_equal_to: 1 }, if: :to_notice?
   validate :to_adjustable?, if: :to_notice?
 

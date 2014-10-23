@@ -58,7 +58,7 @@ module Authenticates
       end
 
       sms_info = {
-        from: current_club.representive.phone_number
+        from: current_club.representive.phone_number,
         to: user_phone_number,
         text: "[인증 url] => " + url
       }
