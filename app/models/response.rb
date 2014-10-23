@@ -10,7 +10,23 @@ class Response < ActiveRecord::Base
   after_save :send_sms_auto
 
   def send_sms_auto 
-    comment = "[" + self.notice.title + "] 공지의 참상태가 " + self.status + "로 변경 되었습니다."
+
+    case self.status
+    when "go"
+      status = "'참가'"
+    when "wait"
+      status = "'대기'"
+    when "not"
+      status = "'불참'으"
+    when "yes"
+      status = "'참가'"
+    when "maybe"
+      status = "'불확실'"
+    when "no"
+      status = "'불참'으"
+    end
+      
+    comment = "[" + self.notice.title + "] 공지의 참가상태가 " + status + "로 변경 되었습니다."
 
     sms_sender = SmsSender.new
     message = sms_sender.send_message(comment, self.notice, self.user)
