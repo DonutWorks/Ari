@@ -1,6 +1,6 @@
 class Admin::ApplicationController < ApplicationController
   skip_before_action :authenticate_user!
-  before_action :club_scoped_authenticate_admin!
+  before_action :club_scoped_authenticate_admin_user!
   protect_from_forgery with: :exception
 
   layout :layout

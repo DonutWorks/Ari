@@ -5,13 +5,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # for back compatibility
-  resources :notices, only: [:show] do
-    resources :responses
-    resources :to_responses
-  end
-
-
   devise_for :admin_users, path: ':club_id/admin'
   resources :clubs, only: [:show], path: '/' do
     resources :invitations, only: [:new, :create, :show], param: :code
@@ -59,4 +52,13 @@ Rails.application.routes.draw do
   end
   get '/gates/:id', to:  redirect('/notices/%{id}')
 
+  # for back compatibility
+  resources :notices, only: [] do
+    collection do
+      get '/:id(/*rest)', to: (redirect do |path_params, req|
+        notice = Notice.find(path_params[:id])
+        [notice.club.friendly_id, 'notices', notice.id, path_params[:rest]].join('/')
+      end)
+    end
+  end
 end
