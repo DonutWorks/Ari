@@ -23,15 +23,15 @@ class Admin::NoticesController < Admin::ApplicationController
   end
 
   def show
-    @notice = current_club.notices.find(params[:id])
+    @notice = current_club.notices.friendly.find(params[:id])
   end
 
   def edit
-    @notice = current_club.notices.find(params[:id])
+    @notice = current_club.notices.friendly.find(params[:id])
   end
 
   def update
-    @notice = current_club.notices.find(params[:id])
+    @notice = current_club.notices.friendly.find(params[:id])
 
     if @notice.update(notice_params)
       flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 수정했습니다."
@@ -42,7 +42,7 @@ class Admin::NoticesController < Admin::ApplicationController
   end
 
   def destroy
-    @notice = current_club.notices.find(params[:id])
+    @notice = current_club.notices.friendly.find(params[:id])
     @notice.destroy
 
     flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 삭제했습니다."

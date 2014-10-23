@@ -1,10 +1,10 @@
 class ToResponsesController < ApplicationController
   def index
-    @notice = current_club.notices.find_by_id(params[:notice_id]) or not_found
+    @notice = current_club.notices.friendly.find(params[:notice_id])
   end
 
   def create
-    notice = current_club.notices.find_by_id(params[:notice_id])
+    notice = current_club.notices.friendly.find(params[:notice_id])
 
     notice_to_checker = NoticeToChecker.new
     status = notice_to_checker.check(notice)
@@ -21,7 +21,7 @@ class ToResponsesController < ApplicationController
   end
 
   def destroy
-    notice = current_club.notices.find_by_id(params[:notice_id]) or not_found
+    notice = current_club.notices.friendly.find(params[:notice_id])
 
     response = notice.responses.find_by_user_id(current_user)
     response.destroy

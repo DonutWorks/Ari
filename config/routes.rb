@@ -56,8 +56,8 @@ Rails.application.routes.draw do
   resources :notices, only: [] do
     collection do
       get '/:id(/*rest)', to: (redirect do |path_params, req|
-        notice = Notice.find(path_params[:id])
-        [notice.club.friendly_id, 'notices', notice.id, path_params[:rest]].join('/')
+        notice = Notice.find_by_id(path_params[:id])
+        [notice.club.friendly_id, 'notices', notice.friendly_id, path_params[:rest]].join('/')
       end)
     end
   end

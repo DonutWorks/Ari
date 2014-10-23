@@ -1,6 +1,6 @@
 class Club < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :name
+  friendly_id :name, use: :slugged
 
   has_many :admin_users
   has_many :invitations

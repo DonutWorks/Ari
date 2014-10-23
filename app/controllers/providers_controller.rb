@@ -1,10 +1,8 @@
 class ProvidersController < AuthenticatableController
-  skip_before_action :capture_club
+  prepend_before_action :merge_omniauth_params
   skip_before_action :require_activated
-  before_action :merge_omniauth_params
 
   def create
-    @current_club = Club.find_by_id(params[:club_id]) or not_found
     remember_me = params[:remember_me]
     auth_hash = request.env['omniauth.auth']
 
@@ -28,12 +26,6 @@ class ProvidersController < AuthenticatableController
   def failure
     flash[:error] = "인증에 실패하였습니다."
     proceed
-  end
-
-private
-  def merge_omniauth_params
-    omniauth_params = request.env['omniauth.params']
-    params.merge!(omniauth_params) if omniauth_params
   end
 
 private

@@ -1,7 +1,7 @@
 class Admin::ResponsesController < Admin::ApplicationController
   before_action :find_notice
-  def index
 
+  def index
   end
 
   def update
@@ -54,6 +54,6 @@ class Admin::ResponsesController < Admin::ApplicationController
   end
 private
   def find_notice
-    @notice = current_club.notices.find_by_id(params[:notice_id])
+    @notice = current_club.notices.friendly.find(params[:notice_id])
   end
 end

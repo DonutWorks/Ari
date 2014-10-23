@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022074807) do
+ActiveRecord::Schema.define(version: 20141023044434) do
 
   create_table "admin_users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20141022074807) do
     t.string   "logo_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
 
   create_table "invitations", force: true do |t|
@@ -84,6 +85,7 @@ ActiveRecord::Schema.define(version: 20141022074807) do
     t.integer  "to"
     t.datetime "due_date"
     t.integer  "club_id"
+    t.string   "slug"
   end
 
   add_index "notices", ["club_id"], name: "index_notices_on_club_id"

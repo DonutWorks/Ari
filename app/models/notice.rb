@@ -14,14 +14,20 @@ class Notice < ActiveRecord::Base
     end
   end
 
-  validates :to, numericality: { greater_than_or_equal_to: 1 }, if: :to_notice?
-  validate :to_adjustable?, if: :to_notice?
-
   has_many :responses
   has_many :messages
   belongs_to :club
 
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
+  # for korean
+  def normalize_friendly_id(value)
+    super(Gimchi.romanize(value.to_s, number: false))
+  end
+
   acts_as_readable
+
   before_save :make_redirectable_url!
   before_save :change_candidates_status, if: :to_notice?
 
@@ -30,6 +36,8 @@ class Notice < ActiveRecord::Base
   validates :content, presence: { message: "공지 내용을 입력해주십시오." }
   validates :notice_type, presence: { message: "유형을 선택해주십시오." },
    inclusion: { in: NOTICE_TYPES, message: "올바르지 않은 유형입니다." }
+  validates :to, numericality: { greater_than_or_equal_to: 1 }, if: :to_notice?
+  validate :to_adjustable?, if: :to_notice?
 
 private
   def make_redirectable_url!

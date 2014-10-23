@@ -35,9 +35,9 @@ protected
 
   def capture_club
     if controller_name == "clubs"
-      @current_club ||= Club.friendly.find(params[:id])
+      @current_club ||= Club.friendly.find(params[:id].downcase)
     else
-      @current_club ||= Club.friendly.find(params[:club_id])
+      @current_club ||= Club.friendly.find(params[:club_id].downcase)
     end
   rescue ActiveRecord::RecordNotFound => e
     not_found

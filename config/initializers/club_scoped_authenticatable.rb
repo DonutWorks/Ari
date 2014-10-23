@@ -16,7 +16,7 @@ module Devise
 
     private
       def club_member?(resource)
-        current_club = Club.friendly.find(params[:club_id])
+        current_club = Club.friendly.find(params[:club_id].downcase)
         return resource.club == current_club
       end
     end

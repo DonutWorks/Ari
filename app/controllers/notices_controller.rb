@@ -1,6 +1,6 @@
 class NoticesController < ApplicationController
   def show
-    @notice = current_club.notices.find_by_id(params[:id]) or not_found
+    @notice = current_club.notices.friendly.find(params[:id])
     current_user.read!(@notice)
 
     case @notice.notice_type
