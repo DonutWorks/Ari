@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: redirect { raise ActionController::RoutingError.new('Not Found') }
+
   resources :providers, path: '/auth/:provider', only: [] do # oauth callback
     collection do
       get 'callback', to: :create

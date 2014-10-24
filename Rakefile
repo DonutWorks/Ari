@@ -13,3 +13,10 @@ namespace :club do
     puts "Representive: { email: #{representive.email}, password: 12345678 }"
   end
 end
+
+namespace :slug do
+  task create: :environment do
+    Club.find_each(&:save)
+    Notice.find_each(&:save)
+  end
+end
