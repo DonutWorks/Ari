@@ -13,34 +13,41 @@ var user_modal = {
 
     $('.all-users-modal').on('shown.bs.modal', function (e) {
       this.target = e.relatedTarget;
-    });
-
-    $('.all-users-modal').on('hidden.bs.modal', function (e) {
-      $(this.target).text(user_modal.user.username);
-      $(this.target).siblings('.assignee-phone-number').val(user_modal.user.phone_number);
-      $(this.target).siblings('.assignee-username').val(user_modal.user.username);
-      $(this.target).removeClass("btn-warning").addClass('btn-success');
-    });
+    }.bind(this));
 
     $(".clickable-row td:not(.menu)").on("click", function(e) {
       var tr = $(this).parent();
       var user = {username: $(tr).children('.user-username').text().trim(),
                   phone_number: $(tr).children('.user-phone-number').text().trim()};
-      user_modal.user = user;
 
       $('.all-users-modal').modal('hide');
+
+      user_modal.get_user_model_on_ajax(user);
     });
   },
 
   already_selected: function(){
-    $('.assignee-phone-number').each(function(){
-      if($(this).val() != ""){
-        td = $('.user-phone-number:contains("' + $(this).val() + '")');
-        name = $(td).siblings('.user-username').text();
-        $(this).siblings('.assign-btn').text(name);
-        $(this).siblings('.assign-btn').removeClass("btn-warning").addClass('btn-success');
+    $('.assignee-user_id').each(function(){
+      if($(this).val()){
+        user_modal.get_user_model_on_ajax({id: $(this).val()}, $(this).siblings('.assign-btn'));
       }
     });
+  },
+
+  get_user_model_on_ajax: function(user, target){
+    $.ajax({
+      url: "/admin/users/get_user",
+      data: {id: user.id, phone_number: user.phone_number},
+      cache: false
+    }).success(function(response) {
+      var user_model = $.parseJSON(response);
+      this.user = user_model;
+      target = target || $(this.target); 
+
+      $(target).text(this.user.username);
+      $(target).siblings('.assignee-user_id').val(this.user.id);
+      $(target).removeClass("btn-warning").addClass('btn-success');
+    }.bind(this));
   }
 }
 
@@ -64,11 +71,9 @@ var checklist = {
   hide_unused_input: function(){
     $('.checklist-form input[type="text"]').each(function(index){
       form = $(this).parents('.checklist-form');
-      assignee = form.find('input[type="hidden"]').val();
-
       prev_input = form.prev().find('input[type="text"]').val();
-      
-      if($(this).val() == ""  && prev_input == "" && assignee == "")
+
+      if($(this).val() == ""  && prev_input == "")
         form.hide();
 
       if($(this).val().length >= 1)

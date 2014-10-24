@@ -1,19 +1,18 @@
 class Checklist < ActiveRecord::Base
   has_many :assignee_comments
+  has_many :assign_histories
+  has_many :assignees, through: :assign_histories, source: :user
+  accepts_nested_attributes_for :assign_histories, reject_if: lambda {|attributes| attributes['user_id'].blank?} 
+
   belongs_to :notice
 
   validates :task, presence: {message: "할 일을 입력해주세요."}
-  validates :assignee, presence: {message: "회원이 할당되어야 합니다"}
+  validate :must_has_assignees
 
-  before_validation :normalize_phone_number
-
-private 
-  def normalize_phone_number
-    normalizer = FormNormalizers::PhoneNumberNormalizer.new
-    begin
-      self.assignee = normalizer.normalize(assignee) if !assignee.blank?
-    rescue FormNormalizers::NormalizeError => e
-      errors.add(:assignee, "가 잘못되었습니다.")
+private
+  def must_has_assignees
+    if self.assign_histories.empty?
+      errors.add(:assignees, '수행할 회원을 할당해야 합니다.') if self.assign_histories.empty?
     end
   end
 end

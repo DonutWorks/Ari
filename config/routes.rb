@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'application#index'
+    get 'users/get_user'
 
     resources :users do
       collection do
@@ -53,5 +54,4 @@ Rails.application.routes.draw do
     resources :messages
   end
   get '/gates/:id', to:  redirect('/notices/%{id}')
-
 end

@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020142108) do
+ActiveRecord::Schema.define(version: 20141022155002) do
+
+  create_table "assign_histories", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "checklist_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "assignee_comments", force: true do |t|
     t.text     "comment"
@@ -24,7 +31,6 @@ ActiveRecord::Schema.define(version: 20141020142108) do
 
   create_table "checklists", force: true do |t|
     t.text     "task"
-    t.text     "assignee"
     t.boolean  "finish"
     t.integer  "notice_id"
     t.datetime "created_at"

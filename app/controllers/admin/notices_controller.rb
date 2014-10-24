@@ -5,7 +5,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def new
     @notice = Notice.new
-    20.times { @notice.checklists.build}
+    20.times { @notice.checklists.build.assign_histories.build }
   end
 
   def create
@@ -19,7 +19,8 @@ class Admin::NoticesController < Admin::ApplicationController
       SlackNotifier.notify("햇빛봉사단 게이트 추가 알림 : #{@notice.title}, #{@notice.shortenURL}")
       redirect_to admin_notice_path(@notice)
     else
-      20.times { @notice.checklists.build}
+      @notice.checklists.last.assign_histories.build if @notice.checklist_notice?
+      20.times { @notice.checklists.build.assign_histories.build }
       render 'new'
     end
   end
@@ -31,7 +32,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def edit
     @notice = Notice.find(params[:id])
-    20.times { @notice.checklists.build}
+    20.times { @notice.checklists.build.assign_histories.build}
   end
 
   def update
@@ -41,7 +42,8 @@ class Admin::NoticesController < Admin::ApplicationController
       flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 수정했습니다."
       redirect_to admin_notice_path(@notice)
     else
-      20.times { @notice.checklists.build}
+      @notice.checklists.last.assign_histories.build if @notice.checklist_notice?
+      20.times { @notice.checklists.build.assign_histories.build}
       render 'edit'
     end
   end
@@ -95,6 +97,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
 private
   def notice_params
-    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date, checklists_attributes: [:id, :task, :assignee])
+    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date,
+      checklists_attributes: [:id, :task, assign_histories_attributes: [:user_id]])
   end
 end

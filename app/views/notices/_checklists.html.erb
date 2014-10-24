@@ -4,9 +4,9 @@
   <div class="list-group">
 
     <% checklists.each do |checklist| %>
-      <% user = User.find_by_phone_number(checklist.assignee) %>
+      <% user = checklist.assignees.first %>
       <div class="list-group-item
-      <%= if checklist.finish? then ' list-group-item-info' elsif current_user && user.phone_number == current_user.phone_number then ' list-group-item-warning' end %>">
+      <%= if checklist.finish? then ' list-group-item-info' elsif current_user && checklist.assignees.include?(current_user) then ' list-group-item-warning' end %>">
         <h4 class="list-group-item-heading"><%= checklist.task %>
           <span class="pull-right"><%= user.username %>
             <%= check_box_tag('sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_assignee") if admin? %>
@@ -32,7 +32,7 @@
         <% end %>
 
         <div class="new-comment-form">
-          <% if current_user && user.phone_number == current_user.phone_number %>
+          <% if current_user && checklist.assignees.include?(current_user) %>
             <%= form_for [notice, checklist, @assignee_comment] do |f| %>
               <div class="input-group">
                 <%= f.text_field :comment, class: "form-control", placeholder: "완료하려면 최소 한 개 이상의 댓글이 필요합니다" %>
