@@ -10,7 +10,7 @@ class InvitationsController < AuthenticatableController
     @user = current_club.users.new(user_params)
     @user.extra_info = YAML.load(params[:user][:extra_info]).to_hash
 
-    create_invitation_service = Authenticates::CreateInvitationService(current_club).new
+    create_invitation_service = Authenticates::CreateInvitationService.new(current_club)
     out = create_invitation_service.execute(current_user, @user)
 
     case out[:status]
