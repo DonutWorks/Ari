@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141023044434) do
+ActiveRecord::Schema.define(version: 20141024073322) do
 
   create_table "admin_users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20141023044434) do
   end
 
   add_index "admin_users", ["club_id"], name: "index_admin_users_on_club_id"
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
+  add_index "admin_users", ["email", "club_id"], name: "index_admin_users_on_email_and_club_id", unique: true
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
 
   create_table "clubs", force: true do |t|
