@@ -21,9 +21,10 @@ class Admin::ImportController < Admin::ApplicationController
           @invalid_messages.push(messages)
         else
           new_user = current_club.users.find_or_initialize_by(phone_number: user.phone_number)
-          new_user.attributes = user.as_json(except: [:id])
+          new_user.attributes = user.as_json(except: [:id]).merge(club: current_club)
 
           unless new_user.save
+            @invalid_messages.push(new_user.errors.inspect)
             messages = i.to_s + "행(" + (new_user.username||="알수없음") + "님)은 꼭 필요한 데이터를 입력하지 않았습니다. "
             @invalid_messages.push(messages)
           end

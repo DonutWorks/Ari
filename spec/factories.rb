@@ -8,7 +8,7 @@ FactoryGirl.define do
   end
 
   factory :club do
-    name "DonutWorks"
+    sequence(:name) { |n| "DonutWorks#{n}" }
 
     trait :with_representive do
       after(:create) do |club|

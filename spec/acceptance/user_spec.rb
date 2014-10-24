@@ -2,25 +2,31 @@ require "rails_helper"
 
 RSpec.describe "check user process", type: :feature do
   before(:each) do
-    authenticate_to_admin!
-    @user = FactoryGirl.create(:user)
+    @club = FactoryGirl.create(:complete_club)
+    authenticate_to_admin!(@club.representive)
+    @user = @club.users.first
+  end
+
+  after(:each) do
+    Warden.test_reset!
   end
 
   it "should show user list" do
-    visit club_admin_users_path(current_club)
+    visit club_admin_users_path(@club)
 
     expect(find('.table')).to have_content(@user.username)
   end
 
   it "should show detail information" do
-    visit club_admin_users_path(current_club)
-    click_link("자세히")
+    visit club_admin_users_path(@club)
+    # detail link for a first user
+    find("tbody tr:first-child a").click
 
     expect(find('.table')).to have_content(@user.member_type)
   end
 
   it "should create new user" do
-    visit new_admin_user_path
+    visit new_club_admin_user_path(@club)
 
     fill_in 'user_username', :with => 'testtest'
     fill_in 'user_phone_number', :with => '01011111111'
@@ -31,7 +37,7 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should not create new user (phone_number is duplicated)" do
-    visit new_admin_user_path
+    visit new_club_admin_user_path(@club)
 
     fill_in 'user_username', :with => 'testtest'
     fill_in 'user_phone_number', :with => @user.phone_number
@@ -42,7 +48,7 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should not create new user (email is duplicated)" do
-    visit new_admin_user_path
+    visit new_club_admin_user_path(@club)
 
     fill_in 'user_username', :with => 'testtest'
     fill_in 'user_phone_number', :with => '01011111111'
@@ -53,7 +59,7 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should not create new user (blank)" do
-    visit new_admin_user_path
+    visit new_club_admin_user_path(@club)
 
     click_button "등록"
 
@@ -61,7 +67,7 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should create user from excel" do
-    visit import_club_admin_users_path(current_club)
+    visit import_club_admin_users_path(@club)
 
     file_path = Rails.root + "spec/acceptance/fixtures/RosterExample.xlsx"
     attach_file('upload_file', file_path)
@@ -72,20 +78,20 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should create user from excel with striping" do
-    visit import_club_admin_users_path(current_club)
+    visit import_club_admin_users_path(@club)
 
     file_path = Rails.root + "spec/acceptance/fixtures/RosterExample.xlsx"
     attach_file('upload_file', file_path)
 
     click_button "업로드"
-    visit club_admin_users_path(current_club)
+    visit club_admin_users_path(@club)
 
     expect(/임수정/).to match(find('.table').text)
     expect(/ 임수정/).to match(find('.table').text)
   end
 
   it "should create user from excel (contains duplicated user)" do
-    visit import_club_admin_users_path(current_club)
+    visit import_club_admin_users_path(@club)
 
     file_path = Rails.root + "spec/acceptance/fixtures/RosterExample.xlsx"
     attach_file('upload_file', file_path)
@@ -94,7 +100,7 @@ RSpec.describe "check user process", type: :feature do
 
     expect(find('.alert-info')).to have_content('멤버 입력에 성공했습니다')
 
-    visit import_club_admin_users_path(current_club)
+    visit import_club_admin_users_path(@club)
 
     file_path = Rails.root + "spec/acceptance/fixtures/RosterExample_duplicated.xlsx"
     attach_file('upload_file', file_path)
@@ -105,7 +111,7 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should not create user from excel (empty file)" do
-    visit import_club_admin_users_path(current_club)
+    visit import_club_admin_users_path(@club)
 
     click_button "업로드"
 
@@ -113,7 +119,7 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should modify user" do
-    visit admin_user_path(@user)
+    visit club_admin_user_path(@club, @user)
 
     click_link "수정"
 
@@ -126,10 +132,9 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should not modify user (email is duplicated)" do
+    @club.users.create(username: 'testtest', phone_number: '01011111111', email: 'test@testtt.com')
 
-    User.create(username: 'testtest', phone_number: '01011111111', email: 'test@testtt.com')
-
-    visit admin_user_path(@user)
+    visit club_admin_user_path(@club, @user)
 
     click_link "수정"
 
@@ -140,10 +145,9 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should not modify user (phone_number is duplicated)" do
+    @club.users.create(username: 'testtest', phone_number: '01011111111', email: 'test@testtt.com')
 
-    User.create(username: 'testtest', phone_number: '01011111111', email: 'test@testtt.com')
-
-    visit admin_user_path(@user)
+    visit club_admin_user_path(@club, @user)
 
     click_link "수정"
 
@@ -154,7 +158,7 @@ RSpec.describe "check user process", type: :feature do
   end
 
   it "should delete user" do
-    visit admin_user_path(@user)
+    visit club_admin_user_path(@club, @user)
 
     click_link "삭제"
 

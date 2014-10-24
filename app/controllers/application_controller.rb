@@ -40,7 +40,7 @@ protected
       @current_club ||= Club.friendly.find(params[:club_id].downcase)
     end
   rescue ActiveRecord::RecordNotFound => e
-    not_found
+   not_found
   end
 
   def not_found
