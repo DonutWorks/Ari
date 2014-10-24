@@ -11,8 +11,8 @@ module AcceptanceHelper
     end
   end
 
-  def authenticate_to_admin!
-    authenticate("habitat", "iloveyou")
+  def authenticate_to_admin!(admin_user)
+    login_as(admin_user, scope: :admin_user)
   end
 
   def authenticate_user!(user)

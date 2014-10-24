@@ -26,9 +26,22 @@ RSpec.configure do |config|
     FactoryGirl.lint
   end
 
- config.include AcceptanceHelper
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
 
- config.include ShowMeTheCookies, :type => :feature
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
+
+  config.include Warden::Test::Helpers
+  Warden.test_mode!
+
+  config.include AcceptanceHelper, type: :feature
+  config.include ShowMeTheCookies, type: :feature
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

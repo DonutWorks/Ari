@@ -53,7 +53,7 @@ FactoryGirl.define do
 
   factory :notice do
     club
-    title "goto google.com"
+    sequence(:title) { |n| "notice title #{n}" }
     content "google!"
     link "http://google.com"
     notice_type "external"
