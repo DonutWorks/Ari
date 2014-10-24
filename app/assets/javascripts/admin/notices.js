@@ -88,36 +88,36 @@ function change_sms_text_size(){
   $('#current-text-size').text(utf8length);
 }
 
-function update_check_status(notice_id, response_id, check) {
+function update_check_status(notice_id, response_id, check, index) {
 
   var url = '/admin/notices/' + notice_id + '/responses/update_check?response_id=' + response_id + "&check=" + check
-  if(check == "memo") url = url + "&memo=" + $('#memo_edit').val();
+  if(check == "memo") url = url + "&memo=" + $('#memo_edit_' + index).val();
 
   $.getJSON(url)
     .done(function (res) {
       if(check == "absence") {
-        if(res.absence == 1) $('#absence_btn').addClass("btn-success");
-        else $('#absence_btn').removeClass("btn-success");
+        if(res.absence == 1) $('#absence_btn_' + index).addClass("btn-success");
+        else $('#absence_btn_' + index).removeClass("btn-success");
       }
       else if(check == "dues") {
-        if(res.dues == 1) $('#dues_btn').addClass("btn-primary");
-        else $('#dues_btn').removeClass("btn-primary");
+        if(res.dues == 1) $('#dues_btn_' + index).addClass("btn-primary");
+        else $('#dues_btn_' + index).removeClass("btn-primary");
       }
       else {
         if(res.memo != "") {
-          $('#memo_btn').addClass("btn-warning");
-          $('#memo_div').html(res.memo);
+          $('#memo_btn_' + index).addClass("btn-warning");
+          $('#memo_div_' + index).html(res.memo);
 
-          $('#memo_in').addClass("show_memo").removeClass("hide_memo");
-          $('#memo_not_in').addClass("hide_memo").removeClass("show_memo");
+          $('#memo_in_' + index).addClass("show_memo").removeClass("hide_memo");
+          $('#memo_not_in_' + index).addClass("hide_memo").removeClass("show_memo");
         }
         else {
-          $('#memo_btn').removeClass("btn-warning");
+          $('#memo_btn_' + index).removeClass("btn-warning");
 
-          $('#memo_not_in').addClass("hide_memo").removeClass("show_memo");
-          $('#memo_in').addClass("hide_memo").removeClass("show_memo");
+          $('#memo_not_in_' + index).addClass("hide_memo").removeClass("show_memo");
+          $('#memo_in_' + index).addClass("hide_memo").removeClass("show_memo");
         }
-        $('#memo_edit').val("");
+        $('#memo_edit_' + index).val("");
       }
       
     })
@@ -126,15 +126,15 @@ function update_check_status(notice_id, response_id, check) {
     });
 }
 
-function edit_memo(notice_id, response_id, check) {
-  $('#memo_not_in').addClass("show_memo").removeClass("hide_memo");
-  $('#memo_in').addClass("hide_memo").removeClass("show_memo");
+function edit_memo(notice_id, response_id, check, index) {
+  $('#memo_not_in_' + index).addClass("show_memo").removeClass("hide_memo");
+  $('#memo_in_' + index).addClass("hide_memo").removeClass("show_memo");
 
-  $('#memo_edit').val($('#memo_div').html());
+  $('#memo_edit_' + index).val($('#memo_div_' + index).html());
 }
 
-function open_memo() {
-  if($('#memo_in').hasClass("hide_memo")) $('#memo_not_in').addClass("show_memo").removeClass("hide_memo");
+function open_memo(index) {
+  if($('#memo_in_' + index).hasClass("hide_memo")) $('#memo_not_in_' + index).addClass("show_memo").removeClass("hide_memo");
 }
 
 
