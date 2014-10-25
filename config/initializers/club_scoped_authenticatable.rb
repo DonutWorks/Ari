@@ -9,7 +9,7 @@ module Devise
         if result && club_member?(resource)
           true
         else
-          fail!(resource.unauthenticated_message)
+          fail!(resource)
           false
         end
       end
