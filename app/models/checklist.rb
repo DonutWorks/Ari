@@ -7,12 +7,10 @@ class Checklist < ActiveRecord::Base
   belongs_to :notice
 
   validates :task, presence: {message: "할 일을 입력해주세요."}
-  validate :must_has_assignees
+  validate :must_have_assignees
 
 private
-  def must_has_assignees
-    if self.assign_histories.empty?
-      errors.add(:assignees, '수행할 회원을 할당해야 합니다.') if self.assign_histories.empty?
-    end
+  def must_have_assignees
+    errors.add(:assignees, '수행할 회원을 할당해야 합니다.') if self.assign_histories.empty?
   end
 end

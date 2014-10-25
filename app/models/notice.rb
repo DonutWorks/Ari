@@ -31,7 +31,7 @@ class Notice < ActiveRecord::Base
   validates :content, presence: { message: "공지 내용을 입력해주십시오." }
   validates :notice_type, presence: { message: "유형을 선택해주십시오." },
    inclusion: { in: NOTICE_TYPES, message: "올바르지 않은 유형입니다." }
-  validate :must_has_checklists, if: :checklist_notice?
+  validate :must_have_checklists, if: :checklist_notice?
 
 private
   def make_redirectable_url!
@@ -56,9 +56,7 @@ private
     candidates.update_all(status: "go")
   end
 
-  def must_has_checklists
-    if self.checklists.empty?
-      errors.add(:task, '하나 이상의 체크리스트가 있어야 합니다') if self.checklists.empty?
-    end
+  def must_have_checklists
+    errors.add(:task, '하나 이상의 체크리스트가 있어야 합니다') if self.checklists.empty?
   end
 end
