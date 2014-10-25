@@ -1,16 +1,19 @@
 class AssigneeCommentsController < ApplicationController
   def create
-    Notice.find(params[:notice_id]).checklists.find(params[:checklist_id]).assignee_comments.create(assignee_comments_params)
+    checklist = Notice.find(params[:notice_id]).checklists.find(params[:checklist_id])
+    checklist.assignee_comments.create!(assignee_comments_params)
     redirect_to :back
   end
 
   def update
-    AssigneeComment.find(params[:id]).update(assignee_comments_params)
+    assignee_comment = AssigneeComment.find(params[:id])
+    assignee_comment.update!(assignee_comments_params)
     redirect_to :back
   end
 
   def destroy
-    AssigneeComment.find(params[:id]).delete
+    assignee_comment = AssigneeComment.find(params[:id])
+    assignee_comment.delete!
     redirect_to :back
   end
 
