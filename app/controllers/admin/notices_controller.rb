@@ -5,6 +5,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def new
     @notice = Notice.new
+    @users = User.all
     20.times { @notice.checklists.build.assign_histories.build }
   end
 

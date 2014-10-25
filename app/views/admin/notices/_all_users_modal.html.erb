@@ -19,7 +19,7 @@
             </thead>
 
             <tbody>
-              <% User.all.each do |user| %>
+              <% users.each do |user| %>
                 <tr class="clickable-row" href="<%= admin_user_path(user) %>">
                   <td><%= pretty_generation_id(user.generation_id) %></td>
                   <td class="user-username">
