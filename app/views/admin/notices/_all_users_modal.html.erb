@@ -1,35 +1,44 @@
 <div class="modal fade all-users-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="table-responsive">
-        <table class="table table-condensed table-striped table-hover">
-          <thead>
-            <tr>
-              <th>기수</th>
-              <th>이름</th>
-              <th>전화번호</th>
-              <th>이메일</th>
-              <th>전공</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% User.all.each do |user| %>
-              <tr class="clickable-row" href="<%= admin_user_path(user) %>">
-                <td><%= pretty_generation_id(user.generation_id) %></td>
-                <td class="user-username">
-                  <%= user.username %>
-                  <% if user.activated? %>
-                    <span class="glyphicon glyphicon-ok"></span>
-                  <% end %>
-                </td>
-                <td class="user-phone-number"><%= pretty_phone_number(user.phone_number) %></td>
-                <td><%= user.email %></td>
-                <td><%= user.major %></td>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">회원을 선택해주세요</h4>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-condensed table-striped table-hover">
+            <thead>
+              <tr>
+                <th>기수</th>
+                <th>이름</th>
+                <th>전화번호</th>
+                <th>이메일</th>
+                <th>전공</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              <% User.all.each do |user| %>
+                <tr class="clickable-row" href="<%= admin_user_path(user) %>">
+                  <td><%= pretty_generation_id(user.generation_id) %></td>
+                  <td class="user-username">
+                    <%= user.username %>
+                    <% if user.activated? %>
+                      <span class="glyphicon glyphicon-ok"></span>
+                    <% end %>
+                  </td>
+                  <td class="user-phone-number"><%= pretty_phone_number(user.phone_number) %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.major %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
       </div>
     </div>
   </div>
