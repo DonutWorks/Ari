@@ -6,24 +6,24 @@ $(document).on('ready page:load', function () {
 
     $('.' + id).prop("checked", this.checked);
 
-    add_phone_number_to_array();
+    addPhoneNumberToArray();
   });
 
 
   $('.sms_check').change(function() {
-    add_phone_number_to_array();
+    addPhoneNumberToArray();
   });
 
-  $('#sms_content').keyup(change_sms_text_size);
+  $('#sms_content').keyup(changeSMSTextSize);
 
-  option_selecter($('.notice-type-option:checked').val());
+  optionSelector($('.notice-type-option:checked').val());
 
   $('.notice-type-option').change(function() {
-      option_selecter($(this).val());
+      optionSelector($(this).val());
   });
 });
 
-function option_selecter(val) {
+function optionSelector(val) {
   switch(val){
     case 'external':
       $('#external-option').show();
@@ -53,25 +53,25 @@ function option_selecter(val) {
   }
 }
 
-function add_phone_number_to_array() {
-  var phone_numbers_cnt = 0;
+function addPhoneNumberToArray() {
+  var phoneNumbersCnt = 0;
 
   $('.sms_check').each(function() {
-    if((this).checked === true) phone_numbers_cnt++;
+    if((this).checked === true) phoneNumbersCnt++;
   });
 
-  if(phone_numbers_cnt >= 1){
+  if(phoneNumbersCnt >= 1){
     $('.notice-full-page').addClass('show-sms');
     $('.sms-text').slideDown();
-    $('#phone_numbers').text("총 " + phone_numbers_cnt + "명이 선택 되었습니다.");
+    $('#phone_numbers').text("총 " + phoneNumbersCnt + "명이 선택 되었습니다.");
   }
-  else if (phone_numbers_cnt == 0){
+  else if (phoneNumbersCnt == 0){
     $('.sms-text').slideUp();
     $('.notice-full-page').removeClass('show-sms');
   }
 }
 
-function change_sms_text_size(){
+function changeSMSTextSize(){
   var string = $('#sms_content').val();
 
   var utf8length = 0;

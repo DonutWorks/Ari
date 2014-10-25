@@ -1,15 +1,15 @@
 $(document).on('ready page:load', function () {
-  user_modal.init();
+  userModal.init();
   checklist.init();
-  assignee_comment.init();
+  assigneeComment.init();
 });
 
-var user_modal = {
+var userModal = {
   target: null,
   user: null,
 
   init: function(){
-    this.already_selected();
+    this.alreadySelected();
 
     $('.all-users-modal').on('shown.bs.modal', function (e) {
       this.target = e.relatedTarget;
@@ -22,26 +22,26 @@ var user_modal = {
 
       $('.all-users-modal').modal('hide');
 
-      user_modal.get_user_model_on_ajax(user);
+      userModal.getUserModel(user);
     });
   },
 
-  already_selected: function(){
+  alreadySelected: function(){
     $('.assignee-user_id').each(function(){
       if($(this).val()){
-        user_modal.get_user_model_on_ajax({id: $(this).val()}, $(this).siblings('.assign-btn'));
+        userModal.getUserModel({id: $(this).val()}, $(this).siblings('.assign-btn'));
       }
     });
   },
 
-  get_user_model_on_ajax: function(user, target){
+  getUserModel: function(user, target){
     $.ajax({
       url: "/admin/users/get_user",
       data: {id: user.id, phone_number: user.phone_number},
       cache: false
     }).success(function(response) {
-      var user_model = $.parseJSON(response);
-      this.user = user_model;
+      var userModel = $.parseJSON(response);
+      this.user = userModel;
       target = target || $(this.target); 
 
       $(target).text(this.user.username);
@@ -53,27 +53,27 @@ var user_modal = {
 
 var checklist = {
   init: function(){
-    this.hide_unused_input();
-    this.show_at_least();
+    this.hideUnusedInput();
+    this.showAtLeastOne();
 
     $('.checklist-form').keyup(function(e){
-      this.hide_unused_input();
-      this.show_at_least();
+      this.hideUnusedInput();
+      this.showAtLeastOne();
     }.bind(this));
   },
 
-  show_at_least: function(){
+  showAtLeastOne: function(){
     if ($('.checklist-form').css('display') == 'none') {
       $('.checklist-form').first().show();
     }
   },
 
-  hide_unused_input: function(){
+  hideUnusedInput: function(){
     $('.checklist-form input[type="text"]').each(function(index){
       form = $(this).parents('.checklist-form');
-      prev_input = form.prev().find('input[type="text"]').val();
+      prevInput = form.prev().find('input[type="text"]').val();
 
-      if($(this).val() == ""  && prev_input == "")
+      if($(this).val() == ""  && prevInput == "")
         form.hide();
 
       if($(this).val().length >= 1)
@@ -82,12 +82,12 @@ var checklist = {
   }
 }
 
-var assignee_comment = {
+var assigneeComment = {
   init: function(){
-    $('.comment-value').click(this.editable_comment);
+    $('.comment-value').click(this.setEditableComment);
   },
 
-  editable_comment: function(e){
+  setEditableComment: function(e){
     if($(this).parents().hasClass('list-group-item-warning')){
       $('.new-comment-form').hide();
       $('.comment-form').each(function(){
