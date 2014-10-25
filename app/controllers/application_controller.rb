@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :capture_club
+  before_action :current_club
   before_action :authenticate_user!
 
   def default_url_options(options={})
@@ -8,9 +8,10 @@ class ApplicationController < ActionController::Base
   end
 
 protected
-  # TODO: need to convert into before_action method because of legacy url.
   def current_club
-    @current_club
+    @current_club ||= Club.friendly.find(params[:club_id].downcase)
+  rescue ActiveRecord::RecordNotFound => e
+    not_found
   end
   helper_method :current_club
 
@@ -31,16 +32,6 @@ protected
     elsif current_user.club != current_club
       not_found
     end
-  end
-
-  def capture_club
-    if controller_name == "clubs"
-      @current_club ||= Club.friendly.find(params[:id].downcase)
-    else
-      @current_club ||= Club.friendly.find(params[:club_id].downcase)
-    end
-  rescue ActiveRecord::RecordNotFound => e
-   not_found
   end
 
   def not_found
