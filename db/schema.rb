@@ -91,6 +91,9 @@ ActiveRecord::Schema.define(version: 20141022155002) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "absence",    default: 0
+    t.integer  "dues",       default: 0
+    t.string   "memo"
   end
 
   create_table "users", force: true do |t|

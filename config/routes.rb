@@ -44,6 +44,7 @@ Rails.application.routes.draw do
         collection do
           get '/', to: :index
           post '/', to: :update
+          get '/update_check', to: :update_check
         end
       end
 

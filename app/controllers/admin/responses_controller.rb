@@ -1,9 +1,24 @@
 class Admin::ResponsesController < Admin::ApplicationController
   before_action :find_notice
+  respond_to :json
+
   def index
 
   end
 
+  def update_check
+
+    response = Response.find_by_id(params[:response_id])
+    case params[:check]
+    when "absence"
+      response.absence == 0 ? response.update(absence: 1) : response.update(absence: 0) 
+    when "dues"
+      response.dues == 0 ? response.update(dues: 1) : response.update(dues: 0)
+    when "memo"
+      response.update(memo: params[:memo])
+    end
+    respond_with response
+  end
   def update
 
     input_to = 0

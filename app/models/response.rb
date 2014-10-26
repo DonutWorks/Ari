@@ -5,6 +5,7 @@ class Response < ActiveRecord::Base
   belongs_to :user
 
   scope :time, -> (notice) { find_by_notice_id(notice.id).created_at.localtime.strftime("%Y-%m-%d %T") }
+
   scope :responsed_to_go, -> (notice) { notice.responses.where(status: "go") }
 
   def responsed_at

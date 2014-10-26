@@ -21,7 +21,6 @@
         <td><%= user.email %></td>
         <td><%= user.major %></td>
         <td>
-
           <% if type == "read" || type == "unread" %>
             <% if user.read_at(@notice) # need to decorate %>
               <%= user.read_at(@notice).localtime.strftime("%Y-%m-%d %T") %>
