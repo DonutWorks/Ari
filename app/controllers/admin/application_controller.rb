@@ -14,8 +14,8 @@ protected
   def club_scoped_authenticate_admin_user!
     authenticate_admin_user!
     if current_admin_user && current_admin_user.club != current_club
-      # need a flash message?
-      not_found
+      flash[:error] = "권한이 없습니다."
+      redirect_to(request.referer || club_admin_root_path(current_admin_user.club))
     end
   end
 
