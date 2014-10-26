@@ -79,4 +79,13 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.auto_sms = ENV["AUTO_SMS"].try(:downcase) == "true"
+
+  config.active_record.observers = :response_observer if config.auto_sms
+
 end
+
+
+
+

@@ -38,6 +38,8 @@ gem 'spring',        group: :development
 gem 'roo', '~> 1.13.2'
 gem 'spreadsheet', '~> 1.0.0'
 
+gem 'rufus-scheduler', '~> 3.0.9'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -54,6 +56,9 @@ gem 'slack-notify', '~> 0.3.2'
 # gem 'debugger', group: [:development, :test]
 
 gem 'fakeweb', '~> 1.3.0'
+
+# actice-record observer 
+gem 'rails-observers'
 
 
 group :development, :test do

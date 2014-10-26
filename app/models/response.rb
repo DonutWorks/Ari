@@ -13,4 +13,5 @@ class Response < ActiveRecord::Base
   end
   validates :status, presence: { message: "회답을 선택해주십시오." },
    inclusion: { in: STATUSES, message: "올바르지 않은 회답입니다." }
+
 end
