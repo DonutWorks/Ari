@@ -39,7 +39,6 @@ ActiveRecord::Schema.define(version: 20141022164203) do
 
   add_index "checklists", ["notice_id"], name: "index_checklists_on_notice_id"
 
-
   create_table "invitations", force: true do |t|
     t.string   "code"
     t.datetime "created_at"

@@ -3,16 +3,13 @@ class User < ActiveRecord::Base
   has_many :responses
   has_many :message_histories
   has_many :messages, through: :message_histories
-<<<<<<< HEAD
   has_many :taggings
   has_many :tags, through: :taggings, source: :tag
-=======
   has_many :assign_histories
   has_many :checklists, through: :assign_histories
->>>>>>> daa0801bba3af87472a55395fcadad6a18bb068c
   serialize :extra_info
 
-  
+
 
   scope :generation_sorted_desc, -> { order(generation_id: :desc) }
   scope :responsed_to_notice, -> (notice) { joins(:responses).merge(Response.where(notice: notice)) }

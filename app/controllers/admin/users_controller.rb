@@ -61,6 +61,7 @@ class Admin::UsersController < Admin::ApplicationController
     tags = Tag.fetch_list_by_tag_name(params[:tag_name]).take(5)
     respond_with tags
   end
+
   def search
 
     search_word = params[:search_word]
@@ -73,6 +74,7 @@ class Admin::UsersController < Admin::ApplicationController
     searched_users2 = User.where(user_arel[:username].matches("%#{search_word}%"))
 
     respond_with (searched_users1 | searched_users2 )
+  end
 
   def get_user
 
@@ -87,7 +89,6 @@ class Admin::UsersController < Admin::ApplicationController
     respond_to do |format|
       format.text { render :json => user }
     end
-
   end
 
 
