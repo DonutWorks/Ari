@@ -14,7 +14,7 @@ class Admin::UsersController < Admin::ApplicationController
 
 
     if @user.valid?
-      associate_user_with_user_tags!
+      associate_user_with_tags!
       @user.save!
       flash[:notice] = "\"#{@user.username}\"님의 회원 정보 생성에 성공했습니다."
       redirect_to admin_users_path
@@ -34,7 +34,7 @@ class Admin::UsersController < Admin::ApplicationController
     @user.assign_attributes(user_params)
 
     if @user.valid?
-      associate_user_with_user_tags!
+      associate_user_with_tags!
       @user.update!(user_params)
       flash[:notice] = "\"#{@user.username}\"님의 회원 정보 수정에 성공했습니다."
       redirect_to admin_user_path(@user)
@@ -57,7 +57,7 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def tags
-    tags = UserTag.fetch_list_by_tag_name(params[:tag_name]).take(5)
+    tags = Tag.fetch_list_by_tag_name(params[:tag_name]).take(5)
     respond_with tags
   end
   def search
@@ -67,8 +67,8 @@ class Admin::UsersController < Admin::ApplicationController
     respond_with User.all if search_word==""
     user_arel = User.arel_table
 
-    user_tag_arel = UserTag.arel_table
-    searched_users1 = User.joins(:tags).where(user_tag_arel[:tag_name].matches("%#{search_word}%"))
+    tag_arel = Tag.arel_table
+    searched_users1 = User.joins(:tags).where(tag_arel[:tag_name].matches("%#{search_word}%"))
     searched_users2 = User.where(user_arel[:username].matches("%#{search_word}%"))
 
     respond_with (searched_users1 | searched_users2 )
@@ -80,13 +80,13 @@ private
     params.require(:user).permit(:username, :email, :phone_number, :major, :student_id, :sex, :home_phone_number, :emergency_phone_number, :habitat_id, :member_type, :generation_id, :birth)
   end
 
-  def associate_user_with_user_tags!
+  def associate_user_with_tags!
     referenced_tags = extract_tags(@user, params[:tags])
 
     @user.tags.destroy_all
 
     referenced_tags.each do |tag|
-      @user.user_user_tags.build(user_tag_id: tag.id)
+      @user.taggings.build(tag_id: tag.id)
     end if referenced_tags != nil
   end
 
@@ -97,7 +97,7 @@ private
     referenced.map! do |term|
       next if term.blank?
       term.strip!
-      user_tag = UserTag.find_or_create_by(tag_name: term)
+      tag = Tag.find_or_create_by(tag_name: term)
     end if !referenced.empty?
     referenced.compact
 
