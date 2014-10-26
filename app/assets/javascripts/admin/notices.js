@@ -24,6 +24,13 @@ $(document).on('ready page:load', function () {
   $('.notice-type-option').change(function() {
       option_selecter($(this).val());
   });
+
+  $('.memo-edit').keypress(function(event){
+    if(event.keyCode == 13){
+      event.preventDefault();
+      $('#memo_button').click();
+    }
+  });
 });
 
 function option_selecter(val) {

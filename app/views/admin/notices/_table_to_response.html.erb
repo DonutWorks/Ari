@@ -37,7 +37,7 @@
             
             <div id="memo-not-in-<%=index%>" class="hide-memo">
               <input type="text" id="memo-edit-<%=index%>" class="memo-edit" />
-              <button type="button" class="btn btn-default", onclick="javascript:update_check_status(<%=@notice.id %>, <%= response.id %>, 'memo', <%=index%>)">등록</button>
+              <button type="button" class="btn btn-default", id="memo_button" onclick="javascript:update_check_status(<%=@notice.id %>, <%= response.id %>, 'memo', <%=index%>)">등록</button>
             </div>
           <div>
         </td>
