@@ -19,6 +19,10 @@ protected
     end
   end
 
+  def after_sign_out_path_for(resource)
+    club_admin_root_path(current_club)
+  end
+
 private
   def layout
     if devise_controller?

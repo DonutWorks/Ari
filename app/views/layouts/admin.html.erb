@@ -36,6 +36,9 @@
           <li>
             <%= link_to "SMS", club_admin_messages_path(current_club) %>
           </li>
+          <li>
+            <%= link_to "로그아웃", destroy_admin_user_session_path, method: :delete %>
+          </li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
