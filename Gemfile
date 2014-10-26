@@ -57,6 +57,9 @@ gem 'slack-notify', '~> 0.3.2'
 
 gem 'fakeweb', '~> 1.3.0'
 
+# actice-record observer 
+gem 'rails-observers'
+
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.2'
