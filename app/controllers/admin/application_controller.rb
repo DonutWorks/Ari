@@ -7,7 +7,7 @@ class Admin::ApplicationController < ApplicationController
 
   def index
     @users = User.all
-    @notices = Notice.all
+    @notices = Notice.order('created_at DESC')
   end
 
 protected
