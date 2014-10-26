@@ -3,7 +3,11 @@ class User < ActiveRecord::Base
   has_many :responses
   has_many :message_histories
   has_many :messages, through: :message_histories
+  has_many :assign_histories
+  has_many :checklists, through: :assign_histories
   serialize :extra_info
+
+  
 
   scope :generation_sorted_desc, -> { order(generation_id: :desc) }
   scope :responsed_to_notice, -> (notice) { joins(:responses).merge(Response.where(notice: notice)) }

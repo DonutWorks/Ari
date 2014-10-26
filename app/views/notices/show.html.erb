@@ -26,6 +26,8 @@
       <p class="text-center">현재 대기자는 <%= User.responsed_wait(@notice).count %>명 입니다.</p>
     <% elsif @notice.notice_type == "survey" %>
 
+    <% elsif @notice.notice_type == "checklist" %>
+      <%= render partial: 'checklists', locals: {notice: @notice, checklists: @notice.checklists} %>
     <% end %>
   </div>
 </div>

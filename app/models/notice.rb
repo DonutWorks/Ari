@@ -1,7 +1,7 @@
 require 'addressable/uri'
 
 class Notice < ActiveRecord::Base
-  NOTICE_TYPES = %w(external plain survey to)
+  NOTICE_TYPES = %w(external plain survey to checklist)
   NOTICE_TYPES.each do |type|
     define_method("#{type}_notice?") do
       notice_type == type
@@ -19,6 +19,8 @@ class Notice < ActiveRecord::Base
 
   has_many :responses
   has_many :messages
+  has_many :checklists
+  accepts_nested_attributes_for :checklists, reject_if: lambda {|attributes| attributes['task'].blank?}
 
   acts_as_readable
   before_save :make_redirectable_url!
@@ -29,6 +31,7 @@ class Notice < ActiveRecord::Base
   validates :content, presence: { message: "공지 내용을 입력해주십시오." }
   validates :notice_type, presence: { message: "유형을 선택해주십시오." },
    inclusion: { in: NOTICE_TYPES, message: "올바르지 않은 유형입니다." }
+  validate :must_have_checklists, if: :checklist_notice?
 
 private
   def make_redirectable_url!
@@ -51,5 +54,9 @@ private
     candidates_count = to - go_responses.count
     candidates = wait_responses.order(created_at: :asc).limit(candidates_count)
     candidates.update_all(status: "go")
+  end
+
+  def must_have_checklists
+    errors.add(:task, '하나 이상의 체크리스트가 있어야 합니다') if self.checklists.empty?
   end
 end

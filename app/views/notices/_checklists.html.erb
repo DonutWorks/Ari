@@ -1,0 +1,53 @@
+<div class="panel panel-default checklist-container">
+  <div class="panel-heading">이번에 해야 할 일</div>
+
+  <div class="list-group">
+
+    <% checklists.each do |checklist| %>
+      <% user = checklist.assignees.first %>
+      <div class="list-group-item
+      <%= if checklist.finish? then ' list-group-item-info' elsif current_user && checklist.assignees.include?(current_user) then ' list-group-item-warning' end %>">
+        <h4 class="list-group-item-heading"><%= checklist.task %>
+          <span class="pull-right"><%= user.username %>
+            <%= check_box_tag('sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_assignee") if admin? %>
+          </span>
+        </h4>
+        <hr>
+
+        <% checklist.assignee_comments.each do |ac| %>
+          <%= form_for ac do |f| %>
+            <p class="comment-value" data-finish="<%= checklist.finish? ? true : false %>">
+              <%= ac.comment %><span class="pull-right"><%= ac.created_at.strftime("%Y-%m-%d %T") %></span>
+            </p>
+
+            <div class="input-group comment-form">
+              <%= f.text_field :comment, class: "form-control" %>
+              <span class="input-group-btn">
+                <%= f.submit "수정", class: "btn btn-success" %>
+                <%= link_to "삭제", ac, class: "btn btn-danger", method: :delete, data: { confirm: '정말 삭제하시겠습니까?' } %>
+                <%= link_to "취소", url_for(params), class: "btn btn-default" %>
+              </span>
+            </div>
+          <% end %>
+        <% end %>
+
+        <div class="new-comment-form">
+          <% if current_user && checklist.assignees.include?(current_user) %>
+            <%= form_for [notice, checklist, @assignee_comment] do |f| %>
+              <div class="input-group">
+                <%= f.text_field :comment, class: "form-control", placeholder: "완료하려면 최소 한 개 이상의 댓글이 필요합니다" %>
+                <span class="input-group-btn">
+                  <%= f.submit "등록", class: "btn btn-success" %>
+
+                  <% unless checklist.finish? || checklist.assignee_comments.empty? %>
+                    <%= link_to "완료", notice_checklist_finish_path(notice, checklist), class: "btn btn-primary", data: { confirm: '완료하시면 기존 댓글의 수정 및 삭제는 불가합니다. 정말 완료하시겠습니까?' } %>
+                  <% end %>
+                </span>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

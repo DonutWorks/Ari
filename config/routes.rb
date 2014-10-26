@@ -19,10 +19,15 @@ Rails.application.routes.draw do
   resources :notices, only: [:show] do
     resources :responses
     resources :to_responses
+    resources :checklists, shallow: true do 
+      get 'finish'
+      resources :assignee_comments
+    end
   end
 
   namespace :admin do
     root 'application#index'
+    get 'users/get_user'
 
     resources :users do
       collection do
@@ -49,5 +54,4 @@ Rails.application.routes.draw do
     resources :messages
   end
   get '/gates/:id', to:  redirect('/notices/%{id}')
-
 end
