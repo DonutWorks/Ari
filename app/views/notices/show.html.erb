@@ -21,11 +21,13 @@
       <p><%= link_to @notice.link, @notice.link, target: "_blank" %></p>
     <% elsif @notice.notice_type == "to"  %>
       <h4 class="title">TO공지 신청 현황</h4>
-      <progress id="to_progress" value="<%= @notice.responses.where(status: "go").count %>" max="<%= @notice.to %>"></progress>
-      <p class="text-center ment"><strong><%= @notice.to %></strong>명 중 <strong><%= @notice.responses.where(status: "go").count %></strong>명이 신청 하였습니다.</p>
-      <p class="text-center">현재 대기자는 <%= @notice.responses.where(status: "wait").count %>명 입니다.</p>
+      <progress id="to_progress" value="<%= User.responsed_go(@notice).count %>" max="<%= @notice.to %>"></progress>
+      <p class="text-center ment"><strong><%= @notice.to %></strong>명 중 <strong><%= User.responsed_go(@notice).count %></strong>명이 신청 하였습니다.</p>
+      <p class="text-center">현재 대기자는 <%= User.responsed_wait(@notice).count %>명 입니다.</p>
     <% elsif @notice.notice_type == "survey" %>
 
+    <% elsif @notice.notice_type == "checklist" %>
+      <%= render partial: 'checklists', locals: {notice: @notice, checklists: @notice.checklists} %>
     <% end %>
   </div>
 </div>

@@ -9,4 +9,9 @@ class Admin::ApplicationController < ApplicationController
     @users = User.all
     @notices = Notice.all
   end
+
+protected
+  def admin?
+    true
+  end
 end

@@ -14,7 +14,7 @@ RSpec.describe Message, :type => :model do
     user.messages.create(content: "good")
     expect(user.messages.size).to eq(2)
 
-    m = Message.where(content: "hihi").first
+    m = Message.find_by(content: "hihi")
 
     expect(m.users.size).to eq(1)
     expect(m.users[0]).to eq(user)
@@ -31,9 +31,9 @@ RSpec.describe Message, :type => :model do
     it "should check presence validation for content" do
       expect(Message.new.save).to eq(false)
 
-      expect(Message.new(content: "hi").save).to eq(true)    
+      expect(Message.new(content: "hi").save).to eq(true)
     end
-  end  
+  end
 
   describe "#created_at_sorted_desc" do
     it "should descending by created_at" do

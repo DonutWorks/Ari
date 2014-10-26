@@ -1,8 +1,8 @@
 require "rails_helper"
 require "net/http"
 
-RSpec.describe SendSMS2 do
-  describe "#send_sms2" do
+RSpec.describe SMSSender do
+  describe "#send_sms" do
 
     sms_info = {
       from: "01054450754",
@@ -11,7 +11,7 @@ RSpec.describe SendSMS2 do
     }
 
     it "should send SMS" do
-      sms_sender = SendSMS2.new
+      sms_sender = SMSSender.new
 
       request_url = "https://api.coolsms.co.kr/1/send"
       body = '{"result_code":"00"}'
@@ -23,7 +23,7 @@ RSpec.describe SendSMS2 do
     end
 
     it "should fail to send SMS" do
-      sms_sender = SendSMS2.new
+      sms_sender = SMSSender.new
 
       request_url = "https://api.coolsms.co.kr/1/send"
       body = '{"result_code":"20"}'

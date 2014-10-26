@@ -56,6 +56,7 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.find(params[:id])
   end
 
+
   def tags
     tags = Tag.fetch_list_by_tag_name(params[:tag_name]).take(5)
     respond_with tags
@@ -72,6 +73,21 @@ class Admin::UsersController < Admin::ApplicationController
     searched_users2 = User.where(user_arel[:username].matches("%#{search_word}%"))
 
     respond_with (searched_users1 | searched_users2 )
+
+  def get_user
+
+    if params[:id]
+      user = User.find(params[:id])
+    else
+      normalizer = FormNormalizers::PhoneNumberNormalizer.new
+      pn = normalizer.normalize(params[:phone_number])
+      user = User.find_by_phone_number(pn)
+    end
+
+    respond_to do |format|
+      format.text { render :json => user }
+    end
+
   end
 
 
