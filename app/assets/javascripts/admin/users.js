@@ -20,6 +20,17 @@ $(document).on('ready page:load', function () {
       index: 1
     }]);
 
+  $("textarea").keydown(function(e){
+    // Enter was pressed without shift key
+    if (e.keyCode == 13 && !e.shiftKey)
+    {
+        if (this.form)
+          this.form.submit();
+        else
+          e.preventDefault();
+        return false;
+    }
+  });
   $('#user_filter_word').textcomplete([
     {
       match: /(.*)$/,

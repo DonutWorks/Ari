@@ -13,16 +13,16 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.new(user_params)
 
 
-    @user.transaction do
-      begin
-        associate_user_with_user_tags!
-        @user.save!
-        flash[:notice] = "\"#{@user.username}\"님의 회원 정보 생성에 성공했습니다."
-        redirect_to admin_users_path
-      rescue
-        render "new"
-      end
+    if @user.valid?
+      associate_user_with_user_tags!
+      @user.save!
+      flash[:notice] = "\"#{@user.username}\"님의 회원 정보 생성에 성공했습니다."
+      redirect_to admin_users_path
+    else
+      render "new"
     end
+
+
   end
 
   def edit
@@ -32,16 +32,15 @@ class Admin::UsersController < Admin::ApplicationController
   def update
     @user = User.find(params[:id])
 
-    @user.transaction do
-      begin
-        associate_user_with_user_tags!
-        @user.update!(user_params)
-        flash[:notice] = "\"#{@user.username}\"님의 회원 정보 수정에 성공했습니다."
-        redirect_to admin_user_path(@user)
-      rescue
-        render 'edit'
-      end
+    if @user.valid?
+      associate_user_with_user_tags!
+      @user.update!(user_params)
+      flash[:notice] = "\"#{@user.username}\"님의 회원 정보 수정에 성공했습니다."
+      redirect_to admin_user_path(@user)
+    else
+      render 'edit'
     end
+
   end
 
   def destroy
