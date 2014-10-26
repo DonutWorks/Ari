@@ -29,6 +29,8 @@
     <ul class="nav nav-tabs" role="tablist">
 
       <% case @notice.notice_type %>
+      <% when "checklist" then %>
+        <li class="secondary-nav"><a href="#checklist-result" role="tab" data-toggle="tab">수행 현황</a></li>
       <% when "to" then %>
         <li class="secondary-nav"><a href="#to-result" role="tab" data-toggle="tab">실시간 TO 현황</a></li>
       <% when "survey" then %>
@@ -73,6 +75,10 @@
           <h3>대기 <small>(총 <%= User.responsed_wait(@notice).count %>명)</small></h3>
           <%= render partial: "table_to_response", locals: { users: User.responsed_wait(@notice).order_by_responsed_at, type: "wait" } %>
         </div>
+      </div>
+
+      <div class="tab-pane fade" id="checklist-result">
+        <%= render partial: 'notices/checklists', locals: {notice: @notice, checklists: @notice.checklists} %>
       </div>
     </div>
     <div class="sms-text fix-bottom">

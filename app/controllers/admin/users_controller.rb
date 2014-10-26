@@ -45,6 +45,20 @@ class Admin::UsersController < Admin::ApplicationController
     @user = User.find(params[:id])
   end
 
+  def get_user
+    if params[:id]
+      user = User.find(params[:id])
+    else
+      normalizer = FormNormalizers::PhoneNumberNormalizer.new
+      pn = normalizer.normalize(params[:phone_number])
+      user = User.find_by_phone_number(pn)
+    end
+    
+    respond_to do |format|
+      format.text { render :json => user }
+    end
+  end
+
 
 private
   def user_params

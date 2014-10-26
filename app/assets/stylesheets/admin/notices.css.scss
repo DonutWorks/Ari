@@ -66,3 +66,16 @@
   display: inline;
   margin-left:10px;
 }
+
+#to-option, #checklist-option {
+  display:none;
+}
+
+.input-group[class*="col-"] {
+  padding-right: 15px;
+  padding-left: 15px;
+
+  .assign-btn {
+    height:46px;
+  }
+}

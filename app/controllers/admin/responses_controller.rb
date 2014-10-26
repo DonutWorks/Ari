@@ -47,7 +47,7 @@ class Admin::ResponsesController < Admin::ApplicationController
           end
 
         else
-          response = Response.where(user: user, notice: @notice).first
+          response = Response.find_by(user: user, notice: @notice)
 
           if value=="not"
             if response.destroy
