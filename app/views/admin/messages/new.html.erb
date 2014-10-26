@@ -1,0 +1,48 @@
+<div>
+  <div class="page-header clearfix">
+    <h3 class="pull-left">SMS 전송</h3>
+  </div>
+  <div class="form-group form-group-lg has-feedback">
+    <span class="help-block">검색</span>
+    <%= text_area_tag :search_word, "", autofocus: true, class: "form-control search_box textcomplete", rows: 1 %>
+
+  </div>
+
+  <%= form_tag(admin_messages_path, method: "post") do %>
+
+
+  <div class="table-responsive">
+    <table id="table-receiver" class="table table-condensed">
+      <thead>
+        <tr>
+          <th class="text-center" width="5%">문자 <%= check_box_tag "sms_all_searched", nil, false, class: 'sms_all_searched' %></th>
+          <th width="7%">이름</th>
+          <th width="13%">전화번호</th>
+          <th width="75%">태그</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each_with_index do |user, index| %>
+        <tr id="tr-user-id-<%= user.id %>" >
+          <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms found" %></td>
+          <td><%= user.username %></td>
+          <td><%= pretty_phone_number(user.phone_number) %></td>
+          <td><%= pretty_tags(user.tags) %></td>
+
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="sms-text fix-bottom">
+      <h3>문자 보내기</h3>
+      <p id="phone_numbers">총 0명이 선택 되었습니다.</p>
+      <%= text_area_tag 'sms_content', "[서울대 햇빛봉사단]", class: 'form-control' %>
+      <div class="pull-right margin-top15">
+        (<span id="current-text-size">19</span>/90 bytes)
+        <button id="send_sms" type="submit" class="btn btn-primary btn-sm">전송</button>
+      </div>
+    </div>
+  <% end %>
+
+</div>

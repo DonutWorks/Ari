@@ -22,4 +22,10 @@ class Admin::MessagesController < Admin::ApplicationController
       redirect_to admin_message_path(out[:message])
     end
   end
+
+  def new
+    @message = Message.new
+    @users = User.all
+  end
+
 end

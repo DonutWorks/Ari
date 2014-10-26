@@ -12,4 +12,10 @@ module Admin::UsersHelper
   def pretty_generation_id(generation_id)
     generation_id.to_s.gsub(".0", "") + " 기" if generation_id
   end
+
+  def pretty_tags(tags)
+
+    tags.map { |tag| '#'+"#{tag.tag_name}" }.join(" ")
+
+  end
 end
