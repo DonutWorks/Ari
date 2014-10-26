@@ -13,6 +13,26 @@
 
 ActiveRecord::Schema.define(version: 20141022164203) do
 
+  create_table "account_activations", force: true do |t|
+    t.integer  "user_id"
+    t.boolean  "activated",         default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "provider_token_id"
+  end
+
+  add_index "account_activations", ["user_id"], name: "index_account_activations_on_user_id"
+
+  create_table "activation_tickets", force: true do |t|
+    t.string   "code"
+    t.integer  "account_activation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "expired",               default: false
+  end
+
+  add_index "activation_tickets", ["account_activation_id"], name: "index_activation_tickets_on_account_activation_id"
+
   create_table "invitations", force: true do |t|
     t.string   "code"
     t.datetime "created_at"
@@ -48,6 +68,14 @@ ActiveRecord::Schema.define(version: 20141022164203) do
     t.string   "notice_type"
     t.integer  "to"
     t.datetime "due_date"
+  end
+
+  create_table "provider_tokens", force: true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.text     "info"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "read_activity_marks", force: true do |t|

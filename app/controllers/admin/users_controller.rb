@@ -31,6 +31,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   def update
     @user = User.find(params[:id])
+    @user.assign_attributes(user_params)
 
     if @user.valid?
       associate_user_with_user_tags!
@@ -56,7 +57,7 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def tags
-    tags = UserTag.fetch_list_by_tag_name(params[:tag_name], 5)
+    tags = UserTag.fetch_list_by_tag_name(params[:tag_name]).take(5)
     respond_with tags
   end
   def search
@@ -96,7 +97,7 @@ private
     referenced.map! do |term|
       next if term.blank?
       term.strip!
-      user_tag = UserTag.find_by_tag_name(term) || UserTag.create(tag_name: term)
+      user_tag = UserTag.find_or_create_by(tag_name: term)
     end if !referenced.empty?
     referenced.compact
 

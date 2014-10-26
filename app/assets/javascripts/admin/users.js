@@ -31,6 +31,7 @@ $(document).on('ready page:load', function () {
         return false;
     }
   });
+
   $('#user_filter_word').textcomplete([
     {
       match: /(.*)$/,
