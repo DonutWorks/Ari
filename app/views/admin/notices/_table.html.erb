@@ -2,24 +2,30 @@
   <table class="table table-condensed">
     <thead>
       <tr>
-        <th class="text-center" width="5%">문자 <%= check_box_tag "sms_#{type}_all", nil, false, class: 'sms_all' %></th>
-        <th width="5%">기수</th>
-        <th width="7%">이름</th>
-        <th width="13%">전화번호</th>
-        <th width="30%">이메일</th>
-        <th width="25%">전공</th>
-        <th width="15%"><%= type == "read" || type == "unread" ? "읽은 시간" : "기록 시간" %></th>
+        <th class="text-center">문자 <%= check_box_tag "sms_#{type}_all", nil, false, class: 'sms_all' %></th>
+        <th>기수</th>
+        <th>이름</th>
+        <th>단원구분</th>
+        <% if @notice.survey_notice? %>
+          <th>해비타트 아이디</th>
+        <% end %>
+        <th>전화번호</th>
+        <th>이메일</th>
+        <th><%= type == "read" || type == "unread" ? "읽은 시간" : "기록 시간" %></th>
       </tr>
     </thead>
     <tbody>
       <% users.each_with_index do |user, index| %>
       <tr>
         <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_#{type}" %></td>
-        <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
+        <td><%= pretty_generation_id(user.generation_id) %></td>
         <td><%= user.username %></td>
+        <td><%= user.member_type %></td>
+        <% if @notice.survey_notice? %>
+          <td><%= user.habitat_id %></td>
+        <% end %>
         <td><%= pretty_phone_number(user.phone_number) %></td>
         <td><%= user.email %></td>
-        <td><%= user.major %></td>
         <td>
 
           <% if type == "read" || type == "unread" %>
