@@ -24,9 +24,6 @@
                   <td><%= pretty_generation_id(user.generation_id) %></td>
                   <td class="user-username">
                     <%= user.username %>
-                    <% if user.activated? %>
-                      <span class="glyphicon glyphicon-ok"></span>
-                    <% end %>
                   </td>
                   <td class="user-phone-number"><%= pretty_phone_number(user.phone_number) %></td>
                   <td><%= user.email %></td>
