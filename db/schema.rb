@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027053522) do
+ActiveRecord::Schema.define(version: 20141027062303) do
+
+  create_table "accounts", force: true do |t|
+    t.integer  "account_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "assign_histories", force: true do |t|
     t.integer  "user_id"
@@ -38,6 +44,18 @@ ActiveRecord::Schema.define(version: 20141027053522) do
   end
 
   add_index "checklists", ["notice_id"], name: "index_checklists_on_notice_id"
+
+  create_table "expense_records", force: true do |t|
+    t.datetime "record_date"
+    t.integer  "deposit"
+    t.integer  "withdraw"
+    t.string   "content"
+    t.integer  "account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "expense_records", ["account_id"], name: "index_expense_records_on_account_id"
 
   create_table "invitations", force: true do |t|
     t.string   "code"
