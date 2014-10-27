@@ -37,7 +37,7 @@
             <%= link_to "SMS", admin_messages_path %>
           </li>
           <li>
-            <%= link_to "회계", admin_account_expense_records_path(Account.find_by_account_number("110383537755")) %>
+            <%= link_to "회계", admin_account_expense_records_path(account_id: 1) %>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->
