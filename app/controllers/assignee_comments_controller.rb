@@ -13,7 +13,7 @@ class AssigneeCommentsController < ApplicationController
 
   def destroy
     assignee_comment = AssigneeComment.find(params[:id])
-    assignee_comment.delete!
+    assignee_comment.delete
     redirect_to :back
   end
 
