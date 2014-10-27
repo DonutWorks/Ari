@@ -20,7 +20,7 @@ class Admin::NoticesController < Admin::ApplicationController
       SlackNotifier.notify("햇빛봉사단 게이트 추가 알림 : #{@notice.title}, #{@notice.shortenURL}")
       redirect_to admin_notice_path(@notice)
     else
-      @notice.checklists.last.assign_histories.build if @notice.checklist_notice?
+      @notice.checklists.last.assign_histories.build if @notice.checklist_notice? && !@notice.checklists.empty?
       @users = User.all
       20.times { @notice.checklists.build.assign_histories.build }
       render 'new'

@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :phone_number, :email
 
   before_validation :normalize_phone_number
-  before_save :strip!
+  before_validation :strip!
 
   attr_accessor :regard_as_activated
 
