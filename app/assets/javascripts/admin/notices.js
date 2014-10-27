@@ -28,10 +28,6 @@ $(document).on('ready page:load', function () {
       $('#memo_button').click();
     }
   });
-
-  $('#fee-checkbox').change(function() {
-   $('#fee-option').toggle(this.checked);
-  });
 });
 
 function optionSelector(val) {
