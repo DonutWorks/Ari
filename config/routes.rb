@@ -52,6 +52,10 @@ Rails.application.routes.draw do
 
     end
 
+    resources :accounts, shallow: true do
+      resources :expense_records
+    end
+
     resource :export_excel,  controller: :export_excel,  only: [:new, :create]
 
     resources :messages
