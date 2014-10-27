@@ -1,1 +1,30 @@
-<%= link_to "내역 업데이트", new_admin_account_expense_record_path(Account.find_by_account_number(110383537755)) %>
+<div class="page-header clearfix">
+  <h3 class="pull-left">회계내역 관리</h3>
+  <div id="buttons-div" class="pull-right">
+    <%= link_to "내역 업데이트", new_admin_account_expense_record_path(@account), class: "btn btn-default" %>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-condensed table-striped table-hover">
+    <thead>
+      <tr>
+        <th>일자</th>
+        <th>입금</th>
+        <th>출금</th>
+        <th>내용</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @account.expense_records.order('record_date DESC').each do |er| %>
+        <tr>
+          <td><%= er.record_date.strftime("%Y-%m-%d %T") %></td>
+          <td><%= er.deposit %> 원</td>
+          <td><%= er.withdraw %> 원</td>
+          <td><%= er.content %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

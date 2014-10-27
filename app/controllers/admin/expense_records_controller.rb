@@ -1,4 +1,8 @@
 class Admin::ExpenseRecordsController < Admin::ApplicationController
+  def index
+    @account = Account.find_by_account_number("110383537755")
+  end
+
   def new
     @account = Account.find_by_account_number("110383537755")
   end
@@ -20,6 +24,9 @@ class Admin::ExpenseRecordsController < Admin::ApplicationController
             er.save!
           end
         end
+
+        flash[:notice] = "최신 내역으로 업데이트 되었습니다."
+        redirect_to admin_account_expense_records_path(@account)
       else
         flash[:error] = "동아리 계좌가 아닙니다. 관리자에게 문의하세요."
         redirect_to :back
