@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022164203) do
+ActiveRecord::Schema.define(version: 20141027053522) do
 
   create_table "assign_histories", force: true do |t|
     t.integer  "user_id"
@@ -74,6 +74,8 @@ ActiveRecord::Schema.define(version: 20141022164203) do
     t.string   "notice_type"
     t.integer  "to"
     t.datetime "due_date"
+    t.integer  "regular_fee"
+    t.integer  "associate_fee"
   end
 
   create_table "read_activity_marks", force: true do |t|
