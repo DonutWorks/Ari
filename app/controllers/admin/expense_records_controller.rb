@@ -9,6 +9,7 @@ class Admin::ExpenseRecordsController < Admin::ApplicationController
 
   def create
     @account = Account.find(params[:account_id])
+    @result_arr = []
 
     if !params[:upload].blank?
       file = ExcelImporter.import(params[:upload][:file])
@@ -21,6 +22,7 @@ class Admin::ExpenseRecordsController < Admin::ApplicationController
           er = @account.expense_records.build(attr)
 
           if er.valid?
+            @result_arr.push er.check_dues if er.check_dues 
             er.save!
           end
         end

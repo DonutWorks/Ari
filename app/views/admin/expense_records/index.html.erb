@@ -10,8 +10,8 @@
     <thead>
       <tr>
         <th>일자</th>
-        <th>입금</th>
         <th>출금</th>
+        <th>입금</th>
         <th>내용</th>
       </tr>
     </thead>
@@ -20,8 +20,8 @@
       <% @account.expense_records.order('record_date DESC').each do |er| %>
         <tr>
           <td><%= er.record_date.strftime("%Y-%m-%d %T") %></td>
-          <td><%= er.deposit %> 원</td>
           <td><%= er.withdraw %> 원</td>
+          <td><%= er.deposit %> 원</td>
           <td><%= er.content %></td>
         </tr>
       <% end %>
