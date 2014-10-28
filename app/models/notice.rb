@@ -17,6 +17,8 @@ class Notice < ActiveRecord::Base
   validates :to, numericality: { greater_than_or_equal_to: 1 }, if: :to_notice?
   validate :to_adjustable?, if: :to_notice?
 
+  belongs_to :activity
+  
   has_many :responses
   has_many :messages
   has_many :checklists

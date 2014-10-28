@@ -5,11 +5,6 @@ class Admin::ApplicationController < ApplicationController
 
   layout "admin"
 
-  def index
-    @users = User.all
-    @notices = Notice.order('created_at DESC')
-  end
-
 protected
   def admin?
     true
