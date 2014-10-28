@@ -1,6 +1,6 @@
 module Authenticates
   class BaseService
-    def initialize(current_club)
+    def initialize(current_club = nil)
       @current_club = current_club
     end
 

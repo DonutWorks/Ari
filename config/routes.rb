@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: redirect { raise ActionController::RoutingError.new('Not Found') }
+  root to: 'application#index'
 
   resources :providers, path: '/auth/:provider', only: [] do # oauth callback
     collection do
@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   end
 
   devise_for :admin_users, path: ':club_id/admin'
+
+  get 'sign_in', to: 'sessions#new'
+  post 'auth', to: 'sessions#auth_without_club'
   resources :clubs, only: [:show], path: '/' do
     resources :invitations, only: [:new, :create, :show], param: :code
 

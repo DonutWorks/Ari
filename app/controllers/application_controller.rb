@@ -1,17 +1,24 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :current_club
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index]
 
+  def index
+    if current_user
+      redirect_to club_path(current_user.club)
+    else
+      redirect_to sign_in_path
+    end
+  end
+
+protected
   def default_url_options(options={})
     { redirect_url: params[:redirect_url] }
   end
 
-protected
   def current_club
-    @current_club ||= Club.friendly.find(params[:club_id].downcase)
-  rescue ActiveRecord::RecordNotFound => e
-    not_found
+    @current_club ||= Club.friendly.find(params[:club_id].try(:downcase))
+  rescue
+    nil
   end
   helper_method :current_club
 

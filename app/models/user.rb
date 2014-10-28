@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   before_validation :normalize_phone_number
   before_save :strip!
 
-  attr_accessor :regard_as_activated
+  attr_accessor :regard_as_activated, :remember_me
 
   def responsed_to?(notice)
     responses.exists?(notice: notice)

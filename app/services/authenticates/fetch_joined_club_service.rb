@@ -1,6 +1,6 @@
 module Authenticates
-  class PhoneNumberSignInService < BaseService
-    def execute(session, phone_number)
+  class FetchJoinedClubService < BaseService
+    def execute(phone_number)
       normalizer = FormNormalizers::PhoneNumberNormalizer.new
 
       begin
@@ -9,14 +9,12 @@ module Authenticates
         return invalid_phone_number
       end
 
-      user = current_club.users.find_by(phone_number: phone_number)
-
-      if user.nil?
-        return invalid_phone_number
+      joined_clubs = User.where(phone_number: phone_number).pluck(:club_id).map do |id|
+        Club.find_by(id: id)
       end
+      joined_clubs.compact!
 
-      UserSession.new(session).create!(user, true)
-      return success({ user: user })
+      return success({ clubs: joined_clubs })
     end
 
   private

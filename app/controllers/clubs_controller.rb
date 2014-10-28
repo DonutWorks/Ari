@@ -3,8 +3,8 @@ class ClubsController < ApplicationController
   end
 
   def current_club
-    @current_club ||= Club.friendly.find(params[:id].downcase)
-  rescue ActiveRecord::RecordNotFound => e
-    not_found
+    @current_club ||= Club.friendly.find(params[:id].try(:downcase))
+  rescue
+    nil
   end
 end
