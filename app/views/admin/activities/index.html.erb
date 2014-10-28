@@ -17,7 +17,14 @@
 
 <% @activities.each do |activity| %>
   <div id="notice-container" class="panel panel-default">
-    <div class="panel-heading"><%= activity.title %></div>
+    <div class="panel-heading">
+      <%= link_to activity.title, admin_activity_path(activity) %>
+      <div class="pull-right">
+        <%= link_to "수정", edit_admin_activity_path(activity), class: "btn btn-default btn-xs" %>
+        <%= link_to "삭제", admin_activity_path(activity), method: :delete,
+        data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger btn-xs" %>
+      </div>
+    </div>
       <ul class="list-group">
         <% activity.notices.each do |notice| %>
           <%= link_to admin_notice_path(notice), class: "list-group-item" do %>

@@ -20,6 +20,33 @@ class Admin::ActivitiesController < Admin::ApplicationController
     @users = User.all
   end
 
+  def show
+    @activity = Activity.find(params[:id])
+  end
+
+  def edit
+    @activity = Activity.find(params[:id])
+  end
+
+  def update
+    @activity = Activity.find(params[:id])
+
+    if @activity.update(activity_params)
+      flash[:notice] = "\"#{@activity.title}\" 공지를 성공적으로 수정했습니다."
+      redirect_to admin_root_path
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @activity = Activity.find(params[:id])
+    @activity.destroy
+
+    flash[:notice] = "\"#{@activity.title}\" 공지를 성공적으로 삭제했습니다."
+    redirect_to admin_root_path
+  end
+
 
 private
   def activity_params
