@@ -92,8 +92,8 @@ ActiveRecord::Schema.define(version: 20141027062303) do
     t.string   "notice_type"
     t.integer  "to"
     t.datetime "due_date"
-    t.integer  "regular_fee"
-    t.integer  "associate_fee"
+    t.integer  "regular_dues"
+    t.integer  "associate_dues"
   end
 
   create_table "read_activity_marks", force: true do |t|

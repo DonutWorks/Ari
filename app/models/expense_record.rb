@@ -10,9 +10,9 @@ class ExpenseRecord < ActiveRecord::Base
       if user = User.find_by_username(content)
         case user.member_type
         when '예비단원'
-          dues = notice.associate_fee
+          dues = notice.associate_dues
         else
-          dues = notice.regular_fee
+          dues = notice.regular_dues
         end
 
         if dues == deposit
