@@ -28,6 +28,36 @@ $(document).on('ready page:load', function () {
       $('#memo_button').click();
     }
   });
+
+  $('.check-btn').click(function() {
+    var id = this.id.split("-")[2];
+    var check = this.id.split("-")[0];
+
+    updateCheckStatus($('#notice-id-' + id).val(), $('#response-id-' + id).val(), check, id);
+  });
+
+  $('.open-memo-btn').click(function() {
+    var id = this.id.split("-")[3];
+    
+    if($('#memo-in-' + id).hasClass("hide-memo")) $('#memo-not-in-' + id).addClass("show-memo").removeClass("hide-memo");
+  });
+
+  $('.edit-memo-btn').click(function() {
+    var id = this.id.split("-")[3];
+
+    $('#memo-not-in-' + id).addClass("show-memo").removeClass("hide-memo");
+    $('#memo-in-' + id).addClass("hide-memo").removeClass("show-memo");
+
+    $('#memo-edit-' + id).val($('#memo-content-' + id).html());
+  });
+
+  $('.remove-memo-btn').click(function() {
+    var id = this.id.split("-")[3];
+    alert(id);
+
+    updateCheckStatus($('#notice-id-' + id).val(), $('#response-id-' + id).val(), 'memo', id);
+  });
+
 });
 
 function optionSelector(val) {
@@ -118,14 +148,14 @@ function updateCheckStatus(notice_id, response_id, check, index) {
       }
       else {
         if(res.memo != "") {
-          $('#memo-btn-' + index).addClass("btn-warning");
+          $('#open-memo-btn-' + index).addClass("btn-warning");
           $('#memo-content-' + index).html(res.memo);
 
           $('#memo-in-' + index).addClass("show-memo").removeClass("hide-memo");
           $('#memo-not-in-' + index).addClass("hide-memo").removeClass("show-memo");
         }
         else {
-          $('#memo-btn-' + index).removeClass("btn-warning");
+          $('#open-memo-btn-' + index).removeClass("btn-warning");
 
           $('#memo-not-in-' + index).addClass("hide-memo").removeClass("show-memo");
           $('#memo-in-' + index).addClass("hide-memo").removeClass("show-memo");
@@ -137,15 +167,4 @@ function updateCheckStatus(notice_id, response_id, check, index) {
     .fail(function (res) {
 
     });
-}
-
-function editMemo(notice_id, response_id, check, index) {
-  $('#memo-not-in-' + index).addClass("show-memo").removeClass("hide-memo");
-  $('#memo-in-' + index).addClass("hide-memo").removeClass("show-memo");
-
-  $('#memo-edit-' + index).val($('#memo-content-' + index).html());
-}
-
-function openMemo(index) {
-  if($('#memo-in-' + index).hasClass("hide-memo")) $('#memo-not-in-' + index).addClass("show-memo").removeClass("hide-memo");
 }
