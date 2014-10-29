@@ -15,16 +15,16 @@
       </tr>
     </thead>
     <tbody>
-      <% users.each_with_index do |user, index| %>
+      <% users.decorate.each_with_index do |user, index| %>
       <tr>
         <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_#{type}" %></td>
-        <td><%= pretty_generation_id(user.generation_id) %></td>
+        <td><%= user.pretty_generation %></td>
         <td><%= user.username %></td>
         <td><%= user.member_type %></td>
         <% if @notice.survey_notice? %>
           <td><%= user.habitat_id %></td>
         <% end %>
-        <td><%= pretty_phone_number(user.phone_number) %></td>
+        <td><%= user.pretty_phone_number %></td>
         <td><%= user.email %></td>
         <td>
           <% if type == "read" || type == "unread" %>

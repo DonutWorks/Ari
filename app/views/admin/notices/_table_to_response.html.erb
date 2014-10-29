@@ -11,13 +11,13 @@
       </tr>
     </thead>
     <tbody>
-      <% users.each_with_index do |user, index| %>
+      <% users.decorate.each_with_index do |user, index| %>
       <% response = user.responses.find_by_notice_id(@notice) %>
       <tr>
         <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_#{type}" %></td>
-        <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
+        <td class="text-right"><%= user.pretty_generation %></td>
         <td><%= user.username %></td>
-        <td><%= pretty_phone_number(user.phone_number) %></td>
+        <td><%= user.pretty_phone_number %></td>
         <td>
           <div class="button-group">
             <button type="button" id="absence-btn-<%=index%>" class="btn btn-default <%= response.absence == 0 ? '' : 'btn-success' %>", onclick="javascript:updateCheckStatus(<%=@notice.id %>, <%= response.id %>, 'absence', <%=index%>)">출석</button>

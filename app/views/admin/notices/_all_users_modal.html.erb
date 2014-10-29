@@ -13,21 +13,20 @@
                 <th>기수</th>
                 <th>이름</th>
                 <th>전화번호</th>
-                <th>이메일</th>
-                <th>전공</th>
+                <th>태그</th>
               </tr>
             </thead>
 
             <tbody>
-              <% users.each do |user| %>
+              <% users.decorate.each do |user| %>
                 <tr class="clickable-row" href="<%= admin_user_path(user) %>">
-                  <td><%= pretty_generation_id(user.generation_id) %></td>
+                  <td><%= user.pretty_generation %></td>
                   <td class="user-username">
                     <%= user.username %>
                   </td>
-                  <td class="user-phone-number"><%= pretty_phone_number(user.phone_number) %></td>
-                  <td><%= user.email %></td>
-                  <td><%= user.major %></td>
+                  <td class="user-phone-number"><%= user.pretty_phone_number %></td>
+                  <td><%= user.pretty_tags %></td>
+
                 </tr>
               <% end %>
             </tbody>

@@ -16,18 +16,16 @@
             <th>기수</th>
             <th>이름</th>
             <th>전화번호</th>
-            <th>이메일</th>
-            <th>전공</th>
+            <th>태그</th>
           </tr>
         </thead>
         <tbody>
-          <% @message.users.order_by_gid.each do |user| %>
+          <% @message.users.order_by_gid.decorate.each do |user| %>
           <tr>
-            <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
+            <td class="text-right"><%= user.pretty_generation %></td>
             <td><%= user.username %></td>
-            <td><%= pretty_phone_number(user.phone_number) %></td>
-            <td><%= user.email %></td>
-            <td><%= user.major %></td>
+            <td><%= user.pretty_phone_number %></td>
+            <td><%= user.pretty_tags %></td>
           </tr>
           <% end %>
         </tbody>

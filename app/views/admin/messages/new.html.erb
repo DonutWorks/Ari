@@ -22,12 +22,12 @@
         </tr>
       </thead>
       <tbody>
-        <% @users.each_with_index do |user, index| %>
+        <% @users.decorate.each_with_index do |user, index| %>
         <tr id="tr-user-id-<%= user.id %>" >
           <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms found" %></td>
           <td><%= user.username %></td>
-          <td><%= pretty_phone_number(user.phone_number) %></td>
-          <td><%= pretty_tags(user.tags) %></td>
+          <td><%= user.pretty_phone_number %></td>
+          <td><%= user.pretty_tags %></td>
 
         </tr>
         <% end %>
