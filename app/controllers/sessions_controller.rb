@@ -17,7 +17,7 @@ class SessionsController < AuthenticatableController
       flash[:error] = "전화번호가 잘못되었습니다."
       redirect_to club_sign_in_path(current_club)
     when :success
-      Authenticates::UserCookies.new(cookies).create!(out[:user], true) if remember_me
+      remember_user(remember_me, out[:user])
       proceed
     end
   end
@@ -37,8 +37,8 @@ class SessionsController < AuthenticatableController
       if @joined_clubs.count == 1
         signing_club = @joined_clubs.first
 
-        Authenticates::PhoneNumberSignInService.new(signing_club).execute(session, @user.phone_number)
-        Authenticates::UserCookies.new(cookies).create!(out[:user], true) if @user.remember_me == "1"
+        out = Authenticates::PhoneNumberSignInService.new(signing_club).execute(session, @user.phone_number)
+        remember_user(@user.remember_me == "1", out[:user])
         redirect_to club_path(signing_club)
         return
       end
@@ -56,5 +56,9 @@ class SessionsController < AuthenticatableController
 private
   def user_params
     params.require(:user).permit(:phone_number, :remember_me)
+  end
+
+  def remember_user(remember_me, user)
+    Authenticates::UserCookies.new(cookies).create!(user, true) if remember_me
   end
 end
