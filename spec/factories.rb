@@ -15,7 +15,7 @@ FactoryGirl.define do
     member_type "정단원"
   end
 
-  factory :notice do
+  factory :notice, aliases: [:external_notice] do
     title "goto google.com"
     content "google!"
     link "http://google.com"
@@ -27,4 +27,14 @@ FactoryGirl.define do
       due_date 100.years.from_now
     end
   end
+
+  factory :response do
+    status "go"
+  end
+
+  factory :message do
+    content "go"
+  end
+
+
 end
