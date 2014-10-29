@@ -32,4 +32,8 @@ private
       "admin"
     end
   end
+
+  def after_sign_out_path_for(admin_user)
+    new_admin_user_session_path(current_club)
+  end
 end

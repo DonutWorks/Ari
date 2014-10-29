@@ -9,7 +9,7 @@ module Devise
         if result && club_member?(resource)
           true
         else
-          fail!(resource)
+          fail!(:not_found_in_database)
           false
         end
       end

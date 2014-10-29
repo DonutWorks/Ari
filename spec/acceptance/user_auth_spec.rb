@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "user auth process", type: :feature do
   before(:each) do
     @club = FactoryGirl.create(:complete_club)
+    @another_club = FactoryGirl.create(:club)
     @user = @club.users.first
     OmniAuth.config.test_mode = true
     OmniAuth.config.add_mock(:kakao, {
@@ -26,6 +27,14 @@ RSpec.describe "user auth process", type: :feature do
   it "shows me an error message when try to sign in with invalid phone number" do
     visit club_path(@club)
     fill_in :user_phone_number, with: "00000000000"
+    click_button "전화번호로 로그인"
+
+    expect(page).to have_content("전화번호가 잘못되었습니다.")
+  end
+
+  it "disallow me to sign in another club" do
+    visit club_path(@another_club)
+    fill_in :user_phone_number, with: @user.phone_number
     click_button "전화번호로 로그인"
 
     expect(page).to have_content("전화번호가 잘못되었습니다.")
@@ -153,6 +162,12 @@ RSpec.describe "user auth process", type: :feature do
             it "leads me to not auth page when I logged in" do
               visit club_path(@club)
               expect(current_path).to eq(club_path(@club))
+            end
+
+          it "should prevent me from accessing another club" do
+              visit club_path(@another_club)
+
+              expect(page).to have_content("존재하지 않는 동아리입니다.")
             end
           end
         end

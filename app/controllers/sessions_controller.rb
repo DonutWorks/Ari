@@ -33,6 +33,16 @@ class SessionsController < AuthenticatableController
       redirect_to sign_in_path
     when :success
       @joined_clubs = out[:clubs]
+
+      if @joined_clubs.count == 1
+        signing_club = @joined_clubs.first
+
+        Authenticates::PhoneNumberSignInService.new(signing_club).execute(session, @user.phone_number)
+        Authenticates::UserCookies.new(cookies).create!(out[:user], true) if @user.remember_me == "1"
+        redirect_to club_path(signing_club)
+        return
+      end
+
       render 'clubs'
     end
   end
