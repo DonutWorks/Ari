@@ -28,7 +28,7 @@ class Admin::NoticesController < Admin::ApplicationController
   end
 
   def show
-    @notice = Notice.find(params[:id])
+    @notice = Notice.find(params[:id]).decorate
     @assignee_comment = AssigneeComment.new if @notice.notice_type == "checklist"
   end
 

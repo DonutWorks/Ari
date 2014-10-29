@@ -1,6 +1,6 @@
 class ToResponsesController < ApplicationController
   def index
-    @notice = Notice.find_by_id(params[:notice_id]) or not_found
+    @notice = Notice.find_by_id(params[:notice_id]).decorate or not_found
   end
 
   def create

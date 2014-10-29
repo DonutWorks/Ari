@@ -26,5 +26,13 @@ class UserDecorator < Draper::Decorator
     tags.map { |tag| '#'+"#{tag.tag_name}" }.join(" ")
   end
 
+  def pretty_read_at(notice)
+    if read_at(notice)
+      read_at(notice).localtime.strftime("%Y-%m-%d %T")
+    else
+      '-'
+    end
+  end
+
 
 end

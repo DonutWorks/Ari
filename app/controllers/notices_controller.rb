@@ -1,6 +1,6 @@
 class NoticesController < ApplicationController
   def show
-    @notice = Notice.find_by_id(params[:id]) or not_found
+    @notice = Notice.find_by_id(params[:id]).decorate or not_found
     @assignee_comment = AssigneeComment.new if @notice.notice_type == "checklist"
 
     current_user.read!(@notice)
