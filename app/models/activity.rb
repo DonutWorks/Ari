@@ -1,3 +1,3 @@
 class Activity < ActiveRecord::Base
-  has_many :notices
+  has_many :notices, :dependent => :destroy
 end
