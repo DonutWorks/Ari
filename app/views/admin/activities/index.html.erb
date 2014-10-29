@@ -1,16 +1,7 @@
 <h3 class="pull-left">공지사항 관리</h3>
 
 <div id="buttons-div" class="pull-right">
-  <%= link_to new_admin_activity_path do %>
-    <button type="button" class="btn btn-success btn-sm ">
-      새 활동
-    </button>
-  <% end %>
-  <%= link_to new_admin_notice_path do %>
-    <button type="button" class="btn btn-primary btn-sm ">
-      새 공지
-    </button>
-  <% end %>
+  <%= link_to "새 활동", new_admin_activity_path, class: "btn btn-success btn-sm " %>
 </div>
 
 <div class="clearfix"></div>
@@ -18,11 +9,9 @@
 <% @activities.each do |activity| %>
   <div id="notice-container" class="panel panel-default">
     <div class="panel-heading">
-      <%= link_to activity.title, admin_activity_path(activity) %>
+      <%= link_to ("[" + activity.event_at.strftime("%Y-%m-%d").to_s + "] " + activity.title), admin_activity_path(activity) %>
       <div class="pull-right">
-        <%= link_to "수정", edit_admin_activity_path(activity), class: "btn btn-default btn-xs" %>
-        <%= link_to "삭제", admin_activity_path(activity), method: :delete,
-        data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger btn-xs" %>
+        <%= link_to "새 공지", new_admin_notice_path(activity_id: activity.id), class: "btn btn-primary btn-xs " %>
       </div>
     </div>
       <ul class="list-group">
