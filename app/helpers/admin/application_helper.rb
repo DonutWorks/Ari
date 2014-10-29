@@ -30,6 +30,10 @@ module Admin::ApplicationHelper
   end
 
   def attribute_error_message(model_instance, attribute)
-    model_instance.errors[attribute].join('\n')
+    content_tag('ul') do
+      model_instance.errors.full_messages_for(attribute).collect do |error|
+        concat(content_tag(:li, error))
+      end
+    end
   end
 end
