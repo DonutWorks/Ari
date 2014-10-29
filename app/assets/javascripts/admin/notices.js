@@ -23,27 +23,31 @@ $(document).on('ready page:load', function () {
   });
 
   $('.memo-edit').keypress(function(event){
-    if(event.keyCode == 13){
+    if(event.keyCode == 13) {
       event.preventDefault();
-      $('#memo_button').click();
+
+      var id = $(this).data("id");
+      $('#memo-click-' + id).click();
     }
   });
 
-  $('.check-btn').click(function() {
-    var id = this.id.split("-")[2];
-    var check = this.id.split("-")[0];
+  $('.check-btn').on("click", function() {
+    var id = $(this).data("id");
+    var check = $(this).data("check");
 
     updateCheckStatus($('#notice-id-' + id).val(), $('#response-id-' + id).val(), check, id);
   });
 
-  $('.open-memo-btn').click(function() {
-    var id = this.id.split("-")[3];
+  $('.open-memo-btn').on("click", function() {
+    var id = $(this).data("id");
     
-    if($('#memo-in-' + id).hasClass("hide-memo")) $('#memo-not-in-' + id).addClass("show-memo").removeClass("hide-memo");
+    if($('#memo-in-' + id).hasClass("hide-memo")) {
+      $('#memo-not-in-' + id).addClass("show-memo").removeClass("hide-memo");
+    }
   });
 
-  $('.edit-memo-btn').click(function() {
-    var id = this.id.split("-")[3];
+  $('.edit-memo-btn').on("click", function() {
+    var id = $(this).data("id");
 
     $('#memo-not-in-' + id).addClass("show-memo").removeClass("hide-memo");
     $('#memo-in-' + id).addClass("hide-memo").removeClass("show-memo");
@@ -51,9 +55,8 @@ $(document).on('ready page:load', function () {
     $('#memo-edit-' + id).val($('#memo-content-' + id).html());
   });
 
-  $('.remove-memo-btn').click(function() {
-    var id = this.id.split("-")[3];
-    alert(id);
+  $('.remove-memo-btn').on("click", function() {
+    var id = $(this).data("id");
 
     updateCheckStatus($('#notice-id-' + id).val(), $('#response-id-' + id).val(), 'memo', id);
   });
@@ -134,17 +137,27 @@ function changeSMSTextSize(){
 function updateCheckStatus(notice_id, response_id, check, index) {
 
   var url = '/admin/notices/' + notice_id + '/responses/update_check?response_id=' + response_id + "&check=" + check
-  if(check == "memo") url = url + "&memo=" + $('#memo-edit-' + index).val();
+  if(check == "memo") {
+    url = url + "&memo=" + $('#memo-edit-' + index).val();
+  }
 
   $.getJSON(url)
     .done(function (res) {
       if(check == "absence") {
-        if(res.absence == 1) $('#absence-btn-' + index).addClass("btn-success");
-        else $('#absence-btn-' + index).removeClass("btn-success");
+        if(res.absence == 1) {
+          $('#absence-btn-' + index).addClass("btn-success");
+        }
+        else {
+          $('#absence-btn-' + index).removeClass("btn-success");
+        }
       }
       else if(check == "dues") {
-        if(res.dues == 1) $('#dues-btn-' + index).addClass("btn-primary");
-        else $('#dues-btn-' + index).removeClass("btn-primary");
+        if(res.dues == 1) {
+          $('#dues-btn-' + index).addClass("btn-primary");
+        }
+        else {
+          $('#dues-btn-' + index).removeClass("btn-primary");
+        }
       }
       else {
         if(res.memo != "") {

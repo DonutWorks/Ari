@@ -22,24 +22,24 @@
         <td><%= pretty_phone_number(user.phone_number) %></td>
         <td>
           <div class="button-group">
-            <button type="button" id="absence-btn-<%=index%>" class="check-btn btn btn-default <%= response.absence == 0 ? '' : 'btn-success' %>">출석</button>
+            <button type="button" id="absence-btn-<%=index%>" class="check-btn btn btn-default <%= response.absence == 0 ? '' : 'btn-success' %>" data-id="<%=index%>" data-check="absence">출석</button>
 
-            <button type="button" id="dues-btn-<%=index%>" class="check-btn btn btn-default <%= response.dues == 0 ? '' : 'btn-primary' %>" >회비</button>
+            <button type="button" id="dues-btn-<%=index%>" class="check-btn btn btn-default <%= response.dues == 0 ? '' : 'btn-primary' %>" data-id="<%=index%>" data-check="dues">회비</button>
 
-            <button type="button" id="open-memo-btn-<%=index%>" class="open-memo-btn btn btn-default <%= response.memo.blank? ? '' : 'btn-warning' %>">메모</button>
+            <button type="button" id="open-memo-btn-<%=index%>" class="open-memo-btn btn btn-default <%= response.memo.blank? ? '' : 'btn-warning' %>" data-id="<%=index%>">메모</button>
           </div>
           <div class="memo">
             <div id="memo-in-<%=index%>" class="<%= response.memo.blank? ? 'hide-memo' : 'show-memo' %>">
               <p id="memo-content-<%=index%>" class="memo-content"><%= response.memo %></p>
               <div class="glyphicon-group">
-                <span id="remove-memo-btn-<%=index%>" class="remove-memo-btn glyphicon glyphicon-remove"></span>
-                <span id="edit-memo-btn-<%=index%>" class="edit-memo-btn glyphicon glyphicon-edit"></span>
+                <span id="remove-memo-btn-<%=index%>" class="remove-memo-btn glyphicon glyphicon-remove" data-id="<%=index%>"></span>
+                <span id="edit-memo-btn-<%=index%>" class="edit-memo-btn glyphicon glyphicon-edit" data-id="<%=index%>"></span>
                 </div>
             </div>
 
             <div id="memo-not-in-<%=index%>" class="hide-memo">
-              <input type="text" id="memo-edit-<%=index%>" class="memo-edit" />
-              <button type="button" class="check-btn btn btn-default", id="memo-btn-<%=index%>">등록</button>
+              <input type="text" id="memo-edit-<%=index%>" class="memo-edit" data-id="<%=index%>"/>
+              <button type="button" id="memo-click-<%=index%>" class="check-btn btn btn-default" data-id="<%=index%>" data-check="memo">등록</button>
             </div>
           <div>
         </td>
