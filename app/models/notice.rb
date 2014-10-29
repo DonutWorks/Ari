@@ -34,16 +34,6 @@ class Notice < ActiveRecord::Base
   validate :must_have_checklists, if: :checklist_notice?
 
 
-  def self.deadline_send_sms
-    sms_sender = SmsSender.new
-
-    Notice.where(notice_type: 'to').where(due_date: Date.today + 3.days).find_each do |notice|
-      Response.responsed_to_go(notice).find_each do |response|
-        sms_sender.send_message("[" + notice.title + "] 공지의 신청이 마감 되었습니다.", notice.id, response.user.id)
-      end
-    end
-  end
-
 private
   def make_redirectable_url!
     unless link.blank?
