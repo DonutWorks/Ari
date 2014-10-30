@@ -1,9 +1,13 @@
 class User < ActiveRecord::Base
+  belongs_to :club
   has_many :invitations
   has_many :responses
   has_many :message_histories
   has_many :messages, through: :message_histories
-  belongs_to :club
+  has_many :taggings
+  has_many :tags, through: :taggings, source: :tag
+  has_many :assign_histories
+  has_many :checklists, through: :assign_histories
   serialize :extra_info
 
   scope :generation_sorted_desc, -> { order(generation_id: :desc) }
@@ -27,7 +31,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :phone_number, :email, scope: :club_id
 
   before_validation :normalize_phone_number
-  before_save :strip!
+  before_validation :strip!
 
   attr_accessor :regard_as_activated, :remember_me
 

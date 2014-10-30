@@ -36,3 +36,46 @@
 .margin-top15 {
   margin-top: 15px
 }
+
+.show-memo {
+  display: inline-block;
+}
+
+.hide-memo {
+  display: none;
+}
+
+.memo {
+  display: inline;
+  margin-left:10px;
+}
+
+.memo-edit {
+  width:300px;
+}
+
+.memo-content {
+  display: inline-block;
+}
+
+.button-group {
+  display: inline-block;
+}
+
+.glyphicon-group {
+  display: inline;
+  margin-left:10px;
+}
+
+#to-option, #checklist-option {
+  display:none;
+}
+
+.input-group[class*="col-"] {
+  padding-right: 15px;
+  padding-left: 15px;
+
+  .assign-btn {
+    height:46px;
+  }
+}

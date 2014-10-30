@@ -1,7 +1,7 @@
 require 'addressable/uri'
 
 class Notice < ActiveRecord::Base
-  NOTICE_TYPES = %w(external plain survey to)
+  NOTICE_TYPES = %w(external plain survey to checklist)
   NOTICE_TYPES.each do |type|
     define_method("#{type}_notice?") do
       notice_type == type
@@ -16,6 +16,8 @@ class Notice < ActiveRecord::Base
 
   has_many :responses
   has_many :messages
+  has_many :checklists
+  accepts_nested_attributes_for :checklists, reject_if: lambda {|attributes| attributes['task'].blank?}
   belongs_to :club
 
   extend FriendlyId
@@ -39,6 +41,16 @@ class Notice < ActiveRecord::Base
   validates :club_id, presence: true
   validates :to, numericality: { greater_than_or_equal_to: 1 }, if: :to_notice?
   validate :to_adjustable?, if: :to_notice?
+  validate :must_have_checklists, if: :checklist_notice?
+
+
+  def self.deadline_send_sms
+    Notice.where(notice_type: 'to').where(due_date: Date.today + 3.days).find_each do |notice|
+      Response.responsed_to_go(notice).find_each do |response|
+        Admin::Messages::SendMessageService.new.execute("[" + notice.title + "] 공지의 신청이 마감 되었습니다.", notice.id, response.user.id)
+      end
+    end
+  end
 
 private
   def make_redirectable_url!
@@ -61,5 +73,9 @@ private
     candidates_count = to - go_responses.count
     candidates = wait_responses.order(created_at: :asc).limit(candidates_count)
     candidates.update_all(status: "go")
+  end
+
+  def must_have_checklists
+    errors.add(:task, '하나 이상의 체크리스트가 있어야 합니다') if self.checklists.empty?
   end
 end

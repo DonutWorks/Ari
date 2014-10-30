@@ -8,7 +8,7 @@ class Admin::ApplicationController < ApplicationController
 
   def index
     @users = current_club.users.all
-    @notices = current_club.notices.all
+    @notices = current_club.notices.order('created_at DESC')
   end
 
 protected
@@ -35,5 +35,10 @@ private
 
   def after_sign_out_path_for(admin_user)
     new_admin_user_session_path(current_club)
+  end
+
+protected
+  def admin?
+    true
   end
 end

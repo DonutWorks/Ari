@@ -28,6 +28,11 @@ protected
   end
   helper_method :current_user
 
+  def admin?
+    false
+  end
+  helper_method :admin?
+
   def authenticate_user!
     Authenticates::CookiesSignInService.new(current_club).execute(session, cookies)
     if current_user.nil?

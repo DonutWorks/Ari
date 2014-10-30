@@ -1,6 +1,8 @@
 class NoticesController < ApplicationController
   def show
     @notice = current_club.notices.friendly.find(params[:id])
+    @assignee_comment = AssigneeComment.new if @notice.notice_type == "checklist"
+
     current_user.read!(@notice)
 
     case @notice.notice_type
@@ -11,9 +13,6 @@ class NoticesController < ApplicationController
     when "to"
       redirect_to club_notice_to_responses_path(current_club, @notice)
     else
-
     end
-
-    # plain -> notices/show
   end
 end

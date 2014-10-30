@@ -9,6 +9,11 @@
 
 <table class="table">
   <tr>
+    <td>태그</td>
+
+    <td><%= pretty_tags(@user.tags) %></td>
+  </tr>
+  <tr>
     <td>기수</td>
     <td><%= pretty_generation_id(@user.generation_id) %></td>
   </tr>

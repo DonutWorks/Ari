@@ -18,6 +18,15 @@ Rails.application.routes.draw do
     post 'auth', to: 'sessions#create'
     get 'sign_out', to: 'sessions#destroy'
 
+    resources :notices, only: [:show] do
+      resources :responses
+      resources :to_responses
+      resources :checklists, shallow: true do
+        get 'finish'
+        resources :assignee_comments
+      end
+    end
+
     resources :users, only: [] do
       collection do
         get 'show'
@@ -31,11 +40,14 @@ Rails.application.routes.draw do
 
     namespace :admin do
       root 'application#index'
+      get 'users/get_user'
 
       resources :users do
         collection do
           get :import, to: 'import#new'
           post :import, to: 'import#create'
+          get '/tags/(:tag_name)', to: :tags, defaults: {format: 'json'}, constraints: { search_word: /.*/ }
+          get '/search/(:search_word)', to: :search, defaults: {format: 'json'}, constraints: { search_word: /.*/ }
         end
       end
 
@@ -43,10 +55,12 @@ Rails.application.routes.draw do
         collection do
           get 'download_roster_example'
         end
+
         resources :responses, only: [] do
           collection do
             get '/', to: :index
             post '/', to: :update
+            get '/update_check', to: :update_check
           end
         end
       end
@@ -55,6 +69,7 @@ Rails.application.routes.draw do
       resources :messages
     end
   end
+
   get '/gates/:id', to:  redirect('/notices/%{id}')
 
   # for back compatibility

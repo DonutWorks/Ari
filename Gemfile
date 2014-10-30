@@ -38,6 +38,8 @@ gem 'spring',        group: :development
 gem 'roo', '~> 1.13.2'
 gem 'spreadsheet', '~> 1.0.0'
 
+gem 'rufus-scheduler', '~> 3.0.9'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -81,3 +83,6 @@ gem 'devise', '~> 3.4.0'
 gem 'devise-i18n', '~> 0.11.2'
 gem 'friendly_id', '~> 5.0.4'
 gem 'gimchi', '~> 0.2.1'
+
+# active-record observer
+gem 'rails-observers'

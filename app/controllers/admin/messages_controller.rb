@@ -3,6 +3,11 @@ class Admin::MessagesController < Admin::ApplicationController
     @messages = current_club.messages.created_at_sorted_desc
   end
 
+  def new
+    @message = current_club.messages.new
+    @users = current_club.users.all
+  end
+
   def show
     @message = current_club.messages.find(params[:id])
   end
@@ -12,7 +17,8 @@ class Admin::MessagesController < Admin::ApplicationController
     notice_id = params[:notice_id]
     user_ids = params[:sms_user].keys
 
-    out = Messages::SendMessageService.new(current_club).execute(content, notice_id, user_ids)
+    out = Admin::Messages::SendMessageService.new(current_club).execute(content, notice_id, user_ids)
+
     case out[:status]
     when :failure
       flash[:error] = "현재 message를 보낼 수 없습니다. 다음에 다시 시도해주세요."

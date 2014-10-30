@@ -1,7 +1,4 @@
 $(document).on('ready page:load', function () {
-  if($('.notice-type-option:checked').val() != "to")
-    $('#to-option').hide();
-
   $('.selectpicker').selectpicker();
 
   $('.sms_all').change(function() {
@@ -9,63 +6,79 @@ $(document).on('ready page:load', function () {
 
     $('.' + id).prop("checked", this.checked);
 
-    add_phone_number_to_array();
+    addPhoneNumberToArray();
   });
 
 
   $('.sms_check').change(function() {
-    add_phone_number_to_array();
+    addPhoneNumberToArray();
   });
 
-  $('#sms_content').keyup(change_sms_text_size);
+  $('#sms_content').keyup(changeSMSTextSize);
 
-  option_selecter($('#notice_type').val());
+  optionSelector($('.notice-type-option:checked').val());
 
   $('.notice-type-option').change(function() {
-      option_selecter($(this).val());
+      optionSelector($(this).val());
+  });
+
+  $('.memo-edit').keypress(function(event){
+    if(event.keyCode == 13){
+      event.preventDefault();
+      $('#memo_button').click();
+    }
   });
 });
 
-function option_selecter(val) {
-  switch(val){
-    case 'external':
-      $('#external-option').fadeIn('fast');
-      $('#to-option').fadeOut('fast');
-      break;
-    case 'plain':
-      $('#external-option').fadeOut('fast');
-      $('#to-option').fadeOut('fast');
-      break;
-    case 'survey':
-      $('#external-option').fadeOut('fast');
-      $('#to-option').fadeOut('fast');
-      break;
-    case 'to':
-      $('#external-option').fadeOut('fast');
-      $('#to-option').fadeIn('fast');
-      break;
+function optionSelector(val) {
+  switch(val) {
+  case 'external':
+    $('#external-option').show();
+    $('#to-option').hide();
+    $('#checklist-option').hide();
+    break;
+  case 'plain':
+    $('#external-option').hide();
+    $('#to-option').hide();
+    $('#checklist-option').hide();
+    break;
+  case 'survey':
+    $('#external-option').hide();
+    $('#to-option').hide();
+    $('#checklist-option').hide();
+    break;
+  case 'to':
+    $('#external-option').hide();
+    $('#to-option').show();
+    $('#checklist-option').hide();
+    break;
+  case 'checklist':
+    $('#external-option').hide();
+    $('#to-option').hide();
+    $('#checklist-option').show();
+    break;
   }
 }
 
-function add_phone_number_to_array() {
-  var phone_numbers_cnt = 0;
+function addPhoneNumberToArray() {
+  var phoneNumbersCnt = 0;
 
   $('.sms_check').each(function() {
-    if((this).checked === true) phone_numbers_cnt++;
+    if((this).checked === true) phoneNumbersCnt++;
   });
 
-  if(phone_numbers_cnt >= 1){
+  if(phoneNumbersCnt >= 1){
     $('.notice-full-page').addClass('show-sms');
     $('.sms-text').slideDown();
-    $('#phone_numbers').text("총 " + phone_numbers_cnt + "명이 선택 되었습니다.");
+    $('#phone_numbers').text("총 " + phoneNumbersCnt + "명이 선택 되었습니다.");
   }
-  else if (phone_numbers_cnt == 0){
+  else if (phoneNumbersCnt == 0){
     $('.sms-text').slideUp();
     $('.notice-full-page').removeClass('show-sms');
   }
 }
 
-function change_sms_text_size(){
+function changeSMSTextSize(){
   var string = $('#sms_content').val();
 
   var utf8length = 0;
@@ -86,4 +99,53 @@ function change_sms_text_size(){
     }
   }
   $('#current-text-size').text(utf8length);
+}
+
+function updateCheckStatus(notice_id, response_id, check, index) {
+
+  var url = '/admin/notices/' + notice_id + '/responses/update_check?response_id=' + response_id + "&check=" + check
+  if(check == "memo") url = url + "&memo=" + $('#memo-edit-' + index).val();
+
+  $.getJSON(url)
+    .done(function (res) {
+      if(check == "absence") {
+        if(res.absence == 1) $('#absence-btn-' + index).addClass("btn-success");
+        else $('#absence-btn-' + index).removeClass("btn-success");
+      }
+      else if(check == "dues") {
+        if(res.dues == 1) $('#dues-btn-' + index).addClass("btn-primary");
+        else $('#dues-btn-' + index).removeClass("btn-primary");
+      }
+      else {
+        if(res.memo != "") {
+          $('#memo-btn-' + index).addClass("btn-warning");
+          $('#memo-content-' + index).html(res.memo);
+
+          $('#memo-in-' + index).addClass("show-memo").removeClass("hide-memo");
+          $('#memo-not-in-' + index).addClass("hide-memo").removeClass("show-memo");
+        }
+        else {
+          $('#memo-btn-' + index).removeClass("btn-warning");
+
+          $('#memo-not-in-' + index).addClass("hide-memo").removeClass("show-memo");
+          $('#memo-in-' + index).addClass("hide-memo").removeClass("show-memo");
+        }
+        $('#memo-edit-' + index).val("");
+      }
+
+    })
+    .fail(function (res) {
+
+    });
+}
+
+function editMemo(notice_id, response_id, check, index) {
+  $('#memo-not-in-' + index).addClass("show-memo").removeClass("hide-memo");
+  $('#memo-in-' + index).addClass("hide-memo").removeClass("show-memo");
+
+  $('#memo-edit-' + index).val($('#memo-content-' + index).html());
+}
+
+function openMemo(index) {
+  if($('#memo-in-' + index).hasClass("hide-memo")) $('#memo-not-in-' + index).addClass("show-memo").removeClass("hide-memo");
 }

@@ -1,9 +1,23 @@
 class Admin::ResponsesController < Admin::ApplicationController
   before_action :find_notice
+  respond_to :json
 
   def index
   end
 
+  def update_check
+
+    response = Response.find_by_id(params[:response_id])
+    case params[:check]
+    when "absence"
+      response.absence == 0 ? response.update(absence: 1) : response.update(absence: 0)
+    when "dues"
+      response.dues == 0 ? response.update(dues: 1) : response.update(dues: 0)
+    when "memo"
+      response.update(memo: params[:memo])
+    end
+    respond_with response
+  end
   def update
 
     input_to = 0
@@ -50,8 +64,8 @@ class Admin::ResponsesController < Admin::ApplicationController
       flash[:notice] = "응답이 수정되었습니다. ( 참가 : #{change_history['go']} / 대기 : #{change_history['wait']} / 미답 : #{change_history['not']} )"
       redirect_to club_admin_notice_path(current_club, @notice)
     end
-
   end
+
 private
   def find_notice
     @notice = current_club.notices.friendly.find(params[:notice_id])

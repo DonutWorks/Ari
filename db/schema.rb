@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141024073322) do
+ActiveRecord::Schema.define(version: 20141030194257) do
 
   create_table "admin_users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -34,6 +34,34 @@ ActiveRecord::Schema.define(version: 20141024073322) do
   add_index "admin_users", ["club_id"], name: "index_admin_users_on_club_id"
   add_index "admin_users", ["email", "club_id"], name: "index_admin_users_on_email_and_club_id", unique: true
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+
+  create_table "assign_histories", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "checklist_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "assignee_comments", force: true do |t|
+    t.text     "comment"
+    t.integer  "checklist_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "assignee_comments", ["checklist_id"], name: "index_assignee_comments_on_checklist_id"
+
+  create_table "checklists", force: true do |t|
+    t.text     "task"
+    t.boolean  "finish"
+    t.integer  "notice_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "club_id"
+  end
+
+  add_index "checklists", ["club_id"], name: "index_checklists_on_club_id"
+  add_index "checklists", ["notice_id"], name: "index_checklists_on_notice_id"
 
   create_table "clubs", force: true do |t|
     t.string   "name",       null: false
@@ -106,9 +134,28 @@ ActiveRecord::Schema.define(version: 20141024073322) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "club_id"
+    t.integer  "absence",    default: 0
+    t.integer  "dues",       default: 0
+    t.string   "memo"
   end
 
   add_index "responses", ["club_id"], name: "index_responses_on_club_id"
+
+  create_table "taggings", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tags", force: true do |t|
+    t.string   "tag_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "club_id"
+  end
+
+  add_index "tags", ["club_id"], name: "index_tags_on_club_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                                  null: false

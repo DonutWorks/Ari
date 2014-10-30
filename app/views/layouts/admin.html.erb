@@ -45,6 +45,7 @@
   </nav>
 
   <div class="container">
+    <input type="hidden" id="current-club-slug" value="<%= current_club.slug %>" />
     <%= render 'layouts/messages' %>
     <%= yield %>
   </div>
