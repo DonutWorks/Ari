@@ -9,8 +9,6 @@ class User < ActiveRecord::Base
   has_many :checklists, through: :assign_histories
   serialize :extra_info
 
-
-
   scope :generation_sorted_desc, -> { order(generation_id: :desc) }
   scope :responsed_to_notice, -> (notice) { joins(:responses).merge(Response.where(notice: notice)) }
   Response::STATUSES.each do |status|
@@ -22,7 +20,6 @@ class User < ActiveRecord::Base
       WHERE A.status is null}
   joins(SQL) }
 
-  scope :order_by_gid, -> {order(generation_id: :desc)}
   scope :order_by_responsed_at, -> {order('responses.created_at ASC')}
   scope :order_by_read_at, -> {order('read_activity_marks.created_at DESC')}
 

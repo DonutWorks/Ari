@@ -21,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @message.users.order_by_gid.each do |user| %>
+          <% @message.users.generation_sorted_desc.each do |user| %>
           <tr>
             <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
             <td><%= user.username %></td>
