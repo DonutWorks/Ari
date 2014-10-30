@@ -18,7 +18,7 @@ class Notice < ActiveRecord::Base
   validate :to_adjustable?, if: :to_notice?
 
   belongs_to :activity
-  
+
   has_many :responses
   has_many :messages
   has_many :checklists
