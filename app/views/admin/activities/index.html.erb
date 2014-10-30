@@ -15,7 +15,7 @@
       </div>
     </div>
       <ul class="list-group">
-        <% activity.notices.each do |notice| %>
+        <% activity.notices.order('created_at DESC').each do |notice| %>
           <%= link_to admin_notice_path(notice), class: "list-group-item" do %>
             <span><%= notice.title %></span>
             <span class="badge">
