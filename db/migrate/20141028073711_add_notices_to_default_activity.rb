@@ -6,7 +6,7 @@ class AddNoticesToDefaultActivity < ActiveRecord::Migration
   end
 
   def up
-    activity = Activity.create!(title: "2014-2학기 활동", description: "2014년 2학기 서울대학교 해비타트의 활동 내역입니다.")
+    activity = Activity.create!(title: "2014-2학기 활동", description: "2014년 2학기 서울대학교 해비타트의 활동 내역입니다.", event_at: "2014-09-01")
     
     Notice.reset_column_information
     Notice.all.each do |notice|
