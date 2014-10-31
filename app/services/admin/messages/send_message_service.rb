@@ -1,7 +1,8 @@
 module Admin::Messages
-  class SendMessageService < BaseService
+  class SendMessageService < Admin::BaseService
     def execute(content, notice_id, user_ids)
-      return failure unless Notice.exists?(notice_id)
+      # notice_id can be nil
+      # return failure unless Notice.exists?(notice_id)
 
       message = Message.new(content: content, notice_id: notice_id)
       users = User.where(id: user_ids)

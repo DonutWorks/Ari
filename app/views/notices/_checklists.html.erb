@@ -15,19 +15,22 @@
         <hr>
 
         <% checklist.assignee_comments.each do |ac| %>
-          <%= form_for ac do |f| %>
-            <p class="comment-value" data-finish="<%= checklist.finish? ? true : false %>">
-              <%= ac.comment %><span class="pull-right"><%= ac.created_at.strftime("%Y-%m-%d %T") %></span>
-            </p>
-
-            <div class="input-group comment-form">
-              <%= f.text_field :comment, class: "form-control" %>
-              <span class="input-group-btn">
-                <%= f.submit "수정", class: "btn btn-success" %>
-                <%= link_to "삭제", ac, class: "btn btn-danger", method: :delete, data: { confirm: '정말 삭제하시겠습니까?' } %>
-                <%= link_to "취소", url_for(params), class: "btn btn-default" %>
-              </span>
-            </div>
+          
+          <p class="comment-value" data-finish="<%= checklist.finish? ? true : false %>">
+            <%= ac.comment %><span class="pull-right"><%= ac.created_at.strftime("%Y-%m-%d %T") %></span>
+          </p>
+          
+          <% if current_user && checklist.assignees.include?(current_user) %>
+            <%= form_for ac do |f| %>
+              <div class="input-group comment-form">
+                <%= f.text_field :comment, class: "form-control" %>
+                <span class="input-group-btn">
+                  <%= f.submit "수정", class: "btn btn-success" %>
+                  <%= link_to "삭제", ac, class: "btn btn-danger", method: :delete, data: { confirm: '정말 삭제하시겠습니까?' } %>
+                  <%= link_to "취소", url_for(params), class: "btn btn-default" %>
+                </span>
+              </div>
+            <% end %>
           <% end %>
         <% end %>
 
