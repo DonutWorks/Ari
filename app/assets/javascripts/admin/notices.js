@@ -23,11 +23,44 @@ $(document).on('ready page:load', function () {
   });
 
   $('.memo-edit').keypress(function(event){
-    if(event.keyCode == 13){
+    if(event.keyCode == 13) {
       event.preventDefault();
-      $('#memo_button').click();
+
+      var id = $(this).data("id");
+      $('#memo-click-' + id).click();
     }
   });
+
+  $('.check-btn').on("click", function() {
+    var id = $(this).data("id");
+    var check = $(this).data("check");
+
+    updateCheckStatus($('#notice-id-' + id).val(), $('#response-id-' + id).val(), check, id);
+  });
+
+  $('.open-memo-btn').on("click", function() {
+    var id = $(this).data("id");
+    
+    if($('#memo-in-' + id).hasClass("hide-memo")) {
+      $('#memo-not-in-' + id).addClass("show-memo").removeClass("hide-memo");
+    }
+  });
+
+  $('.edit-memo-btn').on("click", function() {
+    var id = $(this).data("id");
+
+    $('#memo-not-in-' + id).addClass("show-memo").removeClass("hide-memo");
+    $('#memo-in-' + id).addClass("hide-memo").removeClass("show-memo");
+
+    $('#memo-edit-' + id).val($('#memo-content-' + id).html());
+  });
+
+  $('.remove-memo-btn').on("click", function() {
+    var id = $(this).data("id");
+
+    updateCheckStatus($('#notice-id-' + id).val(), $('#response-id-' + id).val(), 'memo', id);
+  });
+
 });
 
 function optionSelector(val) {
@@ -104,28 +137,38 @@ function changeSMSTextSize(){
 function updateCheckStatus(notice_id, response_id, check, index) {
 
   var url = '/admin/notices/' + notice_id + '/responses/update_check?response_id=' + response_id + "&check=" + check
-  if(check == "memo") url = url + "&memo=" + $('#memo-edit-' + index).val();
+  if(check == "memo") {
+    url = url + "&memo=" + $('#memo-edit-' + index).val();
+  }
 
   $.getJSON(url)
     .done(function (res) {
       if(check == "absence") {
-        if(res.absence == 1) $('#absence-btn-' + index).addClass("btn-success");
-        else $('#absence-btn-' + index).removeClass("btn-success");
+        if(res.absence == 1) {
+          $('#absence-btn-' + index).addClass("btn-success");
+        }
+        else {
+          $('#absence-btn-' + index).removeClass("btn-success");
+        }
       }
       else if(check == "dues") {
-        if(res.dues == 1) $('#dues-btn-' + index).addClass("btn-primary");
-        else $('#dues-btn-' + index).removeClass("btn-primary");
+        if(res.dues == 1) {
+          $('#dues-btn-' + index).addClass("btn-primary");
+        }
+        else {
+          $('#dues-btn-' + index).removeClass("btn-primary");
+        }
       }
       else {
         if(res.memo != "") {
-          $('#memo-btn-' + index).addClass("btn-warning");
+          $('#open-memo-btn-' + index).addClass("btn-warning");
           $('#memo-content-' + index).html(res.memo);
 
           $('#memo-in-' + index).addClass("show-memo").removeClass("hide-memo");
           $('#memo-not-in-' + index).addClass("hide-memo").removeClass("show-memo");
         }
         else {
-          $('#memo-btn-' + index).removeClass("btn-warning");
+          $('#open-memo-btn-' + index).removeClass("btn-warning");
 
           $('#memo-not-in-' + index).addClass("hide-memo").removeClass("show-memo");
           $('#memo-in-' + index).addClass("hide-memo").removeClass("show-memo");
@@ -137,15 +180,4 @@ function updateCheckStatus(notice_id, response_id, check, index) {
     .fail(function (res) {
 
     });
-}
-
-function editMemo(notice_id, response_id, check, index) {
-  $('#memo-not-in-' + index).addClass("show-memo").removeClass("hide-memo");
-  $('#memo-in-' + index).addClass("hide-memo").removeClass("show-memo");
-
-  $('#memo-edit-' + index).val($('#memo-content-' + index).html());
-}
-
-function openMemo(index) {
-  if($('#memo-in-' + index).hasClass("hide-memo")) $('#memo-not-in-' + index).addClass("show-memo").removeClass("hide-memo");
 }
