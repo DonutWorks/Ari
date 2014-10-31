@@ -35,6 +35,7 @@ RSpec.describe Admin::Messages::SendMessageService do
   end
 
   it "should fail if notice is invalid" do
+    skip "Admin can send messages without notice now."
     out = Admin::Messages::SendMessageService.new.execute(@content, -1, @user_list.map(&:id))
 
     expect(out[:status]).to eq(:failure)
