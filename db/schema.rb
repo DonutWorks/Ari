@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20141027062303) do
     t.integer  "deposit"
     t.integer  "withdraw"
     t.string   "content"
+    t.boolean  "confirm"
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"

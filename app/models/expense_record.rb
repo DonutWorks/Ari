@@ -17,7 +17,7 @@ class ExpenseRecord < ActiveRecord::Base
 
         if dues == deposit
           response = notice.responses.find_by_user_id(user.id)
-          return {username: user.username, member_type: user.member_type, dues: deposit, notice_title: notice.title} if response.update!(dues: 1)
+          return {user: user, notice: notice, dues: dues} if response.dues != 1 and response.update!(dues: 1)
         end        
       end
     end

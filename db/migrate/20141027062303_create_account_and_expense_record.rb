@@ -10,6 +10,7 @@ class CreateAccountAndExpenseRecord < ActiveRecord::Migration
       t.integer :deposit
       t.integer :withdraw
       t.string :content
+      t.boolean :confirm
       t.references :account, index: true
       t.timestamps
     end

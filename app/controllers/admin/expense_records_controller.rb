@@ -9,7 +9,7 @@ class Admin::ExpenseRecordsController < Admin::ApplicationController
 
   def create
     @account = Account.find(params[:account_id])
-    @result_arr = []
+    result_arr = []
 
     if !params[:upload].blank?
       file = ExcelImporter.import(params[:upload][:file])
@@ -22,13 +22,17 @@ class Admin::ExpenseRecordsController < Admin::ApplicationController
           er = @account.expense_records.build(attr)
 
           if er.valid?
-            @result_arr.push er.check_dues if er.check_dues 
+            if result = er.check_dues
+              result_arr.push result
+              er.confirm = true
+            end
             er.save!
           end
         end
 
-        flash[:notice] = "최신 내역으로 업데이트 되었습니다."
-        redirect_to admin_account_expense_records_path(@account)
+        @results = result_arr.group_by{|h| h[:notice] }
+        flash[:notice] = "회계 기록이 최신 정보로 업데이트 되었습니다."
+        @results.empty? ? redirect_to(admin_account_expense_records_path(@account)) : render("result")
       else
         flash[:error] = "동아리 계좌가 아닙니다. 관리자에게 문의하세요."
         redirect_to :back
