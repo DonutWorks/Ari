@@ -33,7 +33,6 @@ class Notice < ActiveRecord::Base
    inclusion: { in: NOTICE_TYPES, message: "올바르지 않은 유형입니다." }
   validate :must_have_checklists, if: :checklist_notice?
 
-
   def self.deadline_send_sms
     Notice.where(notice_type: 'to').where(due_date: Date.today + 3.days).find_each do |notice|
       Response.responsed_to_go(notice).find_each do |response|
