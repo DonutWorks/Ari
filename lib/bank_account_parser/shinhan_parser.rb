@@ -26,7 +26,8 @@ module BankAccountParser
   private
     def self.merge_datetime(attr_hash)
       d = Date.parse(attr_hash[:record_date])
-      t = Time.parse(attr_hash[:record_time])
+      t = Time.parse(attr_hash[:record_time]).utc
+      
       dt = DateTime.new(d.year, d.month, d.day, t.hour, t.min, t.sec)
 
       attr_hash[:record_date] = dt

@@ -8,7 +8,7 @@ RSpec.describe BankAccountParser::ShinhanParser do
       result = BankAccountParser::ShinhanParser.parse_records(file)
 
       d = Date.parse("2014-10-25")
-      t = Time.parse("18:58:06")
+      t = Time.parse("18:58:06").utc
       dt = DateTime.new(d.year, d.month, d.day, t.hour, t.min, t.sec)
 
       expect(result).to eq([{
