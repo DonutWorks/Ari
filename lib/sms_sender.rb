@@ -16,7 +16,6 @@ class SMSSender
   API_SECRET = "B9A97FBE326BB30545746123B67B1A65"
 
   def send_sms!(sms_info)
-
     uri = URI(API_REQUEST_URL)
     req = Net::HTTP::Post.new(uri)
 
@@ -30,16 +29,13 @@ class SMSSender
 
     return response if response["result_code"] == "00"
     raise SMSSenderError.new(response), "문자메시지 발송에 실패하였습니다."
-
   end
 
   def send_sms(sms_info)
-    begin
-      send_sms!(sms_info)
-      true
-    rescue SMSSenderError => e
-      false
-    end
+    send_sms!(sms_info)
+    true
+  rescue SMSSenderError => e
+    false
   end
 
   def generate_authentication
