@@ -37,7 +37,9 @@ $(document).on('ready page:load', function () {
     {
       match: /(.*)$/,
       search: function (term, callback) {
-        $.getJSON('/admin/users/search/' + term)
+        current_club = $("#current-club-slug").val()
+        $.getJSON('/' + current_club + '/admin/users/search/' + term)
+        // $.getJSON('/admin/users/search/' + term)
         .done(function (res) {
 
           $("#table-user-list").find("tr:gt(0)").css("display","none");

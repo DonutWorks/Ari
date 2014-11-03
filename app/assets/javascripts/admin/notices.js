@@ -102,8 +102,8 @@ function changeSMSTextSize(){
 }
 
 function updateCheckStatus(notice_id, response_id, check, index) {
-
-  var url = '/admin/notices/' + notice_id + '/responses/update_check?response_id=' + response_id + "&check=" + check
+  var current_club = $("#current-club-slug").val()
+  var url = '/' + current_club + '/admin/notices/' + notice_id + '/responses/update_check?response_id=' + response_id + "&check=" + check
   if(check == "memo") url = url + "&memo=" + $('#memo-edit-' + index).val();
 
   $.getJSON(url)
