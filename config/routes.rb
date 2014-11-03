@@ -52,7 +52,7 @@ Rails.application.routes.draw do
 
     end
 
-    resources :accounts, shallow: true do
+    resources :bank_accounts, shallow: true do
       resources :expense_records
     end
 

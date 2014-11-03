@@ -1,5 +1,5 @@
 class ExpenseRecord < ActiveRecord::Base
-  belongs_to :account
+  belongs_to :bank_account
 
   validates :record_date, :uniqueness => {:scope => [:deposit, :withdraw, :content]}
 

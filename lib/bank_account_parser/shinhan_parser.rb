@@ -1,4 +1,4 @@
-module AccountParser
+module BankAccountParser
   class ShinhanParser
     CONTENTS_START_ROW = 9
     CONTENTS_START_COLUMN = 2

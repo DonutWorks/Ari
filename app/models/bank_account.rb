@@ -1,4 +1,4 @@
-class Account < ActiveRecord::Base
+class BankAccount < ActiveRecord::Base
   has_many :expense_records
 
   validates :account_number, presence: true, uniqueness: true

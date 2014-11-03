@@ -11,13 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027062303) do
-
-  create_table "accounts", force: true do |t|
-    t.string   "account_number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 20141103053643) do
 
   create_table "assign_histories", force: true do |t|
     t.integer  "user_id"
@@ -35,6 +29,12 @@ ActiveRecord::Schema.define(version: 20141027062303) do
 
   add_index "assignee_comments", ["checklist_id"], name: "index_assignee_comments_on_checklist_id"
 
+  create_table "bank_accounts", force: true do |t|
+    t.string   "account_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "checklists", force: true do |t|
     t.text     "task"
     t.boolean  "finish"
@@ -51,12 +51,12 @@ ActiveRecord::Schema.define(version: 20141027062303) do
     t.integer  "withdraw"
     t.string   "content"
     t.boolean  "confirm"
-    t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "bank_account_id"
   end
 
-  add_index "expense_records", ["account_id"], name: "index_expense_records_on_account_id"
+  add_index "expense_records", ["bank_account_id"], name: "index_expense_records_on_bank_account_id"
 
   create_table "invitations", force: true do |t|
     t.string   "code"

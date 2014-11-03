@@ -1,7 +1,7 @@
 <div class="page-header clearfix">
   <h3 class="pull-left">회계내역 관리</h3>
   <div id="buttons-div" class="pull-right">
-    <%= link_to "내역 업데이트", new_admin_account_expense_record_path(@account), class: "btn btn-default" %>
+    <%= link_to "내역 업데이트", new_admin_bank_account_expense_record_path(@bank_account), class: "btn btn-default" %>
   </div>
 </div>
 
@@ -18,7 +18,7 @@
     </thead>
 
     <tbody>
-      <% @account.expense_records.order('record_date DESC').each do |er| %>
+      <% @bank_account.expense_records.order('record_date DESC').each do |er| %>
         <tr class="<%= er.confirm? ? 'success' : '' %>">
           <td><%= er.record_date.strftime("%Y-%m-%d %T") %></td>
           <td><%= er.withdraw %> 원</td>
