@@ -1,0 +1,22 @@
+ko:
+  activerecord:
+    attributes:
+      user:
+        email: "이메일"
+        username: "이름"
+        phone_number: "전화번호"
+        major: "전공"
+        student_id: "학번"
+        sex: "성별"
+        home_phone_number: "자택 전화번호"
+        emergency_phone_number: "응급시 연락처"
+        habitat_id: "해비타트 아이디"
+        member_type: "단원구분"
+        generation_id: "기수"
+        birth: "생년월일"
+      notice:
+        title: "제목"
+        content: "내용"
+        link: "링크"
+      message:
+        content: "내용"
