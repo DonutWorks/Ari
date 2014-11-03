@@ -9,7 +9,7 @@ class Admin::ExpenseRecordsController < Admin::ApplicationController
 
   def create
     @bank_account = BankAccount.find(params[:bank_account_id])
-    result_arr = []
+    result_array = []
 
     if !params[:upload].blank?
       file = ExcelImporter.import(params[:upload][:file])
@@ -19,18 +19,18 @@ class Admin::ExpenseRecordsController < Admin::ApplicationController
         attr_hashes = BankAccountParser::ShinhanParser.parse_records(file)
 
         attr_hashes.each do |attr|
-          er = @bank_account.expense_records.build(attr)
+          record = @bank_account.expense_records.build(attr)
 
-          if er.valid?
-            if result = er.check_dues
-              result_arr.push result
-              er.confirm = true
+          if record.valid?
+            if result = record.check_dues
+              result_array.push result
+              record.confirm = true
             end
-            er.save!
+            record.save!
           end
         end
 
-        @results = result_arr.group_by{|h| h[:notice] }
+        @results = result_array.group_by{|h| h[:notice] }
         flash[:notice] = "회계 기록이 최신 정보로 업데이트 되었습니다."
         @results.empty? ? redirect_to(admin_bank_account_expense_records_path(@bank_account)) : render("result")
       else
