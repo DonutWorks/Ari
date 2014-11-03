@@ -14,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <% users.decorate.each do |user| %>
+      <% users.each do |user| %>
       <tr>
         <td class="text-center"><%= radio_button_tag 'user[' + user.id.to_s + ']', 'go', type == "go" ? true : false %></td>
         <td class="text-center"><%= radio_button_tag 'user[' + user.id.to_s + ']', 'wait', type == "wait" ? true : false %></td>

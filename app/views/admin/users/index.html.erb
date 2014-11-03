@@ -23,7 +23,7 @@
     </thead>
 
     <tbody>
-      <% @users.decorate.each do |user| %>
+      <% @users.each do |user| %>
         <tr id="tr-user-id-<%= user.id %>" class="clickable-row" href="<%= admin_user_path(user) %>">
           <td>
             <%= user.username %>

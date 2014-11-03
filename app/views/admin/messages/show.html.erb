@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @message.users.order_by_gid.decorate.each do |user| %>
+          <% @message.users.each do |user| %>
           <tr>
             <td class="text-right"><%= user.pretty_generation %></td>
             <td><%= user.username %></td>

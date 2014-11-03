@@ -1,6 +1,6 @@
 class Admin::MessagesController < Admin::ApplicationController
   def index
-    @messages = Message.created_at_sorted_desc
+    @messages = Message.created_at_sorted_desc.decorate
   end
 
   def show
@@ -25,7 +25,7 @@ class Admin::MessagesController < Admin::ApplicationController
 
   def new
     @message = Message.new
-    @users = User.all
+    @users = User.all.decorate
   end
 
 end
