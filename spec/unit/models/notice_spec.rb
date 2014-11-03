@@ -1,6 +1,35 @@
 require "rails_helper"
 
 RSpec.describe Notice, :type => :model do
+  describe "#[NOTICE_TYPES]_notice?" do
+    it "should return whether notice is given type" do
+      given_type = Notice::NOTICE_TYPES.first
+      notice = FactoryGirl.create(:notice, notice_type: given_type)
+
+      expect(notice.send("#{given_type}_notice?")).to eq(true)
+      Notice::NOTICE_TYPES[1..-1].each do |type|
+        expect(notice.send("#{type}_notice?")).to eq(false)
+      end
+    end
+  end
+
+  describe "#[Response::STATUSES]_responses" do
+    it "should return responses that is given status" do
+      user = FactoryGirl.create(:user)
+      notice = FactoryGirl.create(:notice)
+
+      given_status = Response::STATUSES.first
+      expect(notice.send("#{given_status}_responses").empty?).to eq(true)
+
+      response = Response.create!(user: user, notice: notice, status: given_status)
+      expect(notice.send("#{given_status}_responses")).to match_array([response])
+
+      Response::STATUSES[1..-1].each do |status|
+        expect(notice.send("#{status}_responses").empty?).to eq(true)
+      end
+    end
+  end
+
   describe "#save with make_redirectable_url!" do
     it "should prepend protocol if not exist" do
       notice = FactoryGirl.create(:notice, link: "www.google.com", shortenURL: "www.google.com")
