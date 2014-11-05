@@ -6,6 +6,8 @@ class Admin::NoticesController < Admin::ApplicationController
   def new
     @notice = Notice.new
     @users = User.all.decorate
+    @activity_id = params[:activity_id]
+
     20.times { @notice.checklists.build.assign_histories.build }
   end
 
@@ -80,28 +82,27 @@ class Admin::NoticesController < Admin::ApplicationController
     lastRow = data.last_row
     lastColumn = data.last_column
 
-    begin
-      User.transaction do
-        (2..lastRow).each do |i|
-          user = User.new
-          user.username = data.cell(i, 1)
-          user.phone_number = data.cell(i, 2)
-          user.email = data.cell(i, 3)
-          user.major = data.cell(i, 4)
-          user.save!
-        end
+    User.transaction do
+      (2..lastRow).each do |i|
+        user = User.new
+        user.username = data.cell(i, 1)
+        user.phone_number = data.cell(i, 2)
+        user.email = data.cell(i, 3)
+        user.major = data.cell(i, 4)
+        user.save!
       end
-      flash[:notice] = "멤버 입력에 성공했습니다."
-    rescue ActiveRecord::StatementInvalid
-      flash[:notice] = "멤버 입력에 실패했습니다."
     end
+    flash[:notice] = "멤버 입력에 성공했습니다."
 
+  rescue ActiveRecord::StatementInvalid
+    flash[:notice] = "멤버 입력에 실패했습니다."
+  ensure
     redirect_to admin_root_path
   end
 
 private
   def notice_params
-    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date,
+    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date, :activity_id,
       checklists_attributes: [:id, :task, assign_histories_attributes: [:user_id]])
   end
 end
