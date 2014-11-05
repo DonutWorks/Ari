@@ -21,7 +21,7 @@ class Admin::NoticesController < Admin::ApplicationController
       SlackNotifier.notify("햇빛봉사단 게이트 추가 알림 : #{@notice.title}, #{@notice.shortenURL}")
       redirect_to admin_notice_path(@notice)
     else
-      @notice.checklists.last.assign_histories.build if @notice.checklist_notice?
+      @notice.checklists.last.assign_histories.build if @notice.checklist_notice? && !@notice.checklists.empty?
       @users = User.all
       20.times { @notice.checklists.build.assign_histories.build }
       render 'new'
@@ -81,22 +81,21 @@ class Admin::NoticesController < Admin::ApplicationController
     lastRow = data.last_row
     lastColumn = data.last_column
 
-    begin
-      User.transaction do
-        (2..lastRow).each do |i|
-          user = User.new
-          user.username = data.cell(i, 1)
-          user.phone_number = data.cell(i, 2)
-          user.email = data.cell(i, 3)
-          user.major = data.cell(i, 4)
-          user.save!
-        end
+    User.transaction do
+      (2..lastRow).each do |i|
+        user = User.new
+        user.username = data.cell(i, 1)
+        user.phone_number = data.cell(i, 2)
+        user.email = data.cell(i, 3)
+        user.major = data.cell(i, 4)
+        user.save!
       end
-      flash[:notice] = "멤버 입력에 성공했습니다."
-    rescue ActiveRecord::StatementInvalid
-      flash[:notice] = "멤버 입력에 실패했습니다."
     end
+    flash[:notice] = "멤버 입력에 성공했습니다."
 
+  rescue ActiveRecord::StatementInvalid
+    flash[:notice] = "멤버 입력에 실패했습니다."
+  ensure
     redirect_to admin_root_path
   end
 

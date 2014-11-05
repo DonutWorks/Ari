@@ -25,12 +25,12 @@ RSpec.describe Notice, :type => :model do
       expect(@to_notice.go_responses.count).to eq(2)
 
       @to_notice.to = 1
-      expect { @to_notice.save! }.to raise_error
+      expect(@to_notice).not_to be_valid
     end
 
     it "should update when inputted TO is greater than the number of responsed go" do
       @to_notice.to = 2
-      expect { @to_notice.save! }.not_to raise_error
+      expect(@to_notice).to be_valid
     end
   end
 
@@ -53,7 +53,11 @@ RSpec.describe Notice, :type => :model do
       end
 
       expect(@to_notice.go_responses.count).to eq(1)
-      expect { @to_notice.update_attributes!(to: 2) }.not_to raise_error
+
+      @to_notice.to = 2
+      expect(@to_notice).to be_valid
+      @to_notice.save!
+
       expect(@to_notice.go_responses.count).to eq(2)
       expect(@to_notice.wait_responses.count).to eq(1)
 

@@ -1,7 +1,8 @@
 module Admin::Messages
-  class SendMessageService < BaseService
+  class SendMessageService < Admin::BaseService
     def execute(content, notice_id, user_ids)
-      return failure unless Notice.exists?(notice_id)
+      # notice_id can be nil
+      # return failure unless Notice.exists?(notice_id)
 
       message = Message.new(content: content, notice_id: notice_id)
       users = User.where(id: user_ids)
@@ -16,16 +17,15 @@ module Admin::Messages
         text: message.content
       }
 
-      begin
-        message.transaction do
-          message.save!
-          sms_sender.send_sms(sms_info)
-        end
-      rescue SMSSender::SMSSenderError, ActiveRecord::RecordInvalid => e
-        return failure
+      message.transaction do
+        message.save!
+        sms_sender.send_sms(sms_info)
       end
 
       return success({ message: message })
+
+    rescue SMSSender::SMSSenderError, ActiveRecord::RecordInvalid => e
+      return failure
     end
   end
 end

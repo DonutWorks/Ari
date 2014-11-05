@@ -29,6 +29,9 @@ ActiveRecord::Schema.define(version: 20141028073711) do
     t.datetime "updated_at"
   end
 
+  add_index "assign_histories", ["checklist_id"], name: "index_assign_histories_on_checklist_id"
+  add_index "assign_histories", ["user_id"], name: "index_assign_histories_on_user_id"
+
   create_table "assignee_comments", force: true do |t|
     t.text     "comment"
     t.integer  "checklist_id"
@@ -46,6 +49,7 @@ ActiveRecord::Schema.define(version: 20141028073711) do
     t.datetime "updated_at"
   end
 
+  add_index "checklists", ["finish"], name: "index_checklists_on_finish"
   add_index "checklists", ["notice_id"], name: "index_checklists_on_notice_id"
 
   create_table "invitations", force: true do |t|
@@ -55,6 +59,8 @@ ActiveRecord::Schema.define(version: 20141028073711) do
     t.boolean  "expired",    default: false
     t.integer  "user_id"
   end
+
+  add_index "invitations", ["user_id"], name: "index_invitations_on_user_id"
 
   create_table "message_histories", force: true do |t|
     t.integer  "user_id"
@@ -73,6 +79,8 @@ ActiveRecord::Schema.define(version: 20141028073711) do
     t.integer  "notice_id"
   end
 
+  add_index "messages", ["notice_id"], name: "index_messages_on_notice_id"
+
   create_table "notices", force: true do |t|
     t.string   "title"
     t.string   "content"
@@ -87,6 +95,7 @@ ActiveRecord::Schema.define(version: 20141028073711) do
   end
 
   add_index "notices", ["activity_id"], name: "index_notices_on_activity_id"
+  add_index "notices", ["notice_type"], name: "index_notices_on_notice_type"
 
   create_table "read_activity_marks", force: true do |t|
     t.integer  "reader_id",                 null: false
@@ -96,6 +105,10 @@ ActiveRecord::Schema.define(version: 20141028073711) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "read_activity_marks", ["readable_id"], name: "index_read_activity_marks_on_readable_id"
+  add_index "read_activity_marks", ["readable_type"], name: "index_read_activity_marks_on_readable_type"
+  add_index "read_activity_marks", ["reader_id"], name: "index_read_activity_marks_on_reader_id"
 
   create_table "responses", force: true do |t|
     t.integer  "user_id"
@@ -108,12 +121,18 @@ ActiveRecord::Schema.define(version: 20141028073711) do
     t.string   "memo"
   end
 
+  add_index "responses", ["notice_id"], name: "index_responses_on_notice_id"
+  add_index "responses", ["user_id"], name: "index_responses_on_user_id"
+
   create_table "taggings", force: true do |t|
     t.integer  "user_id"
     t.integer  "tag_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id"
+  add_index "taggings", ["user_id"], name: "index_taggings_on_user_id"
 
   create_table "tags", force: true do |t|
     t.string   "tag_name"
@@ -141,5 +160,10 @@ ActiveRecord::Schema.define(version: 20141028073711) do
     t.string   "uid"
     t.text     "extra_info"
   end
+
+  add_index "users", ["email"], name: "index_users_on_email"
+  add_index "users", ["phone_number"], name: "index_users_on_phone_number"
+  add_index "users", ["provider"], name: "index_users_on_provider"
+  add_index "users", ["uid"], name: "index_users_on_uid"
 
 end
