@@ -16,7 +16,7 @@ class Admin::ActivitiesController < Admin::ApplicationController
   end
 
   def index
-    @activities = Activity.order('created_at DESC')
+    @activities = Activity.created_at_desc
     @users = User.all
   end
 

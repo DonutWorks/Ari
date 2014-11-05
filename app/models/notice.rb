@@ -35,6 +35,8 @@ class Notice < ActiveRecord::Base
    inclusion: { in: NOTICE_TYPES, message: "올바르지 않은 유형입니다." }
   validate :must_have_checklists, if: :checklist_notice?
 
+  scope :created_at_desc, -> { order(created_at: :desc) }
+
 
   def self.deadline_send_sms
     sms_sender = SmsSender.new
