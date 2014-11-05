@@ -9,7 +9,7 @@
 <% @activities.each do |activity| %>
   <div id="notice-container" class="panel panel-default">
     <div class="panel-heading">
-      <%= link_to ("[" + activity.event_at.strftime("%Y-%m-%d").to_s + "] " + activity.title), admin_activity_path(activity) %>
+      <%= link_to ("[" + activity.event_at + "] " + activity.title), admin_activity_path(activity) %>
       <div class="pull-right">
         <%= link_to "새 공지", new_admin_notice_path(activity_id: activity.id), class: "btn btn-primary btn-xs " %>
       </div>

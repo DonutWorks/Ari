@@ -16,12 +16,12 @@ class Admin::ActivitiesController < Admin::ApplicationController
   end
 
   def index
-    @activities = Activity.created_at_desc
+    @activities = Activity.created_at_desc.decorate
     @users = User.all
   end
 
   def show
-    @activity = Activity.find(params[:id])
+    @activity = Activity.find(params[:id]).decorate
   end
 
   def edit

@@ -17,9 +17,9 @@
       <input type="hidden" id="response-id-<%=index%>" value="<%=response.id %>" />
       <tr>
         <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_#{type}" %></td>
-        <td class="text-right"><%= pretty_generation_id(user.generation_id) %></td>
+        <td class="text-right"><%= user.generation_id %></td>
         <td><%= user.username %></td>
-        <td><%= pretty_phone_number(user.phone_number) %></td>
+        <td><%= user.phone_number %></td>
         <td>
           <div class="button-group">
             <button type="button" id="absence-btn-<%=index%>" class="check-btn btn btn-default <%= response.absence == 0 ? '' : 'btn-success' %>" data-id="<%=index%>" data-check="absence">출석</button>

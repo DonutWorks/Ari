@@ -16,10 +16,10 @@
     <p>실제 공지 주소 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
   <% end %>
   <p>통합 공지 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %></p>
-  <p>만든 시간 : <%= @notice.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
+  <p>만든 시간 : <%= @notice.created_at %></p>
   <% if @notice.to_notice? %>
-    <p>행사 날짜 : <%= @notice.due_date.strftime("%Y-%m-%d %T") %></p>
-    <p>모집 시한 : <%= (@notice.due_date - 3.days).localtime.strftime("%Y-%m-%d %T") %></p>
+    <p>행사 날짜 : <%= @notice.due_date %></p>
+    <p>모집 시한 : <%= @notice.survey_due_date %></p>
     <p>신청 현황 : <%= User.responsed_go(@notice).count %>명 / <%= @notice.to %>명</p>
   <% end %>
   <div class="clearfix"></div>
@@ -44,37 +44,37 @@
       <div class="tab-pane fade in active" id="read-unread">
         <div class="notice-reader">
           <h3>읽은 회원 <small>(총 <%= @notice.readers.count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: @notice.readers.order_by_read_at, type: "read" } %>
+          <%= render partial: "table", locals: { users: @notice.readers.order_by_read_at.decorate, type: "read" } %>
         </div>
 
         <div class="notice-unreader">
           <h3>안 읽은 회원 <small>(총 <%= @notice.unreaders.count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: @notice.unreaders.generation_sorted_desc, type: "unread" } %>
+          <%= render partial: "table", locals: { users: @notice.unreaders.generation_sorted_desc.decorate, type: "unread" } %>
         </div>
       </div>
       <div class="tab-pane fade" id="survey-result">
         <div>
           <h3>참가 <small>(총 <%= User.responsed_yes(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: User.responsed_yes(@notice).order_by_responsed_at, type: "yes" } %>
+          <%= render partial: "table", locals: { users: User.responsed_yes(@notice).order_by_responsed_at.decorate, type: "yes" } %>
         </div>
         <div>
           <h3>불확실 <small>(총 <%= User.responsed_maybe(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: User.responsed_maybe(@notice).order_by_responsed_at, type: "maybe" } %>
+          <%= render partial: "table", locals: { users: User.responsed_maybe(@notice).order_by_responsed_at.decorate, type: "maybe" } %>
         </div>
         <div>
           <h3>불참 <small>(총 <%= User.responsed_no(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: User.responsed_no(@notice).order_by_responsed_at, type: "no" } %>
+          <%= render partial: "table", locals: { users: User.responsed_no(@notice).order_by_responsed_at.decorate, type: "no" } %>
         </div>
       </div>
 
       <div class="tab-pane fade" id="to-result">
         <div>
           <h3>참가 <small>(총 <%= User.responsed_go(@notice).count %>명)</small></h3>
-          <%= render partial: "table_to_response", locals: { users: User.responsed_go(@notice).order_by_responsed_at, type: "go" } %>
+          <%= render partial: "table_to_response", locals: { users: User.responsed_go(@notice).order_by_responsed_at.decorate, type: "go" } %>
         </div>
         <div>
           <h3>대기 <small>(총 <%= User.responsed_wait(@notice).count %>명)</small></h3>
-          <%= render partial: "table_to_response", locals: { users: User.responsed_wait(@notice).order_by_responsed_at, type: "wait" } %>
+          <%= render partial: "table_to_response", locals: { users: User.responsed_wait(@notice).order_by_responsed_at.decorate, type: "wait" } %>
         </div>
       </div>
 

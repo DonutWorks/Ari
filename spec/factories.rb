@@ -15,6 +15,7 @@ FactoryGirl.define do
     member_type "정단원"
   end
 
+
   factory :activity do
     title "2014-2 Acitivity"
     description "This is activity"
@@ -33,4 +34,14 @@ FactoryGirl.define do
       due_date 100.years.from_now
     end
   end
+
+  factory :response do
+    status "go"
+  end
+
+  factory :message do
+    content "go"
+  end
+
+
 end

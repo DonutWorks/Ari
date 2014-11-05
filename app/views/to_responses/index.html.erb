@@ -1,7 +1,7 @@
 <%= render template: 'notices/show' %>
 
 <div class="mention">
-  <% if @notice.due_date - 3.days < Date.today %>
+  <% if @notice.raw_due_date - 3.days < Date.today %>
     <h3 class="text-center">신청이 마감 되었습니다..</h3>
   <% elsif current_user.response_status(@notice) == "go" %>
     <h3 class="text-center">지금 참가자 명단에 있습니다.</h3>

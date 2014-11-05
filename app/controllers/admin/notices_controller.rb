@@ -5,8 +5,9 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def new
     @notice = Notice.new
-    @users = User.all
+    @users = User.all.decorate
     @activity_id = params[:activity_id]
+
     20.times { @notice.checklists.build.assign_histories.build }
   end
 
@@ -22,20 +23,20 @@ class Admin::NoticesController < Admin::ApplicationController
       redirect_to admin_notice_path(@notice)
     else
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice? && !@notice.checklists.empty?
-      @users = User.all
+      @users = User.all.decorate
       20.times { @notice.checklists.build.assign_histories.build }
       render 'new'
     end
   end
 
   def show
-    @notice = Notice.find(params[:id])
+    @notice = Notice.find(params[:id]).decorate
     @assignee_comment = AssigneeComment.new if @notice.notice_type == "checklist"
   end
 
   def edit
     @notice = Notice.find(params[:id])
-    @users = User.all
+    @users = User.all.decorate
     20.times { @notice.checklists.build.assign_histories.build}
   end
 
@@ -47,7 +48,7 @@ class Admin::NoticesController < Admin::ApplicationController
       redirect_to admin_notice_path(@notice)
     else
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice?
-      @users = User.all
+      @users = User.all.decorate
       20.times { @notice.checklists.build.assign_histories.build}
       render 'edit'
     end

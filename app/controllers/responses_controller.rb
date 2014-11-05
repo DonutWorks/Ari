@@ -1,6 +1,6 @@
 class ResponsesController < ApplicationController
   def index
-    @notice = Notice.find_by_id(params[:notice_id]) or not_found
+    @notice = Notice.find_by_id(params[:notice_id]).decorate or not_found
 
     if current_user.responsed_to?(@notice)
       case @notice.responses.find_by_user_id(current_user).status

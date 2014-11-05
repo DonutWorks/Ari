@@ -31,9 +31,9 @@
               <span class="glyphicon glyphicon-ok"></span>
             <% end %>
           </td>
-          <td><%= pretty_phone_number(user.phone_number) %></td>
+          <td><%= user.phone_number %></td>
           <td><%= user.email %></td>
-          <td><%= pretty_tags(user.tags) %></td>
+          <td><%= user.tags %></td>
           <td class="menu"><%= link_to "자세히", admin_user_path(user), class: "btn btn-link btn-xs" %></td>
         </tr>
       <% end %>
