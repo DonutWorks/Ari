@@ -6,6 +6,7 @@ class Admin::NoticesController < Admin::ApplicationController
   def new
     @notice = Notice.new
     @users = User.all
+    @activity_id = params[:activity_id]
     20.times { @notice.checklists.build.assign_histories.build }
   end
 
@@ -100,7 +101,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
 private
   def notice_params
-    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date,
+    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date, :activity_id,
       checklists_attributes: [:id, :task, assign_histories_attributes: [:user_id]])
   end
 end

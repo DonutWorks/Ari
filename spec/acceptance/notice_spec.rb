@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe "notice", type: :feature do
   before(:each) do
     authenticate_to_admin!
-    @notice = FactoryGirl.create(:notice)
+    @activity = FactoryGirl.create(:activity)
+    @notice = FactoryGirl.create(:notice, activity: @activity)
     @user = FactoryGirl.create(:user)
   end
 
@@ -102,7 +103,7 @@ RSpec.describe "notice", type: :feature do
 
   context "when I update a TO notice" do
     before(:each) do
-      @to_notice = FactoryGirl.create(:to_notice, to: 3, title: "TO notice")
+      @to_notice = FactoryGirl.create(:to_notice, to: 3, title: "TO notice", activity: @activity)
       @users = FactoryGirl.create_list(:user, 2)
 
       @users.each do |user|

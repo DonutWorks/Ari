@@ -17,6 +17,8 @@ class Notice < ActiveRecord::Base
   validates :to, numericality: { greater_than_or_equal_to: 1 }, if: :to_notice?
   validate :to_adjustable?, if: :to_notice?
 
+  belongs_to :activity
+
   has_many :responses
   has_many :messages
   has_many :checklists
@@ -32,6 +34,8 @@ class Notice < ActiveRecord::Base
   validates :notice_type, presence: { message: "유형을 선택해주십시오." },
    inclusion: { in: NOTICE_TYPES, message: "올바르지 않은 유형입니다." }
   validate :must_have_checklists, if: :checklist_notice?
+
+  scope :created_at_desc, -> { order(created_at: :desc) }
 
   def self.deadline_send_sms
     Notice.where(notice_type: 'to').where(due_date: Date.today + 3.days).find_each do |notice|

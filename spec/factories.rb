@@ -15,6 +15,12 @@ FactoryGirl.define do
     member_type "정단원"
   end
 
+  factory :activity do
+    title "2014-2 Acitivity"
+    description "This is activity"
+    event_at Time.now
+  end
+
   factory :notice do
     title "goto google.com"
     content "google!"
