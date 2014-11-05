@@ -18,17 +18,17 @@
       <% users.each_with_index do |user, index| %>
       <tr>
         <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_#{type}" %></td>
-        <td><%= user.pretty_generation %></td>
+        <td><%= user.generation_id %></td>
         <td><%= user.username %></td>
         <td><%= user.member_type %></td>
         <% if @notice.survey_notice? %>
           <td><%= user.habitat_id %></td>
         <% end %>
-        <td><%= user.pretty_phone_number %></td>
+        <td><%= user.phone_number %></td>
         <td><%= user.email %></td>
         <td>
           <% if type == "read" || type == "unread" %>
-            <%= user.pretty_read_at(@notice) %>
+            <%= user.read_at(@notice) %>
           <% else %>
             <%= user.responses.time(@notice) %>
           <% end %>

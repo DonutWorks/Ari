@@ -26,8 +26,8 @@
         <tr id="tr-user-id-<%= user.id %>" >
           <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms found" %></td>
           <td><%= user.username %></td>
-          <td><%= user.pretty_phone_number %></td>
-          <td><%= user.pretty_tags %></td>
+          <td><%= user.phone_number %></td>
+          <td><%= user.tags %></td>
 
         </tr>
         <% end %>

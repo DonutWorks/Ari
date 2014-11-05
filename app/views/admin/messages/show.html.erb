@@ -5,7 +5,7 @@
 
   <p>문자 내용 : <%= @message.content %></p>
   <p>공지글 제목 : <%= @message.notice.title unless @message.notice.blank?  %></p>
-  <p>전송 시간 : <%= @message.pretty_created_at %></p>
+  <p>전송 시간 : <%= @message.created_at %></p>
 
   <div>
     <h3>전송된 회원 <small>(총 <%= @message.users.size %>명)</small></h3>
@@ -22,10 +22,10 @@
         <tbody>
           <% @message.users.each do |user| %>
           <tr>
-            <td class="text-right"><%= user.pretty_generation %></td>
+            <td class="text-right"><%= user.generation_id %></td>
             <td><%= user.username %></td>
-            <td><%= user.pretty_phone_number %></td>
-            <td><%= user.pretty_tags %></td>
+            <td><%= user.phone_number %></td>
+            <td><%= user.tags %></td>
           </tr>
           <% end %>
         </tbody>
