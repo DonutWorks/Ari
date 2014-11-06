@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028073711) do
+ActiveRecord::Schema.define(version: 20141103053643) do
 
   create_table "activities", force: true do |t|
     t.string   "title"
@@ -41,6 +41,12 @@ ActiveRecord::Schema.define(version: 20141028073711) do
 
   add_index "assignee_comments", ["checklist_id"], name: "index_assignee_comments_on_checklist_id"
 
+  create_table "bank_accounts", force: true do |t|
+    t.string   "account_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "checklists", force: true do |t|
     t.text     "task"
     t.boolean  "finish"
@@ -51,6 +57,19 @@ ActiveRecord::Schema.define(version: 20141028073711) do
 
   add_index "checklists", ["finish"], name: "index_checklists_on_finish"
   add_index "checklists", ["notice_id"], name: "index_checklists_on_notice_id"
+
+  create_table "expense_records", force: true do |t|
+    t.datetime "record_date"
+    t.integer  "deposit"
+    t.integer  "withdraw"
+    t.string   "content"
+    t.boolean  "confirm"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "bank_account_id"
+  end
+
+  add_index "expense_records", ["bank_account_id"], name: "index_expense_records_on_bank_account_id"
 
   create_table "invitations", force: true do |t|
     t.string   "code"
@@ -91,6 +110,8 @@ ActiveRecord::Schema.define(version: 20141028073711) do
     t.string   "notice_type"
     t.integer  "to"
     t.datetime "due_date"
+    t.integer  "regular_dues"
+    t.integer  "associate_dues"
     t.integer  "activity_id"
   end
 

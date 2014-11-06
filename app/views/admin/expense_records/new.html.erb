@@ -1,0 +1,32 @@
+<% if @error_message %>
+<div class="alert <%= flash_class(:error) %> alert-dismissable fade in">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <%= @error_message %>
+</div>
+<% end %>
+<div class="form-container">
+  <div class="row">
+    <div class="col-md-12">
+
+      <%= form_tag(admin_bank_account_expense_records_path(@bank_account), :multipart => true) do %>
+
+        <legend>엑셀 파일로 회계 내역 업데이트</legend>
+
+        <div class="form-group">
+          <%= label_tag "등록하실 회계내역의 엑셀파일을 선택해주세요." %>
+          <%= file_field_tag 'upload[file]' %>
+        </div>
+
+        <p class="help-block">
+          업로드 전, 파일 구성이 다음과 같은지 확인해주세요(신한은행 기준)<br>
+          <%= image_tag("account_example.png", class: "img-responsive") %>
+        </p>
+
+        <p>
+          <%= submit_tag "업로드", class: "btn btn-default"   %>
+        </p>
+      <% end %>
+
+    </div>
+  </div>
+</div>

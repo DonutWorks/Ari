@@ -1,0 +1,15 @@
+<div class="page-header clearfix">
+  <h3 class="pull-left">아래 행사에 대한 회비 납부현황이 자동 확인 되었습니다.</h3>
+</div>
+
+<% @results.keys.each do |key| %>
+  <h2><%= key.title %> 에 대해</h2>
+
+  <ul class="list-group">
+  <% @results[key].each do |result| %>
+    <li class="list-group-item">
+      <%= result[:user].member_type %> <%= result[:user].username %>님의 참가비 <%= result[:dues] %>원이 확인되었습니다.
+    </li>
+  <% end %>
+  </ul>
+<% end %>
