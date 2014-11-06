@@ -11,11 +11,11 @@
   <tr>
     <td>태그</td>
 
-    <td><%= pretty_tags(@user.tags) %></td>
+    <td><%= @user.tags  %></td>
   </tr>
   <tr>
     <td>기수</td>
-    <td><%= pretty_generation_id(@user.generation_id) %></td>
+    <td><%= @user.generation_id %></td>
   </tr>
   <tr>
   	<td>이름</td>
@@ -44,15 +44,15 @@
   </tr>
   <tr>
   	<td>본인 연락처</td>
-  	<td><%= pretty_phone_number(@user.phone_number) %></td>
+  	<td><%= @user.phone_number %></td>
   </tr>
   <tr>
     <td>자택 전화번호</td>
-    <td><%= pretty_phone_number(@user.home_phone_number) %></td>
+    <td><%= @user.home_phone_number %></td>
   </tr>
   <tr>
     <td>응급시 연락처</td>
-    <td><%= pretty_phone_number(@user.emergency_phone_number) %></td>
+    <td><%= @user.emergency_phone_number %></td>
   </tr>
   <tr>
   	<td>이메일</td>

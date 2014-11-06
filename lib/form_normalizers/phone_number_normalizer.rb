@@ -5,14 +5,12 @@ module FormNormalizers
     end
 
     def normalize(term)
-      begin
-        Phoner::Phone.parse(term, country_code: "82").format("%A%f%l")
-      rescue => e
-        if term != "없음"
-          raise NormalizeError, "전화번호가 형식에 맞지 않습니다. (#{term})"
-        end
-        term
+      Phoner::Phone.parse(term, country_code: "82").format("%A%f%l")
+    rescue => e
+      if term != "없음"
+        raise NormalizeError, "전화번호가 형식에 맞지 않습니다. (#{term})"
       end
+      term
     end
   end
 end

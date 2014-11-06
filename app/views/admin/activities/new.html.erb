@@ -1,0 +1,20 @@
+<div class="form-container">
+  <div class="row">
+    <div class="col-md-12">
+      <%= form_for [:admin, @activity], html: {role: "form", class: "form-horizontal"} do |f|%>
+        <legend>새로운 활동 만들기</legend>
+
+        <%= render partial: 'form', locals: {f: f} %>
+
+        <p class="pull-right">
+          <%= f.submit "등록", class: "btn btn-primary btn-lg"  %>
+          <%= link_to admin_root_path do %>
+            <button type="button" class="btn btn-default btn-lg">
+              취소
+            </button>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

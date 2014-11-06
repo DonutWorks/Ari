@@ -1,10 +1,10 @@
 class Admin::MessagesController < Admin::ApplicationController
   def index
-    @messages = Message.created_at_sorted_desc
+    @messages = Message.created_at_sorted_desc.decorate
   end
 
   def show
-    @message = Message.find(params[:id])
+    @message = Message.find(params[:id]).decorate
   end
 
   def create
@@ -12,7 +12,7 @@ class Admin::MessagesController < Admin::ApplicationController
     notice_id = params[:notice_id]
     user_ids = params[:sms_user].keys
 
-    out = Messages::SendMessageService.new.execute(content, notice_id, user_ids)
+    out = Admin::Messages::SendMessageService.new.execute(content, notice_id, user_ids)
     case out[:status]
     when :failure
       flash[:error] = "현재 message를 보낼 수 없습니다. 다음에 다시 시도해주세요."
@@ -25,7 +25,7 @@ class Admin::MessagesController < Admin::ApplicationController
 
   def new
     @message = Message.new
-    @users = User.all
+    @users = User.all.decorate
   end
 
 end
