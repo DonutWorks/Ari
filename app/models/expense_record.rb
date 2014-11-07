@@ -10,14 +10,14 @@ class ExpenseRecord < ActiveRecord::Base
       if user = User.find_by_username(content)
         case user.member_type
         when '예비단원'
-          dues = notice.associate_dues
+          dues = notice.activity.associate_dues
         else
-          dues = notice.regular_dues
+          dues = notice.activity.regular_dues
         end
 
         if dues == deposit
           response = notice.responses.find_by_user_id(user.id)
-          return {user: user, notice: notice, dues: dues} if response.dues != 1 and response.update!(dues: 1)
+          return {user: user, activity: notice.activity, dues: dues} if response.dues != 1 and response.update!(dues: 1)
         end        
       end
     end

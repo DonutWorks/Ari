@@ -30,7 +30,7 @@ class Admin::ExpenseRecordsController < Admin::ApplicationController
           end
         end
 
-        @results = result_array.group_by{|h| h[:notice] }
+        @results = result_array.group_by{|h| h[:activity] }
         flash[:notice] = "회계 기록이 최신 정보로 업데이트 되었습니다."
         @results.empty? ? redirect_to(admin_bank_account_expense_records_path(@bank_account)) : render("result")
       else

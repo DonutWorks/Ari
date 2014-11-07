@@ -40,7 +40,10 @@ RSpec.describe ExpenseRecord, :type => :model do
     end
 
     it "should return normal data successfully" do
+      activity = FactoryGirl.create(:activity)
       notice = FactoryGirl.create(:to_notice)
+      activity.notices.push notice
+      
       user = FactoryGirl.create(:user, username: "John")
       notice.responses.create({
         user: user,
@@ -48,7 +51,7 @@ RSpec.describe ExpenseRecord, :type => :model do
 
       er = FactoryGirl.build(:expense_record)
       expect(er.check_dues).to eq({
-        user: user, notice: notice, dues: 20000})
+        user: user, activity: activity, dues: 20000})
     end
   end
 end
