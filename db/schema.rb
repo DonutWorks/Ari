@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107082120) do
+ActiveRecord::Schema.define(version: 20141107085132) do
 
   create_table "activities", force: true do |t|
     t.string   "title"
@@ -69,9 +69,13 @@ ActiveRecord::Schema.define(version: 20141107082120) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "bank_account_id"
+    t.integer  "activity_id"
+    t.integer  "notice_id"
   end
 
+  add_index "expense_records", ["activity_id"], name: "index_expense_records_on_activity_id"
   add_index "expense_records", ["bank_account_id"], name: "index_expense_records_on_bank_account_id"
+  add_index "expense_records", ["notice_id"], name: "index_expense_records_on_notice_id"
 
   create_table "invitations", force: true do |t|
     t.string   "code"

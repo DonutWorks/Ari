@@ -24,6 +24,8 @@ class Notice < ActiveRecord::Base
   has_many :checklists
   accepts_nested_attributes_for :checklists, reject_if: lambda {|attributes| attributes['task'].blank?}
 
+  has_many :expense_records
+
   acts_as_readable
   before_save :make_redirectable_url!
   before_save :change_candidates_status, if: :to_notice?

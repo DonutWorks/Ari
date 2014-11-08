@@ -24,7 +24,14 @@
           <td><%= record.withdraw %> 원</td>
           <td><%= record.deposit %> 원</td>
           <td><%= record.content %></td>
-          <td><span class="<%= record.confirm? ? 'glyphicon glyphicon-ok' : '' %>"></span><td>
+          <td>
+            <% if record.notice %>
+              <%= link_to admin_notice_path(record.notice) do %>
+                <%= record.notice.title %>
+              <% end %>
+              (<%= record.activity.title %>)
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
