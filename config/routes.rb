@@ -55,7 +55,8 @@ Rails.application.routes.draw do
     end
 
     resources :bank_accounts, shallow: true do
-      resources :expense_records do
+      get 'download_account_example', on: :collection
+      resources :expense_records do        
         get 'submit_dues'
       end
     end
