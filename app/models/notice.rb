@@ -31,6 +31,7 @@ class Notice < ActiveRecord::Base
 
   acts_as_readable
 
+  before_validation :fill_club_id
   before_save :make_redirectable_url!
   before_save :change_candidates_status, if: :to_notice?
 
@@ -67,6 +68,10 @@ private
     candidates_count = to - go_responses.count
     candidates = wait_responses.order(created_at: :asc).limit(candidates_count)
     candidates.update_all(status: "go")
+  end
+
+  def fill_club_id
+    self.club = self.activity.club
   end
 
   def must_have_checklists

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103053643) do
+ActiveRecord::Schema.define(version: 20141108074628) do
 
   create_table "activities", force: true do |t|
     t.string   "title"
@@ -20,7 +20,10 @@ ActiveRecord::Schema.define(version: 20141103053643) do
     t.datetime "event_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "club_id"
   end
+
+  add_index "activities", ["club_id"], name: "index_activities_on_club_id"
 
   create_table "admin_users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -67,7 +70,10 @@ ActiveRecord::Schema.define(version: 20141103053643) do
     t.string   "account_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "club_id"
   end
+
+  add_index "bank_accounts", ["club_id"], name: "index_bank_accounts_on_club_id"
 
   create_table "checklists", force: true do |t|
     t.text     "task"
