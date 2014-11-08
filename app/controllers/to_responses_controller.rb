@@ -1,6 +1,6 @@
 class ToResponsesController < ApplicationController
   def index
-    @notice = current_club.notices.friendly.find(params[:notice_id])
+    @notice = current_club.notices.friendly.find(params[:notice_id]).decorate
   end
 
   def create
@@ -29,5 +29,4 @@ class ToResponsesController < ApplicationController
     flash[:error] = "응답이 취소 되었습니다."
     redirect_to club_notice_to_responses_path(current_club, notice)
   end
-
 end

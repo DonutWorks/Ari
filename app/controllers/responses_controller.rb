@@ -1,6 +1,6 @@
 class ResponsesController < ApplicationController
   def index
-    @notice = current_club.notices.friendly.find(params[:notice_id])
+    @notice = current_club.notices.friendly.find(params[:notice_id]).decorate
 
     if current_user.responsed_to?(@notice)
       case @notice.responses.find_by_user_id(current_user).status

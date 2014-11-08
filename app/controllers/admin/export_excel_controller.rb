@@ -9,13 +9,7 @@ class Admin::ExportExcelController < Admin::ApplicationController
 
     pattern = PatternUtil.new(params[:pattern])
 
-    begin
-      url = CyworldURL.new(@link_url.strip).to_comment_view_url
-    rescue Exception => e
-      @error_message = e.message
-      render "new"
-      return
-    end
+    url = CyworldURL.new(@link_url.strip).to_comment_view_url
 
     comments = HtmlCommentParser.import(pattern, url)
 
@@ -34,8 +28,9 @@ class Admin::ExportExcelController < Admin::ApplicationController
                                "단체 아이디" => :habitat_id  }
    end
     send_data ExcelBuilder.build_excel_file(comments, habitat_format_header), :filename => "comments-excel.xls", :type =>  "application/vnd.ms-excel"
-    # redirect_to club_admin_root_path(current_club)
+
+  rescue Exception => e
+    @error_message = e.message
+    render "new"
   end
-
-
 end

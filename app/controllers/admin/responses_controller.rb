@@ -3,11 +3,11 @@ class Admin::ResponsesController < Admin::ApplicationController
   respond_to :json
 
   def index
+    @notice = @notice.decorate
   end
 
   def update_check
-
-    response = Response.find_by_id(params[:response_id])
+    response = current_club.responses.find_by_id(params[:response_id])
     case params[:check]
     when "absence"
       response.absence == 0 ? response.update(absence: 1) : response.update(absence: 0)
@@ -18,8 +18,8 @@ class Admin::ResponsesController < Admin::ApplicationController
     end
     respond_with response
   end
-  def update
 
+  def update
     input_to = 0
     params[:user].each do |key,value|
       if value == "go"

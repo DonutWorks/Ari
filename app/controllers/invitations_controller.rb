@@ -40,6 +40,8 @@ class InvitationsController < AuthenticatableController
     case out[:status]
     when :failure
       flash[:error] = "카카오톡 인증에 실패하였습니다."
+    when :expired_ticket
+      flash[:error] = "이미 만료된 초대장입니다."
     when :success
       flash[:notice] = "카카오톡 인증에 성공하였습니다."
     end

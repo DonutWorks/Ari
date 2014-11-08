@@ -39,9 +39,11 @@ Rails.application.routes.draw do
     end
 
     namespace :admin do
-      root 'application#index'
-      get 'users/get_user'
+      root 'activities#index'
 
+      resources :activities
+
+      get 'users/get_user'
       resources :users do
         collection do
           get :import, to: 'import#new'
@@ -63,6 +65,10 @@ Rails.application.routes.draw do
             get '/update_check', to: :update_check
           end
         end
+      end
+
+      resources :bank_accounts, shallow: true do
+        resources :expense_records
       end
 
       resource :export_excel,  controller: :export_excel,  only: [:new, :create]

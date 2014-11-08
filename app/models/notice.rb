@@ -14,11 +14,12 @@ class Notice < ActiveRecord::Base
     end
   end
 
+  belongs_to :club
+  belongs_to :activity
   has_many :responses
   has_many :messages
   has_many :checklists
   accepts_nested_attributes_for :checklists, reject_if: lambda {|attributes| attributes['task'].blank?}
-  belongs_to :club
 
   extend FriendlyId
   friendly_id :title, use: :slugged
@@ -33,9 +34,9 @@ class Notice < ActiveRecord::Base
   before_save :make_redirectable_url!
   before_save :change_candidates_status, if: :to_notice?
 
-  validates :title, presence: { message: "공지 제목을 입력해주십시오." }
-  validates :link, presence: { message: "공지 링크를 입력해주십시오." }, if: :external_notice?
-  validates :content, presence: { message: "공지 내용을 입력해주십시오." }
+  validates :title, presence: true
+  validates :link, presence: true, if: :external_notice?
+  validates :content, presence: true
   validates :notice_type, presence: { message: "유형을 선택해주십시오." },
    inclusion: { in: NOTICE_TYPES, message: "올바르지 않은 유형입니다." }
   validates :club_id, presence: true
@@ -43,14 +44,7 @@ class Notice < ActiveRecord::Base
   validate :to_adjustable?, if: :to_notice?
   validate :must_have_checklists, if: :checklist_notice?
 
-
-  def self.deadline_send_sms
-    Notice.where(notice_type: 'to').where(due_date: Date.today + 3.days).find_each do |notice|
-      Response.responsed_to_go(notice).find_each do |response|
-        Admin::Messages::SendMessageService.new.execute("[" + notice.title + "] 공지의 신청이 마감 되었습니다.", notice.id, response.user.id)
-      end
-    end
-  end
+  scope :created_at_desc, -> { order(created_at: :desc) }
 
 private
   def make_redirectable_url!

@@ -2,12 +2,7 @@ module Authenticates
   class PhoneNumberSignInService < BaseService
     def execute(session, phone_number)
       normalizer = FormNormalizers::PhoneNumberNormalizer.new
-
-      begin
-        phone_number = normalizer.normalize(phone_number)
-      rescue FormNormalizers::NormalizeError => e
-        return invalid_phone_number
-      end
+      phone_number = normalizer.normalize(phone_number)
 
       user = current_club.users.find_by(phone_number: phone_number)
 
@@ -17,6 +12,9 @@ module Authenticates
 
       UserSession.new(session).create!(user, true)
       return success({ user: user })
+
+    rescue FormNormalizers::NormalizeError => e
+      return invalid_phone_number
     end
 
   private

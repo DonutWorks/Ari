@@ -1,6 +1,6 @@
 class NoticesController < ApplicationController
   def show
-    @notice = current_club.notices.friendly.find(params[:id])
+    @notice = current_club.notices.friendly.find(params[:id]).decorate
     @assignee_comment = AssigneeComment.new if @notice.notice_type == "checklist"
 
     current_user.read!(@notice)

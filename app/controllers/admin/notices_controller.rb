@@ -5,7 +5,9 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def new
     @notice = current_club.notices.new
-    @users = current_club.users.all
+    @users = current_club.users.all.decorate
+    @activity_id = params[:activity_id]
+
     20.times { @notice.checklists.build.assign_histories.build }
   end
 
@@ -21,20 +23,22 @@ class Admin::NoticesController < Admin::ApplicationController
       redirect_to club_admin_notice_path(current_club, @notice)
     else
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice? && !@notice.checklists.empty?
-      @users = current_club.users.all
+      @users = current_club.users.all.decorate
+
       20.times { @notice.checklists.build.assign_histories.build }
       render 'new'
     end
   end
 
   def show
-    @notice = current_club.notices.friendly.find(params[:id])
+    @notice = current_club.notices.friendly.find(params[:id]).decorate
     @assignee_comment = AssigneeComment.new if @notice.notice_type == "checklist"
   end
 
   def edit
     @notice = current_club.notices.friendly.find(params[:id])
-    @users = current_club.users.all
+    @users = current_club.users.all.decorate
+
     20.times { @notice.checklists.build.assign_histories.build }
   end
 
@@ -46,7 +50,7 @@ class Admin::NoticesController < Admin::ApplicationController
       redirect_to club_admin_notice_path(current_club, @notice)
     else
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice?
-      @users = User.all
+      @users = current_club.users.all.decorate
       20.times { @notice.checklists.build.assign_histories.build}
       render 'edit'
     end
@@ -80,28 +84,28 @@ class Admin::NoticesController < Admin::ApplicationController
     lastRow = data.last_row
     lastColumn = data.last_column
 
-    begin
-      User.transaction do
-        (2..lastRow).each do |i|
-          user = current_club.users.new
-          user.username = data.cell(i, 1)
-          user.phone_number = data.cell(i, 2)
-          user.email = data.cell(i, 3)
-          user.major = data.cell(i, 4)
-          user.save!
-        end
+    User.transaction do
+      (2..lastRow).each do |i|
+        user = current_club.users.new
+        user.username = data.cell(i, 1)
+        user.phone_number = data.cell(i, 2)
+        user.email = data.cell(i, 3)
+        user.major = data.cell(i, 4)
+        user.save!
       end
-      flash[:notice] = "멤버 입력에 성공했습니다."
-    rescue ActiveRecord::StatementInvalid
-      flash[:notice] = "멤버 입력에 실패했습니다."
     end
 
+    flash[:notice] = "멤버 입력에 성공했습니다."
+
+  rescue ActiveRecord::StatementInvalid
+    flash[:notice] = "멤버 입력에 실패했습니다."
+  ensure
     redirect_to club_admin_root_path(current_club)
   end
 
 private
   def notice_params
-    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date,
+    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date, :activity_id, :regular_dues, :associate_dues,
       checklists_attributes: [:id, :task, assign_histories_attributes: [:user_id]])
   end
 end

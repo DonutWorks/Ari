@@ -1,5 +1,4 @@
 class Admin::ImportController < Admin::ApplicationController
-
   def new
     @invalid_messages = []
   end
@@ -43,7 +42,4 @@ class Admin::ImportController < Admin::ApplicationController
       render 'new'
     end
   end
-
-
-
 end

@@ -131,7 +131,7 @@ RSpec.describe "user auth process", type: :feature do
           visit(@invitation_url_original)
           find("#kakao-login-btn").click
 
-          expect(page).to have_content("카카오톡 인증에 실패하였습니다.")
+          expect(page).to have_content("이미 만료된 초대장입니다.")
         end
       end
 

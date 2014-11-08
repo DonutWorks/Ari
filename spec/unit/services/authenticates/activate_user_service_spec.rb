@@ -47,7 +47,7 @@ RSpec.describe Authenticates::ActivateUserService do
         out = Authenticates::ActivateUserService.new(@club).execute(@user, @code)
         @user.reload
 
-        expect(out[:status]).to eq(:failure)
+        expect(out[:status]).to eq(:expired_ticket)
         expect(@user.activated?).to eq(false)
       end
     end

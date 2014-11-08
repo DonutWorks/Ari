@@ -51,6 +51,13 @@ FactoryGirl.define do
     member_type "정단원"
   end
 
+
+  factory :activity do
+    title "2014-2 Acitivity"
+    description "This is activity"
+    event_at Time.now
+  end
+
   factory :notice do
     club
     sequence(:title) { |n| "notice title #{n}" }
@@ -61,7 +68,23 @@ FactoryGirl.define do
     factory :to_notice do
       notice_type "to"
       to 10
-      due_date 100.years.from_now
+      due_date Date.today + 10.days
+      regular_dues 20000
     end
+  end
+
+  factory :expense_record do
+    record_date "2000-01-01"
+    deposit 20000
+    withdraw 0
+    content "John"
+  end
+
+  factory :response do
+    status "go"
+  end
+
+  factory :message do
+    content "go"
   end
 end

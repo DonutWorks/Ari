@@ -2,11 +2,11 @@ class Admin::UsersController < Admin::ApplicationController
   respond_to :json
 
   def index
-    @users = current_club.users.all
+    @users = current_club.users.all.decorate
   end
 
   def new
-    @user = current_club.users.new
+    @user = current_club.users.new.decorate
   end
 
   def create
@@ -18,12 +18,13 @@ class Admin::UsersController < Admin::ApplicationController
       flash[:notice] = "\"#{@user.username}\"님의 회원 정보 생성에 성공했습니다."
       redirect_to club_admin_users_path(current_club)
     else
+      @user = @user.decorate
       render "new"
     end
   end
 
   def edit
-    @user = current_club.users.find(params[:id])
+    @user = current_club.users.find(params[:id]).decorate
   end
 
   def update
@@ -36,6 +37,7 @@ class Admin::UsersController < Admin::ApplicationController
       flash[:notice] = "\"#{@user.username}\"님의 회원 정보 수정에 성공했습니다."
       redirect_to club_admin_user_path(current_club, @user)
     else
+      @user = @user.decorate
       render 'edit'
     end
   end
@@ -49,7 +51,7 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def show
-    @user = current_club.users.find(params[:id])
+    @user = current_club.users.find(params[:id]).decorate
   end
 
   def tags

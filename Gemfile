@@ -86,3 +86,4 @@ gem 'gimchi', '~> 0.2.1'
 
 # active-record observer
 gem 'rails-observers'
+gem 'draper', '~> 1.4.0'
