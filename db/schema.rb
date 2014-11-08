@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141108115302) do
+ActiveRecord::Schema.define(version: 20141108134935) do
 
   create_table "activities", force: true do |t|
     t.string   "title"
@@ -20,8 +20,6 @@ ActiveRecord::Schema.define(version: 20141108115302) do
     t.datetime "event_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "regular_dues"
-    t.integer  "associate_dues"
   end
 
   create_table "assign_histories", force: true do |t|
@@ -113,6 +111,8 @@ ActiveRecord::Schema.define(version: 20141108115302) do
     t.integer  "to"
     t.datetime "due_date"
     t.integer  "activity_id"
+    t.integer  "associate_dues"
+    t.integer  "regular_dues"
   end
 
   add_index "notices", ["activity_id"], name: "index_notices_on_activity_id"

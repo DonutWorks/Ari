@@ -13,7 +13,7 @@
         <th>출금</th>
         <th>입금</th>
         <th>내용</th>
-        <th width="30%">참조</th>
+        <th width="30%">납부 참조</th>
         <th></th>
       </tr>
     </thead>
@@ -29,7 +29,7 @@
             <%= link_response(record) %>
           </td>
           <td>
-            <button class="record-modal btn btn-default btn-xs" type="button" data-toggle="modal" data-target="#record-select-modal" data-record="<%= record.id %>">새 참조</button>
+            <button class="record-modal btn btn-default btn-xs" type="button" data-toggle="modal" data-target="#record-select-modal" data-record="<%= record.id %>">수동 납부</button>
             <%= link_to "삭제", admin_expense_record_path(record), method: :delete,
       data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger btn-xs" %>
           </td>

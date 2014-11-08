@@ -13,9 +13,9 @@ class ExpenseRecord < ActiveRecord::Base
       if user = User.find_by_username(content)
         case user.member_type
         when '예비단원'
-          dues = notice.activity.associate_dues
+          dues = notice.associate_dues
         else
-          dues = notice.activity.regular_dues
+          dues = notice.regular_dues
         end
 
         if dues == deposit
@@ -32,8 +32,10 @@ class ExpenseRecord < ActiveRecord::Base
 
 private
   def reset_response
-    self.response.update!(dues: 0)
-    self.response = nil
-    self.save
+    if self.response
+      self.response.update!(dues: 0)
+      self.response = nil
+      self.save
+    end
   end
 end

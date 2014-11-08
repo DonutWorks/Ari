@@ -20,7 +20,6 @@ FactoryGirl.define do
     title "2014-2 Acitivity"
     description "This is activity"
     event_at Time.now
-    regular_dues 20000
   end
 
   factory :notice do
@@ -33,6 +32,7 @@ FactoryGirl.define do
       notice_type "to"
       to 10
       due_date Date.today + 10.days
+      regular_dues 20000
     end
   end
 

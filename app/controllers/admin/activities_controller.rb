@@ -52,7 +52,7 @@ class Admin::ActivitiesController < Admin::ApplicationController
 
 private
   def activity_params
-    params.require(:activity).permit(:title, :description, :event_at, :regular_dues, :associate_dues)
+    params.require(:activity).permit(:title, :description, :event_at)
   end
 
   def calculate_dues_sum(activity)
@@ -66,9 +66,9 @@ private
       notice.responses.where(dues: 1).each do |response|
         case response.user.member_type
         when "예비단원"
-          notice.activity.associate_dues ? sum += notice.activity.associate_dues : sum += 0
+          notice.associate_dues ? sum += notice.associate_dues : sum += 0
         else
-          notice.activity.regular_dues ? sum += notice.activity.regular_dues : sum += 0
+          notice.regular_dues ? sum += notice.regular_dues : sum += 0
         end
 
         case response.status
