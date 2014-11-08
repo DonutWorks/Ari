@@ -75,6 +75,17 @@ class Admin::NoticesController < Admin::ApplicationController
     )
   end
 
+  def to_notice_end_deadline
+    notice = Notice.find(params[:notice_id])
+    if notice.update(due_date: Time.now)
+      flash[:notice] = "\"#{notice.title}\" 공지를 성공적으로 마감 했습니다."
+      redirect_to admin_notice_path(notice)
+    else
+      flash[:notice] = "\"#{notice.title}\" 공지를 마감 할 수 없습니다."
+      redirect_to admin_notice_responses_path(notice)
+    end
+  end
+
   def add_members
     data = ExcelImporter.import(params[:upload][:file])
     data.default_sheet = data.sheets.first
@@ -102,7 +113,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
 private
   def notice_params
-    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :due_date, :activity_id, :regular_dues, :associate_dues,
+    params.require(:notice).permit(:title, :link, :content, :notice_type, :to, :event_at, :due_date, :activity_id, :regular_dues, :associate_dues,
       checklists_attributes: [:id, :task, assign_histories_attributes: [:user_id]])
   end
 end

@@ -7,7 +7,6 @@ class Admin::ResponsesController < Admin::ApplicationController
   end
 
   def update_check
-
     response = Response.find_by_id(params[:response_id])
     case params[:check]
     when "absence"
@@ -19,6 +18,7 @@ class Admin::ResponsesController < Admin::ApplicationController
     end
     respond_with response
   end
+
   def update
 
     input_to = 0

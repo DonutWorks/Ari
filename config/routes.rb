@@ -44,6 +44,8 @@ Rails.application.routes.draw do
       collection do
         get 'download_roster_example'
       end
+      get 'to_notice_end_deadline'
+
       resources :responses, only: [] do
         collection do
           get '/', to: :index

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103053643) do
+ActiveRecord::Schema.define(version: 20141108070246) do
 
   create_table "activities", force: true do |t|
     t.string   "title"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20141103053643) do
     t.integer  "regular_dues"
     t.integer  "associate_dues"
     t.integer  "activity_id"
+    t.datetime "event_at"
   end
 
   add_index "notices", ["activity_id"], name: "index_notices_on_activity_id"

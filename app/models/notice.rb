@@ -25,6 +25,8 @@ class Notice < ActiveRecord::Base
   accepts_nested_attributes_for :checklists, reject_if: lambda {|attributes| attributes['task'].blank?}
 
   acts_as_readable
+
+  before_create :copy_event_at_to_due_date
   before_save :make_redirectable_url!
   before_save :change_candidates_status, if: :to_notice?
 
@@ -70,5 +72,9 @@ private
 
   def must_have_checklists
     errors.add(:task, '하나 이상의 체크리스트가 있어야 합니다') if self.checklists.empty?
+  end
+
+  def copy_event_at_to_due_date
+    self.due_date = self.event_at
   end
 end
