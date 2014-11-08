@@ -4,7 +4,7 @@ class ExpenseRecord < ActiveRecord::Base
 
   validates :record_date, :uniqueness => {:scope => [:deposit, :withdraw, :content]}
 
-  after_destroy :reset_response
+  before_destroy :reset_response
 
   def check_dues
     notices = Notice.where(notice_type: 'to').where('due_date >= ?', Date.today - 5.days)
