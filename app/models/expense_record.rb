@@ -1,7 +1,6 @@
 class ExpenseRecord < ActiveRecord::Base
   belongs_to :bank_account
-  belongs_to :activity
-  belongs_to :notice
+  has_one :response
 
   validates :record_date, :uniqueness => {:scope => [:deposit, :withdraw, :content]}
 
@@ -20,8 +19,7 @@ class ExpenseRecord < ActiveRecord::Base
         if dues == deposit
           response = notice.responses.find_by_user_id(user.id)
           if response.dues != 1 and response.update!(dues: 1)
-            self.activity_id = notice.activity.id
-            self.notice_id = notice.id
+            self.response = response
             return {user: user, activity: notice.activity, dues: dues}
           end
         end        

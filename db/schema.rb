@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107085132) do
+ActiveRecord::Schema.define(version: 20141108115302) do
 
   create_table "activities", force: true do |t|
     t.string   "title"
@@ -69,13 +69,9 @@ ActiveRecord::Schema.define(version: 20141107085132) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "bank_account_id"
-    t.integer  "activity_id"
-    t.integer  "notice_id"
   end
 
-  add_index "expense_records", ["activity_id"], name: "index_expense_records_on_activity_id"
   add_index "expense_records", ["bank_account_id"], name: "index_expense_records_on_bank_account_id"
-  add_index "expense_records", ["notice_id"], name: "index_expense_records_on_notice_id"
 
   create_table "invitations", force: true do |t|
     t.string   "code"
@@ -141,11 +137,13 @@ ActiveRecord::Schema.define(version: 20141107085132) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "absence",    default: 0
-    t.integer  "dues",       default: 0
+    t.integer  "absence",           default: 0
+    t.integer  "dues",              default: 0
     t.string   "memo"
+    t.integer  "expense_record_id"
   end
 
+  add_index "responses", ["expense_record_id"], name: "index_responses_on_expense_record_id"
   add_index "responses", ["notice_id"], name: "index_responses_on_notice_id"
   add_index "responses", ["user_id"], name: "index_responses_on_user_id"
 

@@ -55,7 +55,9 @@ Rails.application.routes.draw do
     end
 
     resources :bank_accounts, shallow: true do
-      resources :expense_records
+      resources :expense_records do
+        get 'submit_dues'
+      end
     end
 
     resource :export_excel,  controller: :export_excel,  only: [:new, :create]

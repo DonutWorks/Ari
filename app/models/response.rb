@@ -2,7 +2,8 @@ class Response < ActiveRecord::Base
   STATUSES = %w(yes maybe no go wait)
 
   belongs_to :notice
-  belongs_to :user
+  belongs_to :user  
+  belongs_to :expense_record
 
   scope :responsed_to_go, -> (notice) { notice.responses.where(status: "go") }
   scope :time, -> (notice) { find_by_notice_id(notice.id).decorate.responsed_at }

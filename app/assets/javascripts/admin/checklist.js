@@ -15,7 +15,7 @@ var userModal = {
       this.target = e.relatedTarget;
     }.bind(this));
 
-    $(".clickable-row td:not(.menu)").on("click", function(e) {
+    $(".all-users-modal").on("click", '.clickable-row td:not(.menu)',function(e) {
       var tr = $(this).parent();
       var user = {username: $(tr).children('.user-username').text().trim(),
                   phone_number: $(tr).children('.user-phone-number').text().trim()};
