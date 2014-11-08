@@ -29,7 +29,9 @@
             <%= link_response(record) %>
           </td>
           <td>
-            <button class="record-modal btn btn-default btn-xs" type="button" data-toggle="modal" data-target="#record-select-modal" data-record="<%= record.id %>">수정</button>
+            <button class="record-modal btn btn-default btn-xs" type="button" data-toggle="modal" data-target="#record-select-modal" data-record="<%= record.id %>">새 참조</button>
+            <%= link_to "삭제", admin_expense_record_path(record), method: :delete,
+      data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger btn-xs" %>
           </td>
         </tr>
       <% end %>

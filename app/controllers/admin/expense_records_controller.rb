@@ -45,6 +45,11 @@ class Admin::ExpenseRecordsController < Admin::ApplicationController
     end
   end
 
+  def destroy
+    ExpenseRecord.find(params[:id]).destroy
+    redirect_to :back
+  end
+
   def submit_dues
     expense_record = ExpenseRecord.find(params[:record_id])
     response = Response.find(params[:response_id])
