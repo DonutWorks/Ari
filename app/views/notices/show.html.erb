@@ -4,8 +4,8 @@
     <h5 class="pull-right">
       <p>만든 날짜 : <%= @notice.created_at %></p>
       <% if @notice.notice_type == "to"  %>
-        <p>행사 날짜 : <%= @notice.due_date %></p>
-        <p>모집 시한 : <%= @notice.survey_due_date %></p>
+        <p>행사 날짜 : <%= @notice.event_at %></p>
+        <p>모집 시한 : <%= @notice.due_date %></p>
         <p>참가비 : 정단원(<%= @notice.regular_dues ? @notice.regular_dues : "0" %>원), 예비단원(<%= @notice.associate_dues ? @notice.associate_dues : "0" %>원)</p>
       <% end %>
     </h5>

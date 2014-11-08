@@ -32,6 +32,7 @@ FactoryGirl.define do
       notice_type "to"
       to 10
       due_date Date.today + 10.days
+      event_at Date.today + 10.days
       regular_dues 20000
     end
   end
