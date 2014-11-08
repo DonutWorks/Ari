@@ -17,4 +17,7 @@ class NoticeDecorator < Draper::Decorator
     (object.due_date - 3.days).localtime.strftime("%Y-%m-%d %T")
   end
 
+  def content
+    h.simple_format(object.content)
+  end
 end
