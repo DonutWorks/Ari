@@ -2,6 +2,7 @@ class SessionsController < AuthenticatableController
   skip_before_action :require_activated
 
   def new
+    # need to fix current_club.users.new?
     @user = User.new
   end
 

@@ -1,6 +1,6 @@
 class AssigneeCommentsController < ApplicationController
   def create
-    checklist = Notice.find(params[:notice_id]).checklists.find(params[:checklist_id])
+    checklist = current_club.notices.friendly.find(params[:notice_id]).checklists.find(params[:checklist_id])
     checklist.assignee_comments.create!(assignee_comments_params)
     redirect_to :back
   end

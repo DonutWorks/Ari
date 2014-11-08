@@ -5,15 +5,6 @@ require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
 
-namespace :club do
-  task create: :environment do
-    club = FactoryGirl.create(:complete_club)
-    representive = club.representive
-    puts "Club created: #{club.name}"
-    puts "Representive: { email: #{representive.email}, password: 12345678 }"
-  end
-end
-
 namespace :slug do
   task create: :environment do
     Club.find_each(&:save)

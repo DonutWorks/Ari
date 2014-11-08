@@ -9,9 +9,9 @@ RSpec.describe BankAccount, :type => :model do
       expect(ba.errors.messages.keys).to be_include(:account_number)
     end
 
-    it "should check validates uniqueness of account_number" do 
+    it "should check validates uniqueness of account_number" do
       BankAccount.create(account_number: "1103335555555")
-      
+
       new_ba = BankAccount.new(account_number: "1103335555555")
       new_ba.valid?
 
