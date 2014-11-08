@@ -22,6 +22,8 @@ class Admin::ActivitiesController < Admin::ApplicationController
 
   def show
     @activity = Activity.find(params[:id]).decorate
+    @dues_sum = calculate_dues_sum(@activity)
+    return @dues_sum
   end
 
   def edit
@@ -51,5 +53,35 @@ class Admin::ActivitiesController < Admin::ApplicationController
 private
   def activity_params
     params.require(:activity).permit(:title, :description, :event_at, :regular_dues, :associate_dues)
+  end
+
+  def calculate_dues_sum(activity)
+    dues_sum = []
+
+    activity.notices.where(notice_type: 'to').each do |notice|
+      sum = 0
+      go = 0
+      wait = 0
+
+      notice.responses.where(dues: 1).each do |response|
+        case response.user.member_type
+        when "예비단원"
+          notice.activity.associate_dues ? sum += notice.activity.associate_dues : sum += 0
+        else
+          notice.activity.regular_dues ? sum += notice.activity.regular_dues : sum += 0
+        end
+
+        case response.status
+        when "go"
+          go += 1
+        when "wait"
+          wait += 1
+        end
+      end
+
+      dues_sum << {notice: notice, go: go, wait: wait, sum: sum}
+    end
+
+    return dues_sum
   end
 end
