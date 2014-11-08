@@ -1,14 +1,14 @@
 class Admin::ExpenseRecordsController < Admin::ApplicationController
   def index
-    @bank_account = BankAccount.find_by_account_number("110383537755")
+    @bank_account = current_club.bank_accounts.find_by_account_number("110383537755")
   end
 
   def new
-    @bank_account = BankAccount.find_by_account_number("110383537755")
+    @bank_account = current_club.bank_accounts.find_by_account_number("110383537755")
   end
 
   def create
-    @bank_account = BankAccount.find(params[:bank_account_id])
+    @bank_account = current_club.bank_accounts.find(params[:bank_account_id])
     result_array = []
 
     if !params[:upload].blank?
@@ -32,7 +32,7 @@ class Admin::ExpenseRecordsController < Admin::ApplicationController
 
         @results = result_array.group_by{|h| h[:notice] }
         flash[:notice] = "회계 기록이 최신 정보로 업데이트 되었습니다."
-        @results.empty? ? redirect_to(admin_bank_account_expense_records_path(@bank_account)) : render("result")
+        @results.empty? ? redirect_to(club_admin_bank_account_expense_records_path(current_club, @bank_account)) : render("result")
       else
         flash[:error] = "동아리 계좌가 아닙니다. 관리자에게 문의하세요."
         redirect_to :back

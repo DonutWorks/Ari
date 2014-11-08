@@ -37,10 +37,10 @@
             <%= link_to "SMS", club_admin_messages_path(current_club) %>
           </li>
           <li>
-            <%= link_to "로그아웃", destroy_admin_user_session_path, method: :delete %>
+            <%= link_to "회계", club_admin_bank_account_expense_records_path(current_club, bank_account_id: 1) %>
           </li>
           <li>
-            <%= link_to "회계", admin_bank_account_expense_records_path(bank_account_id: 1) %>
+            <%= link_to "로그아웃", destroy_admin_user_session_path, method: :delete %>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->

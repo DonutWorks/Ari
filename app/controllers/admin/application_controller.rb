@@ -34,6 +34,7 @@ private
   end
 
   def after_sign_out_path_for(admin_user)
+    session["admin_user_return_to"] = club_admin_root_path(current_club)
     new_admin_user_session_path(current_club)
   end
 

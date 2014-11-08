@@ -5,8 +5,7 @@ RSpec.describe "notice", type: :feature do
     @club = FactoryGirl.create(:complete_club)
     authenticate_to_admin!(@club.representive)
 
-    raise "need to modify activity factory"
-    @activity = FactoryGirl.create(:activity)
+    @activity = @club.activities.first
     @notice = @club.notices.first
     @user = @club.users.first
   end
@@ -111,7 +110,6 @@ RSpec.describe "notice", type: :feature do
 
   context "when I update a TO notice" do
     before(:each) do
-      raise "Need to modify test, factory"
       @to_notice = FactoryGirl.create(:to_notice, to: 3, title: "TO notice", club: @club, activity: @activity)
       @users = FactoryGirl.create_list(:user, 2)
 

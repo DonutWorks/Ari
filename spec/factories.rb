@@ -24,7 +24,8 @@ FactoryGirl.define do
 
     trait :with_notices do
       after(:create) do |club|
-        FactoryGirl.create_list(:notice, 3, club: club)
+        activity = FactoryGirl.create(:activity, club: club)
+        FactoryGirl.create_list(:notice, 3, activity: activity)
       end
     end
 
@@ -51,15 +52,15 @@ FactoryGirl.define do
     member_type "정단원"
   end
 
-
   factory :activity do
+    club
     title "2014-2 Acitivity"
     description "This is activity"
     event_at Time.now
   end
 
   factory :notice do
-    club
+    activity
     sequence(:title) { |n| "notice title #{n}" }
     content "google!"
     link "http://google.com"
