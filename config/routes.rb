@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'users#show', id: 1
+  root 'users#show'
 
   resources :invitations, only: [:new, :create, :show], param: :code # email activation
   resources :providers, path: '/auth/:provider', only: [] do # oauth callback
