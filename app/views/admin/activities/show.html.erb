@@ -2,8 +2,8 @@
   <div class="page-header clearfix">
     <h3 class="pull-left"><%= @activity.title %></h3>
     <div class="pull-right margin-top15">
-      <%= link_to "수정", edit_admin_activity_path(@activity), class: "btn btn-default btn-sm" %>
-      <%= link_to "삭제", admin_activity_path(@activity), method: :delete,
+      <%= link_to "수정", edit_club_admin_activity_path(current_club, @activity), class: "btn btn-default btn-sm" %>
+      <%= link_to "삭제", club_admin_activity_path(current_club, @activity), method: :delete,
       data: { confirm: '활동에 속한 공지도 모두 삭제 됩니다. 정말 삭제하시겠어요?' }, class: "btn btn-danger btn-sm" %>
     </div>
   </div>

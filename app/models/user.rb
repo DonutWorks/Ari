@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  belongs_to :club
   has_many :invitations
   has_many :responses
   has_many :message_histories
@@ -8,8 +9,6 @@ class User < ActiveRecord::Base
   has_many :assign_histories
   has_many :checklists, through: :assign_histories
   serialize :extra_info
-
-
 
   scope :generation_sorted_desc, -> { order(generation_id: :desc) }
   scope :responsed_to_notice, -> (notice) { joins(:responses).merge(Response.where(notice: notice)) }
@@ -28,13 +27,13 @@ class User < ActiveRecord::Base
 
   acts_as_reader
 
-  validates_presence_of :username, :phone_number, :email
-  validates_uniqueness_of :phone_number, :email
+  validates_presence_of :username, :phone_number, :email, :club_id
+  validates_uniqueness_of :phone_number, :email, scope: :club_id
 
   before_validation :normalize_phone_number
   before_validation :strip!
 
-  attr_accessor :regard_as_activated
+  attr_accessor :regard_as_activated, :remember_me
 
   def responsed_to?(notice)
     responses.exists?(notice: notice)

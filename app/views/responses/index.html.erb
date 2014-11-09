@@ -2,13 +2,13 @@
 
 <div>
   <div class="btn-group pull-left">
-    <%= link_to "참가", notice_responses_path(status: "yes"), method: :post, class: "btn btn-default #{@status == '참가' ? 'btn-primary' : '' }" %>
-    <%= link_to "불확실", notice_responses_path(status: "maybe"), method: :post, class: "btn btn-default #{@status == '모름' ? 'btn-warning' : '' }" %>
-    <%= link_to "불참", notice_responses_path(status: "no"), method: :post, class: "btn btn-default #{@status == '불참' ? 'btn-danger' : '' }" %>
+    <%= link_to "참가", club_notice_responses_path(current_club, @notice, status: "yes"), method: :post, class: "btn btn-default #{@status == '참가' ? 'btn-primary' : '' }" %>
+    <%= link_to "불확실", club_notice_responses_path(current_club, @notice, status: "maybe"), method: :post, class: "btn btn-default #{@status == '모름' ? 'btn-warning' : '' }" %>
+    <%= link_to "불참", club_notice_responses_path(current_club, @notice, status: "no"), method: :post, class: "btn btn-default #{@status == '불참' ? 'btn-danger' : '' }" %>
   </div>
   <div class="pull-right">
   <% if current_user.responsed_to?(@notice) %>
-    <%= link_to "취소", notice_response_path(@notice, @notice.responses.find_by_user_id(current_user)), method: :delete, class: "btn btn-danger pull-right" %>
+    <%= link_to "취소", club_notice_response_path(current_club, @notice, @notice.responses.find_by_user_id(current_user)), method: :delete, class: "btn btn-danger pull-right" %>
     <% end %>
   </div>
 </div>

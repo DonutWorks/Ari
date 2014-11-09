@@ -1,5 +1,6 @@
 class Invitation < ActiveRecord::Base
   belongs_to :user
+  belongs_to :club
   before_create :generate_code
 
 private

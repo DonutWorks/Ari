@@ -11,7 +11,7 @@ module Authenticates
         return invalid_phone_number
       end
 
-      user = User.find_by(phone_number: user_phone_number)
+      user = current_club.users.find_by(phone_number: user_phone_number)
       return invalid_phone_number if user.nil?
 
       # move provider info to new user
@@ -36,8 +36,8 @@ module Authenticates
 
       # send a ticket
       begin
-        Invitation.where(user: user).update_all(expired: true)
-        ticket = Invitation.create!(user: user)
+        current_club.invitations.where(user: user).update_all(expired: true)
+        ticket = current_club.invitations.create!(user: user)
       rescue ActiveRecord::RecordInvalid => e
         return failure
       end
@@ -58,7 +58,7 @@ module Authenticates
       end
 
       sms_info = {
-        from: "01044127987",
+        from: current_club.representive.phone_number,
         to: user_phone_number,
         text: "[인증 url] => " + url
       }

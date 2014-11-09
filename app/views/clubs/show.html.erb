@@ -1,0 +1,8 @@
+<div class="form-container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>안녕하세요 <%= current_user.username %> 님! @ <%= current_club.name %></h1>
+      <%= link_to('Logout', club_sign_out_path(current_club)) %>
+    </div>
+  </div>
+</div>

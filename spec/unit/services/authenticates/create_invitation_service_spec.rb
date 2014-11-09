@@ -2,11 +2,12 @@ require "rails_helper"
 
 RSpec.describe Authenticates::CreateInvitationService do
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    @club = FactoryGirl.create(:complete_club)
+    @user = @club.users.first
   end
 
   it "should create invitation for a user" do
-    out = Authenticates::CreateInvitationService.new.execute(nil, @user)
+    out = Authenticates::CreateInvitationService.new(@club).execute(nil, @user)
     expect(out[:status]).to eq(:success)
 
     invitation = Invitation.find_by(code: out[:code])
@@ -14,7 +15,7 @@ RSpec.describe Authenticates::CreateInvitationService do
   end
 
   it "should keep only one valid invitation for each user" do
-    service = Authenticates::CreateInvitationService.new
+    service = Authenticates::CreateInvitationService.new(@club)
     service.execute(nil, @user)
     service.execute(nil, @user)
     service.execute(nil, @user)
@@ -24,13 +25,13 @@ RSpec.describe Authenticates::CreateInvitationService do
   end
 
   it "should not create invitation for a invalid user" do
-    out = Authenticates::CreateInvitationService.new.execute(nil, nil)
+    out = Authenticates::CreateInvitationService.new(@club).execute(nil, nil)
     expect(out[:status]).to eq(:failure)
   end
 
   it "should move provider info when signed_in_user is not equal to user_params" do
-    @another_user = FactoryGirl.create(:user, username: "Mary")
-    service = Authenticates::CreateInvitationService.new
+    @another_user = @club.users.second
+    service = Authenticates::CreateInvitationService.new(@club)
     service.execute(nil, @user)
 
     provider = @user.provider

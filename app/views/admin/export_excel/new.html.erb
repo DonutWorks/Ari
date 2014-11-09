@@ -8,7 +8,7 @@
 <div class="form-container">
   <div class="row">
     <div class="col-md-12">
-      <%= form_tag(admin_export_excel_path, role: "form") do %>
+      <%= form_tag(club_admin_export_excel_path(current_club), role: "form") do %>
 
         <legend>공지 댓글을 엑셀파일로 저장하기</legend>
 

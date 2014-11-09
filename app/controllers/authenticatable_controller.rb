@@ -4,13 +4,13 @@ class AuthenticatableController < ApplicationController
 
 protected
   def proceed
-    redirect_to params.delete(:redirect_url) || root_path
+    redirect_to params.delete(:redirect_url) || club_path(current_club)
   end
 
   def require_signed_in
     if current_user.nil?
       params[:redirect_url] = request.fullpath
-      redirect_to sign_in_users_path
+      redirect_to club_sign_in_path(current_club)
       return true
     end
     return false
@@ -19,7 +19,7 @@ protected
   def require_activated
     return true if require_signed_in
     if !current_user.activated?
-      redirect_to new_invitation_path
+      redirect_to new_club_invitation_path(current_club)
       return true
     end
     return false

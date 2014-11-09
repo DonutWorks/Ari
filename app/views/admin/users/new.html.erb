@@ -1,12 +1,12 @@
 <div class="form-container">
   <div class="row">
   	<div class="col-md-12">
-      <%= form_for [:admin, @user], html: {role: "form", class: "form-horizontal"} do |f| %>
+      <%= form_for [current_club, :admin, @user], html: {role: "form", class: "form-horizontal"} do |f| %>
         <legend>새로운 회원 등록하기</legend>
         <%= render partial: 'form', locals: {f: f} %>
         <div class="pull-right">
           <%= f.submit "등록", class: "btn btn-primary btn-lg"  %>
-          <%= link_to admin_users_path do %>
+          <%= link_to club_admin_users_path(current_club) do %>
             <button type="button" class="btn btn-default btn-lg">
               취소
             </button>

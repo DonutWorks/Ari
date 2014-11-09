@@ -28,6 +28,7 @@ class Admin::ExportExcelController < Admin::ApplicationController
                                "단체 아이디" => :habitat_id  }
    end
     send_data ExcelBuilder.build_excel_file(comments, habitat_format_header), :filename => "comments-excel.xls", :type =>  "application/vnd.ms-excel"
+
   rescue Exception => e
     @error_message = e.message
     render "new"

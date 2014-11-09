@@ -19,14 +19,13 @@
 
             <tbody>
               <% users.each do |user| %>
-                <tr class="clickable-row" href="<%= admin_user_path(user) %>">
+                <tr class="clickable-row" href="<%= club_admin_user_path(current_club, user) %>">
                   <td><%= user.generation_id %></td>
                   <td class="user-username">
                     <%= user.username %>
                   </td>
                   <td class="user-phone-number"><%= user.phone_number %></td>
                   <td><%= user.tags %></td>
-
                 </tr>
               <% end %>
             </tbody>
