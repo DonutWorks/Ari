@@ -8,7 +8,7 @@ RSpec.describe ExpenseRecord, :type => :model do
       er = ExpenseRecord.new(record_date: "2000-01-01")
       er.valid?
       expect(er.errors.messages.keys).to be_empty
-      
+
       er.attributes = {
         deposit: 20000,
         withdraw: 0,
@@ -24,13 +24,18 @@ RSpec.describe ExpenseRecord, :type => :model do
   end
 
   describe "#check_dues" do
+    before(:each) do
+      @club = FactoryGirl.create(:complete_club)
+      @user = @club.users.first
+    end
+
     it "should return nil when notice is not found" do
       er = FactoryGirl.create(:expense_record)
       expect(er.check_dues).to eq(nil)
     end
 
     it "should return nil when user is not found in content" do
-      notice = FactoryGirl.create(:to_notice)
+      notice = FactoryGirl.create(:to_notice, activity: @club.activities.first)
       notice.responses.create({
         user: FactoryGirl.create(:user),
         status: "go"})
@@ -40,13 +45,14 @@ RSpec.describe ExpenseRecord, :type => :model do
     end
 
     it "should return normal data successfully" do
-      notice = FactoryGirl.create(:to_notice)
-      user = FactoryGirl.create(:user, username: "John")
+      notice = FactoryGirl.create(:to_notice, activity: @club.activities.first)
+      user = FactoryGirl.create(:user, username: "John", club: @club)
       notice.responses.create({
         user: user,
         status: "go"})
 
-      er = FactoryGirl.build(:expense_record)
+      er = FactoryGirl.build(:expense_record, bank_account: @club.bank_accounts.first)
+
       expect(er.check_dues).to eq({
         user: user, notice: notice, dues: 20000})
     end

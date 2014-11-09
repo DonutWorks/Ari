@@ -10,10 +10,6 @@ RSpec.describe "notice", type: :feature do
     @user = @club.users.first
   end
 
-  after(:each) do
-    Warden.test_reset!
-  end
-
   it "should let me see a notice lists" do
     visit club_admin_root_path(@club)
 
@@ -101,7 +97,7 @@ RSpec.describe "notice", type: :feature do
     visit club_admin_notice_path(@club, @notice)
 
     click_link('삭제')
-    # page.driver.browser.switch_to.alert.accept
+    page.driver.browser.switch_to.alert.accept if Capybara.current_driver != :rack_test
 
     expect(page).to have_selector('.alert')
     expect(page).to have_selector('#notice-container')

@@ -9,10 +9,6 @@ RSpec.describe "the signin process", type: :feature do
     # authenticate_to_admin!(@club.representive)
   end
 
-  after(:each) do
-    Warden.test_reset!
-  end
-
   it "should not sign me in with invalid account" do
     visit club_admin_root_path(@club)
     fill_in :admin_user_email, with: @club.representive.email

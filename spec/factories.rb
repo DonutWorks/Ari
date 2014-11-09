@@ -29,7 +29,13 @@ FactoryGirl.define do
       end
     end
 
-    factory :complete_club, traits: [:with_representive, :with_club_members, :with_notices]
+    trait :with_bank_account do
+      after(:create) do |club|
+        FactoryGirl.create(:bank_account, club: club)
+      end
+    end
+
+    factory :complete_club, traits: [:with_representive, :with_club_members, :with_notices, :with_bank_account]
   end
 
   factory :admin_user do
@@ -74,7 +80,17 @@ FactoryGirl.define do
     end
   end
 
+  sequence :account_number do |n|
+    "%012d" % n
+  end
+
+  factory :bank_account do
+    club
+    account_number
+  end
+
   factory :expense_record do
+    bank_account
     record_date "2000-01-01"
     deposit 20000
     withdraw 0
