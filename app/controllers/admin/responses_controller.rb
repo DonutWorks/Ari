@@ -3,6 +3,7 @@ class Admin::ResponsesController < Admin::ApplicationController
   respond_to :json
 
   def index
+    @notice_form = @notice
     @notice = @notice.decorate
   end
 

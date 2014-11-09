@@ -45,6 +45,7 @@ Rails.application.routes.draw do
         get 'download_roster_example'
       end
       get 'to_notice_end_deadline'
+      patch 'to_notice_change_deadline'
 
       resources :responses, only: [] do
         collection do
