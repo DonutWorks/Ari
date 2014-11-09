@@ -22,14 +22,16 @@ $(document).on('ready page:load', function () {
     }]);
 
   $("textarea").keydown(function(e){
-    // Enter was pressed without shift key
-    if (e.keyCode == 13 && !e.shiftKey)
+    if ( $.inArray(this.id, ["tags","user_filter_word","search_word"]) >= 0)
     {
-        if (this.form)
-          this.form.submit();
-        else
-          e.preventDefault();
-        return false;
+      if (e.keyCode == 13 && !e.shiftKey)
+      {
+          if (this.form)
+            this.form.submit();
+          else
+            e.preventDefault();
+          return false;
+      }
     }
   });
 
