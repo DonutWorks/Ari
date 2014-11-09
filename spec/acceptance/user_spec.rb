@@ -7,10 +7,6 @@ RSpec.describe "check user process", type: :feature do
     @user = @club.users.first
   end
 
-  after(:each) do
-    Warden.test_reset!
-  end
-
   it "should show user list" do
     visit club_admin_users_path(@club)
 
@@ -161,6 +157,7 @@ RSpec.describe "check user process", type: :feature do
     visit club_admin_user_path(@club, @user)
 
     click_link "삭제"
+    page.driver.browser.switch_to.alert.accept if Capybara.current_driver != :rack_test
 
     expect(find('.alert-info')).to have_content('회원 정보 삭제에 성공했습니다')
   end

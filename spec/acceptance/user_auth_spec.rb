@@ -145,28 +145,28 @@ RSpec.describe "user auth process", type: :feature do
             find("#kakao-login-btn").click
           end
 
-          it "lets me activate my account to click invitation link" do
+          it "lets me activate my account to click invitation link and redirect to redirect_url" do
             expect(page).to have_content("카카오톡 인증에 성공하였습니다.")
-          end
-
-          it "redirects me to redirect_url of invitation link" do
             expect(current_path).to eq(club_path(@club))
           end
 
           it "lets me sign out" do
             click_link("Logout")
+            visit club_path(@club)
             expect(current_path).to eq(club_sign_in_path(@club))
           end
 
           context "when user logged in" do
-            it "leads me to not auth page when I logged in" do
+            before(:each) do
               visit club_path(@club)
+            end
+
+            it "leads me to not auth page when I logged in" do
               expect(current_path).to eq(club_path(@club))
             end
 
-          it "should prevent me from accessing another club" do
+            it "should prevent me from accessing another club" do
               visit club_path(@another_club)
-
               expect(page).to have_content("존재하지 않는 동아리입니다.")
             end
           end
@@ -187,6 +187,7 @@ RSpec.describe "user auth process", type: :feature do
 
           it "lets me sign out" do
             click_link("Logout")
+            visit club_path(@club)
             expect(current_path).to eq(club_sign_in_path(@club))
           end
         end

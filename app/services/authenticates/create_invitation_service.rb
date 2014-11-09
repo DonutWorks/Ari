@@ -46,6 +46,7 @@ module Authenticates
     end
 
     def send_invitation_sms(user, invitation_url)
+      return true if Rails.env.test?
       shortener = URLShortener.new
       url = shortener.shorten_url(invitation_url)
 
