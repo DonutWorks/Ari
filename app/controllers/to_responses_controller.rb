@@ -14,7 +14,7 @@ class ToResponsesController < ApplicationController
       flash[:notice] = "참석자로 등록 되었습니다." if status == :go
       flash[:notice] = "대기자로 등록 되었습니다." if status == :wait
     else
-      flash[:error] = "잘못된 응답입니다."
+      flash[:error] = response.errors.full_messages.join('<br />')
     end
 
     redirect_to club_notice_to_responses_path(current_club, notice)

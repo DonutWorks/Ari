@@ -20,3 +20,5 @@ ko:
         link: "링크"
       message:
         content: "내용"
+      response:
+        user_id: "사용자"
