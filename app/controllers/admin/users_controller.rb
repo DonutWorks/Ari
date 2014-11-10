@@ -97,7 +97,7 @@ private
 
     @user.tags.destroy_all
 
-    referenced_tags.each do |tag|
+    referenced_tags.uniq.each do |tag|
       @user.taggings.build(tag_id: tag.id)
     end if referenced_tags != nil
   end

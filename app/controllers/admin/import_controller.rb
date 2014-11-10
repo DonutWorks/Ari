@@ -22,7 +22,10 @@ class Admin::ImportController < Admin::ApplicationController
           new_user = current_club.users.find_or_initialize_by(phone_number: user.phone_number)
           new_user.attributes = user.as_json(except: [:id]).merge(club: current_club)
 
-          unless new_user.save
+          if new_user.valid?
+            associate_user_with_tags!(new_user)
+            new_user.save
+          else
             @invalid_messages.push(new_user.errors.inspect)
             messages = i.to_s + "행(" + (new_user.username||="알수없음") + "님)은 꼭 필요한 데이터를 입력하지 않았습니다. "
             @invalid_messages.push(messages)
@@ -42,4 +45,28 @@ class Admin::ImportController < Admin::ApplicationController
       render 'new'
     end
   end
+
+private
+
+  def associate_user_with_tags!(user)
+    terms = [user.major, "#{user.generation_id.to_s.gsub(".0", "") + "기" if user.generation_id}", user.member_type]
+
+    terms.map! do |term|
+      next if term.blank?
+      term.strip!
+      begin
+        tag = current_club.tags.find_or_create_by(tag_name: term.to_s.force_encoding(Encoding::UTF_8))
+      rescue Encoding::CompatibilityError => e
+        raise term.to_s.force_encoding(Encoding::UTF_8)
+      end
+    end if !terms.empty?
+    user.tags.destroy_all
+
+    terms.compact.each do |tag|
+      user.taggings.build(tag_id: tag.id)
+    end if !terms.empty?
+
+  end
+
 end
+
