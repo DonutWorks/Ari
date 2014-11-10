@@ -1,20 +1,24 @@
-<div class="form-container">
-  <div class="row">
-    <div class="col-md-12">
-      <%= form_for [current_club, :admin, @activity], html: {role: "form", class: "form-horizontal"} do |f|%>
-        <legend>새로운 활동 만들기</legend>
+<div class="main-content">
+  <%= form_for [current_club, :admin, @activity], html: {role: "form", class: "form-horizontal"} do |f|%>
 
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="panel-title">
+          새로운 활동 만들기
+        </div>
+      </div>
+      <div class="panel-body">
         <%= render partial: 'form', locals: {f: f} %>
-
-        <p class="pull-right">
-          <%= f.submit "등록", class: "btn btn-primary btn-lg"  %>
-          <%= link_to club_admin_root_path(current_club) do %>
-            <button type="button" class="btn btn-default btn-lg">
-              취소
-            </button>
-          <% end %>
-        </p>
-      <% end %>
+      </div>
     </div>
-  </div>
+
+    <p class="pull-right">
+      <%= f.submit "등록", class: "btn btn-blue btn-lg btn-icon"  %>
+      <%= link_to club_admin_root_path(current_club) do %>
+        <button type="button" class="btn btn-default btn-lg btn-icon">
+          취소
+        </button>
+      <% end %>
+    </p>
+  <% end %>
 </div>

@@ -7,11 +7,16 @@ class Admin::NoticesController < Admin::ApplicationController
     @notice = current_club.notices.new
     @users = current_club.users.all.decorate
     @activity_id = params[:activity_id]
+    @init_date = 4.days.from_now.localtime.strftime("%m/%d/%Y")
 
     20.times { @notice.checklists.build.assign_histories.build }
   end
 
   def create
+    event_at = params[:notice][:event_at].split('/')
+    event_at_convert = Date.civil(event_at[2].to_i, event_at[0].to_i, event_at[1].to_i)
+    params[:notice][:event_at] = event_at_convert
+
     @notice = current_club.notices.new(notice_params)
 
     if @notice.save
@@ -38,11 +43,16 @@ class Admin::NoticesController < Admin::ApplicationController
   def edit
     @notice = current_club.notices.friendly.find(params[:id])
     @users = current_club.users.all.decorate
+    @init_date = @notice.event_at.localtime.strftime("%m/%d/%Y")
 
     20.times { @notice.checklists.build.assign_histories.build }
   end
 
   def update
+    event_at = params[:notice][:event_at].split('/')
+    event_at_convert = Date.civil(event_at[2].to_i, event_at[0].to_i, event_at[1].to_i)
+    params[:notice][:event_at] = event_at_convert
+    
     @notice = current_club.notices.friendly.find(params[:id])
 
     if @notice.update(notice_params)

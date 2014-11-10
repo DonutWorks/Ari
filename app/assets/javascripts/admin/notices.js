@@ -1,5 +1,5 @@
 $(document).on('ready page:load', function () {
-  $('.selectpicker').selectpicker();
+  // $('.selectpicker').selectpicker();
 
   $('.sms_all').change(function() {
     var id = (this).id.replace('_all','');

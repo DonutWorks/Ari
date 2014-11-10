@@ -27,7 +27,7 @@
 <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :activity) %>">
   <%= f.label :activity, "활동", class: "col-sm-1 control-label" %>
   <div class="col-sm-11">
-    <%= f.collection_select :activity_id, current_club.activities.all,:id,:title, {:selected => @activity_id}, {class: "form-control"} %>
+    <%= f.collection_select :activity_id, current_club.activities.all,:id,:title, {:selected => @activity_id}, {class: "selectboxit"} %>
     <span class="glyphicon <%= validation_state_feedback(@notice, :activity) %> form-control-feedback"></span>
     <span class="help-block"><%= attribute_error_message(@notice, :activity) %></span>
   </div>
@@ -73,14 +73,20 @@
   </div>
 
   <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :event_at) %>">
-    <%= f.label :event_at, "행사 날짜", class: "col-sm-1 control-label" %>
-    <div class="col-sm-11 margin-top15">
-      <%= f.date_select :event_at, {start_year: Date.today.year, default: 4.days.from_now }, {class: "selectpicker"} %>
-      <!-- <p class="text-success">날짜 3일 전까지 공개 모집이 가능합니다</p> -->
-
-      <span class="glyphicon <%= validation_state_feedback(@notice, :event_at) %> form-control-feedback"></span>
-      <span class="help-block"><%= attribute_error_message(@notice, :event_at) %></span>
+    <%= f.label :event_at, "활동 날짜", class: "col-sm-1 control-label" %>
+    <div class="col-sm-11">
+      <div class="input-group">
+        <input type="text" name="notice[event_at]" class="form-control datepicker" value="<%= @init_date %>" data-format="yyyy MM dd D">
+        
+        <div class="input-group-addon">
+          <a href="#"><i class="entypo-calendar"></i></a>
+        </div>
+      </div>
     </div>
+
+    <span class="glyphicon <%= validation_state_feedback(@notice, :event_at) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@notice, :event_at) %></span>
+
   </div>
 
   <div class="form-group form-group-lg has-feedback">

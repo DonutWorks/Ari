@@ -23,7 +23,7 @@
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="ari-navbar-nav nav navbar-nav navbar-right">
           <li>
             <%= link_to "공지", club_admin_root_path(current_club) %>
           </li>
@@ -47,10 +47,12 @@
     </div><!-- /.container-fluid -->
   </nav>
 
-  <div class="container">
+  <div class="page-body">
     <input type="hidden" id="current-club-slug" value="<%= current_club.slug %>" />
-    <%= render 'layouts/messages' %>
-    <%= yield %>
+    <div class="ari-container page-container">
+      <%= render 'layouts/messages' %>
+      <%= yield %>
+    </div>
   </div>
 
 </body>
