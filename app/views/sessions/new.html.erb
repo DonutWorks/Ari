@@ -1,33 +1,45 @@
-<div class="form-container main_form">
-  <div class="row">
-    <div id="login-form">
-      <% if current_club %>
-        <div id="notice-top">
-          <%= image_tag(current_club.logo_url, id: "emblem", class: "img-thumbnail") %>
-        </div>
-        <%= form_for @user, url: club_auth_path(current_club), html: {role: "form"} do |f| %>
-          <%= render partial: 'form', locals: {f: f} %>
-          <%= f.submit "전화번호로 로그인", type: :image, src: asset_path("phone_number_login_btn_large_wide.png"), class: "login-img-button"  %>
-          <%= link_to image_tag("kakao_account_login_btn_large_wide.png", class: "btn btn-link login-img-button"), "/auth/kakao?redirect_url=#{url_encode(params[:redirect_url])}&club_id=#{url_encode(current_club.id)}", id: "kakao-login-btn" %>
-          <div class="checkbox">
-            <%= f.label :remember_me, class: "pull-right" do %>
-              <%= f.check_box :remember_me, checked: false, id: "remember-me" %>
-                로그인 상태 유지
-            <% end %>
-          </div>
-        <% end %>
-      <% else %>
-        <%= form_for @user, url: auth_path, html: {role: "form"} do |f| %>
-          <%= render partial: 'form', locals: {f: f} %>
-          <%= f.submit "전화번호로 로그인", type: :image, src: asset_path("phone_number_login_btn_large_wide.png"), class: "login-img-button"  %>
-          <div class="checkbox">
-            <%= f.label :remember_me, class: "pull-right" do %>
-              <%= f.check_box :remember_me, checked: false, id: "remember-me" %>
-                로그인 상태 유지
-            <% end %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
+<% content_for :body_class, "page-body login-page login-form-fall" %>
+<div class="login-container">
+	<div class="login-header login-caret">
+		<div class="login-content">
+			<% if current_club %>
+				<a href="#" class="logo">
+					<%= image_tag(current_club.logo_url, width: "120") %>
+				</a>
+			<% end %>
+			<p class="description">로그인이 필요합니다!</p>
+		</div>
+	</div>
+
+	<div class="login-form">
+		<div class="login-content">
+			<%= form_for @user, url: @action, html: {role: "form"}, id: "form_login" do |f| %>
+				<%= render partial: 'form', locals: {f: f} %>
+
+ 				<div class="form-group">
+					<%= f.button type: :submit, class: "btn btn-primary btn-block btn-login" do %>
+					<i class="entypo-login"></i>
+					전화번호로 로그인
+					<% end %>
+				</div>
+
+				<% if current_club %>
+			    <div class="form-group">
+			      <em>- 혹은 -</em>
+			    </div>
+
+			    <div class="form-group">
+						<%= link_to image_tag("kakao_account_login_btn_large_wide.png", class: "btn btn-link login-img-button"), "/auth/kakao?redirect_url=#{url_encode(params[:redirect_url])}&club_id=#{url_encode(current_club.id)}", id: "kakao-login-btn" %>
+			    </div>
+		    <% end %>
+
+		    <div class="checkbox">
+	        <%= f.label :remember_me, class: "pull-right" do %>
+	          <%= f.check_box :remember_me, checked: false, id: "remember-me" %>
+	            로그인 상태 유지
+	        <% end %>
+	      </div>
+			<% end %>
+		</div>
+	</div>
 </div>

@@ -4,6 +4,11 @@ class SessionsController < AuthenticatableController
   def new
     # need to fix current_club.users.new?
     @user = User.new
+    if current_club
+      @action = club_auth_path(current_club)
+    else
+      @action = auth_path
+    end
   end
 
   # log in with phone number
