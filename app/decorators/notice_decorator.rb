@@ -13,8 +13,11 @@ class NoticeDecorator < Draper::Decorator
     object.due_date
   end
 
-  def survey_due_date
-    (object.due_date - 3.days).localtime.strftime("%Y-%m-%d %T")
+  def event_at
+    object.event_at.localtime.strftime("%Y-%m-%d %T")
   end
 
+  def content
+    h.simple_format(object.content)
+  end
 end

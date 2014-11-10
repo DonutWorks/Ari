@@ -1,7 +1,7 @@
 module Authenticates
   class KakaoSignInService < BaseService
     def execute(session, auth_hash)
-      user = User.find_by({
+      user = current_club.users.find_by({
         provider: auth_hash['provider'],
         uid: auth_hash['uid']
       })

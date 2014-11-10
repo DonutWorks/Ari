@@ -27,7 +27,7 @@
 <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :activity) %>">
   <%= f.label :activity, "활동", class: "col-sm-1 control-label" %>
   <div class="col-sm-11">
-    <%= f.collection_select :activity_id, Activity.all,:id,:title, {:selected => @activity_id}, {class: "form-control"} %>
+    <%= f.collection_select :activity_id, current_club.activities.all,:id,:title, {:selected => @activity_id}, {class: "form-control"} %>
     <span class="glyphicon <%= validation_state_feedback(@notice, :activity) %> form-control-feedback"></span>
     <span class="help-block"><%= attribute_error_message(@notice, :activity) %></span>
   </div>
@@ -72,14 +72,14 @@
     </div>
   </div>
 
-  <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :due_date) %>">
-    <%= f.label :due_date, "행사 날짜", class: "col-sm-1 control-label" %>
+  <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :event_at) %>">
+    <%= f.label :event_at, "행사 날짜", class: "col-sm-1 control-label" %>
     <div class="col-sm-11 margin-top15">
-      <%= f.date_select :due_date, {start_year: Date.today.year, default: 4.days.from_now }, {class: "selectpicker"} %>
-      <p class="text-success">날짜 3일 전까지 공개 모집이 가능합니다</p>
+      <%= f.date_select :event_at, {start_year: Date.today.year, default: 4.days.from_now }, {class: "selectpicker"} %>
+      <!-- <p class="text-success">날짜 3일 전까지 공개 모집이 가능합니다</p> -->
 
-      <span class="glyphicon <%= validation_state_feedback(@notice, :due_date) %> form-control-feedback"></span>
-      <span class="help-block"><%= attribute_error_message(@notice, :due_date) %></span>
+      <span class="glyphicon <%= validation_state_feedback(@notice, :event_at) %> form-control-feedback"></span>
+      <span class="help-block"><%= attribute_error_message(@notice, :event_at) %></span>
     </div>
   </div>
 
@@ -89,7 +89,7 @@
       <label class="control-label"><input type="radio" id="fee-radio" checked="true"> 참가비</label>
     </div>
   </div>
-  
+
   <div id="fee-option">
     <div class="form-group form-group-lg has-feedback">
       <%= f.label :regular_dues, "정단원", class: "col-sm-2 control-label" %>
@@ -106,7 +106,7 @@
         <span class="input-group-addon">원</span>
       </div>
     </div>
-  <div>
+  </div>
 </div>
 
 <div id="checklist-option">

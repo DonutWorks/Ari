@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col-md-12">
 
-      <%= form_tag(admin_bank_account_expense_records_path(@bank_account), :multipart => true) do %>
+      <%= form_tag(club_admin_bank_account_expense_records_path(current_club, @bank_account), :multipart => true) do %>
 
         <legend>엑셀 파일로 회계 내역 업데이트</legend>
 

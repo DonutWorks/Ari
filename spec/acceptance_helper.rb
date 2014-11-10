@@ -11,12 +11,12 @@ module AcceptanceHelper
     end
   end
 
-  def authenticate_to_admin!
-    authenticate("habitat", "iloveyou")
+  def authenticate_to_admin!(admin_user)
+    login_as(admin_user, scope: :admin_user)
   end
 
   def authenticate_user!(user)
-    visit("/users/sign_in")
+    visit(club_sign_in_path(user.club, user))
     fill_in 'user_phone_number', :with => user.phone_number
 
     click_button "전화번호로 로그인"

@@ -2,7 +2,8 @@ require "rails_helper"
 
 RSpec.describe Authenticates::CookiesSignInService do
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    @club = FactoryGirl.create(:complete_club)
+    @user = @club.users.first
     @cookies = {}
     @session = {}
 
@@ -20,7 +21,7 @@ RSpec.describe Authenticates::CookiesSignInService do
   end
 
   it "should let me sign in with cookies" do
-    out = Authenticates::CookiesSignInService.new.execute(@session, @cookies)
+    out = Authenticates::CookiesSignInService.new(@club).execute(@session, @cookies)
 
     expect(out[:status]).to eq(:success)
     expect(@session).to include(user_id: @user.id)
@@ -28,7 +29,7 @@ RSpec.describe Authenticates::CookiesSignInService do
 
   it "should destroy cookies when try to sign in with invalid cookies" do
     @cookies[:user_id] = -1
-    out = Authenticates::CookiesSignInService.new.execute(@session, @cookies)
+    out = Authenticates::CookiesSignInService.new(@club).execute(@session, @cookies)
 
     expect(out[:status]).to eq(:failure)
     expect(@session.empty?).to eq(true)

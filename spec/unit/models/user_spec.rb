@@ -92,8 +92,8 @@ RSpec.describe User, :type => :model do
       end
 
       it "should return true for activated user" do
-        out = Authenticates::CreateInvitationService.new.execute(nil, @user)
-        out = Authenticates::ActivateUserService.new.execute(@user, out[:code])
+        out = Authenticates::CreateInvitationService.new(@user.club).execute(nil, @user)
+        out = Authenticates::ActivateUserService.new(@user.club).execute(@user, out[:code])
         @user.reload
         expect(@user.activated?).to eq(true)
       end
