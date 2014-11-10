@@ -1,7 +1,7 @@
 class Admin::ExpenseRecordsController < Admin::ApplicationController
   def index
     @bank_account = BankAccount.find_by_account_number("110383537755")
-    @remaining_responses = find_remaining_responses
+    @remaining_responses = Response.find_remaining_responses
   end
 
   def new
@@ -63,18 +63,5 @@ class Admin::ExpenseRecordsController < Admin::ApplicationController
     response.update!(dues: 1)
 
     render text: ""
-  end
-
-private
-  def find_remaining_responses
-    cases = []
-
-    Notice.where(notice_type: 'to').each do |notice|
-      notice.responses.each do |response|
-        cases << {id: response.id, activity: notice.activity, notice: notice, response: response, user: response.user} if response.dues == 0     
-      end 
-    end
-
-    cases
   end
 end

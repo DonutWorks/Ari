@@ -35,7 +35,7 @@ private
     if self.response
       self.response.update!(dues: 0)
       self.response = nil
-      self.save
+      self.save!
     end
   end
 end
