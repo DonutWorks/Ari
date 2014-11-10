@@ -21,18 +21,17 @@ $(document).on('ready page:load', function () {
       index: 1
     }]);
 
-  $("textarea").keydown(function(e){
-    if ( $.inArray(this.id, ["tags","user_filter_word","search_word"]) >= 0)
+  $("textarea.shift-enter").keydown(function(e){
+
+    if (e.keyCode == 13 && !e.shiftKey)
     {
-      if (e.keyCode == 13 && !e.shiftKey)
-      {
-          if (this.form)
-            this.form.submit();
-          else
-            e.preventDefault();
-          return false;
-      }
+        if (this.form)
+          this.form.submit();
+        else
+          e.preventDefault();
+        return false;
     }
+
   });
 
   $('#user_filter_word').textcomplete([
