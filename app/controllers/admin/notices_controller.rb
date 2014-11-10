@@ -80,8 +80,7 @@ class Admin::NoticesController < Admin::ApplicationController
       flash[:notice] = "\"#{notice.title}\" 공지를 성공적으로 마감 했습니다."
       redirect_to admin_notice_path(notice)
     else
-      flash[:notice] = "\"#{notice.title}\" 공지를 마감 할 수 없습니다."
-      redirect_to admin_notice_responses_path(notice)
+      render 'admin/to_responses/index'
     end
   end
 
@@ -94,8 +93,7 @@ class Admin::NoticesController < Admin::ApplicationController
       flash[:notice] = "\"#{notice.title}\" 공지의 마감일을 성공적으로 수정 했습니다."
       redirect_to admin_notice_path(notice)
     else
-      flash[:notice] = "\"#{notice.title}\" 공지의 마감일 수정 할 수 없습니다."
-      redirect_to admin_notice_responses_path(notice)
+      render 'admin/to_responses/index'
     end
   end
 

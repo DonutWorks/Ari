@@ -15,7 +15,7 @@
   <p>모집 시한 : <%= @notice.due_date %></p>
   <p>TO 개수 : <%= @notice.to %></p>
 
-  <% if @notice.due_date > Time.now.localtime.strftime("%Y-%m-%d %T") %>
+  <% if @notice_deadline_end %>
     <%= link_to "마감", admin_notice_to_notice_end_deadline_path(@notice), class: "btn btn-warning" %>
   <% else %>
     <%= form_for @notice_form, url: admin_notice_to_notice_change_deadline_path, html: {role: "form", class: "form-horizontal"} do |f|%>
