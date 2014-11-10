@@ -3,7 +3,9 @@ class Admin::ResponsesController < Admin::ApplicationController
   respond_to :json
 
   def index
+    @notice_form = @notice
     @notice = @notice.decorate
+    @notice_deadline_end = true if @notice.due_date > Time.now.localtime.strftime("%Y-%m-%d %T")
   end
 
   def update_check

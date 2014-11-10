@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 20141108074628) do
     t.integer  "regular_dues"
     t.integer  "associate_dues"
     t.integer  "activity_id"
+    t.datetime "event_at"
   end
 
   add_index "notices", ["activity_id"], name: "index_notices_on_activity_id"
