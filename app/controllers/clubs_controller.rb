@@ -1,5 +1,6 @@
 class ClubsController < ApplicationController
   def show
+    @responses = current_user.responses.decorate
   end
 
   def current_club
