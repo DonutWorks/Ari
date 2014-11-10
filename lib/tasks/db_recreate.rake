@@ -16,9 +16,11 @@ def create_user_snuhabitat
   data.default_sheet = data.sheets.first
   normalizer = FormNormalizer.new
 
+  habitat_club = Club.friendly.find('snu-habitat')
+
   (2..data.last_row).each do |i|
     user = UserModelNormalizer.normalize(normalizer, data, i)
-    new_user = User.find_or_initialize_by(phone_number: user.phone_number)
+    new_user = habitat_club.users.find_or_initialize_by(phone_number: user.phone_number)
     new_user.attributes = user.as_json(except: [:id])
     new_user.save
   end

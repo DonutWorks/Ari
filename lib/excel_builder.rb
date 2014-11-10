@@ -4,6 +4,7 @@ class ExcelBuilder
     sheet1 = book.create_worksheet
     invalid_format = Spreadsheet::Format.new :color => :red,
                                  :weight => :bold
+    habitat_club = Club.friendly.find('snu-habitat')
 
     if !habitat_format_header
 
@@ -42,7 +43,7 @@ class ExcelBuilder
         invalid = comment[comment.keys[0]]
         invalid = true if username.blank? || phone_number_last.blank?
         if !invalid
-          comment_user = User.where("username = ? AND phone_number LIKE ?", username, "%#{phone_number_last}").first
+          comment_user = habitat_club.users.where("username = ? AND phone_number LIKE ?", username, "%#{phone_number_last}").first
           notfound = true if !comment_user
         end
 

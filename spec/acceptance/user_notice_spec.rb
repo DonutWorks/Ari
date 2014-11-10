@@ -2,9 +2,10 @@ require "rails_helper"
 
 RSpec.describe "user_notice", type: :feature do
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    @club = FactoryGirl.create(:complete_club)
+    @user = @club.users.first
     authenticate_user!(@user)
-    @notice = Notice.create(title: "notice!", content: "This is TO notice", link:"http://google.com", to: "1", notice_type: "to", event_at: "2050-1-1", due_date: "2050-1-1")
+    @notice = FactoryGirl.create(:to_notice, to: 1, activity: @club.activities.first)
   end
 
   it "should let me see a TO notice" do

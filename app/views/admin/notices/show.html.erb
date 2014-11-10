@@ -2,11 +2,11 @@
   <div class="page-header clearfix">
     <h3 class="pull-left"><%= @notice.title %></h3>
     <div class="pull-right margin-top15">
-      <%= link_to "수정", edit_admin_notice_path(@notice), class: "btn btn-default btn-sm" %>
+      <%= link_to "수정", edit_club_admin_notice_path(current_club, @notice), class: "btn btn-default btn-sm" %>
       <%if @notice.notice_type =="to" %>
-        <%= link_to "TO관리", admin_notice_responses_path(@notice), class: "btn btn-info btn-sm" %>
+        <%= link_to "TO관리", club_admin_notice_responses_path(current_club, @notice), class: "btn btn-info btn-sm" %>
       <% end %>
-      <%= link_to "삭제", admin_notice_path(@notice), method: :delete,
+      <%= link_to "삭제", club_admin_notice_path(current_club, @notice), method: :delete,
       data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger btn-sm" %>
     </div>
   </div>
@@ -25,7 +25,7 @@
   <% end %>
   <div class="clearfix"></div>
 
-  <%= form_tag(admin_messages_path, method: "post") do %>
+  <%= form_tag(club_admin_messages_path(current_club), method: "post") do %>
     <%= hidden_field_tag 'notice_id', @notice.id %>
 
     <ul class="nav nav-tabs" role="tablist">

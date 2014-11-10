@@ -9,7 +9,7 @@ class Admin::ResponsesController < Admin::ApplicationController
   end
 
   def update_check
-    response = Response.find_by_id(params[:response_id])
+    response = current_club.responses.find_by_id(params[:response_id])
     case params[:check]
     when "absence"
       response.absence == 0 ? response.update(absence: 1) : response.update(absence: 0)
@@ -22,7 +22,6 @@ class Admin::ResponsesController < Admin::ApplicationController
   end
 
   def update
-
     input_to = 0
     params[:user].each do |key,value|
       if value == "go"
@@ -34,22 +33,22 @@ class Admin::ResponsesController < Admin::ApplicationController
 
     if input_to > @notice.to
       flash[:alert] = "TO를 초과하였습니다."
-      redirect_to admin_notice_responses_path(@notice)
+      redirect_to club_admin_notice_responses_path(current_club, @notice)
     else
 
       params[:user].each do |key,value|
-        user = User.find_by_id(key)
+        user = current_club.users.find_by_id(key)
 
         if user.response_status(@notice) == "not"
           if value != "not"
-            response = Response.new(user: user, notice: @notice, status: value)
+            response = current_club.responses.new(user: user, notice: @notice, status: value)
             if response.save
               change_history[value] += 1
             end
           end
 
         else
-          response = Response.find_by(user: user, notice: @notice)
+          response = current_club.responses.find_by(user: user, notice: @notice)
 
           if value=="not"
             if response.destroy
@@ -65,12 +64,12 @@ class Admin::ResponsesController < Admin::ApplicationController
       end
 
       flash[:notice] = "응답이 수정되었습니다. ( 참가 : #{change_history['go']} / 대기 : #{change_history['wait']} / 미답 : #{change_history['not']} )"
-      redirect_to admin_notice_path(@notice)
+      redirect_to club_admin_notice_path(current_club, @notice)
     end
-
   end
+
 private
   def find_notice
-    @notice = Notice.find_by_id(params[:notice_id])
+    @notice = current_club.notices.friendly.find(params[:notice_id])
   end
 end

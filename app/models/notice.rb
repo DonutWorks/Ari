@@ -14,19 +14,25 @@ class Notice < ActiveRecord::Base
     end
   end
 
-  validates :to, numericality: { greater_than_or_equal_to: 1 }, if: :to_notice?
-  validate :to_adjustable?, if: :to_notice?
-
+  belongs_to :club
   belongs_to :activity
-
   has_many :responses
   has_many :messages
   has_many :checklists
   accepts_nested_attributes_for :checklists, reject_if: lambda {|attributes| attributes['task'].blank?}
 
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
+  # for korean
+  def normalize_friendly_id(value)
+    super(Gimchi.romanize(value.to_s, number: false))
+  end
+
   acts_as_readable
 
   before_create :copy_event_at_to_due_date
+  before_validation :fill_club_id
   before_save :make_redirectable_url!
   before_save :change_candidates_status, if: :to_notice?
 
@@ -35,17 +41,13 @@ class Notice < ActiveRecord::Base
   validates :content, presence: true
   validates :notice_type, presence: { message: "유형을 선택해주십시오." },
    inclusion: { in: NOTICE_TYPES, message: "올바르지 않은 유형입니다." }
+  validates :club_id, presence: true
+  validates :activity_id, presence: true
+  validates :to, numericality: { greater_than_or_equal_to: 1 }, if: :to_notice?
+  validate :to_adjustable?, if: :to_notice?
   validate :must_have_checklists, if: :checklist_notice?
 
   scope :created_at_desc, -> { order(created_at: :desc) }
-
-  def self.deadline_send_sms
-    Notice.where(notice_type: 'to').where(due_date: Date.today + 3.days).find_each do |notice|
-      Response.responsed_to_go(notice).find_each do |response|
-        Admin::Messages::SendMessageService.new.execute("[" + notice.title + "] 공지의 신청이 마감 되었습니다.", notice.id, response.user.id)
-      end
-    end
-  end
 
 private
   def make_redirectable_url!
@@ -68,6 +70,10 @@ private
     candidates_count = to - go_responses.count
     candidates = wait_responses.order(created_at: :asc).limit(candidates_count)
     candidates.update_all(status: "go")
+  end
+
+  def fill_club_id
+    self.club = self.activity.club if self.activity
   end
 
   def must_have_checklists

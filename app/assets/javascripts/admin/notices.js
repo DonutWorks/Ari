@@ -40,7 +40,7 @@ $(document).on('ready page:load', function () {
 
   $('.open-memo-btn').on("click", function() {
     var id = $(this).data("id");
-    
+
     if($('#memo-in-' + id).hasClass("hide-memo")) {
       $('#memo-not-in-' + id).addClass("show-memo").removeClass("hide-memo");
     }
@@ -135,11 +135,9 @@ function changeSMSTextSize(){
 }
 
 function updateCheckStatus(notice_id, response_id, check, index) {
-
-  var url = '/admin/notices/' + notice_id + '/responses/update_check?response_id=' + response_id + "&check=" + check
-  if(check == "memo") {
-    url = url + "&memo=" + $('#memo-edit-' + index).val();
-  }
+  var current_club = $("#current-club-slug").val()
+  var url = '/' + current_club + '/admin/notices/' + notice_id + '/responses/update_check?response_id=' + response_id + "&check=" + check
+  if(check == "memo") url = url + "&memo=" + $('#memo-edit-' + index).val();
 
   $.getJSON(url)
     .done(function (res) {

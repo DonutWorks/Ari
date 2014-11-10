@@ -7,10 +7,10 @@ class InvitationsController < AuthenticatableController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = current_club.users.new(user_params)
     @user.extra_info = YAML.load(params[:user][:extra_info]).to_hash
 
-    create_invitation_service = Authenticates::CreateInvitationService.new
+    create_invitation_service = Authenticates::CreateInvitationService.new(current_club)
     out = create_invitation_service.execute(current_user, @user)
 
     case out[:status]
@@ -25,7 +25,7 @@ class InvitationsController < AuthenticatableController
     when :success
       Authenticates::UserSession.new(session).destroy!
       create_invitation_service.send_invitation_sms(@user,
-       invitation_url(out[:code], redirect_url: params[:redirect_url]))
+       club_invitation_url(current_club, out[:code], redirect_url: params[:redirect_url]))
       flash[:notice] = "인증 문자가 전송되었습니다."
     end
 
@@ -35,7 +35,7 @@ class InvitationsController < AuthenticatableController
   def show
     code = params[:code]
 
-    out = Authenticates::ActivateUserService.new.execute(current_user, code)
+    out = Authenticates::ActivateUserService.new(current_club).execute(current_user, code)
 
     case out[:status]
     when :failure

@@ -7,6 +7,10 @@ RSpec.describe Checklist, :type => :model do
       @checklist.valid?
     end
 
+    it "should belong to club" do
+      expect(@checklist.errors.messages.keys).to be_include(:club_id)
+    end
+
     it "should check validation for task" do
       expect(@checklist.errors.messages.keys).to be_include(:task)
     end

@@ -2,7 +2,7 @@
   <div class="page-header clearfix">
     <h3 class="pull-left">"<%= @notice.title %>"공지 TO관리</h3>
     <div class="pull-right margin-top15">
-      <%= link_to "취소", admin_notice_path(@notice), class: "btn btn-default" %>
+      <%= link_to "취소", club_admin_notice_path(current_club, @notice), class: "btn btn-default" %>
     </div>
   </div>
 
@@ -16,9 +16,9 @@
   <p>TO 개수 : <%= @notice.to %></p>
 
   <% if @notice_deadline_end %>
-    <%= link_to "마감", admin_notice_to_notice_end_deadline_path(@notice), class: "btn btn-warning" %>
+    <%= link_to "마감", to_notice_end_deadline_club_admin_notice_path(current_club, @notice.id), class: "btn btn-warning" %>
   <% else %>
-    <%= form_for @notice_form, url: admin_notice_to_notice_change_deadline_path, html: {role: "form", class: "form-horizontal"} do |f|%>
+    <%= form_for @notice_form, url: to_notice_change_deadline_club_admin_notice_path(current_club, @notice_form.id), html: {role: "form", class: "form-horizontal"} do |f|%>
       <div class="modal-body">
         <div class="form-group form-group-sm has-feedback <%= validation_state(@notice, :due_date) %>">
           <%= f.label :due_date, "모집 시한 변경", class: "control-label" %>
@@ -35,7 +35,7 @@
 
   <div class="clearfix"></div>
 
-  <%= form_tag(admin_notice_responses_path, method: "post") do %>
+  <%= form_tag(club_admin_notice_responses_path(current_club, @notice), method: "post") do %>
     <%= hidden_field_tag 'notice_id', @notice.id %>
     <div>
       <h3>참가 <small>(총 <%= User.responsed_go(@notice).count %>명)</small></h3>
@@ -51,7 +51,7 @@
     </div>
     <div>
       <%= submit_tag "변경", class: "btn btn-primary"  %>
-      <%= link_to "취소", admin_notice_path(@notice), class: "btn btn-default" %>
+      <%= link_to "취소", club_admin_notice_path(current_club, @notice), class: "btn btn-default" %>
     <div>
   <% end %>
 </div>

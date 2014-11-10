@@ -15,11 +15,9 @@
         <hr>
 
         <% checklist.assignee_comments.each do |ac| %>
-          
           <p class="comment-value" data-finish="<%= checklist.finish? ? true : false %>">
             <%= ac.comment %><span class="pull-right"><%= ac.created_at.strftime("%Y-%m-%d %T") %></span>
           </p>
-          
           <% if current_user && checklist.assignees.include?(current_user) %>
             <%= form_for ac do |f| %>
               <div class="input-group comment-form">

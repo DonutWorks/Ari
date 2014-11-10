@@ -26,14 +26,35 @@ RSpec.configure do |config|
     FactoryGirl.lint
   end
 
- config.include AcceptanceHelper
+  config.before(:suite) do
+    if Capybara.current_driver == :rack_test
+      DatabaseCleaner.strategy = :transaction
+    else
+      DatabaseCleaner.strategy = :truncation
+    end
+    DatabaseCleaner.clean_with(:truncation)
+  end
 
- config.include ShowMeTheCookies, :type => :feature
+  config.around(:each) do |example|
+    DatabaseCleaner.start
+    example.run
+    DatabaseCleaner.clean
+
+    Capybara.reset_sessions!
+    # clear warden test session
+    Warden.test_reset!
+  end
+
+  config.include Warden::Test::Helpers
+  Warden.test_mode!
+
+  config.include AcceptanceHelper, type: :feature
+  config.include ShowMeTheCookies, type: :feature
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -49,4 +70,6 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  # Capybara.default_driver = :selenium
 end
