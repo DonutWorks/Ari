@@ -19,7 +19,7 @@
           <%= link_to club_admin_notice_path(current_club, notice), class: "list-group-item" do %>
             <span><%= notice.title %></span>
             <span class="badge">
-              <%= "#{notice.readers.count} / #{current_club.users.all.count}" %>
+              <%= "#{notice.club_readers.count} / #{current_club.users.all.count}" %>
             </span>
           <% end %>
         <% end %>
