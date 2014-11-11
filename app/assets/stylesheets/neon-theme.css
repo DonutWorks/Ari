@@ -5839,6 +5839,7 @@ fieldset[disabled] .calendar-env .calendar-body .fc-content .fc-view table tbody
 @media (max-width: 601px) {
   .profile-env > header .profile-info-sections {
     margin-bottom: 10px;
+    text-align: center;
   }
   .profile-env > header .profile-info-sections li {
     padding: 15px;
@@ -5860,10 +5861,10 @@ fieldset[disabled] .calendar-env .calendar-body .fc-content .fc-view table tbody
     margin-bottom: 15px;
   }
   .profile-env section.profile-feed .profile-stories article.story .user-thumb {
-    width: 18%;
+    width: 8%;
   }
   .profile-env section.profile-feed .profile-stories article.story .story-content {
-    width: 82%;
+    width: 92%;
   }
   .profile-env section.profile-info-tabs .nav-tabs li a {
     padding-left: 15px;
