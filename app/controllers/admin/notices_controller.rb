@@ -13,6 +13,9 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def create
     @notice = current_club.notices.new(notice_params)
+    @notice.checklists.each do |checklist|
+      checklist.update(club_id: current_club.id)
+    end if @notice.notice_type == "checklist"
 
     if @notice.save
       shortener = URLShortener.new
