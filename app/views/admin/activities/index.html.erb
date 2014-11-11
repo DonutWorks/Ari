@@ -1,27 +1,22 @@
 <div class="main-content">
-  <div id="buttons-div" class="pull-right">
-    <%= link_to "새 활동", new_club_admin_activity_path(current_club), class: "btn btn-success btn-green " %>
+  <div class="ari-new-activity pull-right">
+    <%= link_to "새 활동", new_club_admin_activity_path(current_club), class: "btn btn-green " %>
   </div>
 
   <div class="clearfix"></div>
 
-  <ul class="cbp_tmtimeline">
+  <div class="row">
     <% @activities.each do |activity| %>
-      <li>
-        <time class="ari-tmtime cbp_tmtime"><h4><%= activity.event_at %></h4></time>
-        <div class="cbp_tmicon bg-warning">
-          <i class="entypo-feather"></i>
-        </div>
-        
-        <div class="cbp_tmlabel">
+      <div class="col-sm-6">
+        <div class="tile-stats tile-white tile-white-primary">
           <div class="pull-right">
-            <%= link_to "새 플로우", new_club_admin_notice_path(current_club, activity_id: activity.id), class: "btn btn-primary btn-blue " %>
+            <%= link_to "새 플로우", new_club_admin_notice_path(current_club), class: "btn btn-blue " %>
           </div>
-          <h2><%= link_to activity.title, club_admin_activity_path(current_club, activity) %></h2>
-          
-          <blockquote><%= activity.description %></blockquote>
-          
-          <ul class="list-group">
+          <div class="ari-activity-title-area num" ><%= link_to activity.title, club_admin_activity_path(current_club, activity), class: "ari-activity-title" %></div>
+          <p><%= activity.event_at %></p>
+          <div><h3><%= activity.description %></h3></div>
+
+          <div class="ari-flow-list">
             <% activity.notices.created_at_desc.each do |notice| %>
               <%= link_to club_admin_notice_path(current_club, notice), class: "list-group-item" do %>
                 <span><%= notice.title %></span>
@@ -30,9 +25,10 @@
                 </span>
               <% end %>
             <% end %>
-          </ul>
-      </li>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </ul>
+  </div>
 
 </div>

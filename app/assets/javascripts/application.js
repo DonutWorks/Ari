@@ -14,4 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require_tree ./jquery-ui
+//= require_tree ./gsap
+//= require_tree ./neon
+//= require_tree ./selectboxit
 //= require_tree .
