@@ -21,8 +21,8 @@ $(document).on('ready page:load', function () {
       index: 1
     }]);
 
-  $("textarea").keydown(function(e){
-    // Enter was pressed without shift key
+  $("textarea.shift-enter").keydown(function(e){
+
     if (e.keyCode == 13 && !e.shiftKey)
     {
         if (this.form)
@@ -31,6 +31,7 @@ $(document).on('ready page:load', function () {
           e.preventDefault();
         return false;
     }
+
   });
 
   $('#user_filter_word').textcomplete([
