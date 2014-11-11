@@ -1,3 +1,4 @@
+<% content_for :body_class, "page-body login-page" %>
 <% if @error_message %>
 <div class="alert <%= flash_class(:error) %> alert-dismissable fade in">
   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -5,29 +6,39 @@
 </div>
 <% end %>
 
-<div class="form-container" id="user-invitation">
-  <div class="row">
-    <div class="col-md-12">
-      <%= form_for [current_club, @user], url: club_invitations_path(current_club), method: :create do |f|%>
-        <legend>휴대폰 번호를 입력해주세요</legend>
-        <div class="profile">
-          <%= image_tag(@user.extra_info['image'], class: "img-thumbnail") %>
-          <p id="name"><%= @user.extra_info['name'] %></p>
-        </div>
-
-        <%= f.hidden_field :uid %>
-        <%= f.hidden_field :provider %>
-        <%= f.hidden_field :extra_info, value: @user.extra_info.to_yaml %>
-
-        <div class="form-group">
-          <%= f.label :phone_number, id: "phone-number-label" %><br>
-          <%= f.text_field :phone_number, class: "form-control input-lg", placeholder: "예) 010-1111-2222" %>
-        </div>
-
-        <p>
-          <%= f.submit "인증 문자 보내기", class: "btn btn-primary btn-block btn-lg"  %>
-        </p>
-      <% end %>
+  <div class="login-header login-caret">
+    <div class="login-content">
+      <a href="#" class="logo">
+        <%= image_tag(@user.extra_info['image'], width: "120") %>
+      </a>
+      <h3 class="invitation-user-name"><%= @user.extra_info['name'] %> 님</h3>
+      <p class="description">휴대폰 번호를 입력해주세요</p>
     </div>
+  </div>
+
+<div class="login-form" id="user-invitation">
+  <div class="login-content">
+    <%= form_for [current_club, @user], url: club_invitations_path(current_club), method: :create do |f|%>
+
+      <%= f.hidden_field :uid %>
+      <%= f.hidden_field :provider %>
+      <%= f.hidden_field :extra_info, value: @user.extra_info.to_yaml %>
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="entypo-user"></i>
+          </div>
+
+          <%= f.text_field :phone_number, class: "form-control", placeholder: "전화번호 예) 010-1111-2222", autocomplete: "off" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.button type: :submit, class: "btn btn-primary btn-block btn-login" do %>
+        <i class="entypo-chat"></i>
+        인증 문자 보내기
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
