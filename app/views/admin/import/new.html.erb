@@ -1,39 +1,37 @@
-<% if @error_message %>
-<div class="alert <%= flash_class(:error) %> alert-dismissable fade in">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  <%= @error_message %>
-</div>
-<% end %>
-<div class="form-container">
-  <div class="row">
-    <div class="col-md-12">
-      <% if @invalid_messages.count > 0 %>
-        <div class="error_name_list">
-          <% @invalid_messages.map do |message| %>
-            <div><%= message %></div>
-          <% end %>
-        </div>
-      <% end %>
-      <%= form_tag(import_club_admin_users_path(current_club), :multipart => true) do %>
-
-        <legend>엑셀 파일로 회원 등록</legend>
-
-        <div class="form-group">
-          <%= label_tag "등록하실 명단의 엑셀파일을 선택해주세요." %>
-          <%= file_field_tag 'upload[file]' %>
-        </div>
-
-        <p class="help-block">
-          명단 엑셀 파일은 아래와 같은 구조로 올려주셔야 합니다.<br>
-          <%= image_tag("RosterExample.png", id: "RosterExample.png", class: "img-responsive") %>
-          <%= link_to '명단 예제 다운로드', download_roster_example_club_admin_notices_path(current_club) %>
-        </p>
-
-        <p>
-          <%= submit_tag "업로드", class: "btn btn-default"   %>
-        </p>
-      <% end %>
-
+<div class="main-content">
+  <% if @error_message %>
+    <div class="alert <%= flash_class(:error) %> alert-dismissable fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= @error_message %>
     </div>
-  </div>
+  <% end %>
+
+  <h2>엑셀 파일로 회원 등록</h2>
+  <br>
+
+  <% if @invalid_messages.count > 0 %>
+    <div class="error_name_list">
+      <% @invalid_messages.map do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form_tag(import_club_admin_users_path(current_club), :multipart => true) do %>
+
+    <div class="form-group">
+      <%= label_tag "등록하실 명단의 엑셀파일을 선택해주세요." %>
+      <%= file_field_tag 'upload[file]' %>
+    </div>
+
+    <p class="help-block">
+      명단 엑셀 파일은 아래와 같은 구조로 올려주셔야 합니다.<br>
+      <%= image_tag("RosterExample.png", id: "RosterExample.png", class: "img-responsive") %>
+      <%= link_to '명단 예제 다운로드', download_roster_example_club_admin_notices_path(current_club) %>
+    </p>
+
+    <p>
+      <%= submit_tag "업로드", class: "btn btn-default"   %>
+    </p>
+  <% end %>
 </div>

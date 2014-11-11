@@ -1,12 +1,13 @@
 <div class="main-content">
-  <div class="page-header clearfix">
-    <h3 class="pull-left"><%= @activity.title %></h3>
-    <div class="pull-right margin-top15">
-      <%= link_to "수정", edit_club_admin_activity_path(current_club, @activity), class: "btn btn-warning" %>
+  <h2><%= @activity.title %></h2>
+  <br>
+  <div class="ari-top-buttons pull-right">
+    <%= link_to "수정", edit_club_admin_activity_path(current_club, @activity), class: "btn btn-warning" %>
       <%= link_to "삭제", club_admin_activity_path(current_club, @activity), method: :delete,
       data: { confirm: '활동에 속한 공지도 모두 삭제 됩니다. 정말 삭제하시겠어요?' }, class: "btn btn-red" %>
-    </div>
   </div>
+
+  <div class="clearfix"></div>
 
   <h4>활동 설명 : <%= @activity.description %></h4>
   <h4>활동 날짜 : <%= @activity.event_at %></h4>

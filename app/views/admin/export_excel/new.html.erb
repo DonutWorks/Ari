@@ -5,51 +5,49 @@
 </div>
 <% end %>
 
-<div class="form-container">
-  <div class="row">
-    <div class="col-md-12">
-      <%= form_tag(club_admin_export_excel_path(current_club), role: "form") do %>
+<div class="main-content">
 
-        <legend>공지 댓글을 엑셀파일로 저장하기</legend>
+  <h2>댓글을 엑셀파일로 저장하기</h2>
+  <br>
 
-        <div class="form-group">
-          <%= label_tag "*cyworld 공지 주소를 입력해주세요." %>
-          <%= text_field_tag "notice_link", @link_url, class: "form-control" %>
-        </div>
+  <%= form_tag(club_admin_export_excel_path(current_club), role: "form") do %>
 
-        <p class="help-block">싸이월드 공지글 옆 "주소복사" 버튼을 클릭하여 주소를 복사해주세요. ex)<br>
-          <%= image_tag("HowToGetLink.png", id: "HowToGetLink", class: "img-responsive") %>
-        </p>
-
-        <div class="form-group">
-          <%= label_tag "*댓글 양식 ( ex: 이름/기수/핸드폰 번호 뒷자리 )" %>
-          <%= text_field_tag "pattern", "이름/기수/핸드폰 번호 뒷자리", class: "form-control" %>
-        </div>
-
-        <p class="help-block">
-          - 입력된 양식에 맞추어 엑셀파일로 저장합니다.<br>
-          - 구분자는 / 를 이용해주세요.
-        </p>
-
-
-        <div class="form-group">
-          <%= label_tag "엑셀 양식" %>
-          <div>
-            <%= label_tag do %>
-              <%= radio_button_tag :export_type, "normal", checked: true %>
-              댓글 양식
-            <% end %>
-            <%= label_tag do %>
-              <%= radio_button_tag :export_type, "habitat" %>
-              해비타트 제출용
-            <% end %>
-          </div>
-
-        </div>
-
-        <%= submit_tag "저장하기", class: "btn btn-default"   %>
-
-      <% end %>
+    <div class="form-group">
+      <%= label_tag "*cyworld 공지 주소를 입력해주세요." %>
+      <%= text_field_tag "notice_link", @link_url, class: "form-control" %>
     </div>
-  </div>
+
+    <p class="help-block">싸이월드 공지글 옆 "주소복사" 버튼을 클릭하여 주소를 복사해주세요. ex)<br>
+      <%= image_tag("HowToGetLink.png", id: "HowToGetLink", class: "img-responsive") %>
+    </p>
+
+    <div class="form-group">
+      <%= label_tag "*댓글 양식 ( ex: 이름/기수/핸드폰 번호 뒷자리 )" %>
+      <%= text_field_tag "pattern", "이름/기수/핸드폰 번호 뒷자리", class: "form-control" %>
+    </div>
+
+    <p class="help-block">
+      - 입력된 양식에 맞추어 엑셀파일로 저장합니다.<br>
+      - 구분자는 / 를 이용해주세요.
+    </p>
+
+    <div class="form-group">
+      <%= label_tag "엑셀 양식" %>
+      <div>
+        <%= label_tag do %>
+          <%= radio_button_tag :export_type, "normal", checked: true %>
+          댓글 양식
+        <% end %>
+        <%= label_tag do %>
+          <%= radio_button_tag :export_type, "habitat" %>
+          해비타트 제출용
+        <% end %>
+      </div>
+
+    </div>
+
+    <%= submit_tag "저장하기", class: "btn btn-blue"   %>
+
+  <% end %>
+
 </div>
