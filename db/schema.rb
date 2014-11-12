@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141108074628) do
+ActiveRecord::Schema.define(version: 20141108134935) do
 
   create_table "activities", force: true do |t|
     t.string   "title"
@@ -154,10 +154,10 @@ ActiveRecord::Schema.define(version: 20141108074628) do
     t.datetime "due_date"
     t.integer  "club_id"
     t.string   "slug"
-    t.integer  "regular_dues"
-    t.integer  "associate_dues"
     t.integer  "activity_id"
     t.datetime "event_at"
+    t.integer  "associate_dues"
+    t.integer  "regular_dues"
   end
 
   add_index "notices", ["activity_id"], name: "index_notices_on_activity_id"
@@ -184,12 +184,14 @@ ActiveRecord::Schema.define(version: 20141108074628) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "club_id"
-    t.integer  "absence",    default: 0
-    t.integer  "dues",       default: 0
+    t.integer  "absence",           default: 0
+    t.integer  "dues",              default: 0
     t.string   "memo"
+    t.integer  "expense_record_id"
   end
 
   add_index "responses", ["club_id"], name: "index_responses_on_club_id"
+  add_index "responses", ["expense_record_id"], name: "index_responses_on_expense_record_id"
   add_index "responses", ["notice_id"], name: "index_responses_on_notice_id"
   add_index "responses", ["user_id"], name: "index_responses_on_user_id"
 
