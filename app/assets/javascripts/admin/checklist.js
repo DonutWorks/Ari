@@ -35,8 +35,10 @@ var userModal = {
   },
 
   getUserModel: function(user, target){
+    var club_id = $('#club_id').val();
+
     $.ajax({
-      url: "/admin/users/get_user",
+      url: "/" + club_id + "/admin/users/get_user",
       data: {id: user.id, phone_number: user.phone_number},
       cache: false
     }).success(function(response) {
