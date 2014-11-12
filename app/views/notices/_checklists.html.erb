@@ -159,7 +159,7 @@
                   <%= f.submit "등록", class: "btn btn-success" %>
 
                   <% unless checklist.finish? || checklist.assignee_comments.empty? %>
-                    <%= link_to "완료", club_notice_checklist_finish_path(current_club, notice, checklist), class: "btn btn-primary", data: { confirm: '완료하시면 기존 댓글의 수정 및 삭제는 불가합니다. 정말 완료하시겠습니까?' } %>
+                    <%= link_to "완료", club_notice_checklist_finish_path(current_club,notice, checklist), class: "btn btn-primary", data: { confirm: '완료하시면 기존 댓글의 수정 및 삭제는 불가합니다. 정말 완료하시겠습니까?' } %>
                   <% end %>
                 </span>
               </div>

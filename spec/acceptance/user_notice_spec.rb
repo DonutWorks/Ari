@@ -5,7 +5,9 @@ RSpec.describe "user_notice", type: :feature do
     @club = FactoryGirl.create(:complete_club)
     @user = @club.users.first
     authenticate_user!(@user)
+
     @notice = FactoryGirl.create(:to_notice, to: 1, activity: @club.activities.first)
+
   end
 
   it "should let me see a TO notice" do

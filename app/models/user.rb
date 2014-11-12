@@ -15,10 +15,11 @@ class User < ActiveRecord::Base
   Response::STATUSES.each do |status|
     scope "responsed_#{status}", -> (notice) { responsed_to_notice(notice).merge(Response.where(status: status)) }
   end
-  scope :responsed_not_to_notice, -> (notice) {
-  SQL = %{LEFT OUTER JOIN (SELECT * FROM responses WHERE responses.notice_id = #{notice.id} ) A
+  scope :responsed_not_to_notice, -> (notice, club) {
+  SQL = %{LEFT OUTER JOIN (SELECT * FROM responses WHERE responses.notice_id = #{notice.id} and responses.club_id = #{club.id}) A
       ON users.id = A.user_id
-      WHERE A.status is null}
+      WHERE A.status is null
+      }
   joins(SQL) }
 
   scope :order_by_gid, -> {order(generation_id: :desc)}

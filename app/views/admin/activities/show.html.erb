@@ -7,7 +7,7 @@
             <a><%= @activity.description %></a>
           </div>
         </div>
-        
+
         <div class="col-sm-3">
           <div class="text-right">
             <div class="item-detail">
@@ -63,7 +63,7 @@
           <%= link_to new_club_admin_notice_path(current_club, activity_id: @activity.id) do %>
             <div class="ari-tile tile-stats tile-white tile-white-primary">
               <div class="icon"><i class="entypo-plus"></i></div>
-            </div>  
+            </div>
           <% end %>
         </div>
       </div>
@@ -81,7 +81,7 @@
             </div>
           </div>
         <% elsif notice.notice_type == "survey" %>
-          <span>[수요조사] <%= notice.title %></span> 
+          <span>[수요조사] <%= notice.title %></span>
           <div class="ari-badge-pie">
             <input class="knob" data-min="0" data-max="10" data-width="20" data-height="20" data-thickness=".25" data-fgColor="#21a9e1" data-bgColor="#ebebeb" value="6">
           </div>
@@ -101,3 +101,16 @@
       <% end %>
     <% end %>
   </div> -->
+
+  <h4>TO 모집 현황 결과</h4>
+  <ul class="list-group">
+    <% @dues_sum.each do |result| %>
+        <ol class="breadcrumb">
+          <li><h4><a href="<%= club_admin_notice_path(current_club,result[:notice]) %>"><%= result[:notice].title %></a></h4></li>
+          <li class="active">참가 : <%= result[:go] %> 명</li>
+          <li class="active">대기 : <%= result[:wait] %> 명</li>
+          <li class="active">회비 합계 : <%= result[:sum] %> </li>
+        </ol>
+    <% end %>
+  </ul>
+</div>

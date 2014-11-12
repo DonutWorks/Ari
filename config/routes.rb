@@ -58,10 +58,12 @@ Rails.application.routes.draw do
           get 'download_roster_example'
         end
 
-        member do 
+
+        member do
           get 'to_notice_end_deadline'
           patch 'to_notice_change_deadline'
         end
+
 
         resources :responses, only: [] do
           collection do
@@ -72,8 +74,12 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :bank_accounts, shallow: true do
-        resources :expense_records
+
+      resources :bank_accounts do
+        get 'download_account_example', on: :collection
+        resources :expense_records do
+          get 'submit_dues'
+        end
       end
 
       resource :export_excel,  controller: :export_excel,  only: [:new, :create]

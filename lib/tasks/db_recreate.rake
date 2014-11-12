@@ -7,9 +7,10 @@ namespace :db do
     Rake::Task['db:migrate'].execute
 
     create_user_snuhabitat
-    BankAccount.create(account_number: "110383537755")
+
   end
 end
+
 
 def create_user_snuhabitat
   data = Roo::Excelx.new("#{Rails.root}/public/snuhabitat_for_test.xlsx")

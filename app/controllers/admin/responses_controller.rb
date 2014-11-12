@@ -14,7 +14,7 @@ class Admin::ResponsesController < Admin::ApplicationController
     when "absence"
       response.absence == 0 ? response.update(absence: 1) : response.update(absence: 0)
     when "dues"
-      response.dues == 0 ? response.update(dues: 1) : response.update(dues: 0)
+      response.dues == 0 ? response.update(dues: 1) : response.update(dues: 0, expense_record: nil)
     when "memo"
       response.update(memo: params[:memo])
     end

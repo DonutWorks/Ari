@@ -10,6 +10,9 @@ namespace :club do
     task test: :environment do
       club = FactoryGirl.create(:complete_club)
       representive = club.representive
+      club.bank_accounts.first.update(account_number: "110383537755")
+
+
       puts "Club created: #{club.name}"
       puts "Representive: { email: #{representive.email}, password: 12345678 }"
     end
@@ -27,5 +30,19 @@ namespace :club do
 
       puts admin_user.inspect
     end
+
+    desc "Create a bank account of club (params: [account_number, club_name])."
+    task :bank_account, [:account_number, :club_name] => :environment do |t, args|
+      club = Club.friendly.find(args[:club_name].downcase)
+      account_number = :account_number
+      bank_account = club.bank_accounts.new({
+        account_number: args[:account_number]
+        })
+
+      bank_account.save!
+
+      puts bank_account.inspect
+    end
+
   end
 end
