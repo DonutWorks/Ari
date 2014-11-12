@@ -85,17 +85,14 @@ var checklist = {
 
 var assigneeComment = {
   init: function(){
-    $('.comment-value').click(this.setEditableComment);
+    $('.checklist-comment-modify').on('click', this.showCommentEditForm);
   },
 
-  setEditableComment: function(e){
-    if($(this).parents().hasClass('list-group-item-warning')){
-      $('.new-comment-form').hide();
-      $('.comment-form').each(function(){
-        $(this).hide().prev().show();
-      });
-      $(e.target).hide().next().css('display','table');
-    }
+  showCommentEditForm: function(e){
+    e.preventDefault();
+    $(this).parents('.checklist-comment-modify-form')
+      .children('.checklist-comment-modify-area')
+      .toggle();
   }
 }
 

@@ -1,11 +1,11 @@
 class NoticesController < ApplicationController
   def show
     @notice = current_club.notices.friendly.find(params[:id]).decorate
-    @assignee_comment = AssigneeComment.new if @notice.notice_type == "checklist"
+    @assignee_comment = AssigneeComment.new if @notice.raw_notice_type == "checklist"
 
     current_user.read!(@notice)
 
-    case @notice.notice_type
+    case @notice.raw_notice_type
     when "external"
       redirect_to @notice.link
     when "survey"

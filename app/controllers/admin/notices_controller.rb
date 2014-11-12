@@ -40,7 +40,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def show
     @notice = current_club.notices.friendly.find(params[:id]).decorate
-    @assignee_comment = AssigneeComment.new if @notice.notice_type == "checklist"
+    @assignee_comment = AssigneeComment.new if @notice.raw_notice_type == "checklist"
   end
 
   def edit
@@ -55,7 +55,7 @@ class Admin::NoticesController < Admin::ApplicationController
     event_at = params[:notice][:event_at].split('/')
     event_at_convert = Date.civil(event_at[2].to_i, event_at[0].to_i, event_at[1].to_i)
     params[:notice][:event_at] = event_at_convert
-    
+
     @notice = current_club.notices.friendly.find(params[:id])
 
     if @notice.update(notice_params)

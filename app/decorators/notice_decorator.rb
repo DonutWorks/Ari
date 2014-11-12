@@ -37,7 +37,7 @@ class NoticeDecorator < Draper::Decorator
       status = "체크리스트"
     when "external"
       status = "외부공지"
-    when "internal"
+    when "plain"
       status = "내부공지"
     when "survey"
       status = "수요조사"
