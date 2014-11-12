@@ -4,7 +4,8 @@ $(document).on('ready page:load', function () {
     {
       match: /\B#([^\s]*)$/,
       search: function (term, callback) {
-        $.getJSON('/admin/users/tags/' + term)
+        current_club = $("#current-club-slug").val()
+        $.getJSON('/' + current_club + '/admin/users/tags/' + term)
         .done(function (res) {
           callback($.map(res, function (tag) {
             return '#' + tag.tag_name + " ";
@@ -20,8 +21,8 @@ $(document).on('ready page:load', function () {
       index: 1
     }]);
 
-  $("textarea").keydown(function(e){
-    // Enter was pressed without shift key
+  $("textarea.shift-enter").keydown(function(e){
+
     if (e.keyCode == 13 && !e.shiftKey)
     {
         if (this.form)
@@ -30,13 +31,16 @@ $(document).on('ready page:load', function () {
           e.preventDefault();
         return false;
     }
+
   });
 
   $('#user_filter_word').textcomplete([
     {
       match: /(.*)$/,
       search: function (term, callback) {
-        $.getJSON('/admin/users/search/' + term)
+        current_club = $("#current-club-slug").val()
+        $.getJSON('/' + current_club + '/admin/users/search/' + term)
+        // $.getJSON('/admin/users/search/' + term)
         .done(function (res) {
 
           $("#table-user-list").find("tr:gt(0)").css("display","none");

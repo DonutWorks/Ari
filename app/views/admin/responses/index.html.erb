@@ -2,7 +2,7 @@
   <div class="page-header clearfix">
     <h3 class="pull-left">"<%= @notice.title %>"공지 TO관리</h3>
     <div class="pull-right margin-top15">
-      <%= link_to "취소", admin_notice_path(@notice), class: "btn btn-default" %>
+      <%= link_to "취소", club_admin_notice_path(current_club, @notice), class: "btn btn-default" %>
     </div>
   </div>
 
@@ -11,29 +11,47 @@
   <p>통합 공지 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %></p>
   <p>만든 시간 : <%= @notice.created_at %></p>
 
-  <p>행사 날짜 : <%= @notice.due_date %></p>
-  <p>모집 시한 : <%= @notice.survey_due_date %></p>
+  <p>행사 날짜 : <%= @notice.event_at %></p>
+  <p>모집 시한 : <%= @notice.due_date %></p>
   <p>TO 개수 : <%= @notice.to %></p>
+
+  <% if @notice_deadline_end %>
+    <%= link_to "마감", to_notice_end_deadline_club_admin_notice_path(current_club, @notice.id), class: "btn btn-warning" %>
+  <% else %>
+    <%= form_for @notice_form, url: to_notice_change_deadline_club_admin_notice_path(current_club, @notice_form.id), html: {role: "form", class: "form-horizontal"} do |f|%>
+      <div class="modal-body">
+        <div class="form-group form-group-sm has-feedback <%= validation_state(@notice, :due_date) %>">
+          <%= f.label :due_date, "모집 시한 변경", class: "control-label" %>
+          <div>
+            <%= f.date_select :due_date, {start_year: Date.today.year, default: 4.days.from_now }, {class: "selectpicker"} %>
+            <%= f.submit "연장", class: "btn btn-primary"  %>
+            <span class="glyphicon <%= validation_state_feedback(@notice_form, :due_date) %> form-control-feedback"></span>
+            <span class="help-block"><%= attribute_error_message(@notice_form, :due_date) %></span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 
   <div class="clearfix"></div>
 
-  <%= form_tag(admin_notice_responses_path, method: "post") do %>
+  <%= form_tag(club_admin_notice_responses_path(current_club, @notice), method: "post") do %>
     <%= hidden_field_tag 'notice_id', @notice.id %>
     <div>
       <h3>참가 <small>(총 <%= User.responsed_go(@notice).count %>명)</small></h3>
-      <%= render partial: "table", locals: { users: User.responsed_go(@notice).order_by_responsed_at.decorate, type: "go" } %>
+      <%= render partial: "table", locals: { users: current_club.users.responsed_go(@notice).order_by_responsed_at.decorate, type: "go" } %>
     </div>
     <div>
       <h3>대기 <small>(총 <%= User.responsed_wait(@notice).count %>명)</small></h3>
-      <%= render partial: "table", locals: { users: User.responsed_wait(@notice).order_by_responsed_at.decorate, type: "wait" } %>
+      <%= render partial: "table", locals: { users: current_club.users.responsed_wait(@notice).order_by_responsed_at.decorate, type: "wait" } %>
     </div>
     <div>
       <h3>미응답 <small>(총 <%= User.responsed_not_to_notice(@notice).count %>명)</small></h3>
-      <%= render partial: "table", locals: { users: User.responsed_not_to_notice(@notice).decorate, type: "not" } %>
+      <%= render partial: "table", locals: { users: current_club.users.responsed_not_to_notice(@notice).decorate, type: "not" } %>
     </div>
     <div>
       <%= submit_tag "변경", class: "btn btn-primary"  %>
-      <%= link_to "취소", admin_notice_path(@notice), class: "btn btn-default" %>
+      <%= link_to "취소", club_admin_notice_path(current_club, @notice), class: "btn btn-default" %>
     <div>
   <% end %>
 </div>

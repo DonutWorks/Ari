@@ -1,5 +1,5 @@
 $(document).on('ready page:load', function(){
-  recordModal.init();  
+  recordModal.init();
 });
 
 var recordModal = {
@@ -8,9 +8,11 @@ var recordModal = {
   init: function(){
     $('#record-select-modal').on('click', '.clickable-row', function(e){
       response = $(e.target).parent().data('response')
+      bank_account = $(e.target).parent().data('bank-account-id')
 
+      current_club = $("#current-club-slug").val()
       $.ajax({
-        url : '/admin/expense_records/' + this.record + '/submit_dues',
+        url : '/' + current_club + '/admin/bank_accounts/'+bank_account+'/expense_records/' + this.record + '/submit_dues',
         data: {response_id: response, record_id: record},
         cache: false
       }).success(function(){

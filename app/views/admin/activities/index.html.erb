@@ -1,7 +1,7 @@
 <h3 class="pull-left">공지사항 관리</h3>
 
 <div id="buttons-div" class="pull-right">
-  <%= link_to "새 활동", new_admin_activity_path, class: "btn btn-success btn-sm " %>
+  <%= link_to "새 활동", new_club_admin_activity_path(current_club), class: "btn btn-success btn-sm " %>
 </div>
 
 <div class="clearfix"></div>
@@ -9,17 +9,17 @@
 <% @activities.each do |activity| %>
   <div id="notice-container" class="panel panel-default">
     <div class="panel-heading">
-      <%= link_to ("[" + activity.event_at + "] " + activity.title), admin_activity_path(activity) %>
+      <%= link_to ("[" + activity.event_at + "] " + activity.title), club_admin_activity_path(current_club, activity) %>
       <div class="pull-right">
-        <%= link_to "새 공지", new_admin_notice_path(activity_id: activity.id), class: "btn btn-primary btn-xs " %>
+        <%= link_to "새 공지", new_club_admin_notice_path(current_club, activity_id: activity.id), class: "btn btn-primary btn-xs " %>
       </div>
     </div>
       <ul class="list-group">
         <% activity.notices.created_at_desc.each do |notice| %>
-          <%= link_to admin_notice_path(notice), class: "list-group-item" do %>
+          <%= link_to club_admin_notice_path(current_club, notice), class: "list-group-item" do %>
             <span><%= notice.title %></span>
             <span class="badge">
-              <%= "#{notice.readers.count} / #{User.all.count}" %>
+              <%= "#{notice.club_readers.count} / #{current_club.users.all.count}" %>
             </span>
           <% end %>
         <% end %>

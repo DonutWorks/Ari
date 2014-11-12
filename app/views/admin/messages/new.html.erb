@@ -4,11 +4,11 @@
   </div>
   <div class="form-group form-group-lg has-feedback">
     <span class="help-block">검색</span>
-    <%= text_area_tag :search_word, "", autofocus: true, class: "form-control search_box textcomplete", rows: 1 %>
+    <%= text_area_tag :search_word, "", autofocus: true, class: "form-control search_box textcomplete shift-enter", rows: 1 %>
 
   </div>
 
-  <%= form_tag(admin_messages_path, method: "post") do %>
+  <%= form_tag(club_admin_messages_path, method: "post") do %>
 
 
   <div class="table-responsive">

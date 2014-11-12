@@ -35,14 +35,15 @@ var userModal = {
   },
 
   getUserModel: function(user, target){
+    current_club = $("#current-club-slug").val()
     $.ajax({
-      url: "/admin/users/get_user",
+      url: '/' + current_club + "/admin/users/get_user",
       data: {id: user.id, phone_number: user.phone_number},
       cache: false
     }).success(function(response) {
       var userModel = $.parseJSON(response);
       this.user = userModel;
-      target = target || $(this.target); 
+      target = target || $(this.target);
 
       $(target).text(this.user.username);
       $(target).siblings('.assignee-user_id').val(this.user.id);

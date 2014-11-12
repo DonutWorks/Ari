@@ -7,18 +7,21 @@ namespace :db do
     Rake::Task['db:migrate'].execute
 
     create_user_snuhabitat
-    BankAccount.create(account_number: "110383537755")
+
   end
 end
+
 
 def create_user_snuhabitat
   data = Roo::Excelx.new("#{Rails.root}/public/snuhabitat_for_test.xlsx")
   data.default_sheet = data.sheets.first
   normalizer = FormNormalizer.new
 
+  habitat_club = Club.friendly.find('snu-habitat')
+
   (2..data.last_row).each do |i|
     user = UserModelNormalizer.normalize(normalizer, data, i)
-    new_user = User.find_or_initialize_by(phone_number: user.phone_number)
+    new_user = habitat_club.users.find_or_initialize_by(phone_number: user.phone_number)
     new_user.attributes = user.as_json(except: [:id])
     new_user.save
   end

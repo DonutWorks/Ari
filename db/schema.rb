@@ -20,7 +20,32 @@ ActiveRecord::Schema.define(version: 20141108134935) do
     t.datetime "event_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "club_id"
   end
+
+  add_index "activities", ["club_id"], name: "index_activities_on_club_id"
+
+  create_table "admin_users", force: true do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "club_id"
+    t.string   "name"
+    t.string   "phone_number"
+  end
+
+  add_index "admin_users", ["club_id"], name: "index_admin_users_on_club_id"
+  add_index "admin_users", ["email", "club_id"], name: "index_admin_users_on_email_and_club_id", unique: true
+  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
 
   create_table "assign_histories", force: true do |t|
     t.integer  "user_id"
@@ -45,7 +70,10 @@ ActiveRecord::Schema.define(version: 20141108134935) do
     t.string   "account_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "club_id"
   end
+
+  add_index "bank_accounts", ["club_id"], name: "index_bank_accounts_on_club_id"
 
   create_table "checklists", force: true do |t|
     t.text     "task"
@@ -53,10 +81,20 @@ ActiveRecord::Schema.define(version: 20141108134935) do
     t.integer  "notice_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "club_id"
   end
 
+  add_index "checklists", ["club_id"], name: "index_checklists_on_club_id"
   add_index "checklists", ["finish"], name: "index_checklists_on_finish"
   add_index "checklists", ["notice_id"], name: "index_checklists_on_notice_id"
+
+  create_table "clubs", force: true do |t|
+    t.string   "name",       null: false
+    t.string   "logo_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug"
+  end
 
   create_table "expense_records", force: true do |t|
     t.datetime "record_date"
@@ -77,8 +115,10 @@ ActiveRecord::Schema.define(version: 20141108134935) do
     t.datetime "updated_at"
     t.boolean  "expired",    default: false
     t.integer  "user_id"
+    t.integer  "club_id"
   end
 
+  add_index "invitations", ["club_id"], name: "index_invitations_on_club_id"
   add_index "invitations", ["user_id"], name: "index_invitations_on_user_id"
 
   create_table "message_histories", force: true do |t|
@@ -96,8 +136,10 @@ ActiveRecord::Schema.define(version: 20141108134935) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "notice_id"
+    t.integer  "club_id"
   end
 
+  add_index "messages", ["club_id"], name: "index_messages_on_club_id"
   add_index "messages", ["notice_id"], name: "index_messages_on_notice_id"
 
   create_table "notices", force: true do |t|
@@ -110,12 +152,16 @@ ActiveRecord::Schema.define(version: 20141108134935) do
     t.string   "notice_type"
     t.integer  "to"
     t.datetime "due_date"
+    t.integer  "club_id"
+    t.string   "slug"
     t.integer  "activity_id"
+    t.datetime "event_at"
     t.integer  "associate_dues"
     t.integer  "regular_dues"
   end
 
   add_index "notices", ["activity_id"], name: "index_notices_on_activity_id"
+  add_index "notices", ["club_id"], name: "index_notices_on_club_id"
   add_index "notices", ["notice_type"], name: "index_notices_on_notice_type"
 
   create_table "read_activity_marks", force: true do |t|
@@ -137,12 +183,14 @@ ActiveRecord::Schema.define(version: 20141108134935) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "club_id"
     t.integer  "absence",           default: 0
     t.integer  "dues",              default: 0
     t.string   "memo"
     t.integer  "expense_record_id"
   end
 
+  add_index "responses", ["club_id"], name: "index_responses_on_club_id"
   add_index "responses", ["expense_record_id"], name: "index_responses_on_expense_record_id"
   add_index "responses", ["notice_id"], name: "index_responses_on_notice_id"
   add_index "responses", ["user_id"], name: "index_responses_on_user_id"
@@ -161,7 +209,10 @@ ActiveRecord::Schema.define(version: 20141108134935) do
     t.string   "tag_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "club_id"
   end
+
+  add_index "tags", ["club_id"], name: "index_tags_on_club_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                                  null: false
@@ -182,8 +233,10 @@ ActiveRecord::Schema.define(version: 20141108134935) do
     t.string   "provider"
     t.string   "uid"
     t.text     "extra_info"
+    t.integer  "club_id"
   end
 
+  add_index "users", ["club_id"], name: "index_users_on_club_id"
   add_index "users", ["email"], name: "index_users_on_email"
   add_index "users", ["phone_number"], name: "index_users_on_phone_number"
   add_index "users", ["provider"], name: "index_users_on_provider"

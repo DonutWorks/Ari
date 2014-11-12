@@ -1,0 +1,7 @@
+<% @joined_clubs.each do |club| %>
+  <%= form_for @user, url: club_auth_path(club), html: {role: "form"} do |f| %>
+    <%= f.hidden_field :phone_number %>
+    <%= f.hidden_field :remember_me %>
+    <%= f.submit club.name %>
+  <% end %>
+<% end %>

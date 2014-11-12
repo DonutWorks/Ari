@@ -1,11 +1,12 @@
 class Checklist < ActiveRecord::Base
+  belongs_to :club
+  belongs_to :notice
   has_many :assignee_comments
   has_many :assign_histories
   has_many :assignees, through: :assign_histories, source: :user
   accepts_nested_attributes_for :assign_histories, reject_if: lambda {|attributes| attributes['user_id'].blank?} 
 
-  belongs_to :notice
-
+  validates :club_id, presence: true
   validates :task, presence: {message: "할 일을 입력해주세요."}
   validate :must_have_assignees
 

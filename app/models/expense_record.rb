@@ -7,10 +7,12 @@ class ExpenseRecord < ActiveRecord::Base
   before_destroy :reset_response
 
   def check_dues
-    notices = Notice.where(notice_type: 'to').where('due_date >= ?', Date.today - 5.days)
+    club = self.bank_account.club
+    notices = club.notices.where(notice_type: 'to').where('due_date >= ?', Date.today - 5.days)
 
     notices.each do |notice|
-      if user = User.find_by_username(content)
+
+      if user = club.users.find_by_username(content)
         case user.member_type
         when '예비단원'
           dues = notice.associate_dues
@@ -19,12 +21,15 @@ class ExpenseRecord < ActiveRecord::Base
         end
 
         if dues == deposit
+
           response = notice.responses.find_by_user_id(user.id)
-          if response.dues != 1 and response.update!(dues: 1)
+
+          if response and response.dues != 1 and response.update!(dues: 1)
             self.response = response
             return {user: user, activity: notice.activity, dues: dues}
           end
-        end        
+        end
+
       end
     end
     return

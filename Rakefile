@@ -4,3 +4,10 @@
 require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
+
+namespace :slug do
+  task create: :environment do
+    Club.find_each(&:save)
+    Notice.find_each(&:save)
+  end
+end
