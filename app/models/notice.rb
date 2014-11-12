@@ -49,6 +49,14 @@ class Notice < ActiveRecord::Base
 
   scope :created_at_desc, -> { order(created_at: :desc) }
 
+  def club_readers
+    club.users.merge(self.readers)
+  end
+
+  def club_unreaders
+    club.users.merge(self.unreaders)
+  end
+
 private
   def make_redirectable_url!
     unless link.blank?

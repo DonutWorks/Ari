@@ -8,6 +8,7 @@ RSpec.describe "notice", type: :feature do
     @activity = @club.activities.first
     @notice = @club.notices.first
     @user = @club.users.first
+
   end
 
   it "should let me see a notice lists" do
@@ -69,8 +70,6 @@ RSpec.describe "notice", type: :feature do
   end
 
 
-
-
   it "should let me check unreaders" do
     visit club_admin_root_path(@club)
     click_link @notice.title
@@ -87,6 +86,20 @@ RSpec.describe "notice", type: :feature do
 
     expect(find('.notice-reader')).to have_content(@user.username)
     expect(find('.notice-unreader')).not_to have_content(@user.username)
+  end
+
+  it "should let me not see other clubs' members" do
+
+    visit club_admin_root_path(@club)
+    click_link @notice.title
+
+
+    club_another = FactoryGirl.create(:club)
+    @user_in_another_club = FactoryGirl.create(:user, club: club_another)
+
+
+    expect(find('.notice-unreader')).not_to have_content(@user_in_another_club.username)
+    expect(find('.notice-reader')).not_to have_content(@user_in_another_club.username)
   end
 
   it "should let me delete the notice" do
