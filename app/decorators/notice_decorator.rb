@@ -25,6 +25,10 @@ class NoticeDecorator < Draper::Decorator
     h.simple_format(object.content)
   end
 
+  def raw_notice_type
+    object.notice_type
+  end
+
   def notice_type
     case object.notice_type
     when "to"
@@ -36,7 +40,7 @@ class NoticeDecorator < Draper::Decorator
     when "internal"
       status = "내부공지"
     when "survey"
-      status = "수요조"
+      status = "수요조사"
     end
   end
 end

@@ -4,7 +4,7 @@
         <div class="col-sm-9">
           <h1><%= @notice.title %></h1>
           <div class="categories">
-            <a><%= @notice.decorate.notice_type %></a>
+          <%= link_to (@notice.notice_type + " in " + @notice.activity.title), club_admin_activity_path(current_club, @notice.activity) %>
           </div>
         </div>
         
@@ -12,7 +12,7 @@
           <div class="text-right">
             <div class="item-detail">
               <%= link_to "수정", edit_club_admin_notice_path(current_club, @notice), class: "btn btn-warning" %>
-              <%if @notice.notice_type =="to" %>
+              <%if @notice.raw_notice_type =="to" %>
                 <%= link_to "TO관리", club_admin_notice_responses_path(current_club, @notice), class: "btn btn-info" %>
               <% end %>
               <%= link_to "삭제", club_admin_notice_path(current_club, @notice), method: :delete,
@@ -47,57 +47,58 @@
         <%= hidden_field_tag 'notice_id', @notice.id %>
 
         <ul class="nav nav-tabs" role="tablist">
-
-          <% case @notice.notice_type %>
+          <li class="secondary-nav <%= 'active' if @notice.raw_notice_type == 'external' or @notice.raw_notice_type == 'internal' %>">
+            <a href="#read-unread" role="tab" data-toggle="tab">읽음 확인</a>
+          </li>
+          <% case @notice.raw_notice_type %>
           <% when "checklist" then %>
-            <li class="secondary-nav"><a href="#checklist-result" role="tab" data-toggle="tab">수행 현황</a></li>
+            <li class="secondary-nav active"><a href="#checklist-result" role="tab" data-toggle="tab">수행 현황</a></li>
           <% when "to" then %>
-            <li class="secondary-nav"><a href="#to-result" role="tab" data-toggle="tab">실시간 TO 현황</a></li>
+            <li class="secondary-nav active"><a href="#to-result" role="tab" data-toggle="tab">실시간 TO 현황</a></li>
           <% when "survey" then %>
-            <li class="secondary-nav"><a href="#survey-result" role="tab" data-toggle="tab">수요 조사</a></li>
+            <li class="secondary-nav active"><a href="#survey-result" role="tab" data-toggle="tab">수요 조사</a></li>
           <% end %>
-          <li class="secondary-nav active"><a href="#read-unread" role="tab" data-toggle="tab">읽음 확인</a></li>
         </ul>
 
         <div class="tab-content">
-          <div class="tab-pane fade in active" id="read-unread">
-            <div class="notice-reader">
+          <div class="tab-pane fade <%= 'in active' if @notice.raw_notice_type == 'external' or @notice.raw_notice_type == 'internal' %>" id="read-unread">
+            <div>
               <h3>읽은 회원 <small>(총 <%= @notice.readers.count %>명)</small></h3>
               <%= render partial: "table", locals: { users: @notice.readers.order_by_read_at.decorate, type: "read" } %>
             </div>
 
-            <div class="notice-unreader">
+            <div class="notice-under">
               <h3>안 읽은 회원 <small>(총 <%= @notice.unreaders.count %>명)</small></h3>
               <%= render partial: "table", locals: { users: @notice.unreaders.generation_sorted_desc.decorate, type: "unread" } %>
             </div>
           </div>
-          <div class="tab-pane fade" id="survey-result">
+          <div class="tab-pane fade <%= 'in active' if @notice.raw_notice_type == 'survey' %>" id="survey-result">
             <div>
               <h3>참가 <small>(총 <%= User.responsed_yes(@notice).count %>명)</small></h3>
               <%= render partial: "table", locals: { users: User.responsed_yes(@notice).order_by_responsed_at.decorate, type: "yes" } %>
             </div>
-            <div>
+            <div class="notice-under">
               <h3>불확실 <small>(총 <%= User.responsed_maybe(@notice).count %>명)</small></h3>
               <%= render partial: "table", locals: { users: User.responsed_maybe(@notice).order_by_responsed_at.decorate, type: "maybe" } %>
             </div>
-            <div>
+            <div class="notice-under">
               <h3>불참 <small>(총 <%= User.responsed_no(@notice).count %>명)</small></h3>
               <%= render partial: "table", locals: { users: User.responsed_no(@notice).order_by_responsed_at.decorate, type: "no" } %>
             </div>
           </div>
 
-          <div class="tab-pane fade" id="to-result">
+          <div class="tab-pane fade <%= 'in active' if @notice.raw_notice_type == 'to' %>" id="to-result">
             <div>
               <h3>참가 <small>(총 <%= User.responsed_go(@notice).count %>명)</small></h3>
               <%= render partial: "table_to_response", locals: { users: User.responsed_go(@notice).order_by_responsed_at.decorate, type: "go" } %>
             </div>
-            <div>
+            <div class="notice-under">
               <h3>대기 <small>(총 <%= User.responsed_wait(@notice).count %>명)</small></h3>
               <%= render partial: "table_to_response", locals: { users: User.responsed_wait(@notice).order_by_responsed_at.decorate, type: "wait" } %>
             </div>
           </div>
 
-          <div class="tab-pane fade" id="checklist-result">
+          <div class="tab-pane fade <%= 'in active' if @notice.raw_notice_type == 'checklist' %>" id="checklist-result">
             <%= render partial: 'notices/checklists', locals: {notice: @notice, checklists: @notice.checklists} %>
           </div>
         </div>
