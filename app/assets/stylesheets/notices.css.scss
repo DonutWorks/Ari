@@ -2,11 +2,27 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#to_progress {
-  width: 100%;
+.notice-title {
+  padding: 10px 0 0 0;
 }
 
-.content {
+.notice-title a {
+  float: left;
+  padding-left: 15px;
+  font-size: 20pt;
+}
+
+.notice-content-container {
+  padding-top: 10px;
+}
+
+.notice-content {
+  padding-top: 20px;
+}
+
+.notice-content p {
+  color: #333333;
+  font-size: 14pt;
   margin-bottom: 30px;
 }
 
@@ -14,19 +30,26 @@
   margin-bottom: 30px;
 }
 
-.bg-content {
-  background: #F3F7FF;
-  padding: 10px;
+.register-status {
+  margin: 12px 0 0 10px;
+}
+
+.mention {
+  margin-right: 25px;
+}
+
+#to_progress {
+  width: 100%;
 }
 
 #checklist-option{
 
   .glyphicon{
-    right: 100px;  
+    right: 100px;
   }
 
   .input-group-btn{
     vertical-align: top;
   }
-  
+
 }

@@ -1,0 +1,38 @@
+<div class="main-content">
+  <div class="row status-bar">
+
+    <!-- Profile Info and Notifications -->
+    <div class="col-md-offset-1 col-md-5 col-sm-8 clearfix">
+
+      <ul class="user-info pull-left pull-none-xsm">
+
+              <!-- Profile Info -->
+        <li class="profile-info dropdown"><!-- add class "pull-right" if you want to place this from right -->
+
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <%= image_tag(current_user.extra_info.try(:[], 'image') || asset_url('member.jpg'), class: "img-circle", width: "44") %>
+            <%= link_to "#{current_user.username} @ #{current_club.name}", club_path(current_club) %>
+          </a>
+
+        </li>
+
+      </ul>
+
+    </div>
+
+
+    <div class="col-md-5 col-sm-4 clearfix hidden-xs">
+
+      <ul class="list-inline links-list pull-right">
+        <li>
+          <%= link_to club_sign_out_path(current_club) do %>
+            Log Out <i class="entypo-logout right"></i>
+          <% end %>
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+<hr />
+</div>

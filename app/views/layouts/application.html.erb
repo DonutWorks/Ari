@@ -7,9 +7,10 @@
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body class="<%= yield (:body_class) %>">
-  <div class="container" id="main-container">
-    <%= render 'layouts/messages' %>
+<body class="page-body <%= yield (:body_class) %>">
+  <%= render 'layouts/messages' %>
+  <div class="page-container without-sidebar">
+    <%= render 'layouts/status_bar' if current_user %>
     <%= yield %>
   </div>
 </body>
