@@ -38,16 +38,16 @@
   <%= form_tag(club_admin_notice_responses_path(current_club, @notice), method: "post") do %>
     <%= hidden_field_tag 'notice_id', @notice.id %>
     <div>
-      <h3>참가 <small>(총 <%= User.responsed_go(@notice).count %>명)</small></h3>
+      <h3>참가 <small>(총 <%= current_club.users.responsed_go(@notice).count %>명)</small></h3>
       <%= render partial: "table", locals: { users: current_club.users.responsed_go(@notice).order_by_responsed_at.decorate, type: "go" } %>
     </div>
     <div>
-      <h3>대기 <small>(총 <%= User.responsed_wait(@notice).count %>명)</small></h3>
+      <h3>대기 <small>(총 <%= current_club.users.responsed_wait(@notice).count %>명)</small></h3>
       <%= render partial: "table", locals: { users: current_club.users.responsed_wait(@notice).order_by_responsed_at.decorate, type: "wait" } %>
     </div>
     <div>
-      <h3>미응답 <small>(총 <%= User.responsed_not_to_notice(@notice).count %>명)</small></h3>
-      <%= render partial: "table", locals: { users: current_club.users.responsed_not_to_notice(@notice).decorate, type: "not" } %>
+      <h3>미응답 <small>(총 <%= User.responsed_not_to_notice(@notice,current_club).count %>명)</small></h3>
+      <%= render partial: "table", locals: { users: User.responsed_not_to_notice(@notice,current_club).decorate, type: "not" } %>
     </div>
     <div>
       <%= submit_tag "변경", class: "btn btn-primary"  %>
