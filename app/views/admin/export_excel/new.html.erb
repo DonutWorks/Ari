@@ -1,55 +1,97 @@
-<% if @error_message %>
-<div class="alert <%= flash_class(:error) %> alert-dismissable fade in">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  <%= @error_message %>
-</div>
-<% end %>
-
-<div class="form-container">
-  <div class="row">
-    <div class="col-md-12">
-      <%= form_tag(club_admin_export_excel_path(current_club), role: "form") do %>
-
-        <legend>공지 댓글을 엑셀파일로 저장하기</legend>
-
-        <div class="form-group">
-          <%= label_tag "*cyworld 공지 주소를 입력해주세요." %>
-          <%= text_field_tag "notice_link", @link_url, class: "form-control" %>
-        </div>
-
-        <p class="help-block">싸이월드 공지글 옆 "주소복사" 버튼을 클릭하여 주소를 복사해주세요. ex)<br>
-          <%= image_tag("HowToGetLink.png", id: "HowToGetLink", class: "img-responsive") %>
-        </p>
-
-        <div class="form-group">
-          <%= label_tag "*댓글 양식 ( ex: 이름/기수/핸드폰 번호 뒷자리 )" %>
-          <%= text_field_tag "pattern", "이름/기수/핸드폰 번호 뒷자리", class: "form-control" %>
-        </div>
-
-        <p class="help-block">
-          - 입력된 양식에 맞추어 엑셀파일로 저장합니다.<br>
-          - 구분자는 / 를 이용해주세요.
-        </p>
-
-
-        <div class="form-group">
-          <%= label_tag "엑셀 양식" %>
-          <div>
-            <%= label_tag do %>
-              <%= radio_button_tag :export_type, "normal", checked: true %>
-              댓글 양식
-            <% end %>
-            <%= label_tag do %>
-              <%= radio_button_tag :export_type, "habitat" %>
-              해비타트 제출용
-            <% end %>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1>댓글을 엑셀파일로 저장하기</h1>
+          <div class="categories">
+            <a></a>
           </div>
+        </div>
+        
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+            </div>
+            <div class="item-detail">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section class="portfolio-container">
+    <div class="container">
+      <% if @error_message %>
+        <div class="alert <%= flash_class(:error) %> alert-dismissable fade in">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <%= @error_message %>
+        </div>
+      <% end %>
+
+      <%= form_tag(club_admin_export_excel_path(current_club), role: "form", class: "form-horizontal") do %>
+        <div class="help-block text-center">
+          <p>싸이월드 공지글 옆 "주소복사" 버튼을 클릭하여 주소를 복사해주세요. ex)</p>
+          <%= image_tag("HowToGetLink.png", id: "HowToGetLink", class: "img-responsive ari-center") %>
         </div>
 
-        <%= submit_tag "저장하기", class: "btn btn-default"   %>
+        <div class="panel panel-primary">
+          <div class="panel-body">
+            <div class="form-group form-group-lg ">
+              <div class="col-sm-2 control-label"><%= label_tag "cyworld 주소" %></div>
+              <div class="col-sm-10">
+                <%= text_field_tag "notice_link", @link_url, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="form-group form-group-lg ">
+              <div class="col-sm-2 control-label"><%= label_tag "댓글 양식" %></div>
+              <div class="col-sm-10">
+                <%= text_field_tag "pattern", "이름/기수/핸드폰 번호 뒷자리", class: "form-control" %>
+                <p class="help-block">
+                  - 입력된 양식에 맞추어 엑셀파일로 저장합니다.<br>
+                  - 구분자는 / 를 이용해주세요.
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group form-group-lg ">
+              <div class="col-sm-2 control-label"><%= label_tag "엑셀 양식" %></div>
+              <div class="col-sm-10">
+                <div>
+                  <%= label_tag do %>
+                    <%= radio_button_tag :export_type, "normal", checked: true %>
+                    댓글 양식
+                  <% end %>
+                  <%= label_tag do %>
+                    <%= radio_button_tag :export_type, "habitat" %>
+                    해비타트 제출용
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="pull-right">
+              <%= button_tag type: :submit, class: "btn btn-blue" do %>
+                저장하기<i class="entypo-check"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        
 
       <% end %>
+
     </div>
-  </div>
+  </section>
+
+
+
+<div class="main-content">
+
+  <h2></h2>
+  <br>
+
+
+
 </div>

@@ -24,6 +24,6 @@ module Ari
     config.i18n.available_locales = [:en, :ko]
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
-    
+    config.assets.paths << "#{Rails.root}/app/assets/fonts"
   end
 end

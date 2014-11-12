@@ -1,69 +1,88 @@
-<div class="page-header clearfix">
-  <h3 class="pull-left"><%= @user.username %>님의 정보</h3>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1><%= @user.username %>님의 정보</h1>
+          <div class="categories">
+            <a><%= @user.phone_number %></a>
+          </div>
+        </div>
+        
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+              <%= link_to "수정", edit_club_admin_user_path(current_club, @user), class: "btn btn-gold" %>
+              <%= link_to "삭제", club_admin_user_path(current_club, @user), method: :delete, data: { confirm: "정말 삭제하시겠어요?" }, class: "btn btn-danger" %>
+            </div>
+            <div class="item-detail">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div id="buttons-div" class="pull-right">
-    <%= link_to "수정", edit_club_admin_user_path(current_club, @user), class: "btn btn-default" %>
-  	<%= link_to "삭제", club_admin_user_path(current_club, @user), method: :delete, data: { confirm: "정말 삭제하시겠어요?" }, class: "btn btn-danger" %>
-  </div>
-</div>
+  <section class="portfolio-container">
+    <div class="container">
+      <table class="table">
+        <tr>
+          <td>태그</td>
 
-<table class="table">
-  <tr>
-    <td>태그</td>
-
-    <td><%= @user.tags  %></td>
-  </tr>
-  <tr>
-    <td>기수</td>
-    <td><%= @user.generation_id %></td>
-  </tr>
-  <tr>
-  	<td>이름</td>
-  	<td>
-      <%= @user.username %>
-      <% if @user.activated? %>
-        <span class="glyphicon glyphicon-ok"></span>
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <td>생년월일</td>
-    <td><%= @user.birth %></td>
-  </tr>
-  <tr>
-    <td>성별</td>
-    <td><%= @user.sex %></td>
-  </tr>
-  <tr>
-    <td>전공</td>
-    <td><%= @user.major %></td>
-  </tr>
-  <tr>
-    <td>학번</td>
-    <td><%= @user.student_id %></td>
-  </tr>
-  <tr>
-  	<td>본인 연락처</td>
-  	<td><%= @user.phone_number %></td>
-  </tr>
-  <tr>
-    <td>자택 전화번호</td>
-    <td><%= @user.home_phone_number %></td>
-  </tr>
-  <tr>
-    <td>응급시 연락처</td>
-    <td><%= @user.emergency_phone_number %></td>
-  </tr>
-  <tr>
-  	<td>이메일</td>
-  	<td><%= @user.email %></td>
-  </tr>
-  <tr>
-    <td>해비타트 아이디</td>
-    <td><%= @user.habitat_id %></td>
-  </tr>
-  <tr>
-    <td>단원구분</td>
-    <td><%= @user.member_type %></td>
-  </tr>
-</table>
+          <td><%= @user.tags  %></td>
+        </tr>
+        <tr>
+          <td>기수</td>
+          <td><%= @user.generation_id %></td>
+        </tr>
+        <tr>
+          <td>이름</td>
+          <td>
+            <%= @user.username %>
+            <% if @user.activated? %>
+              <span class="glyphicon glyphicon-ok"></span>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>생년월일</td>
+          <td><%= @user.birth %></td>
+        </tr>
+        <tr>
+          <td>성별</td>
+          <td><%= @user.sex %></td>
+        </tr>
+        <tr>
+          <td>전공</td>
+          <td><%= @user.major %></td>
+        </tr>
+        <tr>
+          <td>학번</td>
+          <td><%= @user.student_id %></td>
+        </tr>
+        <tr>
+          <td>본인 연락처</td>
+          <td><%= @user.phone_number %></td>
+        </tr>
+        <tr>
+          <td>자택 전화번호</td>
+          <td><%= @user.home_phone_number %></td>
+        </tr>
+        <tr>
+          <td>응급시 연락처</td>
+          <td><%= @user.emergency_phone_number %></td>
+        </tr>
+        <tr>
+          <td>이메일</td>
+          <td><%= @user.email %></td>
+        </tr>
+<!--         <tr>
+          <td>해비타트 아이디</td>
+          <td><%= @user.habitat_id %></td>
+        </tr> -->
+        <tr>
+          <td>단원구분</td>
+          <td><%= @user.member_type %></td>
+        </tr>
+      </table>
+    </div>
+  </section>

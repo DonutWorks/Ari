@@ -1,5 +1,6 @@
 $(document).on('ready page:load', function () {
-  $('.selectpicker').selectpicker();
+  // $('.selectpicker').selectpicker();
+  $('.selectboxit').selectBoxIt();
 
   $('.sms_all').change(function() {
     var id = (this).id.replace('_all','');
@@ -151,22 +152,22 @@ function updateCheckStatus(notice_id, response_id, check, index) {
       }
       else if(check == "dues") {
         if(res.dues == 1) {
-          $('#dues-btn-' + index).addClass("btn-primary");
+          $('#dues-btn-' + index).addClass("btn-orange");
         }
         else {
-          $('#dues-btn-' + index).removeClass("btn-primary");
+          $('#dues-btn-' + index).removeClass("btn-orange");
         }
       }
       else {
         if(res.memo != "") {
-          $('#open-memo-btn-' + index).addClass("btn-warning");
+          $('#open-memo-btn-' + index).addClass("btn-gold");
           $('#memo-content-' + index).html(res.memo);
 
           $('#memo-in-' + index).addClass("show-memo").removeClass("hide-memo");
           $('#memo-not-in-' + index).addClass("hide-memo").removeClass("show-memo");
         }
         else {
-          $('#open-memo-btn-' + index).removeClass("btn-warning");
+          $('#open-memo-btn-' + index).removeClass("btn-gold");
 
           $('#memo-not-in-' + index).addClass("hide-memo").removeClass("show-memo");
           $('#memo-in-' + index).addClass("hide-memo").removeClass("show-memo");

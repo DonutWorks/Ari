@@ -9,6 +9,7 @@ var neonLogin = neonLogin || {};
 ;(function($, window, undefined)
 {
 	"use strict";
+<<<<<<< HEAD
 
 	$(document).on('ready page:load', function()
 	{
@@ -65,5 +66,4 @@ var neonLogin = neonLogin || {};
 			});
 		});
 	});
-
 })(jQuery, window);
