@@ -2,6 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.checklist-feed {
+  padding: 0 !important;
+}
+
+.full-width {
+  width: 100% !important;
+}
+
 .notice-title {
   padding: 10px 0 0 0;
 }
@@ -40,6 +48,10 @@
 
 #to_progress {
   width: 100%;
+}
+
+.checklist-container {
+  margin-left: -120px;
 }
 
 #checklist-option{

@@ -8,6 +8,7 @@
   </div>
 
   <div class="notice-content-container col-md-10 col-md-offset-1">
+    <div class="clearfix"></div>
     <p>만든 날짜 : <%= @notice.created_at %></p>
     <% if @notice.notice_type == "to"  %>
       <p>행사 날짜 : <%= @notice.event_at %></p>

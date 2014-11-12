@@ -1,5 +1,123 @@
-<div class="panel panel-default checklist-container">
-  <div class="panel-heading">이번에 해야 할 일</div>
+<div class="profile-env">
+  <section class="profile-feed checklist-feed">
+<!-- profile stories -->
+    <div class="profile-stories">
+
+    <% checklists.each do |checklist| %>
+      <% user = checklist.assignees.first %>
+
+      <article class="story">
+
+
+        <div class="story-content full-width">
+
+          <!-- story header -->
+          <header>
+
+            <div class="publisher">
+              <a href="#"><%= checklist.assignees.first.username %></a> 에게 할당된 작업
+              <em><%= time_ago_in_words(checklist.updated_at) %> 전에</em>
+            </div>
+
+            <div class="story-type">
+              <% unless checklist.finish? || checklist.assignee_comments.empty? %>
+                <%= link_to "완료하기", club_notice_checklist_finish_path(current_club, notice, checklist), class: "btn btn-success", data: { confirm: '완료하시면 기존 댓글의 수정 및 삭제는 불가합니다. 정말 완료하시겠습니까?' } %>
+              <% end %>
+            </div>
+
+          </header>
+
+          <div class="story-main-content">
+            <p><%= checklist.task %></p>
+            <span class="pull-right"><%= user.username %>
+              <%= check_box_tag('sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_assignee") if admin? %>
+            </span>
+          </div>
+
+          <footer>
+            <a href="#">
+              <i class="entypo-comment"></i>
+              Comment <span>(<%= checklist.assignee_comments.count %>)</span>
+            </a>
+
+            <ul class="comments">
+              <% checklist.assignee_comments.each do |ac| %>
+
+              <li>
+                <div class="user-comment-thumb">
+                  <%= image_tag(checklist.assignees.first.extra_info.try(:[], 'image') || asset_url('member.jpg'), class: "img-circle", width: "30") %>
+                </div>
+
+                <div class="user-comment-content">
+
+                  <a href="#" class="user-comment-name">
+                    <%= checklist.assignees.first.username %>
+                  </a>
+
+                  <span class="comment-value" data-finish="<%= checklist.finish? ? true : false %>">
+                    <%= ac.comment %>
+                  </span>
+
+                  <% if current_user && checklist.assignees.include?(current_user) %>
+                    <%= form_for ac do |f| %>
+
+                      <div class="pull-right">
+                        <%= link_to ac, method: :put do %>
+                          <i class="entypo-pencil"></i>
+                          수정
+                        <% end %>
+                        <%= link_to ac, method: :delete, data: { confirm: '정말 삭제하시겠습니까?' } do %>
+                          <i class="entypo-cancel"></i>
+                          삭제
+                        <% end %>
+                      </div>
+                    <% end %>
+                  <% end %>
+
+                  <div class="user-comment-meta">
+
+                    <a href="#" class="comment-date"><%= ac.created_at.strftime("%Y-%m-%d %T") %></a>
+
+                  </div>
+
+                </div>
+              </li>
+
+              <% end %>
+
+              <% if current_user && checklist.assignees.include?(current_user) %>
+                <%= form_for [current_club, notice, checklist, @assignee_comment] do |f| %>
+                  <li class="comment-form">
+                    <div class="user-comment-thumb">
+                      <%= image_tag(checklist.assignees.first.extra_info.try(:[], 'image') || asset_url('member.jpg'), class: "img-circle", width: "30") %>
+                    </div>
+
+                    <div class="user-comment-content">
+                      <%= f.text_area :comment, class: "form-control", placeholder: "완료하려면 최소 한 개 이상의 댓글이 필요합니다" %>
+                      <button class="btn"><i class="entypo-chat"></i></button>
+                    </div>
+                  </li>
+                <% end %>
+              <% end %>
+
+            </ul>
+
+          </footer>
+
+          <!-- separator -->
+          <hr />
+
+        </div>
+
+      </article>
+    <% end %>
+    </div>
+</section>
+<!-- 
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <div class="panel-title">이번에 해야 할 일</div>
+  </div>
 
   <div class="list-group">
 
@@ -34,14 +152,14 @@
 
         <div class="new-comment-form">
           <% if current_user && checklist.assignees.include?(current_user) %>
-            <%= form_for [notice, checklist, @assignee_comment] do |f| %>
+            <%= form_for [current_club, notice, checklist, @assignee_comment] do |f| %>
               <div class="input-group">
                 <%= f.text_field :comment, class: "form-control", placeholder: "완료하려면 최소 한 개 이상의 댓글이 필요합니다" %>
                 <span class="input-group-btn">
                   <%= f.submit "등록", class: "btn btn-success" %>
 
                   <% unless checklist.finish? || checklist.assignee_comments.empty? %>
-                    <%= link_to "완료", notice_checklist_finish_path(notice, checklist), class: "btn btn-primary", data: { confirm: '완료하시면 기존 댓글의 수정 및 삭제는 불가합니다. 정말 완료하시겠습니까?' } %>
+                    <%= link_to "완료", club_notice_checklist_finish_path(current_club, notice, checklist), class: "btn btn-primary", data: { confirm: '완료하시면 기존 댓글의 수정 및 삭제는 불가합니다. 정말 완료하시겠습니까?' } %>
                   <% end %>
                 </span>
               </div>
@@ -51,4 +169,5 @@
       </div>
     <% end %>
   </div>
+</div> -->
 </div>
