@@ -1,37 +1,63 @@
-<div class="main-content">
-  <div class="page-header clearfix">
-    <h2>SMS 전송 내역</h2>
-    <br>
-  </div>
-
-  <p>문자 내용 : <%= @message.content %></p>
-  <p>공지글 제목 : <%= @message.notice.title unless @message.notice.blank?  %></p>
-  <p>전송 시간 : <%= @message.created_at %></p>
-
-  <div>
-    <h3>전송된 회원 <small>(총 <%= @message.users.size %>명)</small></h3>
-    <div class="table-responsive">
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th>기수</th>
-            <th>이름</th>
-            <th>전화번호</th>
-            <th>태그</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @message.users.each do |user| %>
-          <tr>
-            <td class="text-right"><%= user.generation_id %></td>
-            <td><%= user.username %></td>
-            <td><%= user.phone_number %></td>
-            <td><%= user.tags %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1>SMS 전송내역</h1>
+          <div class="categories">
+            <% unless @message.notice.blank? %>
+              <a>공지글 제목 : <%= @message.notice.title %></a>
+            <% end %>
+          </div>
+        </div>
+        
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+            </div>
+            <div class="item-detail">
+              <span>Date:</span>
+              <%= @message.created_at %>
+            </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-</div>
+  <section class="portfolio-container">
+    <div class="container">
+      <div class="panel panel-info" data-collapsed="0">
+        <div class="panel-heading">
+          <div class="panel-title">문자 내용</div>
+        </div>
+        <div class="panel-body">
+          <p><%= @message.content %></p>
+        </div>
+      </div>
+
+      <div>
+        <h3>전송된 회원 <small>(총 <%= @message.users.size %>명)</small></h3>
+        <div class="table-responsive">
+          <table class="table table-condensed table-striped">
+            <thead>
+              <tr>
+                <th>기수</th>
+                <th>이름</th>
+                <th>전화번호</th>
+                <th>태그</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @message.users.each do |user| %>
+              <tr>
+                <td class="text-right"><%= user.generation_id %></td>
+                <td><%= user.username %></td>
+                <td><%= user.phone_number %></td>
+                <td><%= user.tags %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>

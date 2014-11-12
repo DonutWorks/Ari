@@ -20,6 +20,15 @@ textarea.textcomplete {
     resize: none;
 }
 
+.ari-center {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.ari-site-header {
+  backgroud-color: green;
+}
+
 .ari-navber {
   border-radius: 0px !important;
   margin-bottom: 0px !important;
@@ -36,6 +45,28 @@ textarea.textcomplete {
 .ari-tmtime {
   text-align: right;
   padding-right: 120px !important;
+}
+
+.ari-badge-progress {
+  float: right;
+  width: 100px;
+}
+
+.ari-tile {
+  height: 150px;
+}
+
+.ari-badge-progress-detail {
+  height: 17px !important;
+  margin-bottom: 37px !important;
+}
+
+.ari-badge-pie-detail {
+  height: 54px;
+}
+
+.ari-badge-pie {
+  float: right; 
 }
 
 .ari-alert {
@@ -68,8 +99,32 @@ textarea.textcomplete {
 
 .ari-activity-title-area {
   display:inline;
+  font-size: 20px !important;
 }
 
 .main-content h2 {
   font-weight: bold;
+}
+
+.ari-activity-tile {
+  min-height: 120px;
+}
+
+.ari-notice-group {
+  margin-top: 5px;
+}
+
+.ari-site-header {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.ari-site-nav {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.ari-site-logo {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }

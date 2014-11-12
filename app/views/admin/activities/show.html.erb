@@ -1,14 +1,103 @@
-<div class="main-content">
-  <h2><%= @activity.title %></h2>
-  <br>
-  <div class="ari-top-buttons pull-right">
-    <%= link_to "수정", edit_club_admin_activity_path(current_club, @activity), class: "btn btn-warning" %>
-      <%= link_to "삭제", club_admin_activity_path(current_club, @activity), method: :delete,
-      data: { confirm: '활동에 속한 공지도 모두 삭제 됩니다. 정말 삭제하시겠어요?' }, class: "btn btn-red" %>
-  </div>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1><%= @activity.title %></h1>
+          <div class="categories">
+            <a><%= @activity.description %></a>
+          </div>
+        </div>
+        
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+              <%= link_to "수정", edit_club_admin_activity_path(current_club, @activity), class: "btn btn-warning" %>
+              <%= link_to "삭제", club_admin_activity_path(current_club, @activity), method: :delete,
+          data: { confirm: '활동에 속한 공지도 모두 삭제 됩니다. 정말 삭제하시겠어요?' }, class: "btn btn-red" %>
+            </div>
+            <div class="item-detail">
+              <span>Date:</span>
+              <%= @activity.event_at %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class="clearfix"></div>
+  <section class="portfolio-container">
+    <div class="container">
+      <div class="row">
+        <% @activity.notices.created_at_desc.each do |notice| %>
+          <%= link_to club_admin_notice_path(current_club, notice) do %>
+            <div class="col-sm-3">
+              <div class="ari-tile tile-stats tile-white tile-white-primary">
+                <% if notice.notice_type == "to" %>
+                  <div class="icon"><i class="entypo-user"></i></div>
+                  <div class="ari-badge-progress-detail progress">
+                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" style="width: 35%">
+                      <span class="sr-only">35% Complete (success)</span>
+                    </div>
+                  </div>
+                <% elsif notice.notice_type == "survey" %>
+                  <div class="icon"><i class="entypo-chart-pie"></i></div>
+                  <div class="ari-badge-pie-detail">
+                    <input class="knob" data-min="0" data-max="10" data-width="50" data-height="50" data-thickness=".25" data-fgColor="#21a9e1" data-bgColor="#ebebeb" value="6">
+                  </div>
+                <% elsif notice.notice_type == "checklist" %>
+                  <div class="icon"><i class="entypo-check"></i></div>
+                  <div class="ari-badge-pie-detail">
+                    <input class="knob" data-min="0" data-max="10" data-width="50" data-height="50" data-thickness=".25" data-fgColor="#21a9e1" data-bgColor="#ebebeb" value="6">
+                  </div>
+                <% else %>
+                  <div class="icon"><i class="entypo-sound"></i></div>
+                  <div class="num"><%= "#{notice.readers.count} / #{current_club.users.all.count}" %></div>
+                <% end %>
+                <h3><%= notice.title %></h3>
+                <p><%= notice.content %></p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+        <div class="col-sm-3">
+          <%= link_to new_club_admin_notice_path(current_club, activity_id: @activity.id) do %>
+            <div class="ari-tile tile-stats tile-white tile-white-primary">
+              <div class="icon"><i class="entypo-plus"></i></div>
+            </div>  
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <h4>활동 설명 : <%= @activity.description %></h4>
-  <h4>활동 날짜 : <%= @activity.event_at %></h4>
-</div>
+<!--   <div class="ari-flow-list">
+    <% @activity.notices.created_at_desc.each do |notice| %>
+      <%= link_to club_admin_notice_path(current_club, notice), class: "list-group-item" do %>
+        <% if notice.notice_type == "to" %>
+          <span>[TO조사] <%= notice.title %></span>
+          <div class="ari-badge-progress progress">
+            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" style="width: 35%">
+              <span class="sr-only">35% Complete (success)</span>
+            </div>
+          </div>
+        <% elsif notice.notice_type == "survey" %>
+          <span>[수요조사] <%= notice.title %></span> 
+          <div class="ari-badge-pie">
+            <input class="knob" data-min="0" data-max="10" data-width="20" data-height="20" data-thickness=".25" data-fgColor="#21a9e1" data-bgColor="#ebebeb" value="6">
+          </div>
+        <% elsif notice.notice_type == "checklist" %>
+          <span>[체크리스트] <%= notice.title %></span>
+          <div class="ari-badge-progress progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" style="width: 35%">
+              <span class="sr-only">35% Complete (success)</span>
+            </div>
+          </div>
+        <% else %>
+          <span>[공지] <%= notice.title %></span>
+          <span class="badge badge-info">
+            <%= "#{notice.readers.count} / #{current_club.users.all.count}" %>
+          </span>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div> -->

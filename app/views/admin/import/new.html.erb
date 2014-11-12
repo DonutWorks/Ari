@@ -1,37 +1,66 @@
-<div class="main-content">
-  <% if @error_message %>
-    <div class="alert <%= flash_class(:error) %> alert-dismissable fade in">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <%= @error_message %>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1>엑셀로 회원 등록하기</h1>
+          <div class="categories">
+            <a></a>
+          </div>
+        </div>
+        
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+            </div>
+            <div class="item-detail">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
+  </section>
 
-  <h2>엑셀 파일로 회원 등록</h2>
-  <br>
-
-  <% if @invalid_messages.count > 0 %>
-    <div class="error_name_list">
-      <% @invalid_messages.map do |message| %>
-        <div><%= message %></div>
+  <section class="portfolio-container">
+    <div class="container">
+      <% if @error_message %>
+        <div class="alert <%= flash_class(:error) %> alert-dismissable fade in">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <%= @error_message %>
+        </div>
       <% end %>
+
+      <% if @invalid_messages.count > 0 %>
+        <div class="error_name_list">
+          <% @invalid_messages.map do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= form_tag(import_club_admin_users_path(current_club), :multipart => true) do %>
+        <div class="help-block">
+          <p>명단 엑셀 파일은 아래와 같은 구조로 올려주셔야 합니다.</p>
+          <%= image_tag("RosterExample.png", id: "RosterExample.png", class: "img-responsive") %>
+          <br>
+          <%= link_to '명단 예제 다운로드', download_roster_example_club_admin_notices_path(current_club), class: "btn btn-default btn-xs" %>
+        </div>
+
+        <div class="panel panel-primary">
+          <div class="panel-body">
+            <div class="form-group">
+              <%= label_tag "등록하실 명단의 엑셀파일을 선택해주세요." %>
+              <%= file_field_tag 'upload[file]', class: "form-control" %>
+            </div>
+
+            <div class="pull-right">
+              <%= button_tag type: :submit, class: "btn btn-blue" do %>
+                업로드<i class="entypo-check"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+      <% end %>
+
     </div>
-  <% end %>
-
-  <%= form_tag(import_club_admin_users_path(current_club), :multipart => true) do %>
-
-    <div class="form-group">
-      <%= label_tag "등록하실 명단의 엑셀파일을 선택해주세요." %>
-      <%= file_field_tag 'upload[file]' %>
-    </div>
-
-    <p class="help-block">
-      명단 엑셀 파일은 아래와 같은 구조로 올려주셔야 합니다.<br>
-      <%= image_tag("RosterExample.png", id: "RosterExample.png", class: "img-responsive") %>
-      <%= link_to '명단 예제 다운로드', download_roster_example_club_admin_notices_path(current_club) %>
-    </p>
-
-    <p>
-      <%= submit_tag "업로드", class: "btn btn-default"   %>
-    </p>
-  <% end %>
-</div>
+  </section>

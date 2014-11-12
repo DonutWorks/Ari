@@ -1,28 +1,39 @@
-<div class="main-content">
-
-  <h2 class="pull-left">SMS 전송목록</h2>
-  <br>
-
-  <div class="ari-top-buttons pull-right">
-    <%= link_to "SMS 전송", new_club_admin_message_path, class: "btn btn-blue" %>
-  </div>
-
-  <div class="clearfix"></div>
-
-  <div id="notice-container" class="panel panel-default">
-    <table class="table">
-      <% @messages.each do |message| %>
-        <%= link_to club_admin_message_path(current_club, message), class: "list-group-item" do %>
-          <% unless message.notice.blank? %>
-            <span>[<%= message.notice.title %>] <%= message.content %></span>
-          <% else %>
-            <span><%= message.content %></span>
-          <% end %>
-          <div class="pull-right">
-          <span><%= message.created_at %></span>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1>SMS 전송 목록</h1>
+          <div class="categories">
           </div>
-        <% end %>
-      <% end %>
-    </table>
-  </div>
-</div>
+        </div>
+        
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+              <%= link_to "SMS 전송", new_club_admin_message_path, class: "btn btn-blue" %>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="portfolio-container">
+    <div class="container">
+      <div id="notice-container" class="panel panel-default">
+        <table class="table">
+          <% @messages.each do |message| %>
+            <%= link_to club_admin_message_path(current_club, message), class: "list-group-item" do %>
+              <% unless message.notice.blank? %>
+                <span>[<%= message.notice.title %>] <%= message.content %></span>
+              <% else %>
+                <span><%= message.content %></span>
+              <% end %>
+              <div class="pull-right">
+              <span><%= message.created_at %></span>
+              </div>
+            <% end %>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </section>
