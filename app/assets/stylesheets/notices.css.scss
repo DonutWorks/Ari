@@ -2,11 +2,35 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#to_progress {
-  width: 100%;
+.checklist-feed {
+  padding: 0 !important;
 }
 
-.content {
+.full-width {
+  width: 100% !important;
+}
+
+.notice-title {
+  padding: 10px 0 0 0;
+}
+
+.notice-title a {
+  float: left;
+  padding-left: 15px;
+  font-size: 20pt;
+}
+
+.notice-content-container {
+  padding-top: 10px;
+}
+
+.notice-content {
+  padding-top: 20px;
+}
+
+.notice-content p {
+  color: #333333;
+  font-size: 14pt;
   margin-bottom: 30px;
 }
 
@@ -14,19 +38,56 @@
   margin-bottom: 30px;
 }
 
-.bg-content {
-  background: #F3F7FF;
-  padding: 10px;
+.register-status {
+  margin: 12px 0 0 10px;
+}
+
+.mention {
+  margin-right: 25px;
+}
+
+#to_progress {
+  width: 100%;
+}
+
+.checklist-container {
+  margin-left: -120px;
+}
+
+.checklist-finish {
+  margin-top: 8px;
+}
+
+.checklist-comment-modify-area {
+  position: relative;
+  margin-top: 10px;
+  display: none;
+
+  .btn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    border: 0;
+    background: transparent;
+    color: #737881;
+    font-size: 13px;
+    -webkit-opacity: 0.7;
+    -moz-opacity: 0.7;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+    -webkit-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
+  }
 }
 
 #checklist-option{
 
   .glyphicon{
-    right: 100px;  
+    right: 100px;
   }
 
   .input-group-btn{
     vertical-align: top;
   }
-  
+
 }

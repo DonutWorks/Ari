@@ -10,7 +10,7 @@ class ResponseDecorator < Draper::Decorator
     when "yes"
       status = "참가"
     when "maybe"
-      status = "모름"
+      status = "불확실"
     when "no"
       status = "불참"
     when "go"
@@ -18,7 +18,7 @@ class ResponseDecorator < Draper::Decorator
     when "wait"
       status = "대기"
     when "not"
-      status = "불참"  
+      status = "불참"
     end
   end
 

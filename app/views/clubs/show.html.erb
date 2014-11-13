@@ -1,31 +1,113 @@
-<div class="form-container">
-  <div class="page-header clearfix">
-    <h3 class="text-center">안녕하세요 <%= current_user.username %> 님!</h3>
-    <div class="pull-right"><%= link_to('Logout', club_sign_out_path(current_club)) %></div>
-  </div>
+<div class="profile-env">
 
-  <div class="page-header clearfix">
-    <p>이메일 : <%= current_user.email %></p>
-    <p>전화번호 : <%= current_user.phone_number %></p>
-  </div>
+  <header class="row">
 
-  <div class="table-responsive">
-  <table class="table table-condensed">
-    <thead>
-      <tr>
-        <th width="40%">공지 이름</th>
-        <th width="40%">행사 날짜</th>
-        <th width="20%">참가 여부</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @responses.each do |response| %>
-        <tr>
-          <td><%= response.notice.title %></td>
-          <td><%= response.notice.decorate.event_at %></td>
-          <td><%= response.status %></td>
-        </tr>
+    <div class="col-sm-2">
+
+      <a href="#" class="profile-picture">
+        <%= image_tag(current_user.extra_info.try(:[], 'image') || asset_url('member.jpg'), class: "img-responsive img-circle") %>
+      </a>
+
+    </div>
+
+    <div class="col-sm-10">
+
+      <ul class="profile-info-sections">
+        <li>
+          <div class="profile-name">
+            <strong>
+              <a href="#"><%= current_user.username %></a>
+              <a href="#" class="user-status is-online tooltip-primary" data-toggle="tooltip" data-placement="top" data-original-title="Online"></a>
+              <!-- User statuses available classes "is-online", "is-offline", "is-idle", "is-busy" -->            </strong>
+            <span><a href="#"><%= current_user.club.name %></a></span>
+          </div>
+        </li>
+
+        <li>
+          <div class="profile-stat">
+            <h3><%= @responses.count %></h3>
+            <span><a href="#">Activities</a></span>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+
+  </header>
+
+  <section class="profile-info-tabs">
+
+    <div class="row">
+
+      <div class="col-sm-offset-2 col-sm-10">
+
+        <ul class="user-details">
+          <li>
+            <a href="#">
+              <i class="entypo-mail"></i>
+              <%= current_user.email %>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              <i class="entypo-phone"></i>
+              <%= current_user.decorate.phone_number %>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="profile-feed col-md-11">
+
+    <!-- profile stories -->
+    <div class="profile-stories">
+      <% if @responses.empty? %>
+        <p>
+          활동 내역이 없습니다.
+        </p>
       <% end %>
-    </tbody>
-  </table>
+      <% @responses.each do |response| %>
+        <article class="story">
+          <div class="story-content">
+            <!-- story header -->
+            <header>
+
+              <div class="publisher">
+                '<%= link_to response.notice.title, club_notice_path(current_club, response.notice) %>' 에 <%= response.status %> 한다고 응답하였습니다.
+                <em><%= time_ago_in_words(response.updated_at) %> 전에</em>
+              </div>
+
+              <div class="story-type">
+                <i class="entypo-feather"></i>
+              </div>
+
+            </header>
+
+            <div class="story-main-content">
+              <p><%= response.notice.content %></p>
+              <em><%= distance_of_time_in_words(Date.today, response.notice.due_date) %> 후에 마감됩니다.</em>
+            </div>
+
+            <footer>
+            </footer>
+
+            <!-- separator -->
+            <hr />
+
+          </div>
+
+        </article>
+
+      <% end %>
+
+    </div>
+
+  </section>
 </div>

@@ -1,7 +1,28 @@
-<% @joined_clubs.each do |club| %>
-  <%= form_for @user, url: club_auth_path(club), html: {role: "form"} do |f| %>
-    <%= f.hidden_field :phone_number %>
-    <%= f.hidden_field :remember_me %>
-    <%= f.submit club.name %>
-  <% end %>
-<% end %>
+<% content_for :body_class, "login-page" %>
+<div class="login-header login-caret">
+  <div class="login-content">
+    <a href="#" class="logo">
+    <!-- our logo -->
+    </a>
+    <p class="description">로그인하려는 동아리를 선택해주세요.</p>
+  </div>
+</div>
+
+<div class="login-form">
+  <div class="login-content">
+
+    <% @joined_clubs.each do |club| %>
+      <%= form_for @user, url: club_auth_path(club), html: {role: "form"} do |f| %>
+        <%= f.hidden_field :phone_number %>
+        <%= f.hidden_field :remember_me %>
+        <div class="form-group">
+          <%= f.button type: :submit, class: "btn btn-primary btn-block btn-login" do %>
+          <i class="entypo-right-open-mini"></i>
+          <%= club.name %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+
+  </div>
+</div>

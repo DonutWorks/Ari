@@ -16,4 +16,8 @@ class Club < ActiveRecord::Base
   def representive
     AdminUser.find_by(club: self)
   end
+
+  def last_signed_in_at
+    representive.last_sign_in_at if representive
+  end
 end

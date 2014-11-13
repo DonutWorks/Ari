@@ -14,6 +14,7 @@ module Authenticates
       end
       joined_clubs.compact!
 
+      return invalid_phone_number if joined_clubs.empty?
       return success({ clubs: joined_clubs })
     end
 
