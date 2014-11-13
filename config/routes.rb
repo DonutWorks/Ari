@@ -43,6 +43,9 @@ Rails.application.routes.draw do
 
       resources :activities
 
+      get 'edit_club', to: 'clubs#edit'
+      patch 'edit_club', to: 'clubs#update'
+
       get 'users/get_user'
       resources :users do
         collection do
