@@ -1,5 +1,4 @@
-<%= render template: 'notices/show' %>
-
+<% content_for :notice_detail do %>
 <div>
   <div class="btn-group pull-left">
     <%= link_to "참가", club_notice_responses_path(current_club, @notice, status: "yes"), method: :post, class: "btn btn-default #{@status == '참가' ? 'btn-primary' : '' }" %>
@@ -12,3 +11,5 @@
     <% end %>
   </div>
 </div>
+<% end %>
+<%= render template: 'notices/show' %>
