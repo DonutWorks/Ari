@@ -84,6 +84,7 @@ gem 'devise-i18n', '~> 0.11.2'
 gem 'friendly_id', '~> 5.0.4'
 gem 'gimchi', '~> 0.2.1'
 gem 'public_activity', '~> 1.4.2'
+gem 'kaminari', '~> 0.16.1'
 
 # active-record observer
 gem 'rails-observers'
