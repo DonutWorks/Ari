@@ -99,6 +99,8 @@ FactoryGirl.define do
   end
 
   factory :response do
+    user
+    notice
     status "go"
   end
 

@@ -12,6 +12,9 @@ class Response < ActiveRecord::Base
 
   validates :status, presence: { message: "회답을 선택해주십시오." },
    inclusion: { in: STATUSES, message: "올바르지 않은 회답입니다." }
+  validates :user, uniqueness: { scope: :notice_id, message: "는 하나의 응답만을 할 수 있습니다." }
+  validates :user, presence: true
+  validates :notice, presence: true
 
   def self.find_remaining_responses
     cases = []
