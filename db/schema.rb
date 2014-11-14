@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141108134935) do
+ActiveRecord::Schema.define(version: 20141113162538) do
 
   create_table "activities", force: true do |t|
     t.string   "title"
@@ -89,11 +89,12 @@ ActiveRecord::Schema.define(version: 20141108134935) do
   add_index "checklists", ["notice_id"], name: "index_checklists_on_notice_id"
 
   create_table "clubs", force: true do |t|
-    t.string   "name",       null: false
+    t.string   "name",                       null: false
     t.string   "logo_url"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
+    t.boolean  "demo",       default: false
   end
 
   create_table "expense_records", force: true do |t|

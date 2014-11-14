@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'application#index'
 
+  get 'demo', to: 'demo#show'
+
   resources :providers, path: '/auth/:provider', only: [] do # oauth callback
     collection do
       get 'callback', to: :create
