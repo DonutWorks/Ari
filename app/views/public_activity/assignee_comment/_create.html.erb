@@ -1,0 +1,20 @@
+<% if activity.trackable %>
+  <%= time_tag activity.created_at, class: "cbp_tmtime" do %>
+    <span><%= activity.created_at.strftime('%H:%M %p') %></span>
+    <span><%= time_ago_in_words(activity.created_at) %> 전</span>
+  <% end %>
+
+  <div class="cbp_tmicon bg-success">
+    <i class="entypo-comment"></i>
+  </div>
+
+  <div class="cbp_tmlabel">
+    <h2>'<%= link_to activity.trackable.checklist.task, club_notice_path(current_club, activity.trackable.checklist.notice) %>' 에 댓글을 남겼습니다</h2>
+    <p>
+      <%= p[:comment] %>
+    </p>
+    <p>
+      <em><%= time_ago_in_words(activity.trackable.checklist.notice.created_at) %> 전에 작성되었습니다.</em>
+    </p>
+  </div>
+<% end %>

@@ -1,6 +1,8 @@
 require 'addressable/uri'
 
 class Notice < ActiveRecord::Base
+  before_destroy :destroy_public_activities
+
   NOTICE_TYPES = %w(external plain survey to checklist)
   NOTICE_TYPES.each do |type|
     define_method("#{type}_notice?") do
@@ -16,9 +18,9 @@ class Notice < ActiveRecord::Base
 
   belongs_to :club
   belongs_to :activity
-  has_many :responses
+  has_many :responses, dependent: :destroy
   has_many :messages
-  has_many :checklists
+  has_many :checklists, dependent: :destroy
   accepts_nested_attributes_for :checklists, reject_if: lambda {|attributes| attributes['task'].blank?}
 
   extend FriendlyId
@@ -90,5 +92,10 @@ private
 
   def copy_event_at_to_due_date
     self.due_date = self.event_at
+  end
+
+  def destroy_public_activities
+    activities = PublicActivity::Activity.where(recipient: self)
+    activities.destroy_all
   end
 end

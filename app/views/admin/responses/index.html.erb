@@ -63,8 +63,8 @@
           <%= render partial: "table", locals: { users: current_club.users.responsed_wait(@notice).order_by_responsed_at.decorate, type: "wait" } %>
         </div>
         <div class="notice-under">
-          <h3>미응답 <small>(총 <%= User.responsed_not_to_notice(@notice,current_club).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: current_club.users.responsed_not_to_notice(@notice).decorate, type: "not" } %>
+          <h3>미응답 <small>(총 <%= User.responsed_not_to_notice(@notice, current_club).count %>명)</small></h3>
+          <%= render partial: "table", locals: { users: User.responsed_not_to_notice(@notice, current_club).decorate, type: "not" } %>
         </div>
 
         <div class="pull-right">

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141113162538) do
+ActiveRecord::Schema.define(version: 20141114055612) do
 
   create_table "activities", force: true do |t|
     t.string   "title"
@@ -164,6 +164,23 @@ ActiveRecord::Schema.define(version: 20141113162538) do
   add_index "notices", ["activity_id"], name: "index_notices_on_activity_id"
   add_index "notices", ["club_id"], name: "index_notices_on_club_id"
   add_index "notices", ["notice_type"], name: "index_notices_on_notice_type"
+
+  create_table "public_activities", force: true do |t|
+    t.integer  "trackable_id"
+    t.string   "trackable_type"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "key"
+    t.text     "parameters"
+    t.integer  "recipient_id"
+    t.string   "recipient_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "public_activities", ["owner_id", "owner_type"], name: "index_public_activities_on_owner_id_and_owner_type"
+  add_index "public_activities", ["recipient_id", "recipient_type"], name: "index_public_activities_on_recipient_id_and_recipient_type"
+  add_index "public_activities", ["trackable_id", "trackable_type"], name: "index_public_activities_on_trackable_id_and_trackable_type"
 
   create_table "read_activity_marks", force: true do |t|
     t.integer  "reader_id",                 null: false
