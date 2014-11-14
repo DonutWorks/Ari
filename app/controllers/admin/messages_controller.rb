@@ -5,7 +5,7 @@ class Admin::MessagesController < Admin::ApplicationController
 
   def new
     @message = current_club.messages.new
-    @users = current_club.users.decorate
+    @users = current_club.users.includes(:tags).decorate
   end
 
   def show
