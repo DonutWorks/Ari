@@ -5,7 +5,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def new
     @notice = current_club.notices.new
-    @users = current_club.users.decorate
+    @users = current_club.users.includes(:tags).decorate
     @activity_id = params[:activity_id]
     @init_date = 4.days.from_now.localtime.strftime("%m/%d/%Y")
 
@@ -31,7 +31,7 @@ class Admin::NoticesController < Admin::ApplicationController
       redirect_to club_admin_notice_path(current_club, @notice)
     else
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice? && !@notice.checklists.empty?
-      @users = current_club.users.decorate
+      @users = current_club.users.includes(:tags).decorate
 
       20.times { @notice.checklists.build.assign_histories.build }
       render 'new'
@@ -39,7 +39,7 @@ class Admin::NoticesController < Admin::ApplicationController
   end
 
   def show
-    @notice = current_club.notices.friendly.find(params[:id]).decorate
+    @notice = current_club.notices.includes(checklists: [:assignees, :assignee_comments]).friendly.find(params[:id]).decorate
     @readers = @notice.club_readers.order_by_read_at.page(params[:readers_page])
     @unreaders = @notice.club_unreaders.generation_sorted_desc.page(params[:unreaders_page])
 
@@ -60,7 +60,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def edit
     @notice = current_club.notices.friendly.find(params[:id])
-    @users = current_club.users.decorate
+    @users = current_club.users.includes(:tags).decorate
     @init_date = @notice.event_at.localtime.strftime("%m/%d/%Y")
 
     20.times { @notice.checklists.build.assign_histories.build }

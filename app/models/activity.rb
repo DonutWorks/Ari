@@ -6,5 +6,4 @@ class Activity < ActiveRecord::Base
   validates :club_id, presence: true
 
   scope :created_at_desc, -> { order(created_at: :desc) }
-
 end

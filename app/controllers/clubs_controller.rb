@@ -1,6 +1,6 @@
 class ClubsController < ApplicationController
   def show
-    @public_activities = PublicActivity::Activity.where(owner: [current_user, current_club]).order(created_at: :desc)
+    @public_activities = PublicActivity::Activity.includes(:trackable, :recipient).where(owner: [current_user, current_club]).order(created_at: :desc)
   end
 
   def current_club
