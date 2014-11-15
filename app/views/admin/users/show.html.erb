@@ -1,20 +1,27 @@
   <section class="portfolio-item-details">
     <div class="container">
-      <div class="row item-title">
-        <div class="col-sm-9">
-          <h1><%= @user.username %>님의 정보</h1>
-          <div class="categories">
-            <a><%= @user.phone_number %></a>
-          </div>
-        </div>
-        
-        <div class="col-sm-3">
-          <div class="text-right">
+      <div class="row">
+        <div class="col-sm-12 col-xs-12">
+          <div class="pull-right">
             <div class="item-detail">
               <%= link_to "수정", edit_club_admin_user_path(current_club, @user), class: "btn btn-gold" %>
               <%= link_to "삭제", club_admin_user_path(current_club, @user), method: :delete, data: { confirm: "정말 삭제하시겠어요?" }, class: "btn btn-danger" %>
             </div>
             <div class="item-detail">
+            </div>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="col-sm-9 col-xs-12">
+          <div class="col-sm-3 col-xs-12" style="text-align: center">
+          <%= image_tag(@user.extra_info.try(:[], 'image') || asset_url('member.jpg'), class: "img-circle") %>
+          </div>
+          <div class="col-sm-6 col-xs-12">
+            <h3 style="margin-top: 40px"><%= @user.username %></h3>
+            <div class="categories">
+              <a><%= @user.member_type %> <%= @user.generation_id %></a>
             </div>
           </div>
         </div>
@@ -24,65 +31,85 @@
 
   <section class="portfolio-container">
     <div class="container">
-      <table class="table">
-        <tr>
-          <td>태그</td>
+      <div class="tabs-vertical-env">
 
-          <td><%= @user.tags  %></td>
-        </tr>
-        <tr>
-          <td>기수</td>
-          <td><%= @user.generation_id %></td>
-        </tr>
-        <tr>
-          <td>이름</td>
-          <td>
-            <%= @user.username %>
-            <% if @user.activated? %>
-              <span class="glyphicon glyphicon-ok"></span>
-            <% end %>
-          </td>
-        </tr>
-        <tr>
-          <td>생년월일</td>
-          <td><%= @user.birth %></td>
-        </tr>
-        <tr>
-          <td>성별</td>
-          <td><%= @user.sex %></td>
-        </tr>
-        <tr>
-          <td>전공</td>
-          <td><%= @user.major %></td>
-        </tr>
-        <tr>
-          <td>학번</td>
-          <td><%= @user.student_id %></td>
-        </tr>
-        <tr>
-          <td>본인 연락처</td>
-          <td><%= @user.phone_number %></td>
-        </tr>
-        <tr>
-          <td>자택 전화번호</td>
-          <td><%= @user.home_phone_number %></td>
-        </tr>
-        <tr>
-          <td>응급시 연락처</td>
-          <td><%= @user.emergency_phone_number %></td>
-        </tr>
-        <tr>
-          <td>이메일</td>
-          <td><%= @user.email %></td>
-        </tr>
-<!--         <tr>
-          <td>해비타트 아이디</td>
-          <td><%= @user.habitat_id %></td>
-        </tr> -->
-        <tr>
-          <td>단원구분</td>
-          <td><%= @user.member_type %></td>
-        </tr>
-      </table>
+        <ul class="nav tabs-vertical right-aligned"><!-- available classes "right-aligned" -->
+          <li class="active"><a href="#v-default" data-toggle="tab">기본 정보</a></li>
+          <li class=""><a href="#v-additional" data-toggle="tab">추가 정보</a></li>
+          <li class=""><a href="#v-activities" data-toggle="tab">이벤트 내역</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="v-default">
+            <table class="table">
+            <tr>
+              <td>태그</td>
+              <td><%= @user.tags  %></td>
+            </tr>
+            <tr>
+              <td>기수</td>
+              <td><%= @user.generation_id %></td>
+            </tr>
+            <tr>
+              <td>이름</td>
+              <td>
+                <%= @user.username %>
+                <% if @user.activated? %>
+                  <span class="glyphicon glyphicon-ok"></span>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td>생년월일</td>
+              <td><%= @user.birth %></td>
+            </tr>
+            <tr>
+              <td>성별</td>
+              <td><%= @user.sex %></td>
+            </tr>
+            <tr>
+              <td>본인 연락처</td>
+              <td><%= @user.phone_number %></td>
+            </tr>
+            <tr>
+              <td>이메일</td>
+              <td><%= @user.email %></td>
+            </tr>
+          </table>
+          </div>
+          <div class="tab-pane" id="v-additional">
+            <table class="table">
+              <tr>
+                <td>전공</td>
+                <td><%= @user.major %></td>
+              </tr>
+              <tr>
+                <td>학번</td>
+                <td><%= @user.student_id %></td>
+              </tr>
+              <tr>
+                <td>자택 전화번호</td>
+                <td><%= @user.home_phone_number %></td>
+              </tr>
+              <tr>
+                <td>응급시 연락처</td>
+                <td><%= @user.emergency_phone_number %></td>
+              </tr>
+              <tr>
+                <td>해비타트 아이디</td>
+                <td><%= @user.habitat_id %></td>
+              </tr>
+              <tr>
+                <td>단원구분</td>
+                <td><%= @user.member_type %></td>
+              </tr>
+            </table>
+          </div>
+          <div class="tab-pane" id="v-activities">
+            <%= render partial: 'clubs/activities', locals: { activities: @public_activities } %>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>

@@ -5,7 +5,7 @@ class Admin::MessagesController < Admin::ApplicationController
 
   def new
     @message = current_club.messages.new
-    @users = current_club.users.all.decorate
+    @users = current_club.users.includes(:tags).decorate
   end
 
   def show
@@ -24,7 +24,7 @@ class Admin::MessagesController < Admin::ApplicationController
       flash[:error] = "현재 message를 보낼 수 없습니다. 다음에 다시 시도해주세요."
       redirect_to club_admin_notice_path(current_club, notice_id)
     when :success
-      flash[:notice] = "회원들에게 문자를 전송 했습니다!"
+      flash[:notice] = "멤버들에게 문자를 전송 했습니다!"
       redirect_to club_admin_message_path(current_club, out[:message])
     end
   end

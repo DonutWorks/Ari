@@ -16,6 +16,12 @@
 
 @import "http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic";
 
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url(asset_path('glyphicons-halflings-regular.eot'));
+  src: url(asset_path('glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), url(asset_path('glyphicons-halflings-regular.woff')) format('woff'), url(asset_path('glyphicons-halflings-regular.ttf')) format('truetype'), url(asset_path('glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
+}
+
 html {
   height:100%;
 }
@@ -139,4 +145,16 @@ textarea.textcomplete {
 .ari-site-logo {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
+}
+
+.ari-tile-progress {
+  margin-top: 30px !important;
+}
+
+.ari-tile-header {
+  padding-bottom: 20px !important;
+}
+
+.ari-tile-footer {
+  padding: 10px !important;
 }

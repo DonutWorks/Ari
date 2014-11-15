@@ -25,13 +25,13 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="ari-navbar-nav nav navbar-nav navbar-right">
           <li>
-            <%= link_to "활동", club_admin_root_path(current_club) %>
+            <%= link_to "이벤트", club_admin_root_path(current_club) %>
           </li>
           <li>
-            <%= link_to "회원", club_admin_users_path(current_club) %>
+            <%= link_to "멤버", club_admin_users_path(current_club) %>
           </li>
           <li>
-            <%= link_to "설문조사", new_club_admin_export_excel_path(current_club) %>
+            <%= link_to "내보내기", new_club_admin_export_excel_path(current_club) %>
           </li>
           <li>
             <%= link_to "SMS", club_admin_messages_path(current_club) %>
@@ -39,8 +39,16 @@
           <li>
             <%= link_to "회계", club_admin_bank_account_expense_records_path(current_club, bank_account_id: 1) %>
           </li>
-          <li>
-            <%= link_to "로그아웃", destroy_admin_user_session_path, method: :delete %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">동아리<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li>
+                <%= link_to "정보 수정", club_admin_edit_club_path %>
+              </li>
+              <li>
+                <%= link_to "로그아웃", destroy_admin_user_session_path, method: :delete %>
+              </li>
+            </ul>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->

@@ -13,7 +13,7 @@ class Admin::ActivitiesController < Admin::ApplicationController
     @activity = current_club.activities.new(activity_params)
 
     if @activity.save
-      SlackNotifier.notify("햇빛봉사단이 활동을 추가하였습니다! : #{@activity.title}, #{@activity.description}")
+      SlackNotifier.notify("햇빛봉사단이 이벤트을 추가하였습니다! : #{@activity.title}, #{@activity.description}")
       redirect_to club_admin_root_path(current_club)
     else
       render 'new'
@@ -42,7 +42,7 @@ class Admin::ActivitiesController < Admin::ApplicationController
     params[:activity][:event_at] = event_at_convert
 
     if @activity.update(activity_params)
-      flash[:notice] = "\"#{@activity.title}\" 활동 성공적으로 수정했습니다."
+      flash[:notice] = "\"#{@activity.title}\" 이벤트 성공적으로 수정했습니다."
       redirect_to club_admin_root_path(current_club)
     else
       render 'edit'
@@ -53,7 +53,7 @@ class Admin::ActivitiesController < Admin::ApplicationController
     @activity = current_club.activities.find(params[:id])
     @activity.destroy
 
-    flash[:notice] = "\"#{@activity.title}\" 활동 성공적으로 삭제했습니다."
+    flash[:notice] = "\"#{@activity.title}\" 이벤트 성공적으로 삭제했습니다."
     redirect_to club_admin_root_path(current_club)
   end
 

@@ -10,7 +10,7 @@ var public_vars = public_vars || {};
 	
 	"use strict";
 	
-	$(document).ready(function()
+	$(document).on('ready page:load', function()
 	{
 		// Sidebar Menu var
 		public_vars.$body	 	 	= $("body");

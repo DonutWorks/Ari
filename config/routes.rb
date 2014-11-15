@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'application#index'
 
+  get 'demo', to: 'demo#show'
+
   resources :providers, path: '/auth/:provider', only: [] do # oauth callback
     collection do
       get 'callback', to: :create
@@ -42,6 +44,9 @@ Rails.application.routes.draw do
       root 'activities#index'
 
       resources :activities
+
+      get 'edit_club', to: 'clubs#edit'
+      patch 'edit_club', to: 'clubs#update'
 
       get 'users/get_user'
       resources :users do

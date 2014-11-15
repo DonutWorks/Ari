@@ -32,15 +32,15 @@ class NoticeDecorator < Draper::Decorator
   def notice_type
     case object.notice_type
     when "to"
-      status = "TO조사"
+      status = "참가조사"
     when "checklist"
-      status = "체크리스트"
+      status = "할일 배분"
     when "external"
-      status = "외부공지"
+      status = "외부링크 공지"
     when "plain"
-      status = "내부공지"
+      status = "텍스트 공지"
     when "survey"
-      status = "수요조사"
+      status = "투표"
     end
   end
 end

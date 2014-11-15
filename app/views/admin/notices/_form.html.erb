@@ -1,31 +1,33 @@
-<div class="form-group form-group-lg has-feedback %>">
+<div class="<%= "hide" if @notice.persisted? %> form-group form-group-lg has-feedback <%= validation_state(@notice, :notice_type) %>">
   <%= f.label :notice_type, "유형", class: "col-sm-2 control-label" %>
   <div class="col-sm-10">
     <%= f.label :notice_type_external, class: "radio-inline control-label" do %>
       <%= f.radio_button :notice_type, "external", checked: true, class: "notice-type-option" %>
-      외부 공지
+      외부링크 공지
     <% end %>
     <%= f.label :notice_type_plain, class: "radio-inline control-label" do %>
       <%= f.radio_button :notice_type, "plain", class: "notice-type-option" %>
-      내부 공지
+      텍스트 공지
+    <% end %>
+    <span class="notice-type-separator">|</span>
+    <%= f.label :notice_type_to, class: "radio-inline control-label" do %>
+      <%= f.radio_button :notice_type, "to", class: "notice-type-option" %>
+      참가조사
     <% end %>
     <%= f.label :notice_type_survey, class: "radio-inline control-label" do %>
       <%= f.radio_button :notice_type, "survey", class: "notice-type-option" %>
-      수요조사
+      투표
     <% end %>
-    <%= f.label :notice_type_to, class: "radio-inline control-label" do %>
-      <%= f.radio_button :notice_type, "to", class: "notice-type-option" %>
-      TO 공지
-    <% end %>
+    <span class="notice-type-separator">|</span>
     <%= f.label :notice_type_checklist, class: "radio-inline control-label" do %>
       <%= f.radio_button :notice_type, "checklist", class: "notice-type-option" %>
-      체크리스트 공지
+      할일 배분
     <% end %>
   </div>
 </div>
 
 <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :activity) %>">
-  <%= f.label :activity, "활동", class: "col-sm-2 control-label" %>
+  <%= f.label :activity, "이벤트", class: "col-sm-2 control-label" %>
   <div class="col-sm-10">
     <%= f.collection_select :activity_id, current_club.activities.all,:id,:title, {:selected => @activity_id}, {class: "selectboxit"} %>
     <span class="glyphicon <%= validation_state_feedback(@notice, :activity) %> form-control-feedback"></span>
@@ -73,7 +75,7 @@
   </div>
 
   <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :event_at) %>">
-    <%= f.label :event_at, "활동 날짜", class: "col-sm-2 control-label" %>
+    <%= f.label :event_at, "이벤트 날짜", class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
       <div class="input-group">
         <input type="text" name="notice[event_at]" class="form-control datepicker" value="<%= @init_date %>" data-format="yyyy MM dd D">
@@ -127,7 +129,7 @@
         <span class="help-block"><%= attribute_error_message(checklist, :task) %></span>
         <span class="help-block"><%= attribute_error_message(checklist, :assignees) %></span>
         <span class="input-group-btn">
-          <button class="btn btn-warning assign-btn" type="button" data-toggle="modal" data-target=".all-users-modal">회원 선택</button>
+          <button class="btn btn-warning assign-btn" type="button" data-toggle="modal" data-target=".all-users-modal">멤버 선택</button>
           <%= checklist_form.fields_for :assign_histories do |assign_form| %>
             <%= assign_form.hidden_field :user_id, class: 'assignee-user_id' %>
           <% end %>
