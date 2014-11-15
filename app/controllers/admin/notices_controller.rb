@@ -117,8 +117,8 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def to_notice_change_deadline
     notice = current_club.notices.friendly.find(params[:id])
-    due_date = params.require(:notice).permit(:due_date)
-    due_date_convert = Date.civil(due_date['due_date(1i)'].to_i, due_date['due_date(2i)'].to_i, due_date['due_date(3i)'].to_i)
+    due_date = params[:due_date].split('/')
+    due_date_convert = Date.civil(due_date[2].to_i, due_date[0].to_i, due_date[1].to_i)
 
     if notice.update(due_date: due_date_convert)
       flash[:notice] = "\"#{notice.title}\" 공지의 마감일을 성공적으로 수정 했습니다."

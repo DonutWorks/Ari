@@ -11,6 +11,9 @@
         <div class="col-sm-3">
           <div class="text-right">
             <div class="item-detail">
+              <% if @notice_deadline_end %>
+                <%= link_to "마감", to_notice_end_deadline_club_admin_notice_path(current_club, @notice.id), class: "btn btn-red" %>
+              <% end %>
               <%= link_to "취소", club_admin_notice_path(current_club, @notice), class: "btn btn-gold" %>
             </div>
             <div class="item-detail">
@@ -25,31 +28,63 @@
 
   <section class="portfolio-container">
     <div class="container">
-      <p>공지 내용 : <%= @notice.content %></p>
-      <p>실제 공지 주소 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
-      <p>통합 공지 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %></p>
+      <ul class="ari-notice-ul">
+        <li class="ari-notice-li-top">
+          <i class="entypo-doc-text"></i>
+          <a><%= @notice.content %></a>
+        </li>
+        
+        <li class="ari-notice-li">
+          <i class="entypo-link"></i>
+            통합 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %>
+        </li>
 
-      <p>행사 날짜 : <%= @notice.event_at %></p>
-      <p>모집 시한 : <%= @notice.due_date %></p>
-      <p>최대 참가 인원 : <%= @notice.to %></p>
+        <li class="ari-notice-li">
+          <i class="entypo-calendar"></i>
+            행사 날짜 : <a><%= @notice.event_at %></a>
+        </li>
+        <li class="ari-notice-li">
+          <i class="entypo-calendar"></i>
+            모집 시한 : <a><%= @notice.due_date %></a>
+        </li>
+        <li class="ari-notice-li">
+          <i class="entypo-credit-card"></i>
+            <a> 정단원(<%= @notice.regular_dues ? @notice.regular_dues : "0" %>원), 예비단원(<%= @notice.associate_dues ? @notice.associate_dues : "0" %>원) </a>
+        </li>
 
-      <% if @notice_deadline_end %>
-        <%= link_to "마감", to_notice_end_deadline_club_admin_notice_path(current_club, @notice.id), class: "btn btn-warning" %>
-      <% else %>
-        <%= form_for @notice_form, url: to_notice_change_deadline_club_admin_notice_path(current_club, @notice_form.id), html: {role: "form", class: "form-horizontal"} do |f|%>
-          <div class="modal-body">
-            <div class="form-group form-group-sm has-feedback <%= validation_state(@notice, :due_date) %>">
-              <%= f.label :due_date, "모집 시한 변경", class: "control-label" %>
-              <div>
-                <%= f.date_select :due_date, {start_year: Date.today.year, default: 4.days.from_now }, {class: "selectpicker"} %>
-                <%= f.submit "연장", class: "btn btn-primary"  %>
-                <span class="glyphicon <%= validation_state_feedback(@notice_form, :due_date) %> form-control-feedback"></span>
-                <span class="help-block"><%= attribute_error_message(@notice_form, :due_date) %></span>
+        <li class="ari-notice-li">
+          <i class="entypo-user"></i>
+            최대 참가 가능인원 : <a><%= @notice.to %></a>
+        </li>
+        <% unless @notice_deadline_end %>
+          <li class="ari-notice-li">
+            <i class="entypo-calendar"></i>
+              <div class="ari-deadline-edit">
+                모집 시한 변경
+                <%= form_for @notice_form, url: to_notice_change_deadline_club_admin_notice_path(current_club, @notice_form.id), html: {role: "form", class: "form-horizontal"} do |f|%>
+                  <div class="ari-form-group-deadline form-group form-group-lg has-feedback <%= validation_state(@notice_form, :due_date) %>">
+                    <div class="ari-input-group input-group">
+                      <input type="text" name="due_date" class="ari-form-control form-control datepicker" value="<%= @notice_form.due_date.localtime.strftime("%m/%d/%Y") %>" data-format="mm/dd/yyyy">
+
+                      <div class="ari-input-calendar input-group-addon">
+                        <i class="entypo-calendar"></i>
+                      </div>
+                      <div class="ari-input-group"><%= f.submit "연장", class: "btn btn-primary"  %></div>
+                    </div>
+
+                    <span class="glyphicon <%= validation_state_feedback(@notice_form, :due_date) %> form-control-feedback"></span>
+                    <span class="help-block"><%= attribute_error_message(@notice_form, :due_date) %></span>
+                  </div>
+                <% end %>
               </div>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
+            <% end %>
+          </li>
+          
+          
+      </ul>
+
+      
+        
 
       <div class="clearfix"></div>
       <%= form_tag(club_admin_notice_responses_path(current_club, @notice), method: "post") do %>
