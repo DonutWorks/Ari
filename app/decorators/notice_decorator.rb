@@ -32,7 +32,7 @@ class NoticeDecorator < Draper::Decorator
   def notice_type
     case object.notice_type
     when "to"
-      status = "TO조사"
+      status = "참가조사"
     when "checklist"
       status = "체크리스트"
     when "external"
