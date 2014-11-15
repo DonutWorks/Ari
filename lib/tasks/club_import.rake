@@ -8,12 +8,12 @@ namespace :club do
     club.transaction do
 
       # import users
-      CSV.foreach('./exported_user.csv', headers: true) do |row|
+      CSV.foreach('./db/seeds/exported_user.csv', headers: true) do |row|
         club.users.create!(row.to_hash.except('id', 'club_id'))
       end
 
       # import activities, notices
-      notices = CSV.read('./exported_notice.csv', headers: true)
+      notices = CSV.read('./db/seeds/exported_notice.csv', headers: true)
       notices = notices.map(&:to_hash)
 
       CSV.foreach('./db/seeds/exported_activity.csv', headers: true) do |row|
