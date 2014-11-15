@@ -5,11 +5,11 @@ class ResponsesController < ApplicationController
     if current_user.responsed_to?(@notice)
       case @notice.responses.find_by_user_id(current_user).status
       when "yes"
-        @status = "참가"
+        @status = "찬성"
       when "maybe"
-        @status = "모름"
+        @status = "보류"
       when "no"
-        @status = "불참"
+        @status = "반대"
       end
     end
   end
