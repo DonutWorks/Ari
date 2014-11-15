@@ -40,7 +40,7 @@ class NoticeDecorator < Draper::Decorator
     when "plain"
       status = "텍스트 공지"
     when "survey"
-      status = "수요조사"
+      status = "투표"
     end
   end
 end
