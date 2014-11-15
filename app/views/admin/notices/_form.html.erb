@@ -129,7 +129,7 @@
         <span class="help-block"><%= attribute_error_message(checklist, :task) %></span>
         <span class="help-block"><%= attribute_error_message(checklist, :assignees) %></span>
         <span class="input-group-btn">
-          <button class="btn btn-warning assign-btn" type="button" data-toggle="modal" data-target=".all-users-modal">회원 선택</button>
+          <button class="btn btn-warning assign-btn" type="button" data-toggle="modal" data-target=".all-users-modal">멤버 선택</button>
           <%= checklist_form.fields_for :assign_histories do |assign_form| %>
             <%= assign_form.hidden_field :user_id, class: 'assignee-user_id' %>
           <% end %>
