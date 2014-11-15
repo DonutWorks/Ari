@@ -15,7 +15,7 @@ class Activity < ActiveRecord::Base
       go = 0
       wait = 0
 
-      notice.responses.where(dues: 1).each do |response|
+      notice.responses.includes(:user).where(dues: 1).each do |response|
         case response.user.member_type
         when "예비단원"
           notice.associate_dues ? sum += notice.associate_dues : sum += 0

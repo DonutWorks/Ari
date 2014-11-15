@@ -1,6 +1,6 @@
 class NoticesController < ApplicationController
   def show
-    @notice = current_club.notices.friendly.find(params[:id]).decorate
+    @notice = current_club.notices.includes(checklists: [:assignees, :assignee_comments]).friendly.find(params[:id]).decorate
     @assignee_comment = AssigneeComment.new if @notice.raw_notice_type == "checklist"
 
     create_read_activity!(current_user, @notice)
@@ -12,7 +12,6 @@ class NoticesController < ApplicationController
       redirect_to club_notice_responses_path(current_club, @notice)
     when "to"
       redirect_to club_notice_to_responses_path(current_club, @notice)
-    else
     end
   end
 
