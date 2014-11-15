@@ -84,7 +84,7 @@ class Notice < ActiveRecord::Base
 
 
       return {notice: self, go: go, wait: wait, sum: sum}
-    else 
+    else
       return 'not_to'
     end
   end
