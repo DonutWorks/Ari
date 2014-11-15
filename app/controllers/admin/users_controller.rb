@@ -52,6 +52,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   def show
     @user = current_club.users.find(params[:id]).decorate
+    @public_activities = PublicActivity::Activity.where(owner: [@user, current_club]).order(created_at: :desc)
   end
 
   def tags
