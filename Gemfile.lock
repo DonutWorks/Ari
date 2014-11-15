@@ -104,6 +104,9 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.1)
     jwt (1.0.0)
+    kaminari (0.16.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     listen (2.7.11)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -301,6 +304,7 @@ DEPENDENCIES
   guard-rspec (~> 4.3.1)
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari (~> 0.16.1)
   mailgun (~> 0.8)
   newrelic_rpm (~> 3.9.4.245)
   nokogiri (~> 1.6.3.1)

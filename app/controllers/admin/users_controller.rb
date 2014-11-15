@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::ApplicationController
   respond_to :json
 
   def index
-    @users = current_club.users.all.decorate
+    @users = current_club.users.includes(:tags).decorate
   end
 
   def new

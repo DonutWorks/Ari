@@ -22,7 +22,7 @@ def create_user_snuhabitat
   (2..data.last_row).each do |i|
     user = UserModelNormalizer.normalize(normalizer, data, i)
     new_user = habitat_club.users.find_or_initialize_by(phone_number: user.phone_number)
-    new_user.attributes = user.as_json(except: [:id])
-    new_user.save
+    new_user.attributes = user.as_json(except: [:id]).merge({ club_id: habitat_club.id })
+    new_user.save!
   end
 end
