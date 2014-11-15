@@ -1,6 +1,6 @@
 $(document).on('ready page:load', function()
 {
-  for(var i=1; i<$('#survey_count').val()+1; i++) {
+  for(var i=0; i<$('#survey_count').val(); i++) {
     $("#pie-" + i).sparkline([$("#pie-" + i).data("yes"),$("#pie-" + i).data("maybe"),$("#pie-" + i).data("no"),$("#pie-" + i).data("empty")], {
       type: 'pie',
       width: '50px ',
