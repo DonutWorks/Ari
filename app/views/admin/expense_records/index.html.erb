@@ -29,9 +29,9 @@
               <th width="15%">일자</th>
               <th width="10%">출금</th>
               <th width="10%">입금</th>
-              <th width="25%">내용</th>
+              <th width="20%">내용</th>
               <th width="30%">납부 참조</th>
-              <th width="10%">확인</th>
+              <th width="15%">확인</th>
             </tr>
           </thead>
 
@@ -48,7 +48,7 @@
                 <td>
                   <button class="record-modal btn btn-info btn-xs" type="button" data-toggle="modal" data-target="#record-select-modal" data-record="<%= record.id %>">수동 납부</button>
                   <%= link_to "삭제", club_admin_bank_account_expense_record_path(current_club,@bank_account,record), method: :delete,
-            data: { confirm: '정말 삭제하시겠어요?' }, class: "record-delete-btn btn btn-red btn-xs" %>
+            data: { confirm: '정말 삭제하시겠어요?' }, class: "record-delete-btn btn btn-orange btn-xs" %>
                 </td>
               </tr>
             <% end %>

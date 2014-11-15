@@ -1,7 +1,5 @@
 $(document).on('ready page:load', function(){
   recordModal.init();
-
-  $('.record-delete-btn').width($('.record-modal').width());
 });
 
 var recordModal = {
