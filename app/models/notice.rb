@@ -16,6 +16,7 @@ class Notice < ActiveRecord::Base
     end
   end
 
+
   belongs_to :club
   belongs_to :activity
   has_many :responses, dependent: :destroy

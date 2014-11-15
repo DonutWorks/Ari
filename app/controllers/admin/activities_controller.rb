@@ -26,7 +26,9 @@ class Admin::ActivitiesController < Admin::ApplicationController
   end
 
   def show
-    @activity = current_club.activities.find(params[:id]).decorate
+    @activity = current_club.activities.find(params[:id])
+    @survey_notice = @activity.notices.where(notice_type: "survey")
+    @activity = @activity.decorate
   end
 
   def edit
