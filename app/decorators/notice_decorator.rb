@@ -22,7 +22,7 @@ class NoticeDecorator < Draper::Decorator
   end
 
   def content
-    h.simple_format(object.content)
+    h.simple_format(object.content, {}, wrapper_tag: "span")
   end
 
   def raw_notice_type
