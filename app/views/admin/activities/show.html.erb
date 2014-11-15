@@ -28,6 +28,13 @@
   <section class="portfolio-container">
     <div class="container">
       <div class="row">
+        <div class="col-sm-3">
+          <%= link_to new_club_admin_notice_path(current_club, activity_id: @activity.id) do %>
+            <div class="ari-tile tile-stats tile-white tile-white-primary">
+              <div class="icon"><i class="entypo-plus"></i></div>
+            </div>
+          <% end %>
+        </div>
         <% @activity.notices.created_at_desc.each do |notice| %>
           <%= link_to club_admin_notice_path(current_club, notice) do %>
             <div class="col-sm-3">
@@ -59,13 +66,6 @@
             </div>
           <% end %>
         <% end %>
-        <div class="col-sm-3">
-          <%= link_to new_club_admin_notice_path(current_club, activity_id: @activity.id) do %>
-            <div class="ari-tile tile-stats tile-white tile-white-primary">
-              <div class="icon"><i class="entypo-plus"></i></div>
-            </div>
-          <% end %>
-        </div>
       </div>
     </div>
   </section>
