@@ -41,6 +41,7 @@ class Admin::NoticesController < Admin::ApplicationController
   def show
     @notice = current_club.notices.friendly.find(params[:id]).decorate
     @assignee_comment = AssigneeComment.new if @notice.raw_notice_type == "checklist"
+    @dues_sum = @notice.calculate_dues_sum if @notice.raw_notice_type == "to"
   end
 
   def edit

@@ -26,11 +26,7 @@ class Admin::ActivitiesController < Admin::ApplicationController
   end
 
   def show
-
-
     @activity = current_club.activities.find(params[:id]).decorate
-    @dues_sum = @activity.calculate_dues_sum
-
   end
 
   def edit

@@ -57,6 +57,36 @@ class Notice < ActiveRecord::Base
     club.users.merge(self.unreaders)
   end
 
+  def calculate_dues_sum
+    if self.notice_type == 'to'
+
+      sum = 0
+      go = 0
+      wait = 0
+
+      self.responses.where(dues: 1).each do |response|
+        case response.user.member_type
+        when "예비단원"
+          self.associate_dues ? sum += self.associate_dues : sum += 0
+        else
+          self.regular_dues ? sum += self.regular_dues : sum += 0
+        end
+
+        case response.status
+        when "go"
+          go += 1
+        when "wait"
+          wait += 1
+        end
+      end
+
+
+      return {notice: self, go: go, wait: wait, sum: sum}
+    else 
+      return 'not_to'
+    end
+  end
+
 private
   def make_redirectable_url!
     unless link.blank?
