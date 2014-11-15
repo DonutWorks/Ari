@@ -9,13 +9,35 @@
 
   <div class="notice-content-container col-md-10 col-md-offset-1">
     <div class="clearfix"></div>
-    <p>만든 날짜 : <%= @notice.created_at %></p>
-    <% if @notice.raw_notice_type == "to"  %>
-      <p>행사 날짜 : <%= @notice.event_at %></p>
-      <p>모집 인원 : <%= @notice.to %> 명</p>
-      <p>모집 시한 : <%= @notice.due_date %></p>
-      <p>참가비 : 정단원(<%= @notice.regular_dues ? @notice.regular_dues : "0" %>원), 예비단원(<%= @notice.associate_dues ? @notice.associate_dues : "0" %>원)</p>
-    <% end %>
+
+    <ul class="ari-notice-ul">
+      <li class="ari-notice-li">
+        <i class="entypo-calendar"></i>
+          만든 날짜 : <a><%= @notice.created_at %></a>
+      </li>
+
+      <% if @notice.raw_notice_type == "to" %>
+        <li class="ari-notice-li">
+          <i class="entypo-calendar"></i>
+            행사 날짜 : <a><%= @notice.event_at %></a>
+        </li>
+        
+        <li class="ari-notice-li">
+          <i class="entypo-user"></i>
+            모집 인원 : <a><%= @notice.to %> 명</a>
+        </li>
+
+        <li class="ari-notice-li">
+          <i class="entypo-calendar"></i>
+            모집 시한 : <a><%= @notice.due_date %></a>
+        </li>
+
+        <li class="ari-notice-li">
+          <i class="entypo-credit-card"></i>
+            <a> 정단원(<%= @notice.regular_dues ? @notice.regular_dues : "0" %>원), 예비단원(<%= @notice.associate_dues ? @notice.associate_dues : "0" %>원) </a>
+        </li>
+      <% end %>
+    </ul>
 
     <div class="notice-content">
       <%= @notice.content %>

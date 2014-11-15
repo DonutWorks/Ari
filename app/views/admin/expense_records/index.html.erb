@@ -1,79 +1,99 @@
-<div class="page-header clearfix">
-  <h3 class="pull-left">회계내역 관리</h3>
-  <div id="buttons-div" class="pull-right">
-    <%= link_to "내역 업데이트", new_club_admin_bank_account_expense_record_path(current_club, @bank_account), class: "btn btn-default" %>
-  </div>
-</div>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1>회계내역 관리</h1>
+          <div class="categories">
+          </div>
+        </div>
 
-<div class="table-responsive">
-  <table class="table table-condensed table-striped table-hover">
-    <thead>
-      <tr>
-        <th>일자</th>
-        <th>출금</th>
-        <th>입금</th>
-        <th>내용</th>
-        <th width="30%">납부 참조</th>
-        <th></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @bank_account.expense_records.order('record_date DESC').each do |record| %>
-        <tr>
-          <td><%= record.record_date.strftime("%Y-%m-%d %T") %></td>
-          <td><%= record.withdraw %> 원</td>
-          <td><%= record.deposit %> 원</td>
-          <td><%= record.content %></td>
-          <td class="expense-option">
-            <%= link_response(record) %>
-          </td>
-          <td>
-            <button class="record-modal btn btn-default btn-xs" type="button" data-toggle="modal" data-target="#record-select-modal" data-record="<%= record.id %>">수동 납부</button>
-            <%= link_to "삭제", club_admin_bank_account_expense_record_path(current_club,@bank_account,record), method: :delete,
-      data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger btn-xs" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
-
-<div class="modal fade" id="record-select-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">수동 납부처리할 멤버를 선택하세요</h4>
-      </div>
-      <div class="modal-body">
-
-        <div class="table-responsive">
-          <table class="table table-condensed table-striped table-hover">
-            <thead>
-              <tr>
-                <th>이벤트</th>
-                <th>공지</th>
-                <th>멤버명</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <% @remaining_responses.each do |response| %>
-                <tr class="clickable-row" data-response="<%= response[:id] %>" data-bank-account-id="<%= @bank_account.id%>" data-record="" >
-                  <td><%= response[:activity].title %></td>
-                  <td><%= response[:notice].title %></td>
-                  <td><%= response[:user].username %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+              <%= link_to "내역 업데이트", new_club_admin_bank_account_expense_record_path(current_club, @bank_account), class: "btn btn-blue" %>
+            </div>
+            <div class="item-detail">
+            </div>
+          </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+    </div>
+  </section>
+
+  <section class="portfolio-container">
+    <div class="container">
+      <div class="table-responsive">
+        <table class="table table-condensed table-striped">
+          <thead>
+            <tr>
+              <th width="15%">일자</th>
+              <th width="10%">출금</th>
+              <th width="10%">입금</th>
+              <th width="25%">내용</th>
+              <th width="30%">납부 참조</th>
+              <th width="10%">확인</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @bank_account.expense_records.order('record_date DESC').each do |record| %>
+              <tr>
+                <td><%= record.record_date.strftime("%Y-%m-%d %T") %></td>
+                <td><%= record.withdraw %> 원</td>
+                <td><%= record.deposit %> 원</td>
+                <td><%= record.content %></td>
+                <td class="expense-option">
+                  <%= link_response(record) %>
+                </td>
+                <td>
+                  <button class="record-modal btn btn-info btn-xs" type="button" data-toggle="modal" data-target="#record-select-modal" data-record="<%= record.id %>">수동 납부</button>
+                  <%= link_to "삭제", club_admin_bank_account_expense_record_path(current_club,@bank_account,record), method: :delete,
+            data: { confirm: '정말 삭제하시겠어요?' }, class: "record-delete-btn btn btn-red btn-xs" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="modal fade" id="record-select-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">수동 납부처리할 멤버를 선택하세요</h4>
+            </div>
+            <div class="modal-body">
+
+              <div class="table-responsive">
+                <table class="table table-condensed table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>이벤트</th>
+                      <th>공지</th>
+                      <th>멤버명</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% @remaining_responses.each do |response| %>
+                      <tr class="clickable-row" data-response="<%= response[:id] %>" data-bank-account-id="<%= @bank_account.id%>" data-record="" >
+                        <td><%= response[:activity].title %></td>
+                        <td><%= response[:notice].title %></td>
+                        <td><%= response[:user].username %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  </section>
+
