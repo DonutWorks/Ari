@@ -9,14 +9,16 @@
       <%= f.radio_button :notice_type, "plain", class: "notice-type-option" %>
       텍스트 공지
     <% end %>
-    <%= f.label :notice_type_survey, class: "radio-inline control-label" do %>
-      <%= f.radio_button :notice_type, "survey", class: "notice-type-option" %>
-      투표
-    <% end %>
+    <span class="notice-type-separator">|</span>
     <%= f.label :notice_type_to, class: "radio-inline control-label" do %>
       <%= f.radio_button :notice_type, "to", class: "notice-type-option" %>
       참가조사
     <% end %>
+    <%= f.label :notice_type_survey, class: "radio-inline control-label" do %>
+      <%= f.radio_button :notice_type, "survey", class: "notice-type-option" %>
+      투표
+    <% end %>
+    <span class="notice-type-separator">|</span>
     <%= f.label :notice_type_checklist, class: "radio-inline control-label" do %>
       <%= f.radio_button :notice_type, "checklist", class: "notice-type-option" %>
       할일 배분
