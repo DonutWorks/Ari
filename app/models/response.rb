@@ -25,7 +25,7 @@ class Response < ActiveRecord::Base
   def self.find_remaining_responses
     cases = []
 
-    Notice.where(notice_type: 'to').each do |notice|
+    Notice.includes(:activity, responses: :user).where(notice_type: 'to').each do |notice|
       notice.responses.each do |response|
         cases << {
           id: response.id,
