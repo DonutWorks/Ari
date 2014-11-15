@@ -52,6 +52,9 @@ class Admin::NoticesController < Admin::ApplicationController
     elsif @notice.to_notice?
       @responsed_go = current_club.users.responsed_go(@notice).order_by_responsed_at.page(params[:responsed_go_page])
       @responsed_wait = current_club.users.responsed_wait(@notice).order_by_responsed_at.page(params[:responsed_wait_page])
+      @responsed_go_percentage = (@responsed_go.count.to_f / @notice.to) * 100
+
+      @dues_sum = @notice.calculate_dues_sum
     end
   end
 
