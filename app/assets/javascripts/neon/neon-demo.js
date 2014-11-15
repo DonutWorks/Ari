@@ -13,7 +13,7 @@ if(typeof Dropzone != 'undefined')
 {
 	"use strict";
 	
-	$(document).ready(function()
+	$(document).on('ready page:load', function()
 	{
 		
 		// Dropzone Example
