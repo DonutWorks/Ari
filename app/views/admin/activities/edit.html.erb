@@ -1,18 +1,43 @@
-<div class="form-container">
-  <div class="row">
-    <div class="col-md-12">
-      <%= form_for [current_club, :admin, @activity], html: {role: "form", class: "form-horizontal"} do |f|%>
-        <legend>활동 수정하기</legend>
-        <%= render partial: 'form', locals: {f: f} %>
-        <p class="pull-right">
-          <%= f.submit "수정", class: "btn btn-primary btn-lg"  %>
-          <%= link_to club_admin_root_path(current_club) do %>
-            <button type="button" class="btn btn-default btn-lg">
-              취소
-            </button>
-          <% end %>
-        </p>
-      <% end %>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1>활동 수정하기</h1>
+          <div class="categories">
+            <a></a>
+          </div>
+        </div>
+        
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+            </div>
+            <div class="item-detail">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+
+<section class="portfolio-container">
+  <div class="container">
+    <%= form_for [current_club, :admin, @activity], html: {role: "form", class: "form-horizontal"} do |f|%>
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <%= render partial: 'form', locals: {f: f} %>
+          <p class="pull-right">
+            <%= f.submit "수정", class: "btn btn-info btn-lg btn-icon"  %>
+            <%= link_to club_admin_root_path(current_club) do %>
+              <button type="button" class="btn btn-gold btn-lg btn-icon">
+                취소
+              </button>
+            <% end %>
+          </p>
+        </div>
+      </div>
+
+      
+    <% end %>
   </div>
-</div>
+</section>

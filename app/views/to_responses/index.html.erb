@@ -1,17 +1,67 @@
-<%= render template: 'notices/show' %>
-
-<div class="mention">
-  <% if @notice.due_date < Time.now.localtime.strftime("%Y-%m-%d %T") %>
-    <h3 class="text-center">신청이 마감 되었습니다..</h3>
-  <% elsif current_user.response_status(@notice) == "go" %>
-    <h3 class="text-center">지금 참가자 명단에 있습니다.</h3>
-    <%= link_to "참가취소", club_notice_to_response_path(current_club, @notice, @notice.responses.find_by_user_id(current_user)), method: :delete, class: "btn btn-danger pull-right" %>
-  <% elsif current_user.response_status(@notice) == "wait" %>
-    <h3 class="text-center">지금 대기 명단에 있습니다.</h3>
-    <%= link_to "참가취소", club_notice_to_response_path(current_club, @notice, @notice.responses.find_by_user_id(current_user)), method: :delete, class: "btn btn-danger pull-right" %>
-  <% else %>
-    <h3 class="text-center">지금 등록하세요!</h3>
-    <%= link_to "참가신청", club_notice_to_responses_path(current_club, @notice), method: :post, class: "btn btn-primary pull-right" %>
-  <% end %>
-  <div class="clearfix"></div>
+<% content_for :notice_header do %>
+<div class="pull-left register-status">
+<% case @response.try(:status) %>
+<% when "go" %>
+  <div class="label label-success">이 행사에 참가합니다</div>
+<% when "wait" %>
+  <div class="label label-info">이 행사에 참가 대기 중입니다.</div>
+<% end %>
 </div>
+<div class="mention pull-right">
+  <% if @notice.due_date < Time.now.localtime.strftime("%Y-%m-%d %T") %>
+  <% elsif @response.nil? %>
+    <%= button_to club_notice_to_responses_path(current_club, @notice), method: :post, class: "btn btn-success" do %>
+        참가하기
+    <% end %>
+  <% elsif @response.status == "go" or @response.status == "wait" %>
+    <%= button_to club_notice_to_response_path(current_club, @notice, @response), method: :delete, class: "btn btn-danger" do %>
+        취소하기
+    <% end %>
+  <% end %>
+</div>
+<div class="clearfix"></div>
+<% end %>
+
+<% content_for :notice_detail do %>
+  <div class="panel minimal minimal-gray">
+    <div class="panel-heading">
+      <div class="panel-title"><h3>참가자</h3></div>
+      <span class="badge badge-secondary"><%= User.responsed_go(@notice).count %></span>
+    </div>
+
+    <div class="panel-body">
+      <ul class="user-info pull-left pull-none-xsm">
+        <% User.responsed_go(@notice).each do |user| %>
+          <li class="profile-info">
+          <a href="#">
+            <%= image_tag(user.extra_info.try(:[], 'image') || asset_url('member.jpg'), class: "img-circle", width: "44") %>
+            <%= user.username %>
+          </a>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel minimal minimal-gray">
+    <div class="panel-heading">
+      <div class="panel-title"><h3>대기자</h3></div>
+      <span class="badge badge-secondary"><%= User.responsed_wait(@notice).count %></span>
+    </div>
+
+    <div class="panel-body">
+      <ul class="user-info pull-left pull-none-xsm">
+        <% User.responsed_wait(@notice).each do |user| %>
+          <li class="profile-info">
+          <a href="#">
+            <%= image_tag(user.extra_info.try(:[], 'image') || asset_url('member.jpg'), class: "img-circle", width: "44") %>
+            <%= user.username %>
+          </a>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<%= render template: 'notices/show' %>

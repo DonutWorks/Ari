@@ -1,0 +1,20 @@
+<div class="main-content">
+  <ul class="cbp_tmtimeline">
+    <li>
+      <%= time_tag Date.today, class: "cbp_tmtime" do %>
+        <span class="large">Now</span>
+      <% end %>
+
+      <div class="cbp_tmicon">
+        <i class="entypo-user"></i>
+      </div>
+
+      <div class="cbp_tmlabel empty">
+      </div>
+    </li>
+
+    <% activities.each do |activity| %>
+      <li><%= render_activity(activity) %></li>
+    <% end %>
+  </ul>
+</div>

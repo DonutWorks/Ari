@@ -1,6 +1,6 @@
 <div class="form-group form-group-lg has-feedback %>">
-  <%= f.label :notice_type, "유형", class: "col-sm-1 control-label" %>
-  <div class="col-sm-11">
+  <%= f.label :notice_type, "유형", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
     <%= f.label :notice_type_external, class: "radio-inline control-label" do %>
       <%= f.radio_button :notice_type, "external", checked: true, class: "notice-type-option" %>
       외부 공지
@@ -25,17 +25,17 @@
 </div>
 
 <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :activity) %>">
-  <%= f.label :activity, "활동", class: "col-sm-1 control-label" %>
-  <div class="col-sm-11">
-    <%= f.collection_select :activity_id, current_club.activities.all,:id,:title, {:selected => @activity_id}, {class: "form-control"} %>
+  <%= f.label :activity, "활동", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+    <%= f.collection_select :activity_id, current_club.activities.all,:id,:title, {:selected => @activity_id}, {class: "selectboxit"} %>
     <span class="glyphicon <%= validation_state_feedback(@notice, :activity) %> form-control-feedback"></span>
     <span class="help-block"><%= attribute_error_message(@notice, :activity) %></span>
   </div>
 </div>
 
 <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :title) %>">
-  <%= f.label :title, "제목", class: "col-sm-1 control-label" %>
-  <div class="col-sm-11">
+  <%= f.label :title, "제목", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
     <%= f.text_field :title, class: "form-control" %>
     <span class="glyphicon <%= validation_state_feedback(@notice, :title) %> form-control-feedback"></span>
     <span class="help-block"><%= attribute_error_message(@notice, :title) %></span>
@@ -43,8 +43,8 @@
 </div>
 
 <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :content) %>">
-  <%= f.label :content, "내용", class: "col-sm-1 control-label" %>
-  <div class="col-sm-11">
+  <%= f.label :content, "내용", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
     <%= f.text_area :content, rows: 5, class: "form-control" %>
     <span class="glyphicon <%= validation_state_feedback(@notice, :content) %> form-control-feedback"></span>
     <span class="help-block"><%= attribute_error_message(@notice, :content) %></span>
@@ -53,8 +53,8 @@
 
 <div id="external-option">
   <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :link) %>">
-    <%= f.label :link, "링크", class: "col-sm-1 control-label" %>
-    <div class="col-sm-11">
+    <%= f.label :link, "링크", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
       <%= f.text_field :link, class: "form-control" %>
       <span class="glyphicon <%= validation_state_feedback(@notice, :link) %> form-control-feedback"></span>
       <span class="help-block"><%= attribute_error_message(@notice, :link) %></span>
@@ -64,8 +64,8 @@
 
 <div id="to-option">
   <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :to) %>">
-    <%= f.label :to, "모집 인원", class: "col-sm-1 control-label" %>
-    <div class="col-sm-11">
+    <%= f.label :to, "모집 인원", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
       <%= f.number_field :to, min: 1, class: "form-control" %>
       <span class="glyphicon <%= validation_state_feedback(@notice, :to) %> form-control-feedback"></span>
       <span class="help-block"><%= attribute_error_message(@notice, :to) %></span>
@@ -73,19 +73,25 @@
   </div>
 
   <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :event_at) %>">
-    <%= f.label :event_at, "행사 날짜", class: "col-sm-1 control-label" %>
-    <div class="col-sm-11 margin-top15">
-      <%= f.date_select :event_at, {start_year: Date.today.year, default: 4.days.from_now }, {class: "selectpicker"} %>
-      <!-- <p class="text-success">날짜 3일 전까지 공개 모집이 가능합니다</p> -->
+    <%= f.label :event_at, "활동 날짜", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <div class="input-group">
+        <input type="text" name="notice[event_at]" class="form-control datepicker" value="<%= @init_date %>" data-format="yyyy MM dd D">
 
-      <span class="glyphicon <%= validation_state_feedback(@notice, :event_at) %> form-control-feedback"></span>
-      <span class="help-block"><%= attribute_error_message(@notice, :event_at) %></span>
+        <div class="input-group-addon">
+          <a href="#"><i class="entypo-calendar"></i></a>
+        </div>
+      </div>
     </div>
+
+    <span class="glyphicon <%= validation_state_feedback(@notice, :event_at) %> form-control-feedback"></span>
+    <span class="help-block"><%= attribute_error_message(@notice, :event_at) %></span>
+
   </div>
-  
-<div class="form-group form-group-lg has-feedback">
-    <label class="col-sm-1 control-label">옵션</label>
-      <div class="col-sm-11">
+
+  <div class="form-group form-group-lg has-feedback">
+    <label class="col-sm-2 control-label">옵션</label>
+      <div class="col-sm-10">
       <label class="control-label"><input type="radio" id="fee-radio" checked="true"> 참가비</label>
     </div>
   </div>
@@ -113,8 +119,8 @@
   <%= f.fields_for :checklists do |checklist_form| %>
     <% checklist = checklist_form.object %>
     <div class="form-group form-group-lg has-feedback <%= validation_state(@notice, :task) %> <%= validation_state(checklist, :task) %> <%= validation_state(checklist, :assignees) %> checklist-form">
-      <%= checklist_form.label :task, "할일", class: "col-sm-1 control-label" %>
-      <div class="col-sm-11 input-group">
+      <%= checklist_form.label :task, "할일", class: "col-sm-2 control-label" %>
+      <div class="col-sm-10 input-group">
         <%= checklist_form.text_field :task, class: "form-control" %>
         <span class="glyphicon <%= validation_state_feedback(@notice, :task) %> <%= validation_state_feedback(checklist, :task) %> <%= validation_state_feedback(checklist, :assignees) %> form-control-feedback"></span>
         <span class="help-block"><%= attribute_error_message(@notice, :task) %></span>

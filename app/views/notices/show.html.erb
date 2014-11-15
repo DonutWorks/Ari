@@ -1,44 +1,34 @@
 <div>
-  <div class="page-header clearfix">
-    <h3 class="text-center"><%= @notice.title %></h3>
-    <h5 class="pull-right">
-      <p>만든 날짜 : <%= @notice.created_at %></p>
-      <% if @notice.notice_type == "to"  %>
-        <p>행사 날짜 : <%= @notice.event_at %></p>
-        <p>모집 시한 : <%= @notice.due_date %></p>
-        <p>참가비 : 정단원(<%= @notice.regular_dues ? @notice.regular_dues : "0" %>원), 예비단원(<%= @notice.associate_dues ? @notice.associate_dues : "0" %>원)</p>
-      <% end %>
-    </h5>
-  </div>
-
-  <div class="content">
-    <h4>내용</h4>
-    <div class="bg-content"><%= @notice.content %></div>
-  </div>
-
-  <div class="details">
-    <% if @notice.notice_type == "external" %>
-      <h4 class="title">링크</h4>
-      <p><%= link_to @notice.link, @notice.link, target: "_blank" %></p>
-    <% elsif @notice.notice_type == "to"  %>
-      <h4 class="title">TO공지 신청 현황</h4>
-      <progress id="to_progress" value="<%= User.responsed_go(@notice).count %>" max="<%= @notice.to %>"></progress>
-      <div class="text-center ment">
-        <h4>참가자 ( <%= User.responsed_go(@notice).count %> / <%= @notice.to %> )</h4>
-        <p>
-          <%=  User.responsed_go(@notice).map { |user| user.username }.join(", ")  %>
-        </p>
-      </div>
-      <div class="text-center">
-        <h4>대기자 ( <%= User.responsed_wait(@notice).count %> )</h4>
-        <p>
-          <%=  User.responsed_wait(@notice).map { |user| user.username }.join(", ")  %>
-        </p>
-      </div>
-    <% elsif @notice.notice_type == "survey" %>
-
-    <% elsif @notice.notice_type == "checklist" %>
-      <%= render partial: 'checklists', locals: {notice: @notice, checklists: @notice.checklists} %>
+  <div class="notice-title col-md-offset-1 col-md-10">
+    <%= link_to club_notice_path(current_club, @notice) do %>
+      <%= @notice.title %>
     <% end %>
+    <i class="entypo-info-circled pull-left"></i>
+    <%= yield :notice_header %>
+  </div>
+
+  <div class="notice-content-container col-md-10 col-md-offset-1">
+    <div class="clearfix"></div>
+    <p>만든 날짜 : <%= @notice.created_at %></p>
+    <% if @notice.raw_notice_type == "to"  %>
+      <p>행사 날짜 : <%= @notice.event_at %></p>
+      <p>모집 인원 : <%= @notice.to %> 명</p>
+      <p>모집 시한 : <%= @notice.due_date %></p>
+      <p>참가비 : 정단원(<%= @notice.regular_dues ? @notice.regular_dues : "0" %>원), 예비단원(<%= @notice.associate_dues ? @notice.associate_dues : "0" %>원)</p>
+    <% end %>
+
+    <div class="notice-content">
+      <%= @notice.content %>
+    </div>
+
+    <div class="details">
+      <%= yield :notice_detail %>
+      <% if @notice.raw_notice_type == "external" %>
+        <h4 class="title">링크</h4>
+        <p><%= link_to @notice.link, @notice.link, target: "_blank" %></p>
+      <% elsif @notice.raw_notice_type == "checklist" %>
+        <%= render partial: 'checklists', locals: {notice: @notice, checklists: @notice.checklists} %>
+      <% end %>
+    </div>
   </div>
 </div>

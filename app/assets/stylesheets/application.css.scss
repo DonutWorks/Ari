@@ -14,9 +14,135 @@
 *= require_tree .
 */
 
-@import "bootstrap-sprockets";
-@import "bootstrap";
+@import "http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic";
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url(asset_path('glyphicons-halflings-regular.eot'));
+  src: url(asset_path('glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), url(asset_path('glyphicons-halflings-regular.woff')) format('woff'), url(asset_path('glyphicons-halflings-regular.ttf')) format('truetype'), url(asset_path('glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
+}
+
+html {
+  height:100%;
+}
+
+body {
+  height:100%;
+}
 
 textarea.textcomplete {
     resize: none;
+}
+
+.without-sidebar {
+  padding-left: 0 !important;
+}
+
+.ari-center {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.ari-site-header {
+  backgroud-color: green;
+}
+
+.ari-navber {
+  border-radius: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.ari-navbar-nav {
+  font-size: 13px;
+}
+
+.ari-container {
+  padding-left: 0px !important;
+}
+
+.ari-tmtime {
+  text-align: right;
+  padding-right: 120px !important;
+}
+
+.ari-badge-progress {
+  float: right;
+  width: 100px;
+}
+
+.ari-tile {
+  height: 150px;
+}
+
+.ari-badge-progress-detail {
+  height: 17px !important;
+  margin-bottom: 37px !important;
+}
+
+.ari-badge-pie-detail {
+  height: 54px;
+}
+
+.ari-badge-pie {
+  float: right;
+}
+
+.ari-alert {
+  font-size: 13px;
+}
+
+.ari-white-label {
+  color: #F5F5F5;
+}
+
+.ari-checkbox {
+  display:inline !important;
+}
+
+.ari-flow-list {
+  margin-top: 15px;
+}
+
+.ari-top-buttons  {
+  margin-bottom: 15px;
+}
+
+.ari-activity-title {
+  color: black;
+}
+
+.ari-activity-title:hover {
+  color: #727575;
+}
+
+.ari-activity-title-area {
+  display:inline;
+  font-size: 20px !important;
+}
+
+.main-content h2 {
+  font-weight: bold;
+}
+
+.ari-activity-tile {
+  min-height: 120px;
+}
+
+.ari-notice-group {
+  margin-top: 5px;
+}
+
+.ari-site-header {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.ari-site-nav {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.ari-site-logo {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
