@@ -87,7 +87,7 @@ private
   end
 
   def must_have_checklists
-    errors.add(:task, '하나 이상의 체크리스트가 있어야 합니다') if self.checklists.empty?
+    errors.add(:task, '하나 이상의 할일이 있어야 합니다') if self.checklists.empty?
   end
 
   def copy_event_at_to_due_date

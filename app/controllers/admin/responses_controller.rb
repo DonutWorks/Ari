@@ -32,7 +32,7 @@ class Admin::ResponsesController < Admin::ApplicationController
     change_history = {"go" => 0, "wait"=> 0, "not"=> 0}
 
     if input_to > @notice.to
-      flash[:alert] = "TO를 초과하였습니다."
+      flash[:alert] = "최대 참가 인원을 초과하였습니다."
       redirect_to club_admin_notice_responses_path(current_club, @notice)
     else
 

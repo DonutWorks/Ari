@@ -13,7 +13,7 @@
             <div class="item-detail">
               <%= link_to "수정", edit_club_admin_activity_path(current_club, @activity), class: "btn btn-warning" %>
               <%= link_to "삭제", club_admin_activity_path(current_club, @activity), method: :delete,
-          data: { confirm: '활동에 속한 공지도 모두 삭제 됩니다. 정말 삭제하시겠어요?' }, class: "btn btn-red" %>
+          data: { confirm: '이벤트에 속한 공지도 모두 삭제 됩니다. 정말 삭제하시겠어요?' }, class: "btn btn-red" %>
             </div>
             <div class="item-detail">
               <span>Date:</span>
@@ -102,14 +102,14 @@
     <% end %>
   </div> -->
 
-  <h4>TO 모집 현황 결과</h4>
+  <h4>참가조사 현황 결과</h4>
   <ul class="list-group">
     <% @dues_sum.each do |result| %>
         <ol class="breadcrumb">
           <li><h4><a href="<%= club_admin_notice_path(current_club,result[:notice]) %>"><%= result[:notice].title %></a></h4></li>
           <li class="active">참가 : <%= result[:go] %> 명</li>
           <li class="active">대기 : <%= result[:wait] %> 명</li>
-          <li class="active">회비 합계 : <%= result[:sum] %> </li>
+          <li class="active">참가비 합계 : <%= result[:sum] %> </li>
         </ol>
     <% end %>
   </ul>

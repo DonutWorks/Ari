@@ -1,9 +1,9 @@
 <% content_for :notice_detail do %>
 <div>
   <div class="btn-group pull-left">
-    <%= link_to "참가", club_notice_responses_path(current_club, @notice, status: "yes"), method: :post, class: "btn btn-default #{@status == '참가' ? 'btn-primary' : '' }" %>
-    <%= link_to "불확실", club_notice_responses_path(current_club, @notice, status: "maybe"), method: :post, class: "btn btn-default #{@status == '모름' ? 'btn-warning' : '' }" %>
-    <%= link_to "불참", club_notice_responses_path(current_club, @notice, status: "no"), method: :post, class: "btn btn-default #{@status == '불참' ? 'btn-danger' : '' }" %>
+    <%= link_to "찬성", club_notice_responses_path(current_club, @notice, status: "yes"), method: :post, class: "btn btn-default #{@status == '찬성' ? 'btn-primary' : '' }" %>
+    <%= link_to "보류", club_notice_responses_path(current_club, @notice, status: "maybe"), method: :post, class: "btn btn-default #{@status == '보류' ? 'btn-warning' : '' }" %>
+    <%= link_to "반대", club_notice_responses_path(current_club, @notice, status: "no"), method: :post, class: "btn btn-default #{@status == '반대' ? 'btn-danger' : '' }" %>
   </div>
   <div class="pull-right">
   <% if current_user.responsed_to?(@notice) %>

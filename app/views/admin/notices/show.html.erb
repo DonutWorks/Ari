@@ -13,7 +13,7 @@
             <div class="item-detail">
               <%= link_to "수정", edit_club_admin_notice_path(current_club, @notice), class: "btn btn-warning" %>
               <%if @notice.raw_notice_type =="to" %>
-                <%= link_to "TO관리", club_admin_notice_responses_path(current_club, @notice), class: "btn btn-info" %>
+                <%= link_to "참가 인원 관리", club_admin_notice_responses_path(current_club, @notice), class: "btn btn-info" %>
               <% end %>
               <%= link_to "삭제", club_admin_notice_path(current_club, @notice), method: :delete,
               data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger" %>
@@ -54,22 +54,22 @@
           <% when "checklist" then %>
             <li class="secondary-nav active"><a href="#checklist-result" role="tab" data-toggle="tab">수행 현황</a></li>
           <% when "to" then %>
-            <li class="secondary-nav active"><a href="#to-result" role="tab" data-toggle="tab">실시간 TO 현황</a></li>
+            <li class="secondary-nav active"><a href="#to-result" role="tab" data-toggle="tab">실시간 참가인원 현황</a></li>
           <% when "survey" then %>
-            <li class="secondary-nav active"><a href="#survey-result" role="tab" data-toggle="tab">수요 조사</a></li>
+            <li class="secondary-nav active"><a href="#survey-result" role="tab" data-toggle="tab">투표 현황</a></li>
           <% end %>
         </ul>
 
         <div class="tab-content">
           <div class="tab-pane fade-in <%= 'active' if @notice.external_notice? or @notice.plain_notice? %>" id="read-unread">
             <div>
-              <h3>읽은 회원 <small>(총 <%= @notice.readers.count %>명)</small></h3>
+              <h3>읽은 멤버 <small>(총 <%= @notice.readers.count %>명)</small></h3>
               <%= render partial: "table", locals: { users: @readers.decorate, type: "read" } %>
               <%= paginate @readers, param_name: :readers_page %>
             </div>
 
             <div class="notice-under">
-              <h3>안 읽은 회원 <small>(총 <%= @notice.unreaders.count %>명)</small></h3>
+              <h3>안 읽은 멤버 <small>(총 <%= @notice.unreaders.count %>명)</small></h3>
               <%= render partial: "table", locals: { users: @unreaders.decorate, type: "unread" } %>
               <%= paginate @unreaders, param_name: :unreaders_page %>
             </div>
@@ -77,17 +77,17 @@
           <% if @notice.survey_notice? %>
             <div class="tab-pane fade-in active" id="survey-result">
               <div>
-                <h3>참가 <small>(총 <%= current_club.users.responsed_yes(@notice).count %>명)</small></h3>
+                <h3>찬성 <small>(총 <%= current_club.users.responsed_yes(@notice).count %>명)</small></h3>
                 <%= render partial: "table", locals: { users: @responsed_yes.decorate, type: "yes" } %>
                 <%= paginate @responsed_yes, param_name: :responsed_yes_page %>
               </div>
               <div class="notice-under">
-                <h3>불확실 <small>(총 <%= current_club.users.responsed_maybe(@notice).count %>명)</small></h3>
+                <h3>보류 <small>(총 <%= current_club.users.responsed_maybe(@notice).count %>명)</small></h3>
                 <%= render partial: "table", locals: { users: @responsed_maybe.decorate, type: "maybe" } %>
                 <%= paginate @responsed_maybe, param_name: :responsed_maybe_page %>
               </div>
               <div class="notice-under">
-                <h3>불참 <small>(총 <%= current_club.users.responsed_no(@notice).count %>명)</small></h3>
+                <h3>반대 <small>(총 <%= current_club.users.responsed_no(@notice).count %>명)</small></h3>
                 <%= render partial: "table", locals: { users: @responsed_no.decorate, type: "no" } %>
                 <%= paginate @responsed_no, param_name: :responsed_no_page %>
               </div>

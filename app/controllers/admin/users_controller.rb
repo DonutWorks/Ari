@@ -15,7 +15,7 @@ class Admin::UsersController < Admin::ApplicationController
     if @user.valid?
       associate_user_with_tags!
       @user.save!
-      flash[:notice] = "\"#{@user.username}\"님의 회원 정보 생성에 성공했습니다."
+      flash[:notice] = "\"#{@user.username}\"님의 멤버 정보 생성에 성공했습니다."
       redirect_to club_admin_users_path(current_club)
     else
       @user = @user.decorate
@@ -34,7 +34,7 @@ class Admin::UsersController < Admin::ApplicationController
     if @user.valid?
       associate_user_with_tags!
       @user.update!(user_params)
-      flash[:notice] = "\"#{@user.username}\"님의 회원 정보 수정에 성공했습니다."
+      flash[:notice] = "\"#{@user.username}\"님의 멤버 정보 수정에 성공했습니다."
       redirect_to club_admin_user_path(current_club, @user)
     else
       @user = @user.decorate
@@ -46,7 +46,7 @@ class Admin::UsersController < Admin::ApplicationController
     @user = current_club.users.find(params[:id])
     @user.destroy
 
-    flash[:notice] = "\"#{@user.username}\"님의 회원 정보 삭제에 성공했습니다."
+    flash[:notice] = "\"#{@user.username}\"님의 멤버 정보 삭제에 성공했습니다."
     redirect_to club_admin_users_path(current_club)
   end
 
