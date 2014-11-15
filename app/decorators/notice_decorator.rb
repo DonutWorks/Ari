@@ -38,7 +38,7 @@ class NoticeDecorator < Draper::Decorator
     when "external"
       status = "외부공지"
     when "plain"
-      status = "내부공지"
+      status = "텍스트 공지"
     when "survey"
       status = "수요조사"
     end
