@@ -27,10 +27,12 @@
         <div class="panel-body">
           <%= render partial: 'form', locals: {f: f} %>
           <p class="pull-right">
-            <%= f.submit "수정", class: "btn btn-info btn-lg btn-icon"  %>
+            <%= f.button type: :submit, class: "btn btn-info btn-lg btn-icon" do %>
+              수정<i class="entypo-check"></i>
+            <% end %>
             <%= link_to club_admin_root_path(current_club) do %>
               <button type="button" class="btn btn-gold btn-lg btn-icon">
-                취소
+                취소<i class="entypo-cancel"></i>
               </button>
             <% end %>
           </p>
