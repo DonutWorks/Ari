@@ -2,7 +2,7 @@ class Admin::ExpenseRecordsController < Admin::ApplicationController
   def index
 
     @bank_account = current_club.bank_accounts.first
-    @remaining_responses = current_club.responses.find_remaining_responses
+    @remaining_responses = Response.find_remaining_responses(current_club)
 
   end
 
