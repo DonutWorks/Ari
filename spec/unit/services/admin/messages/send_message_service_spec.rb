@@ -36,10 +36,10 @@ RSpec.describe Admin::Messages::SendMessageService do
     expect(@sms_info[:to].split(",")).to eq(@club.users.map(&:phone_number))
   end
 
-  it "should fail if notice is invalid" do
-    skip "Admin can send messages without notice now."
-    out = Admin::Messages::SendMessageService.new(@club).execute(@content, -1, @club.users.map(&:id))
+  # it "should fail if notice is invalid" do
+  #   skip "Admin can send messages without notice now."
+  #   out = Admin::Messages::SendMessageService.new(@club).execute(@content, -1, @club.users.map(&:id))
 
-    expect(out[:status]).to eq(:failure)
-  end
+  #   expect(out[:status]).to eq(:failure)
+  # end
 end

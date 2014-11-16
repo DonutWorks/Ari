@@ -18,7 +18,7 @@ RSpec.describe "check user process", type: :feature do
     # detail link for a first user
     find("tbody tr:first-child a").click
 
-    expect(find('.table')).to have_content(@user.member_type)
+    expect(find('.categories')).to have_content(@user.member_type)
   end
 
   it "should create new user" do

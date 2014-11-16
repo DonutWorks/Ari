@@ -28,7 +28,7 @@ RSpec.describe "root page", type: :feature do
       click_button "전화번호로 로그인"
 
       expect(current_path).to eq(club_path(@user.club))
-      expect(page).to have_content("안녕하세요 #{@user.username} 님!")
+      expect(page).to have_content("#{@user.username} @ #{@user.club.name}")
     end
 
     it "should show me clubs I joined" do
@@ -39,7 +39,7 @@ RSpec.describe "root page", type: :feature do
       click_button "전화번호로 로그인"
 
       click_button @user.club.name
-      expect(page).to have_content("안녕하세요 #{@user.username} 님!")
+      expect(page).to have_content("#{@user.username} @ #{@user.club.name}")
     end
   end
 end

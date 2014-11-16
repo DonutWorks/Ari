@@ -71,12 +71,12 @@ FactoryGirl.define do
     content "google!"
     link "http://google.com"
     notice_type "external"
+    event_at Date.today + 10.days
 
     factory :to_notice do
       notice_type "to"
       to 10
       due_date Date.today + 10.days
-      event_at Date.today + 10.days
       regular_dues 20000
     end
   end

@@ -40,13 +40,13 @@ RSpec.describe "user auth process", type: :feature do
     expect(page).to have_content("전화번호가 잘못되었습니다.")
   end
 
-  it "lets me fail to kakao log in" do
-    skip "Omniauth testing limitation"
-    OmniAuth.config.mock_auth[:kakao] = :invalid_credentials
-    visit club_path(@club)
-    find("#kakao-login-btn").click
-    expect(page).to have_content("인증에 실패하였습니다.")
-  end
+  # it "lets me fail to kakao log in" do
+  #   skip "Omniauth testing limitation"
+  #   OmniAuth.config.mock_auth[:kakao] = :invalid_credentials
+  #   visit club_path(@club)
+  #   find("#kakao-login-btn").click
+  #   expect(page).to have_content("인증에 실패하였습니다.")
+  # end
 
   context "when try to log in w/kakao" do
     before(:each) do
@@ -151,7 +151,7 @@ RSpec.describe "user auth process", type: :feature do
           end
 
           it "lets me sign out" do
-            click_link("Logout")
+            click_link("Log Out")
             visit club_path(@club)
             expect(current_path).to eq(club_sign_in_path(@club))
           end
@@ -186,7 +186,7 @@ RSpec.describe "user auth process", type: :feature do
           end
 
           it "lets me sign out" do
-            click_link("Logout")
+            click_link("Log Out")
             visit club_path(@club)
             expect(current_path).to eq(club_sign_in_path(@club))
           end

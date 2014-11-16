@@ -46,6 +46,7 @@ RSpec.describe "the signin process", type: :feature do
     end
 
     it "redirect me club admin sign in page after sign out" do
+      click_link "동아리"
       click_link "로그아웃"
 
       expect(current_path).to eq(new_admin_user_session_path(@club))

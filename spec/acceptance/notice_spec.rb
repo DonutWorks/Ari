@@ -12,16 +12,16 @@ RSpec.describe "notice", type: :feature do
   end
 
   it "should let me see a notice lists" do
-    visit club_admin_root_path(@club)
+    visit club_admin_activity_path(@club, @activity)
 
-    expect(find('#notice-container')).to have_content(@notice.title)
+    expect(find('.portfolio-container .container')).to have_content(@notice.title)
   end
 
   it "should let me read a notice" do
-    visit club_admin_root_path(@club)
+    visit club_admin_activity_path(@club, @activity)
     click_link @notice.title
 
-    expect(find('.page-header.clearfix')).to have_content(@notice.title)
+    expect(find('.portfolio-item-details')).to have_content(@notice.title)
   end
 
   it "should let me add a new notice" do
@@ -32,7 +32,7 @@ RSpec.describe "notice", type: :feature do
     fill_in 'notice_link', :with => 'www.starcraft.com'
     click_button "등록"
 
-    expect(find('.page-header.clearfix')).to have_content('Protoss noticeway')
+    expect(find('.portfolio-item-details')).to have_content('Protoss noticeway')
   end
 
   it "should let me fail to add a new notice when I forget to fill in" do
@@ -53,7 +53,7 @@ RSpec.describe "notice", type: :feature do
     fill_in 'notice_link', :with => 'www.starcraft.com'
     click_button "수정"
 
-    expect(find('.page-header.clearfix')).to have_content('Protoss noticeway')
+    expect(find('.portfolio-item-details')).to have_content('Protoss noticeway')
   end
 
   it "should let me fail to modify a new notice when I forget to fill in" do
@@ -71,7 +71,7 @@ RSpec.describe "notice", type: :feature do
 
 
   it "should let me check unreaders" do
-    visit club_admin_root_path(@club)
+    visit club_admin_activity_path(@club, @activity)
     click_link @notice.title
 
     expect(find('.notice-reader')).not_to have_content(@user.username)
@@ -81,7 +81,7 @@ RSpec.describe "notice", type: :feature do
   it "should let me check readers" do
     @user.read!(@notice)
 
-    visit club_admin_root_path(@club)
+    visit club_admin_activity_path(@club, @activity)
     click_link @notice.title
 
     expect(find('.notice-reader')).to have_content(@user.username)
@@ -90,7 +90,7 @@ RSpec.describe "notice", type: :feature do
 
   it "should let me not see other clubs' members" do
 
-    visit club_admin_root_path(@club)
+    visit club_admin_activity_path(@club, @activity)
     click_link @notice.title
 
 
@@ -103,9 +103,9 @@ RSpec.describe "notice", type: :feature do
   end
 
   it "should let me delete the notice" do
-    visit club_admin_root_path(@club)
+    visit club_admin_activity_path(@club, @activity)
 
-    expect(find('#notice-container')).to have_content(@notice.title)
+    expect(find('.portfolio-container .container')).to have_content(@notice.title)
 
     visit club_admin_notice_path(@club, @notice)
 
@@ -113,8 +113,8 @@ RSpec.describe "notice", type: :feature do
     page.driver.browser.switch_to.alert.accept if Capybara.current_driver != :rack_test
 
     expect(page).to have_selector('.alert')
-    expect(page).to have_selector('#notice-container')
-    expect(find('#notice-container')).not_to have_content(@notice.title)
+    expect(page).to have_selector('.portfolio-container .container')
+    expect(find('.portfolio-container .container')).not_to have_content(@notice.title)
   end
 
   context "when I update a TO notice" do
@@ -126,7 +126,7 @@ RSpec.describe "notice", type: :feature do
         @club.responses.create!(user: user, notice: @to_notice, status: "go")
       end
 
-      visit club_admin_root_path(@club)
+      visit club_admin_activity_path(@club, @activity)
       click_link @to_notice.title
       click_link "수정"
     end
