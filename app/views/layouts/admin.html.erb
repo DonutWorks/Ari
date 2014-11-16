@@ -24,22 +24,22 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="ari-navbar-nav nav navbar-nav navbar-right">
-          <li>
+          <li class="<%= 'active' if params[:controller] == 'admin/activities' %>">
             <%= link_to "이벤트", club_admin_root_path(current_club) %>
           </li>
-          <li>
+          <li class="<%= 'active' if params[:controller] == 'admin/users' %>">
             <%= link_to "멤버", club_admin_users_path(current_club) %>
           </li>
-          <li>
+          <li class="<%= 'active' if params[:controller] == 'admin/export_excel' %>">
             <%= link_to "내보내기", new_club_admin_export_excel_path(current_club) %>
           </li>
-          <li>
+          <li class="<%= 'active' if params[:controller] == 'admin/messages' %>">
             <%= link_to "SMS", club_admin_messages_path(current_club) %>
           </li>
-          <li>
+          <li class="<%= 'active' if params[:controller] == 'admin/expense_records' %>">
             <%= link_to "회계", club_admin_bank_account_expense_records_path(current_club, bank_account_id: 1) %>
           </li>
-          <li class="dropdown">
+          <li class="dropdown <%= 'active' if params[:controller] == 'admin/clubs' %>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">동아리<b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li>
