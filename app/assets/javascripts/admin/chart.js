@@ -5,7 +5,7 @@ $(document).on('ready page:load', function()
       type: 'pie',
       width: '50px ',
       height: '50px',
-      sliceColors: ['#738DE8', '#E8C073','#FFFFFF', '#D0D0D0']
+      sliceColors: ['#58ACFA', '#F5DA81','#FA5858', '#D0D0D0']
     });
   }
 });

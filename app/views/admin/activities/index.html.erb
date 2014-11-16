@@ -11,7 +11,7 @@
         <div class="col-sm-3">
           <div class="text-right">
             <div class="item-detail">
-              <%= link_to "새 이벤트", new_club_admin_activity_path(current_club), class: "btn btn-green " %>
+              <%= link_to "새 이벤트", new_club_admin_activity_path(current_club), class: "btn btn-blue " %>
             </div>
         </div>
       </div>
@@ -71,7 +71,7 @@
                         <div class="ari-badge-progress progress">
 
                           <% total_cnt = notice.checklists.count
-                            done_cnt = notice.checklists.count
+                            done_cnt = notice.checklists.where(finish: true).count
                           %>
 
                           <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%=done_cnt%>" aria-valuemin="0" aria-valuemax="<%=total_cnt%>" style="width: <%=((done_cnt.to_f/total_cnt)*100)%>%">
