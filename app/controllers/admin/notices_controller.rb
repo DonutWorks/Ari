@@ -37,6 +37,7 @@ class Admin::NoticesController < Admin::ApplicationController
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice? && !@notice.checklists.empty?
       @users = current_club.users.includes(:tags).decorate
       @activity_id = params[:notice][:activity_id]
+      @init_date = params[:notice][:event_at].strftime("%m/%d/%Y")
 
       20.times { @notice.checklists.build.assign_histories.build }
       render 'new'
@@ -89,7 +90,8 @@ class Admin::NoticesController < Admin::ApplicationController
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice?
       @users = current_club.users.decorate
       @activity_id = params[:notice][:activity_id]
-      
+      @init_date = params[:notice][:event_at].strftime("%m/%d/%Y")
+
       20.times { @notice.checklists.build.assign_histories.build}
       render 'edit'
     end
