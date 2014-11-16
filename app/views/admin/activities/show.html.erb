@@ -1,27 +1,99 @@
-<div class="notice-full-page">
-  <div class="page-header clearfix">
-    <h3 class="pull-left"><%= @activity.title %></h3>
-    <div class="pull-right margin-top15">
-      <%= link_to "수정", edit_club_admin_activity_path(current_club, @activity), class: "btn btn-default btn-sm" %>
-      <%= link_to "삭제", club_admin_activity_path(current_club, @activity), method: :delete,
-      data: { confirm: '활동에 속한 공지도 모두 삭제 됩니다. 정말 삭제하시겠어요?' }, class: "btn btn-danger btn-sm" %>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1><%= @activity.title %></h1>
+          <div class="categories">
+            <a><%= @activity.description %></a>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+              <%= link_to "수정", edit_club_admin_activity_path(current_club, @activity), class: "btn btn-warning" %>
+              <%= link_to "삭제", club_admin_activity_path(current_club, @activity), method: :delete,
+          data: { confirm: '이벤트에 속한 공지도 모두 삭제 됩니다. 정말 삭제하시겠어요?' }, class: "btn btn-red" %>
+            </div>
+            <div class="item-detail">
+              <span>Date:</span>
+              <%= @activity.event_at %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <p>활동 설명 : <%= @activity.description %></p>
-  <p>활동 날짜 : <%= @activity.event_at %></p>
+  <section class="portfolio-container">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <%= link_to new_club_admin_notice_path(current_club, activity_id: @activity.id) do %>
+            <div class="ari-tile tile-stats tile-white tile-white-primary">
+              <div class="icon"><i class="entypo-plus"></i></div>
+            </div>
+          <% end %>
+        </div>
 
-  <hr>
+        <input id="survey_count" type="hidden" value="<%=@survey_notice.count%>" />
+        <% survey_index = 0 %>
+        <% @activity.notices.created_at_desc.each do |notice| %>
+          <%= link_to club_admin_notice_path(current_club, notice) do %>
+            <div class="col-sm-4">
+              <div class="ari-tile tile-stats tile-white tile-white-primary">
+                <% if notice.notice_type == "to" %>
+                  <div class="icon"><i class="entypo-user"></i></div>
+                  <div class="ari-badge-progress-detail progress">
 
-  <h4>TO 모집 현황 결과</h4>
-  <ul class="list-group">
-    <% @dues_sum.each do |result| %>
-        <ol class="breadcrumb">
-          <li><h4><a href="<%= club_admin_notice_path(current_club,result[:notice]) %>"><%= result[:notice].title %></a></h4></li>
-          <li class="active">참가 : <%= result[:go] %> 명</li>
-          <li class="active">대기 : <%= result[:wait] %> 명</li>
-          <li class="active">회비 합계 : <%= result[:sum] %> </li>
-        </ol>
-    <% end %>
-  </ul>
-</div>
+                    <% go_cnt = current_club.users.responsed_go(notice).count %>
+
+                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%=go_cnt%>" aria-valuemin="0" aria-valuemax="<%=notice.to%>" style="width: <%=((go_cnt.to_f/notice.to)*100)%>%">
+                      <span class="sr-only"><%=((go_cnt.to_f/notice.to)*100)%>% Complete (success)</span>
+                    </div>
+                  </div>
+                <% elsif notice.notice_type == "survey" %>
+                  <div class="icon"><i class="entypo-chart-pie"></i></div>
+                  <div class="ari-badge-pie-detail">
+
+                    <% yes_cnt = current_club.users.responsed_yes(notice).count 
+                      maybe_cnt = current_club.users.responsed_maybe(notice).count
+                      no_cnt = current_club.users.responsed_no(notice).count
+                      if (yes_cnt + maybe_cnt + no_cnt) == 0
+                        empty = 1
+                      else 
+                        empty = 0
+                      end
+                    %>
+
+                    <span id="pie-<%=survey_index%>" class="pie-large" data-yes="<%=yes_cnt%>" data-maybe="<%=maybe_cnt%>" data-no="<%=no_cnt%>" data-empty="<%=empty%>"></span>
+                    <% survey_index = survey_index + 1 %>
+                  </div>
+                <% elsif notice.notice_type == "checklist" %>
+                  <div class="icon"><i class="entypo-check"></i></div>
+                  <div class="ari-badge-progress-detail progress">
+
+                    <% total_cnt = notice.checklists.count
+                      done_cnt = notice.checklists.where(finish: true).count
+                    %>
+
+                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%=done_cnt%>" aria-valuemin="0" aria-valuemax="<%=total_cnt%>" style="width: <%=((done_cnt.to_f/total_cnt)*100)%>%">
+                      <span class="sr-only"><%=((done_cnt.to_f/total_cnt)*100)%>% Complete (success)</span>
+                    </div>
+
+                  </div>
+                <% else %>
+                  <div class="icon"><i class="entypo-sound"></i></div>
+                  <div class="num"><%= "#{notice.readers.count} / #{current_club.users.all.count}" %></div>
+                <% end %>
+
+                <p class="ari-p"><%= notice.created_at.localtime.strftime("%Y-%m-%d %T") %></p>
+                <h3><%= truncate(notice.title, length: 18)%></h3>
+                <p><%= truncate(notice.content, length: 56)%></p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </section>

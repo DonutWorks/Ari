@@ -1,33 +1,63 @@
-<% if @error_message %>
-<div class="alert <%= flash_class(:error) %> alert-dismissable fade in">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-  <%= @error_message %>
-</div>
-<% end %>
-<div class="form-container">
-  <div class="row">
-    <div class="col-md-12">
-
-      <%= form_tag(club_admin_bank_account_expense_records_path(current_club, @bank_account), :multipart => true) do %>
-
-        <legend>엑셀 파일로 회계 내역 업데이트</legend>
-
-        <div class="form-group">
-          <%= label_tag "등록하실 회계내역의 엑셀파일을 선택해주세요." %>
-          <%= file_field_tag 'upload[file]' %>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1>회계 내역 업데이트</h1>
+          <div class="categories">
+          </div>
         </div>
 
-        <p class="help-block">
-          업로드 전, 파일 구성이 다음과 같은지 확인해주세요(신한은행 기준)<br>
-          <%= image_tag("account_example.png", class: "img-responsive") %>
-          <%= link_to '회계내역 예제 다운로드', download_account_example_club_admin_bank_accounts_path %>
-        </p>
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+            </div>
+            <div class="item-detail">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <p>
-          <%= submit_tag "업로드", class: "btn btn-default"   %>
-        </p>
+  <section class="portfolio-container">
+    <div class="container">
+      <% if @error_message %>
+        <div class="alert <%= flash_class(:error) %> alert-dismissable fade in">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <%= @error_message %>
+        </div>
       <% end %>
 
+      <div class="row">
+        <div class="col-md-12">
+
+          <%= form_tag(club_admin_bank_account_expense_records_path(current_club, @bank_account), :multipart => true) do %>
+
+            <div class="help-block">
+              <p>업로드 전, 파일 구성이 다음과 같은지 확인해주세요(신한은행 기준)</p>
+              <%= image_tag("account_example.png", class: "img-responsive") %>
+              <br>
+              <%= link_to '회계내역 예제 다운로드', download_account_example_club_admin_bank_accounts_path, class: "btn btn-default btn-xs" %>
+            </div>
+
+            <div class="panel panel-primary">
+              <div class="panel-body">
+                <div class="form-group">
+                  <%= label_tag "등록하실 회계내역의 엑셀파일을 선택해주세요." %>
+                  <%= file_field_tag 'upload[file]', class: "form-control"  %>
+                </div>
+
+                <div class="pull-right">
+                  <%= button_tag type: :submit, class: "btn btn-blue" do %>
+                업로드<i class="entypo-check"></i>
+              <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </section>  
+

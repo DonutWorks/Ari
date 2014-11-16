@@ -12,41 +12,43 @@
     </thead>
     <tbody>
       <% users.each_with_index do |user, index| %>
-      <% response = user.responses.find_by_notice_id(@notice) %>
-      <input type="hidden" id="notice-id-<%=index%>" value="<%=@notice.id %>" />
-      <input type="hidden" id="response-id-<%=index%>" value="<%=response.id %>" />
-      <tr>
-        <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_#{type}" %></td>
-        <td class="text-right"><%= user.generation_id %></td>
-        <td><%= user.username %></td>
-        <td><%= user.phone_number %></td>
-        <td>
-          <div class="button-group">
-            <button type="button" id="absence-btn-<%=index%>" class="check-btn btn btn-default <%= response.absence == 0 ? '' : 'btn-success' %>" data-id="<%=index%>" data-check="absence">출석</button>
+          <% response = user.responses.find_by_notice_id(@notice) %>
+          <input type="hidden" id="notice-id-<%=index%>" value="<%=@notice.id %>" />
+          <input type="hidden" id="response-id-<%=index%>" value="<%=response.id %>" />
+          <tr>
+            <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms_#{type}" %></td>
+            <td class="text-right"><%= user.generation_id %></td>
+            <td><%= user.username %></td>
+            <td><%= user.phone_number %></td>
+            <td>
+              <% if type == "go" %>
+                <div class="button-group">
+                  <button type="button" id="absence-btn-<%=index%>" class="check-btn btn <%= response.absence == 0 ? '' : 'btn-success' %>" data-id="<%=index%>" data-check="absence">출석</button>
 
-            <button type="button" id="dues-btn-<%=index%>" class="check-btn btn btn-default <%= response.dues == 0 ? '' : 'btn-primary' %>" data-id="<%=index%>" data-check="dues">회비</button>
+                  <button type="button" id="dues-btn-<%=index%>" class="check-btn btn <%= response.dues == 0 ? '' : 'btn-orange' %>" data-id="<%=index%>" data-check="dues">참가비</button>
 
-            <button type="button" id="open-memo-btn-<%=index%>" class="open-memo-btn btn btn-default <%= response.memo.blank? ? '' : 'btn-warning' %>" data-id="<%=index%>">메모</button>
-          </div>
-          <div class="memo">
-            <div id="memo-in-<%=index%>" class="<%= response.memo.blank? ? 'hide-memo' : 'show-memo' %>">
-              <p id="memo-content-<%=index%>" class="memo-content"><%= response.memo %></p>
-              <div class="glyphicon-group">
-                <span id="remove-memo-btn-<%=index%>" class="remove-memo-btn glyphicon glyphicon-remove" data-id="<%=index%>"></span>
-                <span id="edit-memo-btn-<%=index%>" class="edit-memo-btn glyphicon glyphicon-edit" data-id="<%=index%>"></span>
+                  <button type="button" id="open-memo-btn-<%=index%>" class="open-memo-btn btn <%= response.memo.blank? ? '' : 'btn-gold' %>" data-id="<%=index%>">메모</button>
                 </div>
-            </div>
+                <div class="memo">
+                  <div id="memo-in-<%=index%>" class="<%= response.memo.blank? ? 'hide-memo' : 'show-memo' %>">
+                    <p id="memo-content-<%=index%>" class="memo-content"><%= response.memo %></p>
+                    <div class="glyphicon-group">
+                      <i id="remove-memo-btn-<%=index%>" class="remove-memo-btn entypo-trash" data-id="<%=index%>"></i>
+                      <i id="edit-memo-btn-<%=index%>" class="edit-memo-btn entypo-brush" data-id="<%=index%>"></i>
+                      </div>
+                  </div>
 
-            <div id="memo-not-in-<%=index%>" class="hide-memo">
-              <input type="text" id="memo-edit-<%=index%>" class="memo-edit" data-id="<%=index%>"/>
-              <button type="button" id="memo-click-<%=index%>" class="check-btn btn btn-default" data-id="<%=index%>" data-check="memo">등록</button>
-            </div>
-          <div>
-        </td>
-        <td>
-          <%= user.responses.time(@notice) %>
-        </td>
-      </tr>
+                  <div id="memo-not-in-<%=index%>" class="hide-memo">
+                    <input type="text" id="memo-edit-<%=index%>" class="memo-edit" data-id="<%=index%>"/>
+                    <button type="button" id="memo-click-<%=index%>" class="check-btn btn btn-blue" data-id="<%=index%>" data-check="memo">등록</button>
+                  </div>
+                <div>
+              <% end %>
+            </td>
+            <td>
+              <%= user.responses.time(@notice) %>
+            </td>
+          </tr>
       <% end %>
     </tbody>
   </table>

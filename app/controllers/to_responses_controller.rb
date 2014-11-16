@@ -1,6 +1,7 @@
 class ToResponsesController < ApplicationController
   def index
     @notice = current_club.notices.friendly.find(params[:notice_id]).decorate
+    @response = @notice.responses.find_by_user_id(current_user)
   end
 
   def create

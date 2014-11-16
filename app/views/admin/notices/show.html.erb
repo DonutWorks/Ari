@@ -1,96 +1,174 @@
-<div class="notice-full-page">
-  <div class="page-header clearfix">
-    <h3 class="pull-left"><%= @notice.title %></h3>
-    <div class="pull-right margin-top15">
-      <%= link_to "수정", edit_club_admin_notice_path(current_club, @notice), class: "btn btn-default btn-sm" %>
-      <%if @notice.notice_type =="to" %>
-        <%= link_to "TO관리", club_admin_notice_responses_path(current_club, @notice), class: "btn btn-info btn-sm" %>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1><%= @notice.title %></h1>
+          <div class="categories">
+          <%= link_to (@notice.notice_type + " in " + @notice.activity.title), club_admin_activity_path(current_club, @notice.activity) %>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+              <%= link_to "수정", edit_club_admin_notice_path(current_club, @notice), class: "btn btn-warning" %>
+              <%if @notice.raw_notice_type =="to" %>
+                <%= link_to "참가 인원 관리", club_admin_notice_responses_path(current_club, @notice), class: "btn btn-info" %>
+              <% end %>
+              <%= link_to "삭제", club_admin_notice_path(current_club, @notice), method: :delete,
+              data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger" %>
+            </div>
+            <div class="item-detail">
+              <span>Date:</span>
+              <%= @notice.created_at %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="portfolio-container">
+    <div class="container">
+
+      <ul class="ari-notice-ul">
+        <li class="ari-notice-li-top">
+          <i class="entypo-doc-text"></i>
+          <a class="admin-notice-content"><%= @notice.content %></a>
+        </li>
+
+        <% if @notice.external_notice? %>
+          <li class="ari-notice-li">
+            <i class="entypo-link"></i>
+              실제 주소 : <%= link_to @notice.link, @notice.link, target: "_blank" %>
+          </li>
+        <% end %>
+
+        <li class="ari-notice-li">
+          <i class="entypo-link"></i>
+            통합 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %>
+        </li>
+
+        <% if @notice.to_notice? %>
+          <li class="ari-notice-li">
+            <i class="entypo-calendar"></i>
+              행사 날짜 : <a><%= @notice.event_at %></a>
+          </li>
+          <li class="ari-notice-li">
+            <i class="entypo-calendar"></i>
+              모집 시한 : <a><%= @notice.due_date %></a>
+          </li>
+          <li class="ari-notice-li">
+            <i class="entypo-credit-card"></i>
+              <a> 정단원(<%= @notice.regular_dues ? @notice.regular_dues : "0" %>원), 예비단원(<%= @notice.associate_dues ? @notice.associate_dues : "0" %>원) </a>
+          </li>
+        <% end %>
+      </ul>
+
+      <%= form_tag(club_admin_messages_path(current_club), method: "post") do %>
+        <%= hidden_field_tag 'notice_id', @notice.id %>
+
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="secondary-nav <%= 'active' if @notice.raw_notice_type == 'external' or @notice.raw_notice_type == 'plain' %>">
+            <a href="#read-unread" role="tab" data-toggle="tab">읽음 확인</a>
+          </li>
+          <% case @notice.raw_notice_type %>
+          <% when "checklist" then %>
+            <li class="secondary-nav active"><a href="#checklist-result" role="tab" data-toggle="tab">수행 현황</a></li>
+          <% when "to" then %>
+            <li class="secondary-nav active"><a href="#to-result" role="tab" data-toggle="tab">실시간 참가인원 현황</a></li>
+          <% when "survey" then %>
+            <li class="secondary-nav active"><a href="#survey-result" role="tab" data-toggle="tab">투표 현황</a></li>
+          <% end %>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane fade-in <%= 'active' if @notice.external_notice? or @notice.plain_notice? %>" id="read-unread">
+            <div>
+              <h3>읽은 멤버 <small>(총 <%= @notice.readers.count %>명)</small></h3>
+              <%= render partial: "table", locals: { users: @readers.decorate, type: "read" } %>
+              <%= paginate @readers, param_name: :readers_page %>
+            </div>
+
+            <div class="notice-under">
+              <h3>안 읽은 멤버 <small>(총 <%= @notice.unreaders.count %>명)</small></h3>
+              <%= render partial: "table", locals: { users: @unreaders.decorate, type: "unread" } %>
+              <%= paginate @unreaders, param_name: :unreaders_page %>
+            </div>
+          </div>
+          <% if @notice.survey_notice? %>
+            <div class="tab-pane fade-in active" id="survey-result">
+              <div>
+                <h3>찬성 <small>(총 <%= current_club.users.responsed_yes(@notice).count %>명)</small></h3>
+                <%= render partial: "table", locals: { users: @responsed_yes.decorate, type: "yes" } %>
+                <%= paginate @responsed_yes, param_name: :responsed_yes_page %>
+              </div>
+              <div class="notice-under">
+                <h3>보류 <small>(총 <%= current_club.users.responsed_maybe(@notice).count %>명)</small></h3>
+                <%= render partial: "table", locals: { users: @responsed_maybe.decorate, type: "maybe" } %>
+                <%= paginate @responsed_maybe, param_name: :responsed_maybe_page %>
+              </div>
+              <div class="notice-under">
+                <h3>반대 <small>(총 <%= current_club.users.responsed_no(@notice).count %>명)</small></h3>
+                <%= render partial: "table", locals: { users: @responsed_no.decorate, type: "no" } %>
+                <%= paginate @responsed_no, param_name: :responsed_no_page %>
+              </div>
+            </div>
+
+          <% elsif @notice.to_notice? %>
+            <div class="tab-pane fade-in active" id="to-result">
+              <% if @notice.to_notice? %>
+                <div class="ari-tile-progress tile-progress tile-gray">
+                  <div class="ari-tile-header tile-header">
+                    <h3>최대 참가 가능인원 : <%= @notice.to %> 명</h3>
+                  </div>
+
+                  <div class="tile-progressbar">
+                    <span data-fill="<%= @responsed_go_percentage %>%" style="width: <%= @responsed_go_percentage %>%;"></span>
+                  </div>
+
+                  <div class="ari-tile-footer tile-footer">
+                    <h4>
+                      <span class="pct-counter"></span>% 참가 중 ( <%= current_club.users.responsed_go(@notice).count %> 명 )
+                      <% if @responsed_go_percentage == 100 %>
+                        현재 대기 인원 : <%= @dues_sum[:wait] %> 명
+                      <% end %>
+                    </h4>
+
+                    <h3>회비 납부 총합 : <%= @dues_sum[:sum] %>원</h3>
+                  </div>
+                </div>
+              <% end %>
+
+              <div>
+                <h3>참가 <small>(총 <%= current_club.users.responsed_go(@notice).count %>명)</small></h3>
+                <%= render partial: "table_to_response", locals: { users: @responsed_go.decorate, type: "go" } %>
+                <%= paginate @responsed_go, param_name: :responsed_go_page %>
+              </div>
+              <div class="notice-under">
+                <h3>대기 <small>(총 <%= current_club.users.responsed_wait(@notice).count %>명)</small></h3>
+                <%= render partial: "table_to_response", locals: { users: @responsed_wait.decorate, type: "wait" } %>
+                <%= paginate @responsed_wait, param_name: :responsed_wait_page %>
+              </div>
+            </div>
+
+          <% elsif @notice.checklist_notice? %>
+            <div class="tab-pane fade-in active" id="checklist-result">
+              <%= render partial: 'notices/checklists', locals: {notice: @notice, checklists: @notice.checklists} %>
+            </div>
+          <% end %>
+
+        </div>
+        <div class="sms-text">
+          <h3>문자 보내기</h3>
+          <p id="phone_numbers">총 0명이 선택 되었습니다.</p>
+          <%= text_area_tag 'sms_content', ("[" + current_club.name + "]"), class: 'form-control' %>
+          <div class="pull-right margin-top15">
+            (<span id="current-text-size">19</span>/90 bytes)
+            <button id="send_sms" type="submit" class="btn btn-primary btn-sm">전송</button>
+          </div>
+        </div>
       <% end %>
-      <%= link_to "삭제", club_admin_notice_path(current_club, @notice), method: :delete,
-      data: { confirm: '정말 삭제하시겠어요?' }, class: "btn btn-danger btn-sm" %>
+
     </div>
-  </div>
-
-  <p>공지 내용 : <%= @notice.content %></p>
-  <% if @notice.external_notice? %>
-    <p>실제 공지 주소 : <%= link_to @notice.link, @notice.link, target: "_blank" %></p>
-  <% end %>
-  <p>통합 공지 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %></p>
-  <p>만든 시간 : <%= @notice.created_at %></p>
-  <% if @notice.to_notice? %>
-    <p>행사 날짜 : <%= @notice.event_at %></p>
-    <p>모집 시한 : <%= @notice.due_date %></p>
-    <p>신청 현황 : <%= current_club.users.responsed_go(@notice).count %>명 / <%= @notice.to %>명</p>
-    <p>참가비 : 정단원(<%= @notice.regular_dues ? @notice.regular_dues : "0" %>원), 예비단원(<%= @notice.associate_dues ? @notice.associate_dues : "0" %>원)</p>
-  <% end %>
-  <div class="clearfix"></div>
-
-  <%= form_tag(club_admin_messages_path(current_club), method: "post") do %>
-    <%= hidden_field_tag 'notice_id', @notice.id %>
-
-    <ul class="nav nav-tabs" role="tablist">
-
-      <% case @notice.notice_type %>
-      <% when "checklist" then %>
-        <li class="secondary-nav"><a href="#checklist-result" role="tab" data-toggle="tab">수행 현황</a></li>
-      <% when "to" then %>
-        <li class="secondary-nav"><a href="#to-result" role="tab" data-toggle="tab">실시간 TO 현황</a></li>
-      <% when "survey" then %>
-        <li class="secondary-nav"><a href="#survey-result" role="tab" data-toggle="tab">수요 조사</a></li>
-      <% end %>
-      <li class="secondary-nav active"><a href="#read-unread" role="tab" data-toggle="tab">읽음 확인</a></li>
-    </ul>
-
-    <div class="tab-content">
-      <div class="tab-pane fade in active" id="read-unread">
-        <div class="notice-reader">
-          <h3>읽은 회원 <small>(총 <%= @notice.club_readers.count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: @notice.club_readers.order_by_read_at.decorate, type: "read" } %>
-        </div>
-
-        <div class="notice-unreader">
-          <h3>안 읽은 회원 <small>(총 <%= @notice.club_unreaders.count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: @notice.club_unreaders.generation_sorted_desc.decorate, type: "unread" } %>
-        </div>
-      </div>
-      <div class="tab-pane fade" id="survey-result">
-        <div>
-          <h3>참가 <small>(총 <%= current_club.users.responsed_yes(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: current_club.users.responsed_yes(@notice).order_by_responsed_at.decorate, type: "yes" } %>
-        </div>
-        <div>
-          <h3>불확실 <small>(총 <%= current_club.users.responsed_maybe(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: current_club.users.responsed_maybe(@notice).order_by_responsed_at.decorate, type: "maybe" } %>
-        </div>
-        <div>
-          <h3>불참 <small>(총 <%= current_club.users.responsed_no(@notice).count %>명)</small></h3>
-          <%= render partial: "table", locals: { users: current_club.users.responsed_no(@notice).order_by_responsed_at.decorate, type: "no" } %>
-        </div>
-      </div>
-
-      <div class="tab-pane fade" id="to-result">
-        <div>
-          <h3>참가 <small>(총 <%= current_club.users.responsed_go(@notice).count %>명)</small></h3>
-          <%= render partial: "table_to_response", locals: { users: current_club.users.responsed_go(@notice).order_by_responsed_at.decorate, type: "go" } %>
-        </div>
-        <div>
-          <h3>대기 <small>(총 <%= current_club.users.responsed_wait(@notice).count %>명)</small></h3>
-          <%= render partial: "table_to_response", locals: { users: current_club.users.responsed_wait(@notice).order_by_responsed_at.decorate, type: "wait" } %>
-        </div>
-      </div>
-
-      <div class="tab-pane fade" id="checklist-result">
-        <%= render partial: 'notices/checklists', locals: {notice: @notice, checklists: @notice.checklists} %>
-      </div>
-    </div>
-    <div class="sms-text fix-bottom">
-      <h3>문자 보내기</h3>
-      <p id="phone_numbers">총 0명이 선택 되었습니다.</p>
-      <%= text_area_tag 'sms_content', "[서울대 햇빛봉사단]", class: 'form-control' %>
-      <div class="pull-right margin-top15">
-        (<span id="current-text-size">19</span>/90 bytes)
-        <button id="send_sms" type="submit" class="btn btn-primary btn-sm">전송</button>
-      </div>
-    </div>
-  <% end %>
-</div>
+  </section>

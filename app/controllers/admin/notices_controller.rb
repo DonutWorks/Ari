@@ -5,13 +5,18 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def new
     @notice = current_club.notices.new
-    @users = current_club.users.all.decorate
+    @users = current_club.users.includes(:tags).decorate
     @activity_id = params[:activity_id]
+    @init_date = 4.days.from_now.localtime.strftime("%m/%d/%Y")
 
     20.times { @notice.checklists.build.assign_histories.build }
   end
 
   def create
+    event_at = params[:notice][:event_at].split('/')
+    event_at_convert = Date.civil(event_at[2].to_i, event_at[0].to_i, event_at[1].to_i)
+    params[:notice][:event_at] = event_at_convert
+
     @notice = current_club.notices.new(notice_params)
     @notice.checklists.each do |checklist|
       checklist.update(club_id: current_club.id)
@@ -26,7 +31,7 @@ class Admin::NoticesController < Admin::ApplicationController
       redirect_to club_admin_notice_path(current_club, @notice)
     else
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice? && !@notice.checklists.empty?
-      @users = current_club.users.all.decorate
+      @users = current_club.users.includes(:tags).decorate
 
       20.times { @notice.checklists.build.assign_histories.build }
       render 'new'
@@ -34,18 +39,38 @@ class Admin::NoticesController < Admin::ApplicationController
   end
 
   def show
-    @notice = current_club.notices.friendly.find(params[:id]).decorate
-    @assignee_comment = AssigneeComment.new if @notice.notice_type == "checklist"
+    @notice = current_club.notices.includes(checklists: [:assignees, :assignee_comments]).friendly.find(params[:id]).decorate
+    @readers = @notice.club_readers.order_by_read_at.page(params[:readers_page])
+    @unreaders = @notice.club_unreaders.generation_sorted_desc.page(params[:unreaders_page])
+
+    if @notice.checklist_notice?
+      @assignee_comment = AssigneeComment.new
+    elsif @notice.survey_notice?
+      @responsed_yes = current_club.users.responsed_yes(@notice).order_by_responsed_at.page(params[:responsed_yes_page])
+      @responsed_maybe = current_club.users.responsed_maybe(@notice).order_by_responsed_at.page(params[:responsed_maybe_page])
+      @responsed_no = current_club.users.responsed_no(@notice).order_by_responsed_at.page(params[:responsed_no_page])
+    elsif @notice.to_notice?
+      @responsed_go = current_club.users.responsed_go(@notice).order_by_responsed_at.page(params[:responsed_go_page])
+      @responsed_wait = current_club.users.responsed_wait(@notice).order_by_responsed_at.page(params[:responsed_wait_page])
+      @responsed_go_percentage = (@responsed_go.count.to_f / @notice.to) * 100
+
+      @dues_sum = @notice.calculate_dues_sum
+    end
   end
 
   def edit
     @notice = current_club.notices.friendly.find(params[:id])
-    @users = current_club.users.all.decorate
+    @users = current_club.users.includes(:tags).decorate
+    @init_date = @notice.event_at.localtime.strftime("%m/%d/%Y")
 
     20.times { @notice.checklists.build.assign_histories.build }
   end
 
   def update
+    event_at = params[:notice][:event_at].split('/')
+    event_at_convert = Date.civil(event_at[2].to_i, event_at[0].to_i, event_at[1].to_i)
+    params[:notice][:event_at] = event_at_convert
+
     @notice = current_club.notices.friendly.find(params[:id])
 
     if @notice.update(notice_params)
@@ -53,7 +78,7 @@ class Admin::NoticesController < Admin::ApplicationController
       redirect_to club_admin_notice_path(current_club, @notice)
     else
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice?
-      @users = current_club.users.all.decorate
+      @users = current_club.users.decorate
       20.times { @notice.checklists.build.assign_histories.build}
       render 'edit'
     end
@@ -92,8 +117,8 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def to_notice_change_deadline
     notice = current_club.notices.friendly.find(params[:id])
-    due_date = params.require(:notice).permit(:due_date)
-    due_date_convert = Date.civil(due_date['due_date(1i)'].to_i, due_date['due_date(2i)'].to_i, due_date['due_date(3i)'].to_i)
+    due_date = params[:due_date].split('/')
+    due_date_convert = Date.civil(due_date[2].to_i, due_date[0].to_i, due_date[1].to_i)
 
     if notice.update(due_date: due_date_convert)
       flash[:notice] = "\"#{notice.title}\" 공지의 마감일을 성공적으로 수정 했습니다."

@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  before_destroy :destroy_public_activities
+  include PublicActivity::Model
+
   belongs_to :club
   has_many :invitations
   has_many :responses
@@ -64,5 +67,13 @@ class User < ActiveRecord::Base
     self.phone_number = normalizer.normalize(phone_number) if !phone_number.blank?
   rescue FormNormalizers::NormalizeError => e
     errors.add(:phone_number, "가 잘못되었습니다.")
+  end
+
+  def destroy_public_activities
+    activities = PublicActivity::Activity.where(owner: self)
+    activities.destroy_all
+
+    activities = PublicActivity::Activity.where(trackable: self)
+    activities.destroy_all
   end
 end

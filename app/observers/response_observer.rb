@@ -21,11 +21,11 @@ class ResponseObserver < ActiveRecord::Observer
       when "not"
         status = "'불참'으"
       when "yes"
-        status = "'참가'"
+        status = "'찬성'으"
       when "maybe"
-        status = "'불확실'"
+        status = "'보류'"
       when "no"
-        status = "'불참'으"
+        status = "'반대'"
       end
 
       status

@@ -1,0 +1,20 @@
+<% if activity.trackable and activity.recipient %>
+  <%= time_tag activity.created_at, class: "cbp_tmtime" do %>
+    <span><%= activity.created_at.strftime('%H:%M %p') %></span>
+    <span><%= time_ago_in_words(activity.created_at) %> 전</span>
+  <% end %>
+
+  <div class="cbp_tmicon bg-success">
+    <i class="entypo-check"></i>
+  </div>
+
+  <div class="cbp_tmlabel">
+    <h2>'<%= link_to activity.recipient.title, club_notice_path(current_club, activity.recipient) %>' 를 읽었습니다</h2>
+    <p>
+      <%= activity.recipient.content %>
+    </p>
+    <p>
+      <em><%= time_ago_in_words(activity.recipient.created_at) %> 전에 작성되었습니다.</em>
+    </p>
+  </div>
+<% end %>

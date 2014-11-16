@@ -29,7 +29,7 @@ RSpec.describe "check user process", type: :feature do
     fill_in 'user_email', :with => 'test@testtt.com'
     click_button "등록"
 
-    expect(find('.alert-info')).to have_content('님의 회원 정보 생성에 성공했습니다')
+    expect(find('.alert-info')).to have_content('님의 멤버 정보 생성에 성공했습니다')
   end
 
   it "should not create new user (phone_number is duplicated)" do
@@ -124,7 +124,7 @@ RSpec.describe "check user process", type: :feature do
     fill_in 'user_email', :with => 'test@testtt.com'
     click_button "수정"
 
-    expect(find('.alert-info')).to have_content('회원 정보 수정에 성공했습니다')
+    expect(find('.alert-info')).to have_content('멤버 정보 수정에 성공했습니다')
   end
 
   it "should not modify user (email is duplicated)" do
@@ -159,6 +159,6 @@ RSpec.describe "check user process", type: :feature do
     click_link "삭제"
     page.driver.browser.switch_to.alert.accept if Capybara.current_driver != :rack_test
 
-    expect(find('.alert-info')).to have_content('회원 정보 삭제에 성공했습니다')
+    expect(find('.alert-info')).to have_content('멤버 정보 삭제에 성공했습니다')
   end
 end

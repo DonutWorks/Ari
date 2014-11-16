@@ -22,6 +22,25 @@ class NoticeDecorator < Draper::Decorator
   end
 
   def content
-    h.simple_format(object.content)
+    h.simple_format(object.content, {}, wrapper_tag: "span")
+  end
+
+  def raw_notice_type
+    object.notice_type
+  end
+
+  def notice_type
+    case object.notice_type
+    when "to"
+      status = "참가조사"
+    when "checklist"
+      status = "할일 배분"
+    when "external"
+      status = "외부링크 공지"
+    when "plain"
+      status = "텍스트 공지"
+    when "survey"
+      status = "투표"
+    end
   end
 end

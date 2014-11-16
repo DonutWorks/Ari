@@ -23,7 +23,8 @@ class UserDecorator < Draper::Decorator
   end
 
   def tags
-    object.tags.map { |tag| '#'+"#{tag.tag_name}" }.join(" ")
+    return nil if object.tags.empty?
+    return object.tags.map { |tag| '#'+"#{tag.tag_name}" }.join(" ")
   end
 
   def read_at(notice)

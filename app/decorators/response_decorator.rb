@@ -8,17 +8,17 @@ class ResponseDecorator < Draper::Decorator
   def status
     case object.status
     when "yes"
-      status = "참가"
+      status = "찬성"
     when "maybe"
-      status = "모름"
+      status = "보류"
     when "no"
-      status = "불참"
+      status = "반대"
     when "go"
       status = "참가"
     when "wait"
       status = "대기"
     when "not"
-      status = "불참"  
+      status = "불참"
     end
   end
 

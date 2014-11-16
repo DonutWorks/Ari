@@ -1,30 +1,96 @@
-<h3 class="pull-left">공지사항 관리</h3>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1>이벤트</h1>
+          <div class="categories">
+            <a>커뮤니티의 전체 이벤트 리스트 입니다.</a>
+          </div>
+        </div>
 
-<div id="buttons-div" class="pull-right">
-  <%= link_to "새 활동", new_club_admin_activity_path(current_club), class: "btn btn-success btn-sm " %>
-</div>
-
-<div class="clearfix"></div>
-
-<% @activities.each do |activity| %>
-  <div id="notice-container" class="panel panel-default">
-    <div class="panel-heading">
-      <%= link_to ("[" + activity.event_at + "] " + activity.title), club_admin_activity_path(current_club, activity) %>
-      <div class="pull-right">
-        <%= link_to "새 공지", new_club_admin_notice_path(current_club, activity_id: activity.id), class: "btn btn-primary btn-xs " %>
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+              <%= link_to "새 이벤트", new_club_admin_activity_path(current_club), class: "btn btn-blue " %>
+            </div>
+        </div>
       </div>
     </div>
-      <ul class="list-group">
-        <% activity.notices.created_at_desc.each do |notice| %>
-          <%= link_to club_admin_notice_path(current_club, notice), class: "list-group-item" do %>
-            <span><%= notice.title %></span>
-            <span class="badge">
-              <%= "#{notice.club_readers.count} / #{current_club.users.all.count}" %>
-            </span>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
-<% end %>
+  </section>
 
-</div>
+  <section class="portfolio-container">
+    <div class="container">
+      <div class="row">
+        <% @activities.each do |activity| %>
+          <div class="col-sm-12">
+            <div class="ari-activity-tile tile-stats tile-white tile-white-primary">
+
+              <div class="row">
+                <div class="col-sm-9">
+                  <div class="ari-activity-title-area num" ><%= link_to activity.title, club_admin_activity_path(current_club, activity), class: "ari-activity-title" %></div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="text-right">
+                    <div class="item-detail">
+                      <%= truncate(activity.description, length: 45)%>
+                    </div>
+                    <div class="item-detail">
+                      <span>Date:</span>
+                      <%= activity.event_at %>
+                    </div>
+                    <h3></h3>
+                  </div>
+                </div>
+              </div>
+              <div class="ari-notice-group row">
+                <% activity.notices.created_at_desc.each_with_index do |notice, index| %>
+                  <% if index < 3 %>
+                    <div class="col-sm-4">
+                    <%= link_to club_admin_notice_path(current_club, notice), class: "list-group-item" do %>
+                      <span><%= truncate(notice.title, length: 15)%></span>
+                      <% if notice.notice_type == "to" %>
+                        <div class="ari-badge-progress progress">
+
+                        <% go_cnt = current_club.users.responsed_go(notice).count %>
+
+                          <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%=go_cnt%>" aria-valuemin="0" aria-valuemax="<%=notice.to%>" style="width: <%=((go_cnt.to_f/notice.to)*100)%>%">
+                            <span class="sr-only">35% Complete (success)</span>
+                          </div>
+                        </div>
+                      <% elsif notice.notice_type == "survey" %>
+
+                        <% yes_cnt = current_club.users.responsed_yes(notice).count 
+                          maybe_cnt = current_club.users.responsed_maybe(notice).count
+                          no_cnt = current_club.users.responsed_no(notice).count
+                        %>
+
+                        <span class="badge badge-success">
+                          <%= "#{yes_cnt} / #{yes_cnt + maybe_cnt + no_cnt}" %>
+                        </span>
+                      <% elsif notice.notice_type == "checklist" %>
+                        <div class="ari-badge-progress progress">
+
+                          <% total_cnt = notice.checklists.count
+                            done_cnt = notice.checklists.where(finish: true).count
+                          %>
+
+                          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%=done_cnt%>" aria-valuemin="0" aria-valuemax="<%=total_cnt%>" style="width: <%=((done_cnt.to_f/total_cnt)*100)%>%">
+                            <span class="sr-only"><%=((done_cnt.to_f/total_cnt)*100)%>% Complete (success)</span>
+                          </div>
+                        </div>
+                      <% else %>
+                        <span class="badge">
+                          <%= "#{notice.readers.count} / #{current_club.users.all.count}" %>
+                        </span>
+                      <% end %>
+                    <% end %>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>

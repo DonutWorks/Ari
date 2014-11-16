@@ -1,0 +1,20 @@
+<% if activity.trackable %>
+  <%= time_tag activity.created_at, class: "cbp_tmtime" do %>
+    <span><%= activity.created_at.strftime('%H:%M %p') %></span>
+    <span><%= time_ago_in_words(activity.created_at) %> 전</span>
+  <% end %>
+
+  <div class="cbp_tmicon bg-warning">
+    <i class="entypo-feather"></i>
+  </div>
+
+  <div class="cbp_tmlabel">
+    <h2>'<%= link_to activity.trackable.notice.title, club_notice_path(current_club, activity.trackable.notice) %>' 에 <%= activity.trackable.decorate.status %> 한다고 응답을 수정하였습니다</h2>
+    <p>
+      <%= activity.trackable.notice.content %>
+    </p>
+    <p>
+      <em><%= distance_of_time_in_words(Date.today, activity.trackable.notice.due_date) %> 후에 마감됩니다.</em>
+    </p>
+  </div>
+<% end %>
