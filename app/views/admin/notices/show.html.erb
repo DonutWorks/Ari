@@ -109,7 +109,7 @@
                 <%= paginate @responsed_maybe, param_name: :responsed_maybe_page %>
               </div>
               <div class="notice-under notice-bottom">
-                <h3>반대 <small>(총 <%= c@responsed_no.total_count %>명)</small></h3>
+                <h3>반대 <small>(총 <%= @responsed_no.total_count %>명)</small></h3>
                 <%= render partial: "table", locals: { users: @responsed_no.decorate, type: "no" } %>
                 <%= paginate @responsed_no, param_name: :responsed_no_page %>
               </div>
