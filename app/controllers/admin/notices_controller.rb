@@ -48,7 +48,7 @@ class Admin::NoticesController < Admin::ApplicationController
     @notice = current_club.notices.includes(checklists: [:assignees, :assignee_comments]).friendly.find(params[:id]).decorate
     @readers = @notice.club_readers.order_by_read_at.page(params[:readers_page])
     @unreaders = @notice.club_unreaders.generation_sorted_desc.page(params[:unreaders_page])
-    
+
     if @notice.external_notice? or @notice.plain_notice?
       @only_read = true
     else
@@ -93,7 +93,7 @@ class Admin::NoticesController < Admin::ApplicationController
       params[:notice][:event_at] = event_at_convert
     else
       params[:notice][:event_at] = @notice.event_at
-    end 
+    end
 
     @notice.attributes = notice_params
     @notice.checklists.each do |checklist|
@@ -105,7 +105,7 @@ class Admin::NoticesController < Admin::ApplicationController
       redirect_to club_admin_notice_path(current_club, @notice)
     else
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice?
-      @users = current_club.users.decorate
+      @users = current_club.users.includes(:tags).decorate
       @activity_id = params[:notice][:activity_id]
       @init_date = params[:notice][:event_at].strftime("%m/%d/%Y")
 
