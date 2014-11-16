@@ -6,6 +6,10 @@ class Admin::ResponsesController < Admin::ApplicationController
     @notice_form = @notice
     @notice = @notice.decorate
     @notice_deadline_end = true if @notice.due_date > Time.now.localtime.strftime("%Y-%m-%d %T")
+
+    @responsed_go = current_club.users.responsed_go(@notice).order_by_responsed_at.page(params[:responsed_go_page])
+    @responsed_wait = current_club.users.responsed_wait(@notice).order_by_responsed_at.page(params[:responsed_wait_page])
+    @responsed_not = User.responsed_not_to_notice(@notice, current_club).page(params[:responsed_not_page])
   end
 
   def update_check

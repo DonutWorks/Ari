@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   scope :responsed_not_to_notice, -> (notice, club) {
   SQL = %{LEFT OUTER JOIN (SELECT * FROM responses WHERE responses.notice_id = #{notice.id} and responses.club_id = #{club.id}) A
       ON users.id = A.user_id
-      WHERE A.status is null
+      WHERE A.status is null AND users.club_id = #{club.id}
       }
   joins(SQL) }
 

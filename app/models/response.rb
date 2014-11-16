@@ -22,10 +22,10 @@ class Response < ActiveRecord::Base
   validates :user, presence: true
   validates :notice, presence: true
 
-  def self.find_remaining_responses
+  def self.find_remaining_responses(club)
     cases = []
 
-    Notice.includes(:activity, responses: :user).where(notice_type: 'to').each do |notice|
+    club.notices.includes(:activity, responses: :user).where(notice_type: 'to').each do |notice|
       notice.responses.each do |response|
         cases << {
           id: response.id,
