@@ -3,7 +3,6 @@
     <%= link_to club_notice_path(current_club, @notice) do %>
       <%= @notice.title %>
     <% end %>
-    <i class="entypo-info-circled pull-left"></i>
     <%= yield :notice_header %>
   </div>
 
@@ -21,7 +20,7 @@
           <i class="entypo-calendar"></i>
             행사 날짜 : <a><%= @notice.event_at %></a>
         </li>
-        
+
         <li class="ari-notice-li">
           <i class="entypo-user"></i>
             모집 인원 : <a><%= @notice.to %> 명</a>
