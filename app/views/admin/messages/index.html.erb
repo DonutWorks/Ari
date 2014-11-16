@@ -24,7 +24,7 @@
           <% @messages.each do |message| %>
             <%= link_to club_admin_message_path(current_club, message), class: "list-group-item" do %>
               <% unless message.notice.blank? %>
-                <span>[<%= message.notice.title %>] <%= message.content %></span>
+                <span>[<%= message.notice.activity.title %> - <%= message.notice.title %>] "<%= message.content %>"</span>
               <% else %>
                 <span><%= message.content %></span>
               <% end %>

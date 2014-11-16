@@ -62,7 +62,7 @@ class Admin::NoticesController < Admin::ApplicationController
     @notice = current_club.notices.friendly.find(params[:id])
     @users = current_club.users.includes(:tags).decorate
     @init_date = @notice.event_at.localtime.strftime("%m/%d/%Y")
-
+    @activity_id = params[:activity_id]
     20.times { @notice.checklists.build.assign_histories.build }
   end
 

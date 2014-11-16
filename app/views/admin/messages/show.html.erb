@@ -5,7 +5,7 @@
           <h1>SMS 전송내역</h1>
           <div class="categories">
             <% unless @message.notice.blank? %>
-              <a>공지글 제목 : <%= @message.notice.title %></a>
+              <%= link_to (@message.notice.title + " in " + @message.notice.activity.title), club_admin_notice_path(current_club, @message.notice) %>
             <% end %>
           </div>
         </div>

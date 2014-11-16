@@ -11,7 +11,7 @@
         <div class="col-sm-3">
           <div class="text-right">
             <div class="item-detail">
-              <%= link_to "수정", edit_club_admin_notice_path(current_club, @notice), class: "btn btn-warning" %>
+              <%= link_to "수정", edit_club_admin_notice_path(current_club, @notice, activity_id: @notice.activity.id), class: "btn btn-warning" %>
               <%if @notice.raw_notice_type =="to" %>
                 <%= link_to "참가 인원 관리", club_admin_notice_responses_path(current_club, @notice), class: "btn btn-info" %>
               <% end %>
@@ -90,10 +90,10 @@
               <%= paginate @readers, param_name: :readers_page %>
             </div>
 
-            <div class="notice-unreader notice-under">
+            <div class="notice-unreader notice-under notice-bottom">
               <h3>안 읽은 멤버 <small>(총 <%= @unreaders.total_count %>명)</small></h3>
               <%= render partial: "table", locals: { users: @unreaders.decorate, type: "unread" } %>
-              <%= paginate @unreaders, param_name: :unreaders_page %>
+              <%= paginate @unreaders, param_name: :unreaders_page, theme: 'bootstrap' %>
             </div>
           </div>
           <% if @notice.survey_notice? %>
@@ -108,8 +108,8 @@
                 <%= render partial: "table", locals: { users: @responsed_maybe.decorate, type: "maybe" } %>
                 <%= paginate @responsed_maybe, param_name: :responsed_maybe_page %>
               </div>
-              <div class="notice-under">
-                <h3>반대 <small>(총 <%= @responsed_no.total_count %>명)</small></h3>
+              <div class="notice-under notice-bottom">
+                <h3>반대 <small>(총 <%= c@responsed_no.total_count %>명)</small></h3>
                 <%= render partial: "table", locals: { users: @responsed_no.decorate, type: "no" } %>
                 <%= paginate @responsed_no, param_name: :responsed_no_page %>
               </div>
@@ -145,7 +145,7 @@
                 <%= render partial: "table_to_response", locals: { users: @responsed_go.decorate, type: "go" } %>
                 <%= paginate @responsed_go, param_name: :responsed_go_page %>
               </div>
-              <div class="notice-under">
+              <div class="notice-under notice-bottom">
                 <h3>대기 <small>(총 <%= @responsed_wait.total_count %>명)</small></h3>
                 <%= render partial: "table_to_response", locals: { users: @responsed_wait.decorate, type: "wait" } %>
                 <%= paginate @responsed_wait, param_name: :responsed_wait_page %>
@@ -159,13 +159,13 @@
           <% end %>
 
         </div>
-        <div class="sms-text">
+        <div class="sms-text <%= 'fix-bottom' unless @notice.raw_notice_type == 'checklist' %>">
           <h3>문자 보내기</h3>
           <p id="phone_numbers">총 0명이 선택 되었습니다.</p>
           <%= text_area_tag 'sms_content', ("[" + current_club.name + "]"), class: 'form-control' %>
           <div class="pull-right margin-top15">
             (<span id="current-text-size">19</span>/90 bytes)
-            <button id="send_sms" type="submit" class="btn btn-primary btn-sm">전송</button>
+            <button id="send_sms" type="submit" class="btn btn-blue btn-sm">전송</button>
           </div>
         </div>
       <% end %>

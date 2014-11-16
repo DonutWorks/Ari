@@ -12,33 +12,39 @@ class Admin::ImportController < Admin::ApplicationController
 
       normalizer = FormNormalizer.new
 
-      (2..data.last_row).each do |i|
-        begin
-          user = UserModelNormalizer.normalize(normalizer, data, i)
-        rescue UserModelNormalizer::NormalizeError => e
-          messages = i.to_s + "행(" + (e.user.username||="알수없음") + "님)은 " + e.message
-          @invalid_messages.push(messages)
-        else
-          new_user = current_club.users.find_or_initialize_by(phone_number: user.phone_number)
-          new_user.attributes = user.as_json(except: [:id]).merge(club: current_club)
-
-          if new_user.valid?
-            associate_user_with_tags!(new_user)
-            new_user.save
-          else
-            @invalid_messages.push(new_user.errors.inspect)
-            messages = i.to_s + "행(" + (new_user.username||="알수없음") + "님)은 꼭 필요한 데이터를 입력하지 않았습니다. "
+      
+      if data.cell(1, 1) != "기수" and data.cell(1, 2) != "전공" and data.cell(1, 3) != "학번"
+        @error_message = "양식에 맞지 않는 엑셀 파일을 업로드 했습니다."
+        render 'new'
+      else
+        (2..data.last_row).each do |i|
+          begin
+            user = UserModelNormalizer.normalize(normalizer, data, i)
+          rescue UserModelNormalizer::NormalizeError => e
+            messages = i.to_s + "행(" + (e.user.username||="알수없음") + "님)은 " + e.message
             @invalid_messages.push(messages)
+          else
+            new_user = current_club.users.find_or_initialize_by(phone_number: user.phone_number)
+            new_user.attributes = user.as_json(except: [:id]).merge(club: current_club)
+
+            if new_user.valid?
+              associate_user_with_tags!(new_user)
+              new_user.save
+            else
+              @invalid_messages.push(new_user.errors.inspect)
+              messages = i.to_s + "행(" + (new_user.username||="알수없음") + "님)은 꼭 필요한 데이터를 입력하지 않았습니다. "
+              @invalid_messages.push(messages)
+            end
           end
         end
-      end
 
-      if @invalid_messages.count == 0
-        flash[:notice] = "멤버 입력에 성공했습니다."
-        redirect_to club_admin_users_path(current_club)
-      else
-        @error_message = "대부분의 멤버들은 입력에 성공했습니다. 하지만 몇몇 멤버들은 실패했습니다."
-        render 'new'
+        if @invalid_messages.count == 0
+          flash[:notice] = "멤버 입력에 성공했습니다."
+          redirect_to club_admin_users_path(current_club)
+        else
+          @error_message = "대부분의 멤버들은 입력에 성공했습니다. 하지만 몇몇 멤버들은 실패했습니다."
+          render 'new'
+        end
       end
     else
       @error_message = "첨부파일을 업로드 하세요."
