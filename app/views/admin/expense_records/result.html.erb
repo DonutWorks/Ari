@@ -1,15 +1,41 @@
-<div class="page-header clearfix">
-  <h3 class="pull-left">아래 행사에 대한 참가비 납부현황이 자동 확인 되었습니다.</h3>
-</div>
+  <section class="portfolio-item-details">
+    <div class="container">
+      <div class="row item-title">
+        <div class="col-sm-9">
+          <h1>납부현황 자동 확인</h1>
+          <div class="categories">
+          </div>
+        </div>
 
-<% @results.keys.each do |key| %>
-  <h2><%= key.title %> 에 대해</h2>
+        <div class="col-sm-3">
+          <div class="text-right">
+            <div class="item-detail">
+              <%= link_to "목록으로", club_admin_bank_account_expense_records_path(current_club, bank_account_id: 1), class: "btn btn-info"  %>
+            </div>
+            <div class="item-detail">
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <ul class="list-group">
-  <% @results[key].each do |result| %>
-    <li class="list-group-item">
-      <%= result[:user].member_type %> <%= result[:user].username %>님의 참가비 <%= result[:dues] %>원이 확인되었습니다.
-    </li>
-  <% end %>
-  </ul>
-<% end %>
+  <section class="portfolio-container">
+    <div class="container">
+      <div class="page-header clearfix">
+        <h3 class="pull-left">아래 행사에 대한 참가비 납부현황이 자동 확인 되었습니다.</h3>
+      </div>
+
+      <% @results.keys.each do |key| %>
+        <h2><%= key.title %> 에 대해</h2>
+
+        <ul class="list-group">
+        <% @results[key].each do |result| %>
+          <li class="list-group-item">
+            <%= result[:user].member_type %> <%= result[:user].username %>님의 참가비 <%= result[:dues] %>원이 확인되었습니다.
+          </li>
+        <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </section>
+
