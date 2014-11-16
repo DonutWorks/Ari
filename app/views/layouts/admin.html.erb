@@ -7,7 +7,7 @@
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
+<body class="page-body <%= yield (:body_class) %>">
   <nav class="ari-navber navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -63,9 +63,10 @@
     </div>
   </div>
 
-  <footer class="ari-footer main container">
+  <footer class="ari-footer main page-container">
     © 2014 <strong>Aritor</strong> Software Maestro #5</a>
   </footer>
-
 </body>
+
+
 </html>

@@ -1,80 +1,77 @@
-<div class="login-page login-form-fall loaded login-form-fall-init">
-  <div class="login-container">
+<% content_for :body_class, "login-page" %>
     
-    <div class="login-header login-caret">
-      
-      <div class="login-content">
+<div class="login-header login-caret">
+  
+  <div class="login-content">
+    
+    <a href="" class="logo">
+      <%= image_tag("Minion.png", alt: "", width: "100") %>
+    </a>
+    
+    <p class="description">Dear user, log in to access the admin area!</p>
+    
+    <!-- progress bar indicator -->
+    <div class="login-progressbar-indicator">
+      <h3>43%</h3>
+      <span>logging in...</span>
+    </div>
+  </div>
+  
+</div>
+
+<div class="login-progressbar">
+  <div></div>
+</div>
+
+<div class="login-form">
+  
+  <div class="login-content">
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+      <div class="form-group">
         
-        <a href="" class="logo">
-          <%= image_tag("Minion.png", alt: "", width: "100") %>
-        </a>
-        
-        <p class="description">Dear user, log in to access the admin area!</p>
-        
-        <!-- progress bar indicator -->
-        <div class="login-progressbar-indicator">
-          <h3>43%</h3>
-          <span>logging in...</span>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="entypo-user"></i>
+          </div>
+          <%= f.email_field :email, autofocus: true, class: "form-control"  %>
         </div>
       </div>
-      
-    </div>
-    
-    <div class="login-progressbar">
-      <div></div>
-    </div>
-    
-    <div class="login-form">
-      
-      <div class="login-content">
 
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-
-          <div class="form-group">
-            
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="entypo-user"></i>
-              </div>
-              <%= f.email_field :email, autofocus: true, class: "form-control"  %>
-            </div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="entypo-key"></i>
           </div>
+          <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+        </div>  
+      </div>          
 
-          <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-addon">
-                <i class="entypo-key"></i>
-              </div>
-              <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
-            </div>  
-          </div>          
+      <% if devise_mapping.rememberable? -%>
+        <div class="ari-checkbox form-group">
+          <h4><%= f.check_box :remember_me, class: "ari-checkbox checkbox checkbox-replace"%> <%= f.label :remember_me, "로그인 상태 유지", class: "ari-white-label" %></h4>
+        </div>
+      <% end -%>
 
-          <% if devise_mapping.rememberable? -%>
-            <div class="ari-checkbox form-group">
-              <h4><%= f.check_box :remember_me, class: "ari-checkbox checkbox checkbox-replace"%> <%= f.label :remember_me, "로그인 상태 유지", class: "ari-white-label" %></h4>
-            </div>
-          <% end -%>
-
-          <div class="form-group">
-            <%= f.button type: :submit, class: "btn btn-primary btn-block btn-login" do %>
-              <i class="entypo-login"></i>
-              로그인
-            <% end %>
-          </div>
-
+      <div class="form-group">
+        <%= f.button type: :submit, class: "btn btn-primary btn-block btn-login" do %>
+          <i class="entypo-login"></i>
+          로그인
         <% end %>
-        
-        
-        <div class="login-bottom-links">
-          
-          <a href="#">ToS</a>  - <a href="#">Privacy Policy</a>
-        </div>
-        
       </div>
+
+    <% end %>
+    
+    
+    <div class="login-bottom-links">
       
+      <a href="#">ToS</a>  - <a href="#">Privacy Policy</a>
     </div>
     
   </div>
+  
 </div>
+    
 
 <%= render "devise/shared/links" %>

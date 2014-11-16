@@ -14,10 +14,10 @@
     <%= render 'layouts/status_bar' if current_user.try(:activated?) && !devise_controller? %>
     <%= yield %>
   </div>
-</body>
 
-<footer class="ari-footer main container">
-  © 2014 <strong>Aritor</strong> Software Maestro #5</a>
-</footer>
+  <footer class="ari-footer main page-container">
+    © 2014 <strong>Aritor</strong> Software Maestro #5</a>
+  </footer>
+</body>
 
 </html>
