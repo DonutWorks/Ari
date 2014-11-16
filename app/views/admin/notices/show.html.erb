@@ -93,7 +93,7 @@
             <div class="notice-unreader notice-under notice-bottom">
               <h3>안 읽은 멤버 <small>(총 <%= @unreaders.total_count %>명)</small></h3>
               <%= render partial: "table", locals: { users: @unreaders.decorate, type: "unread" } %>
-              <%= paginate @unreaders, param_name: :unreaders_page %>
+              <%= paginate @unreaders, param_name: :unreaders_page, theme: 'bootstrap' %>
             </div>
           </div>
           <% if @notice.survey_notice? %>
