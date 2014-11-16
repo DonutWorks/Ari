@@ -36,14 +36,14 @@
           <i class="entypo-doc-text"></i>
           <a><%= @notice.content %></a>
         </li>
-        
+
         <% if @notice.external_notice? %>
           <li class="ari-notice-li">
             <i class="entypo-link"></i>
               실제 주소 : <%= link_to @notice.link, @notice.link, target: "_blank" %>
           </li>
         <% end %>
-        
+
         <li class="ari-notice-li">
           <i class="entypo-link"></i>
             통합 주소 : <%= link_to @notice.shortenURL, @notice.shortenURL, target: "_blank" %>
@@ -64,7 +64,7 @@
           </li>
         <% end %>
       </ul>
-      
+
       <%= form_tag(club_admin_messages_path(current_club), method: "post") do %>
         <%= hidden_field_tag 'notice_id', @notice.id %>
 
@@ -122,11 +122,11 @@
                   <div class="ari-tile-header tile-header">
                     <h3>최대 참가 가능인원 : <%= @notice.to %> 명</h3>
                   </div>
-                  
+
                   <div class="tile-progressbar">
                     <span data-fill="<%= @responsed_go_percentage %>%" style="width: <%= @responsed_go_percentage %>%;"></span>
                   </div>
-                  
+
                   <div class="ari-tile-footer tile-footer">
                     <h4>
                       <span class="pct-counter"></span>% 참가 중 ( <%= current_club.users.responsed_go(@notice).count %> 명 )
@@ -134,7 +134,7 @@
                         현재 대기 인원 : <%= @dues_sum[:wait] %> 명
                       <% end %>
                     </h4>
-                    
+
                     <h3>회비 납부 총합 : <%= @dues_sum[:sum] %>원</h3>
                   </div>
                 </div>
