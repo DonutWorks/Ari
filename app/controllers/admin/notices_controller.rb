@@ -95,7 +95,12 @@ class Admin::NoticesController < Admin::ApplicationController
       params[:notice][:event_at] = @notice.event_at
     end 
 
-    if @notice.update(notice_params)
+    @notice.attributes = notice_params
+    @notice.checklists.each do |checklist|
+      checklist.update(club_id: current_club.id)
+    end if @notice.notice_type == "checklist"
+
+    if @notice.save
       flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 수정했습니다."
       redirect_to club_admin_notice_path(current_club, @notice)
     else
