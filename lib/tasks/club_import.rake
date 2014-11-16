@@ -29,10 +29,26 @@ namespace :club do
 
       CSV.foreach('./db/seeds/exported_activity.csv', headers: true) do |row|
         activity = club.activities.create!(row.to_hash.except('id', 'club_id'))
-        activity_notices = notices.select { |notice| notice['activity_id'] == row.to_hash['id'] and notice['notice_type'] != 'checklist' }
+
+        activity_notices = notices.select { |notice| notice['activity_id'] == row.to_hash['id'] }
         activity_notices.each do |notice|
           imported_notice = activity.notices.new(notice.except('id', 'club_id', 'activity_id', 'extra_info').merge(club_id: club.id))
           imported_notice.extra_info = YAML.load(notice['extra_info']).to_hash unless notice['extra_info'].nil?
+
+          if imported_notice.checklist_notice?
+            tasks = ["물품 주문", "봉사자 명단 제출", "봉사자 명단 작성", "참가비 입금 확인", "카톡방 생성 후 공지 전달"]
+            tasks.each do |task|
+              checklist = imported_notice.checklists.build({
+                task: task,
+                club: club,
+                finish: [true, false].sample
+              })
+              checklist.assign_histories.build({
+                user: club.users.sample
+              })
+            end
+          end
+
           imported_notice.save!
 
           shorten_url = shortener.shorten_url(Rails.application.routes.url_helpers.club_notice_url(club, imported_notice, host: host))
