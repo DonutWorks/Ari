@@ -69,54 +69,63 @@
         <%= hidden_field_tag 'notice_id', @notice.id %>
 
         <ul class="nav nav-tabs" role="tablist">
-          <li class="secondary-nav <%= 'active' if @notice.raw_notice_type == 'external' or @notice.raw_notice_type == 'plain' %>">
+          <li class="secondary-nav <%= 'active' if @only_read or @page_from_read %>">
             <a href="#read-unread" role="tab" data-toggle="tab">읽음 확인</a>
           </li>
           <% case @notice.raw_notice_type %>
           <% when "checklist" then %>
-            <li class="secondary-nav active"><a href="#checklist-result" role="tab" data-toggle="tab">수행 현황</a></li>
+            <li class="secondary-nav <%= 'active' unless @page_from_read %>"><a href="#checklist-result" role="tab" data-toggle="tab">수행 현황</a></li>
           <% when "to" then %>
-            <li class="secondary-nav active"><a href="#to-result" role="tab" data-toggle="tab">실시간 참가인원 현황</a></li>
+            <li class="secondary-nav <%= 'active' unless @page_from_read %>"><a href="#to-result" role="tab" data-toggle="tab">실시간 참가인원 현황</a></li>
           <% when "survey" then %>
-            <li class="secondary-nav active"><a href="#survey-result" role="tab" data-toggle="tab">투표 현황</a></li>
+            <li class="secondary-nav <%= 'active' unless @page_from_read %>"><a href="#survey-result" role="tab" data-toggle="tab">투표 현황</a></li>
           <% end %>
         </ul>
 
         <div class="tab-content">
-          <div class="tab-pane fade-in <%= 'active' if @notice.external_notice? or @notice.plain_notice? %>" id="read-unread">
+          <div class="tab-pane fade-in <%= 'active' if @only_read or @page_from_read %>" id="read-unread">
             <div class="notice-reader">
               <h3>읽은 멤버 <small>(총 <%= @readers.total_count %>명)</small></h3>
+              <%= @page_anchor %>1111
               <%= render partial: "table", locals: { users: @readers.decorate, type: "read" } %>
-              <%= paginate @readers, param_name: :readers_page %>
+              <% if @only_read %>
+                <%= paginate @readers, param_name: :readers_page, theme: 'bootstrap' %>
+              <% else %>
+                <%= paginate @readers, param_name: :readers_page, :params => { :page_anchor => "true" }, theme: 'bootstrap' %>
+              <% end %>
             </div>
 
             <div class="notice-unreader notice-under notice-bottom">
               <h3>안 읽은 멤버 <small>(총 <%= @unreaders.total_count %>명)</small></h3>
               <%= render partial: "table", locals: { users: @unreaders.decorate, type: "unread" } %>
-              <%= paginate @unreaders, param_name: :unreaders_page, theme: 'bootstrap' %>
+              <% if @only_read %>
+                <%= paginate @unreaders, param_name: :unreaders_page, theme: 'bootstrap' %>
+              <% else %>
+                <%= paginate @unreaders, param_name: :unreaders_page, :params => { :page_anchor => "true" }, theme: 'bootstrap' %>
+              <% end %>
             </div>
           </div>
           <% if @notice.survey_notice? %>
-            <div class="tab-pane fade-in active" id="survey-result">
+            <div class="tab-pane fade-in <%= 'active' unless @page_from_read %>" id="survey-result">
               <div>
                 <h3>찬성 <small>(총 <%= @responsed_yes.total_count %>명)</small></h3>
                 <%= render partial: "table", locals: { users: @responsed_yes.decorate, type: "yes" } %>
-                <%= paginate @responsed_yes, param_name: :responsed_yes_page %>
+                <%= paginate @responsed_yes, param_name: :responsed_yes_page, theme: 'bootstrap'  %>
               </div>
               <div class="notice-under">
                 <h3>보류 <small>(총 <%= @responsed_maybe.total_count %>명)</small></h3>
                 <%= render partial: "table", locals: { users: @responsed_maybe.decorate, type: "maybe" } %>
-                <%= paginate @responsed_maybe, param_name: :responsed_maybe_page %>
+                <%= paginate @responsed_maybe, param_name: :responsed_maybe_page, theme: 'bootstrap'  %>
               </div>
               <div class="notice-under notice-bottom">
                 <h3>반대 <small>(총 <%= @responsed_no.total_count %>명)</small></h3>
                 <%= render partial: "table", locals: { users: @responsed_no.decorate, type: "no" } %>
-                <%= paginate @responsed_no, param_name: :responsed_no_page %>
+                <%= paginate @responsed_no, param_name: :responsed_no_page, theme: 'bootstrap'  %>
               </div>
             </div>
 
           <% elsif @notice.to_notice? %>
-            <div class="tab-pane fade-in active" id="to-result">
+            <div class="tab-pane fade-in <%= 'active' unless @page_from_read %>" id="to-result">
               <% if @notice.to_notice? %>
                 <div class="ari-tile-progress tile-progress tile-gray">
                   <div class="ari-tile-header tile-header">
@@ -143,17 +152,17 @@
               <div>
                 <h3>참가 <small>(총 <%= @responsed_go.total_count %>명)</small></h3>
                 <%= render partial: "table_to_response", locals: { users: @responsed_go.decorate, type: "go" } %>
-                <%= paginate @responsed_go, param_name: :responsed_go_page %>
+                <%= paginate @responsed_go, param_name: :responsed_go_page, theme: 'bootstrap'  %>
               </div>
               <div class="notice-under notice-bottom">
                 <h3>대기 <small>(총 <%= @responsed_wait.total_count %>명)</small></h3>
                 <%= render partial: "table_to_response", locals: { users: @responsed_wait.decorate, type: "wait" } %>
-                <%= paginate @responsed_wait, param_name: :responsed_wait_page %>
+                <%= paginate @responsed_wait, param_name: :responsed_wait_page, theme: 'bootstrap'  %>
               </div>
             </div>
 
           <% elsif @notice.checklist_notice? %>
-            <div class="tab-pane fade-in active" id="checklist-result">
+            <div class="tab-pane fade-in <%= 'active' unless @page_from_read %>" id="checklist-result">
               <%= render partial: 'notices/checklists', locals: {notice: @notice, checklists: @notice.checklists} %>
             </div>
           <% end %>
