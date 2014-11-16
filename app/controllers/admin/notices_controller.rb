@@ -86,10 +86,12 @@ class Admin::NoticesController < Admin::ApplicationController
 
   def destroy
     @notice = current_club.notices.friendly.find(params[:id])
+    activity = @notice.activity
+
     @notice.destroy
 
     flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 삭제했습니다."
-    redirect_to club_admin_root_path(current_club)
+    redirect_to club_admin_activity_path(current_club, activity)
   end
 
 

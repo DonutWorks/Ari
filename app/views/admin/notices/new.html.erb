@@ -30,7 +30,7 @@
               <%= f.button type: :submit, class: "btn btn-blue btn-lg btn-icon" do %>
                 등록<i class="entypo-check"></i>
               <% end %>
-              <%= link_to club_admin_root_path(current_club) do %>
+              <%= link_to club_admin_activity_path(current_club, @activity_id) do %>
                 <button type="button" class="btn btn-red btn-lg btn-icon">
                   취소<i class="entypo-cancel"></i>
                 </button>

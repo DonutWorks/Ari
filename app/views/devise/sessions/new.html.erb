@@ -1,36 +1,37 @@
 <% content_for :body_class, "login-page" %>
-    
+
 <div class="login-header login-caret">
-  
+
   <div class="login-content">
-    
+
     <a href="" class="logo">
-      <%= image_tag("Minion.png", alt: "", width: "100") %>
+      <%= image_tag(current_club.logo_url, width: "320") %>
     </a>
-    
-    <p class="description">Dear user, log in to access the admin area!</p>
-    
+
+    <p class="description">관리자 페이지로 접속하려면 로그인해주세요!</p>
+
     <!-- progress bar indicator -->
     <div class="login-progressbar-indicator">
       <h3>43%</h3>
       <span>logging in...</span>
     </div>
   </div>
-  
+
 </div>
 
 <div class="login-progressbar">
   <div></div>
 </div>
 
+
 <div class="login-form">
-  
+
   <div class="login-content">
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
       <div class="form-group">
-        
+
         <div class="input-group">
           <div class="input-group-addon">
             <i class="entypo-user"></i>
@@ -45,8 +46,8 @@
             <i class="entypo-key"></i>
           </div>
           <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
-        </div>  
-      </div>          
+        </div>
+      </div>
 
       <% if devise_mapping.rememberable? -%>
         <div class="ari-checkbox form-group">
@@ -62,16 +63,17 @@
       </div>
 
     <% end %>
-    
-    
+
+
     <div class="login-bottom-links">
-      
-      <a href="#">ToS</a>  - <a href="#">Privacy Policy</a>
+
+      <a>Aritor</a>  - <a>Privacy Policy</a>
+
     </div>
-    
+
   </div>
-  
+
 </div>
-    
+
 
 <%= render "devise/shared/links" %>
