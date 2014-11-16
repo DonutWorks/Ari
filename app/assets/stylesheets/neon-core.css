@@ -8051,7 +8051,7 @@ textareatable .replace-inputs input {
   color: #8f8f8f;
 }
 .tile-progress.tile-gray .tile-progressbar span {
-  background: #8f8f8f;
+  background: orange;
 }
 .tile-progress.tile-gray .tile-footer h4,
 .tile-progress.tile-gray .tile-footer > span {
