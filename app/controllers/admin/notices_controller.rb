@@ -48,6 +48,18 @@ class Admin::NoticesController < Admin::ApplicationController
     @notice = current_club.notices.includes(checklists: [:assignees, :assignee_comments]).friendly.find(params[:id]).decorate
     @readers = @notice.club_readers.order_by_read_at.page(params[:readers_page])
     @unreaders = @notice.club_unreaders.generation_sorted_desc.page(params[:unreaders_page])
+    
+    if @notice.external_notice? or @notice.plain_notice?
+      @only_read = true
+    else
+      @only_read = false
+    end
+
+    if params[:page_anchor] == "true"
+      @page_from_read = true
+    else
+      @page_from_read = false
+    end
 
     if @notice.checklist_notice?
       @assignee_comment = AssigneeComment.new
