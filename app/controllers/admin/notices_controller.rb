@@ -13,9 +13,13 @@ class Admin::NoticesController < Admin::ApplicationController
   end
 
   def create
-    event_at = params[:notice][:event_at].split('/')
-    event_at_convert = Date.civil(event_at[2].to_i, event_at[0].to_i, event_at[1].to_i)
-    params[:notice][:event_at] = event_at_convert
+    if params[:notice][:event_at].split('/').count > 0
+      event_at = params[:notice][:event_at].split('/')
+      event_at_convert = Date.civil(event_at[2].to_i, event_at[0].to_i, event_at[1].to_i)
+      params[:notice][:event_at] = event_at_convert
+    else
+      params[:notice][:event_at] = Time.now
+    end
 
     @notice = current_club.notices.new(notice_params)
     @notice.checklists.each do |checklist|
@@ -32,6 +36,7 @@ class Admin::NoticesController < Admin::ApplicationController
     else
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice? && !@notice.checklists.empty?
       @users = current_club.users.includes(:tags).decorate
+      @activity_id = params[:notice][:activity_id]
 
       20.times { @notice.checklists.build.assign_histories.build }
       render 'new'
@@ -67,11 +72,15 @@ class Admin::NoticesController < Admin::ApplicationController
   end
 
   def update
-    event_at = params[:notice][:event_at].split('/')
-    event_at_convert = Date.civil(event_at[2].to_i, event_at[0].to_i, event_at[1].to_i)
-    params[:notice][:event_at] = event_at_convert
-
     @notice = current_club.notices.friendly.find(params[:id])
+
+    if params[:notice][:event_at].split('/').count > 0
+      event_at = params[:notice][:event_at].split('/')
+      event_at_convert = Date.civil(event_at[2].to_i, event_at[0].to_i, event_at[1].to_i)
+      params[:notice][:event_at] = event_at_convert
+    else
+      params[:notice][:event_at] = @notice.event_at
+    end 
 
     if @notice.update(notice_params)
       flash[:notice] = "\"#{@notice.title}\" 공지를 성공적으로 수정했습니다."
@@ -79,6 +88,8 @@ class Admin::NoticesController < Admin::ApplicationController
     else
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice?
       @users = current_club.users.decorate
+      @activity_id = params[:notice][:activity_id]
+      
       20.times { @notice.checklists.build.assign_histories.build}
       render 'edit'
     end
