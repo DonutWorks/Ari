@@ -71,7 +71,7 @@
                         <div class="ari-badge-progress progress">
 
                           <% total_cnt = notice.checklists.count
-                            done_cnt = notice.checklists.count
+                            done_cnt = notice.checklists.where(finish: true).count
                           %>
 
                           <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="<%=done_cnt%>" aria-valuemin="0" aria-valuemax="<%=total_cnt%>" style="width: <%=((done_cnt.to_f/total_cnt)*100)%>%">
