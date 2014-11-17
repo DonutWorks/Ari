@@ -20,10 +20,10 @@
 
 <section class="portfolio-container">
   <div class="container">
-    <div class="form-group form-group-lg has-feedback">
+    <!-- <div class="form-group form-group-lg has-feedback">
       <span class="help-block">검색</span>
       <%= text_area_tag :search_word, "", autofocus: true, class: "form-control search_box textcomplete", rows: 1 %>
-    </div>
+    </div> -->
     <div>
       <p> - 문자를 보내려면 체크해주세요.</p>
     </div>
@@ -35,8 +35,9 @@
             <tr>
               <th class="text-center" width="5%">문자 <%= check_box_tag "sms_all_searched", nil, false, class: 'sms_all_searched' %></th>
               <th width="7%">이름</th>
-              <th width="13%">전화번호</th>
-              <th width="75%">태그</th>
+              <th width="88%">전화번호</th>
+              <!-- <th width="13%">전화번호</th> -->
+              <!-- <th width="75%">태그</th> -->
             </tr>
           </thead>
           <tbody>
@@ -45,7 +46,7 @@
               <td class="text-center"><%= check_box_tag 'sms_user[' + user.id.to_s + ']', nil, false, class: "sms_check sms found" %></td>
               <td><%= user.username %></td>
               <td><%= user.phone_number %></td>
-              <td><%= user.tags %></td>
+              <!-- <td><%= user.tags %></td> -->
 
             </tr>
             <% end %>

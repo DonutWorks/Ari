@@ -25,10 +25,10 @@
 
 <section class="portfolio-container">
   <div class="container">
-    <div class="form-group form-group-lg has-feedback">
+    <!-- <div class="form-group form-group-lg has-feedback">
       <span class="help-block">검색</span>
       <%= text_area_tag :user_filter_word, "", autofocus: true, class: "form-control search_box textcomplete", rows: 1 %>
-    </div>
+    </div> -->
 
     <div class="table-responsive" id="table-user-list">
       <table class="table table-hover">
@@ -37,7 +37,7 @@
             <th>이름</th>
             <th>전화번호</th>
             <th>이메일</th>
-            <th>태그</th>
+            <!-- <th>태그</th> -->
             <th>메뉴</th>
           </tr>
         </thead>
@@ -53,7 +53,7 @@
               </td>
               <td><%= user.phone_number %></td>
               <td><%= user.email %></td>
-              <td><%= user.tags %></td>
+              <!-- <td><%= user.tags %></td> -->
               <td class="menu"><%= link_to "자세히", club_admin_user_path(current_club, user), class: "btn btn-link btn-xs" %></td>
             </tr>
           <% end %>
