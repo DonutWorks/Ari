@@ -6,7 +6,7 @@
           <div class="categories">
           </div>
         </div>
-        
+
         <div class="col-sm-3">
           <div class="text-right">
             <div class="item-detail">
@@ -24,9 +24,9 @@
           <% @messages.each do |message| %>
             <%= link_to club_admin_message_path(current_club, message), class: "list-group-item" do %>
               <% unless message.notice.blank? %>
-                <span>[<%= message.notice.activity.title %> - <%= message.notice.title %>] "<%= message.content %>"</span>
+                <span>[<%= message.notice.activity.title %> - <%= message.notice.title %>] "<%= truncate(message.content, length: 30)  %>"</span>
               <% else %>
-                <span><%= message.content %></span>
+                <span><%= truncate(message.content, length: 30)  %></span>
               <% end %>
               <div class="pull-right">
               <span><%= message.created_at %></span>

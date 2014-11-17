@@ -5,7 +5,7 @@
 
     <% checklists.each do |checklist| %>
       <% user = checklist.assignees.first %>
-
+      <% if user %>
       <article class="story">
 
         <div class="story-content full-width">
@@ -118,6 +118,7 @@
         </div>
 
       </article>
+      <% end %>
     <% end %>
     </div>
 </section>
