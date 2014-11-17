@@ -86,7 +86,7 @@
           <div class="tab-pane fade-in <%= 'active' if @only_read or @page_from_read %>" id="read-unread">
             <div class="notice-reader">
               <h3>읽은 멤버 <small>(총 <%= @readers.total_count %>명)</small></h3>
-              <%= @page_anchor %>1111
+              <%= @page_anchor %>
               <%= render partial: "table", locals: { users: @readers.decorate, type: "read" } %>
               <% if @only_read %>
                 <%= paginate @readers, param_name: :readers_page, theme: 'bootstrap' %>

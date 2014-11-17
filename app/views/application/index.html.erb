@@ -9,9 +9,8 @@
 			<header class="site-header">
 			
 				<section class="site-logo">
-				
-					<a href="http://demo.neontheme.com/frontend/main/">
-						<img src="http://demo.neontheme.com/assets/frontend/images/logo@2x.png" width="120">
+					<a href="<%= root_path %>">
+						<%= image_tag("logo.png", id: "playBtn", class: "img-responsive", width:"140") %>
 					</a>
 					
 				</section>
@@ -44,7 +43,7 @@
 	</div>
 	
 </div>	
-	<section class="ari-video-section" style="background-image: url(http://demo.neontheme.com/assets/frontend/images/slide-img-1-bg.png);">
+	<section class="ari-video-section" style="background-image:url(<%=asset_path 'main_image.png'%>); height: 600px; background-repeat: no-repeat; background-size: cover; background-position: center center;">
 	
 	<div class="container">
 		
@@ -53,13 +52,14 @@
 			<div class="col-md-12">
 				<div class="ari-video-wrap">
 					
-					<h1>Outsource your vocabulary with Aritor!!</h1>
-					<h4>Biscuit is the ultimate vocabulary sidekick - <br> Faster than a dictionary,
-easier to use than traditional flash cards or word lists, and always by your side.</h4>
-
+					<h1>Enjoy Your Group with Aritor!!</h1>
+					<h4>동아리 멤버 활동 모니터링 플랫폼<br> Aritor와 함께 손쉬운 동아리 관리를 경험 하세요.</h4>
+					
 					<div class="ari-video">
-						<a href="">
+						<a href="javascript:;" onclick="jQuery('#modal-video').modal('show');">
 							<%= image_tag("btn_play.png", id: "playBtn", class: "img-responsive", width:"140", height:"140") %>
+							<br>
+							<p>Watch the Video</p>
 						</a>
 					</div>
 
@@ -72,31 +72,31 @@ easier to use than traditional flash cards or word lists, and always by your sid
 	
 </section>
 
-<hr />
+
 
 <section class="features-blocks">
 	
 	<div class="ari-main-explain container">
-		
-		<div class="row vspace">			
+		<div class="row">			
 			<div class="ari-main-explain-row col-md-12">
 				
 				<div class="row">
 
 					<div class="ari-main-title col-md-12">
 						<h1>Value</h1>
-						<h5>All plans have a completely free trial until you launch. <br> No credit cards until your site is ready to go!</h5>
+						<p class="lead">Aritor가 모두에게 주는 가치 입니다.</p>
 					</div>
 
 					<div class="col-md-6">
-						<h2>타겟팅된 In-App Promotion</h2>
-						<h3>핵심 유저 세그먼트를 위한 마케팅을 준비하세요.</h3>
-						<a class="home_btn btn_primary learn-more" data-value="2" href="#">자세히</a>
-						<p>세그먼트별로 다른 마케팅 전략이 필요합니다. 구매 경험이 있는 유저에게는 "지금 아이템을 구매하면 2배 지급" 과 같은 시간제한 이벤트로 추가 구매를 유도하고, 플레이 시간이 줄어들고 있는 유저에게는 자사의 다른 게임으로 유도하는 것이 좋습니다.</p>
+						<h2><strong>동아리 운영진</strong></h2>
+						<h3>현재 동아리를 운영하고 있는 운영</h3>
+						<br>
+						<p>동아리 멤버 활동 모니터링 플랫폼 기반 효율적인 동아리 운영진을 경험 할 수 있습니다.</p>
+						<p>수요조사, 공지관리, 업무 진행상황, 모니터링, 회계관리 모니터링 시스템을 제공합니다.</p>
 					</div>
 
-					<div class="col-md-6">
-						<%= image_tag("main1.png", class: "img-responsive") %>
+					<div class="col-md-6 text-center">
+						<%= image_tag("explain1.png", width: "300") %>
 					</div>
 
 				</div>
@@ -110,14 +110,15 @@ easier to use than traditional flash cards or word lists, and always by your sid
 				<div class="row">
 
 					<div class="col-md-6">
-						<h2>타겟팅된 In-App Promotion</h2>
-						<h3>핵심 유저 세그먼트를 위한 마케팅을 준비하세요.</h3>
-						<a class="home_btn btn_primary learn-more" data-value="2" href="#">자세히</a>
-						<p>세그먼트별로 다른 마케팅 전략이 필요합니다. 구매 경험이 있는 유저에게는 "지금 아이템을 구매하면 2배 지급" 과 같은 시간제한 이벤트로 추가 구매를 유도하고, 플레이 시간이 줄어들고 있는 유저에게는 자사의 다른 게임으로 유도하는 것이 좋습니다.</p>
+						<h2><strong>동아리 멤버</strong></h2>
+						<h3>동아리 예비 멤버, 활동 멤버, OB 멤버</h3>
+						<br>
+						<p>앱 설치 및 가입이 불필요 합니다.</p>
+						<p>추가 설치가 없는 Short URL, 소셜 로그인 기반 멤버 인증 기능을 제공합니다.</p>
 					</div>
 
-					<div class="col-md-6">
-						<%= image_tag("main1.png", class: "img-responsive") %>
+					<div class="col-md-6 text-center">
+						<%= image_tag("explain2.png", width: "300") %>
 					</div>
 
 				</div>
@@ -131,14 +132,15 @@ easier to use than traditional flash cards or word lists, and always by your sid
 				<div class="row">
 
 					<div class="col-md-6">
-						<h2>타겟팅된 In-App Promotion</h2>
-						<h3>핵심 유저 세그먼트를 위한 마케팅을 준비하세요.</h3>
-						<a class="home_btn btn_primary learn-more" data-value="2" href="#">자세히</a>
-						<p>세그먼트별로 다른 마케팅 전략이 필요합니다. 구매 경험이 있는 유저에게는 "지금 아이템을 구매하면 2배 지급" 과 같은 시간제한 이벤트로 추가 구매를 유도하고, 플레이 시간이 줄어들고 있는 유저에게는 자사의 다른 게임으로 유도하는 것이 좋습니다.</p>
+						<h2><strong>교류 희망 동아리</strong></h2>
+						<h3>타 동아리와 교류를 희망하는 동아리</h3>
+						<br>
+						<p>동아리 교류 매칭 플랫폼을 제공 하여 효율적인 동아리 운영을 경험 할 수 있습니다.</p>
+						<p>연합 이벤트, 크로스 리쿠르팅 시스템을 제공합니다.</p>
 					</div>
 
-					<div class="col-md-6">
-						<%= image_tag("main1.png", class: "img-responsive") %>
+					<div class="col-md-6 text-center">
+						<%= image_tag("explain3.png", width: "300") %>
 					</div>
 
 				</div>
@@ -158,30 +160,28 @@ easier to use than traditional flash cards or word lists, and always by your sid
 		<div class="ari-price-row row">
 			<div class="ari-main-title col-sm-12">
 				<h1>Pricing</h1>
-				<h5>All plans have a completely free trial until you launch. <br> No credit cards until your site is ready to go!</h5>
+				<p class="lead">Aritor의 가격 정책 입니다.</p>
 			</div>
 			<div class="col-sm-4">
 				
 				<div id="plans-free" class="ari-price-table">
 					<div class="tr">
-						<div class="th">Free<strong>Documentation</strong></div>
+						<div class="th">Basic<strong>최대 300명 사용가능</strong></div>
 					</div>
 					<div class="tr">
 						<div class="td">
-							<a href="/signup" class="btn btn-blue btn-lg plan-personal">Get Started Now<div class="fa fa-chevron-circle-right"></div></a>
+							<a href="<%= admin_sign_in_path %>" class="btn btn-blue btn-lg plan-personal">사용하기<div class="fa fa-chevron-circle-right"></div></a>
 						</div>
 					</div>
 					<div class="tr">
 						<div class="td">
 							<ul class="ari-price-ul">
-								<li class="plan"><strong>Documentation</strong><span>Free</span></li>
-								<li><strong>Documentation</strong> on main page</li>
-								<li>Customize via the <strong>theme builder</strong></li>
-								<li><strong>3</strong> documentation versions</li>
-								<li><strong>1</strong> admin user</li><li>Custom <strong>subdomain</strong>.readme.io</li>
-								<li>Generate <strong>API keys</strong> for users (1,000)</li>
+								<li>수요조사 모니터링 서비스</li>
+								<li>공지관리 모니터링 서비스</li>
+								<li>업무 진행상황 모니터링 서비스</li>
+								<li>화계관리 모니터링 서비스</li>
 								<li><hr></li>
-								<li><span class="addon-price">+$15/mo</span> <strong>Password-protected</strong> docs</li>
+								<li><span class="addon-price">무료</span></li>
 							</ul>
 						</div>
 					</div>
@@ -191,26 +191,24 @@ easier to use than traditional flash cards or word lists, and always by your sid
 			
 			<div class="col-sm-4">
 				
-				<div id="plans-free" class="ari-price-table">
+				<div class="ari-price-table">
 					<div class="tr">
-						<div class="th">Business<strong>Documentation</strong></div>
+						<div class="th">Pro<strong>최대 1000명 사용가능</strong></div>
 					</div>
 					<div class="tr">
 						<div class="td">
-							<a href="/signup" class="btn btn-blue btn-lg plan-personal">Get Started Now<div class="fa fa-chevron-circle-right"></div></a>
+							<a href="" class="btn btn-blue btn-lg plan-personal">구입하기<div class="fa fa-chevron-circle-right"></div></a>
 						</div>
 					</div>
 					<div class="tr">
 						<div class="td">
 							<ul class="ari-price-ul">
-								<li class="plan"><strong>Documentation</strong><span>Free</span></li>
-								<li><strong>Documentation</strong> on main page</li>
-								<li>Customize via the <strong>theme builder</strong></li>
-								<li><strong>3</strong> documentation versions</li>
-								<li><strong>1</strong> admin user</li><li>Custom <strong>subdomain</strong>.readme.io</li>
-								<li>Generate <strong>API keys</strong> for users (1,000)</li>
+								<li><br></li>
+								<li>Basic 제공기능 외</li>
+								<li>납부내역 자동확인 서비스</li>
+								<li><br></li>
 								<li><hr></li>
-								<li><span class="addon-price">+$15/mo</span> <strong>Password-protected</strong> docs</li>
+								<li><span class="addon-price">9,900원/월</span></li>
 							</ul>
 						</div>
 					</div>
@@ -220,26 +218,24 @@ easier to use than traditional flash cards or word lists, and always by your sid
 			
 			<div class="col-sm-4">
 				
-				<div id="plans-free" class="ari-price-table">
+				<div class="ari-price-table">
 					<div class="tr">
-						<div class="th">Gold<strong>Documentation</strong></div>
+						<div class="th">Premium<strong>무제한 사용가능</strong></div>
 					</div>
 					<div class="tr">
 						<div class="td">
-							<a href="/signup" class="btn btn-blue btn-lg plan-personal">Get Started Now<div class="fa fa-chevron-circle-right"></div></a>
+							<a href="" class="btn btn-blue btn-lg plan-personal">구입하기<div class="fa fa-chevron-circle-right"></div></a>
 						</div>
 					</div>
 					<div class="tr">
 						<div class="td">
 							<ul class="ari-price-ul">
-								<li class="plan"><strong>Documentation</strong><span>Free</span></li>
-								<li><strong>Documentation</strong> on main page</li>
-								<li>Customize via the <strong>theme builder</strong></li>
-								<li><strong>3</strong> documentation versions</li>
-								<li><strong>1</strong> admin user</li><li>Custom <strong>subdomain</strong>.readme.io</li>
-								<li>Generate <strong>API keys</strong> for users (1,000)</li>
+								<li>Pro 제공기능 외</li>
+								<li>동아리 교류 매칭 플랫폼</li>
+								<li>- 연합 이벤트 서비스</li>	
+								<li>- 크로스 리크루팅 서비스</li>
 								<li><hr></li>
-								<li><span class="addon-price">+$15/mo</span> <strong>Password-protected</strong> docs</li>
+								<li><span class="addon-price">29,900원/월</span></li>
 							</ul>
 						</div>
 					</div>
@@ -263,68 +259,58 @@ easier to use than traditional flash cards or word lists, and always by your sid
 
 			<div class="ari-main-title col-sm-12">
 				<h1>Customer</h1>
-				<h5>All plans have a completely free trial until you launch. <br> No credit cards until your site is ready to go!</h5>
+				<p class="lead">현재 Aritor를 사용하고 있는 동아리 입니다.</p>
 			</div>
-			
-			<div class="client-logos carousel slide" data-ride="carousel" data-interval="5000">
-			
-				<div class="carousel-inner">
-				
-					<div class="ari-main-company-item item active">
-						
-						<div class="row">
-							<div class="col-md-6">
-								<%= image_tag("main1.png", width:"300") %>
-							</div>
-							<div class="col-md-6">
-								<h2>동아리 설명영여</h2>
-							</div>
-						</div>
-						
-						
-					</div>
-					
-					<div class="ari-main-company-item item">
-						
-						<div class="row">
-							<div class="col-md-6">
-								<%= image_tag("main1.png", width:"300") %>
-							</div>
-							<div class="col-md-6">
-								<h2>동아리 설명영여여</h2>
-							</div>
-						</div>
-						
-					</div>
 
-					<div class="ari-main-company-item item">
-						
-						<div class="row">
-							<div class="col-md-6">
-								<%= image_tag("main1.png", width:"300") %>
-							</div>
-							<div class="col-md-6">
-								<h2>동아리 설명영여여</h2>
-							</div>
-						</div>
-						
-					</div>
-
-					<div class="ari-main-company-item item">
-						
-						<div class="row">
-							<div class="col-md-6">
-								<%= image_tag("main1.png", width:"300") %>
-							</div>
-							<div class="col-md-6">
-								<h2>동아리 설명영여여</h2>
-							</div>
-						</div>
-						
-					</div>
-					
+			<div class="row">
+				<div class="ari-logo-icon col-sm-3">
+					<a href="http://club.cyworld.com/snuhabitat" target="_blank">
+						<%= image_tag("ari0.jpg", width: "200", height: "200") %>
+						<h4>서울대학교 해비타트 햇빛봉사단</h4>
+					</a>
 				</div>
-				
+				<div class="ari-logo-icon col-sm-3">
+					<a href="http://cafe.naver.com/campusceo" target="_blank">
+						<%= image_tag("ari1.png", width: "200", height: "200") %>
+						<h4>대학생 벤처수업 커뮤니티 CampusCEO</h4>
+					</a>
+				</div>
+				<div class="ari-logo-icon col-sm-3">
+					<a href="http://www.facebook.com/aiesec.korea" target="_blank">
+						<%= image_tag("ari7.jpg", width: "200", height: "200") %>
+						<h4>서울대학교 해외인턴십 동아리 AIESEC</h4>
+					</a>
+				</div>
+				<div class="ari-logo-icon col-sm-3">
+					<a href="http://www.facebook.com/raonsoul" target="_blank">
+						<%= image_tag("ari3.jpg", width: "200", height: "200") %>
+						<h4>이화여대 힙합 동아리 RAONSOUL</h4>
+					</a>
+				</div>
+				<div class="ari-logo-icon col-sm-3">
+					<a href="http://club.cyworld.com/sogangsife" target="_blank">
+						<%= image_tag("ari2.jpg", width: "200", height: "200") %>
+						<h4>서강대학교 국제봉사동아리 SIFE</h4>
+					</a>
+				</div>
+				<div class="ari-logo-icon col-sm-3">
+					<a href="http://cafe.naver.com/campusstar" target="_blank">
+						<%= image_tag("ari5.png", width: "200", height: "200") %>
+						<h4>대학생 PT발표 동아리 PT STAR</h4>
+					</a>
+				</div>
+				<div class="ari-logo-icon col-sm-3">
+					<a href="http://poolc.org" target="_blank">
+						<%= image_tag("ari6.gif", width: "200", height: "200") %>
+						<h4>연세대학교 프로그래밍 동아리 PoolC</h4>
+					</a>
+				</div>
+				<div class="ari-logo-icon col-sm-3">
+					<a href="http://tvpot.daum.net/v/e1CJ3wRp2wI$" target="_blank">
+						<%= image_tag("ari4.jpg", width: "200", height: "200") %>
+						<h4>대원외고 아카펠라 동아리</h4>
+					</a>
+				</div>
 			</div>
 			
 		</div>
@@ -360,3 +346,13 @@ easier to use than traditional flash cards or word lists, and always by your sid
 		</div>
 	</div>
 </div>
+
+<div class="modal fade custom-width" id="modal-video" aria-hidden="true" style="display: none;">
+	<div class="ari-modal-dialog modal-dialog text-center">
+		<div>
+			<iframe id="player1" src="//player.vimeo.com/video/76979871?api=1&player_id=player1" width="630" height="354" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		</div>
+		<!-- <button type="button" class="btn btn-red" data-dismiss="modal">Close</button> -->
+	</div>
+</div>
+
