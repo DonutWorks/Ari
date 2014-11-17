@@ -51,15 +51,15 @@
 			
 			<div class="col-md-12">
 				<div class="ari-video-wrap">
-					
-					<h1>Enjoy Your Group with Aritor!!</h1>
-					<h4>동아리 멤버 활동 모니터링 플랫폼<br> Aritor와 함께 손쉬운 동아리 관리를 경험 하세요.</h4>
+
+					<h1>Enjoy Your Circle with Aritor!!</h1>
+					<br>
+					<h2>
+					<div class="title">동아리 멤버 활동 모니터링 플랫폼</div>Aritor와 함께 손쉬운 동아리 관리를 경험 하세요.</h2>
 					
 					<div class="ari-video">
 						<a href="javascript:;" onclick="jQuery('#modal-video').modal('show');">
 							<%= image_tag("btn_play.png", id: "playBtn", class: "img-responsive", width:"140", height:"140") %>
-							<br>
-							<p>Watch the Video</p>
 						</a>
 					</div>
 
@@ -87,12 +87,19 @@
 						<p class="lead">Aritor가 모두에게 주는 가치 입니다.</p>
 					</div>
 
-					<div class="col-md-6">
-						<h2><strong>동아리 운영진</strong></h2>
-						<h3>현재 동아리를 운영하고 있는 운영</h3>
+					<div class="contents col-md-6">
+						<h3><strong>동아리 운영진</strong></h3>
+						<h2>현재 동아리를 운영하고 있는 운영진</h2>
 						<br>
-						<p>동아리 멤버 활동 모니터링 플랫폼 기반 효율적인 동아리 운영진을 경험 할 수 있습니다.</p>
-						<p>수요조사, 공지관리, 업무 진행상황, 모니터링, 회계관리 모니터링 시스템을 제공합니다.</p>
+						<ul class="detail">
+							<li>
+							'동아리 멤버 활동 모니터링 플랫폼' 기반 효율적인 동아리 운영이 가능합니다.</li>
+							<li>
+							멤버들의 수요 응답, 공지사항 수신 여부, 배분한 업무 진행현황 등 소통 관련 모니터링이 가능합니다.
+							</li>
+							<li>
+							동아리 회계관리 모니터링 시스템을 제공합니다.</li>
+						</ul>
 					</div>
 
 					<div class="col-md-6 text-center">
@@ -109,12 +116,18 @@
 				
 				<div class="row">
 
-					<div class="col-md-6">
-						<h2><strong>동아리 멤버</strong></h2>
-						<h3>동아리 예비 멤버, 활동 멤버, OB 멤버</h3>
+					<div class="contents col-md-6">
+						<h3><strong>동아리 멤버</strong></h3>
+						<h2>동아리 예비 멤버, 활동 멤버, OB 멤버</h2>
 						<br>
-						<p>앱 설치 및 가입이 불필요 합니다.</p>
-						<p>추가 설치가 없는 Short URL, 소셜 로그인 기반 멤버 인증 기능을 제공합니다.</p>
+						<ul class="detail">
+							<li>
+							Short URL 기반 동아리 참여가 이루어지기 때문에 앱 추가 설치가 필요 없습니다.
+							</li>
+							<li>
+							소셜 로그인 기반 멤버 인증 기능으로 추가 가입 절차가 불필요합니다.
+							</li>
+						</ul>
 					</div>
 
 					<div class="col-md-6 text-center">
@@ -131,12 +144,18 @@
 				
 				<div class="row">
 
-					<div class="col-md-6">
-						<h2><strong>교류 희망 동아리</strong></h2>
-						<h3>타 동아리와 교류를 희망하는 동아리</h3>
+					<div class="contents col-md-6">
+						<h3><strong>교류 희망 동아리</strong></h3>
+						<h2>타 동아리와 교류를 희망하는 동아리</h2>
 						<br>
-						<p>동아리 교류 매칭 플랫폼을 제공 하여 효율적인 동아리 운영을 경험 할 수 있습니다.</p>
-						<p>연합 이벤트, 크로스 리쿠르팅 시스템을 제공합니다.</p>
+						<ul class="detail">
+							<li>
+							동아리 간 연합 이벤트를 기획할 수 있습니다.
+							</li>
+							<li>
+							동아리 유형에 맞는 우수한 멤버에 대해 리쿠르팅이 가능합니다.
+							</li>
+						</ul>
 					</div>
 
 					<div class="col-md-6 text-center">
@@ -166,7 +185,7 @@
 				
 				<div id="plans-free" class="ari-price-table">
 					<div class="tr">
-						<div class="th">Basic<strong>최대 300명 사용가능</strong></div>
+						<div class="th">Basic<strong>멤버 최대 300명 수용가능</strong></div>
 					</div>
 					<div class="tr">
 						<div class="td">
@@ -176,12 +195,14 @@
 					<div class="tr">
 						<div class="td">
 							<ul class="ari-price-ul">
+								<li class="header">동아리 멤버 활동 모니터링 플랫폼</li>
 								<li>수요조사 모니터링 서비스</li>
 								<li>공지관리 모니터링 서비스</li>
 								<li>업무 진행상황 모니터링 서비스</li>
-								<li>화계관리 모니터링 서비스</li>
+								<li>회계관리 모니터링 서비스</li>
 								<li><hr></li>
-								<li><span class="addon-price">무료</span></li>
+								
+								<span class="addon-price">무료</span>
 							</ul>
 						</div>
 					</div>
@@ -193,7 +214,7 @@
 				
 				<div class="ari-price-table">
 					<div class="tr">
-						<div class="th">Pro<strong>최대 1000명 사용가능</strong></div>
+						<div class="th">Pro<strong>멤버 최대 1000명 수용가능</strong></div>
 					</div>
 					<div class="tr">
 						<div class="td">
@@ -203,9 +224,12 @@
 					<div class="tr">
 						<div class="td">
 							<ul class="ari-price-ul">
-								<li><br></li>
+								
 								<li>Basic 제공기능 외</li>
-								<li>납부내역 자동확인 서비스</li>
+								<li class="header">납부내역 자동확인 서비스</li>
+								<li><br></li>
+								<li><br></li>
+								
 								<li><br></li>
 								<li><hr></li>
 								<li><span class="addon-price">9,900원/월</span></li>
@@ -220,7 +244,7 @@
 				
 				<div class="ari-price-table">
 					<div class="tr">
-						<div class="th">Premium<strong>무제한 사용가능</strong></div>
+						<div class="th">Premium<strong>멤버 무제한 수용가능</strong></div>
 					</div>
 					<div class="tr">
 						<div class="td">
@@ -231,10 +255,12 @@
 						<div class="td">
 							<ul class="ari-price-ul">
 								<li>Pro 제공기능 외</li>
-								<li>동아리 교류 매칭 플랫폼</li>
-								<li>- 연합 이벤트 서비스</li>	
-								<li>- 크로스 리크루팅 서비스</li>
+								<li class="header">동아리 교류 매칭 플랫폼</li>
+								<li>동아리 연합 이벤트 서비스</li>	
+								<li>크로스 리쿠르팅 서비스</li>
+								<li><br></li>
 								<li><hr></li>
+
 								<li><span class="addon-price">29,900원/월</span></li>
 							</ul>
 						</div>
@@ -272,7 +298,7 @@
 				<div class="ari-logo-icon col-sm-3">
 					<a href="http://cafe.naver.com/campusceo" target="_blank">
 						<%= image_tag("ari1.png", width: "200", height: "200") %>
-						<h4>대학생 벤처수업 커뮤니티 CampusCEO</h4>
+						<h4>서울대 이화여대 고려대 수료생 동아리</h4>
 					</a>
 				</div>
 				<div class="ari-logo-icon col-sm-3">
