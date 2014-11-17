@@ -22,17 +22,17 @@
 						<li>
 							<%= link_to "Demo", demo_path %>
 						</li>
-						<li>
-							<a href="javascript:;" onclick="jQuery('#modal-login').modal('show');">Login</a>
+						<li class="ari-login-modal">
+							<a href="#">
+								Login
+							</a>
 						</li>
 					</ul>
 				
 					<div class="visible-xs">
-						
 						<a href="#" class="menu-trigger">
 							<i class="entypo-menu"></i>
 						</a>
-						
 					</div>
 				</nav>
 				
@@ -43,7 +43,7 @@
 	</div>
 	
 </div>	
-	<section class="ari-video-section" style="background-image:url(<%=asset_path 'main_image.png'%>); height: 600px; background-repeat: no-repeat; background-size: cover; background-position: center center;">
+	<section class="ari-video-section" style="background-image:url(<%=asset_path 'main_image.png'%>); background-repeat: no-repeat; background-size: cover; background-position: center center;">
 	
 	<div class="container">
 		
@@ -58,11 +58,11 @@
 					<div class="title">동아리 멤버 활동 모니터링 플랫폼</div>Aritor와 함께 손쉬운 동아리 관리를 경험 하세요.</h2>
 					
 					<div class="ari-video">
-						<a href="javascript:;" onclick="jQuery('#modal-video').modal('show');">
+						<!-- <a href="javascript:;" onclick="jQuery('#modal-video').modal('show');"> -->
+						<a href="#">
 							<%= image_tag("btn_play.png", id: "playBtn", class: "img-responsive", width:"140", height:"140") %>
 						</a>
 					</div>
-
 				</div>
 			</div>
 			
@@ -345,7 +345,6 @@
 
 </div>
 
-
 <div class="modal fade" id="modal-login">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -357,11 +356,21 @@
 			
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-6 text-center">
-						<%= link_to "운영자로 로그인", admin_sign_in_path, class: "btn btn-blue btn-lg" %>
+					<div class="col-xs-6 text-center">
+						<div class="tile-stats tile-primary">
+							<a href="<%= admin_sign_in_path %>">
+								<div class="num">운영자</div>
+								<hr>
+							</a>
+						</div>
 					</div>
-					<div class="col-md-6 text-center">
-						<%= link_to "멤버로 로그인", sign_in_path, class: "btn btn-success btn-lg" %>
+					<div class="col-xs-6 text-center">
+						<div class="tile-stats tile-gray">
+							<a href="<%= sign_in_path %>">
+								<div class="num">멤버</div>
+								<hr>
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -373,12 +382,22 @@
 	</div>
 </div>
 
-<div class="modal fade custom-width" id="modal-video" aria-hidden="true" style="display: none;">
+
+<div class="modal fade" id="modal-video" aria-hidden="true" style="display: none;">
 	<div class="ari-modal-dialog modal-dialog text-center">
-		<div>
-			<iframe id="player1" src="//player.vimeo.com/video/112058359?api=1&player_id=player1" width="630" height="354" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-		</div>
-		<!-- <button type="button" class="btn btn-red" data-dismiss="modal">Close</button> -->
+		 <iframe id="player1" src="//player.vimeo.com/video/112058359?api=1&player_id=player1" width="630" height="354" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 	</div>
 </div>
 
+
+<script>
+$(document).on("ready page:load", function () {
+	$('.ari-video a').on("click", function(){
+		$('#modal-video').modal('show');
+	});
+
+	$('.ari-login-modal a').on("click", function(){
+		$('#modal-login').modal('show');
+	});
+});
+</script>

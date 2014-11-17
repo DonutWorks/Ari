@@ -1,6 +1,7 @@
 class ProvidersController < AuthenticatableController
   prepend_before_action :merge_omniauth_params
   skip_before_action :require_activated
+  before_action :disable_footer
 
   def create
     remember_me = params[:remember_me]

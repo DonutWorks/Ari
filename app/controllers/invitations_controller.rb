@@ -1,6 +1,7 @@
 class InvitationsController < AuthenticatableController
   skip_before_action :require_activated
   before_action :require_signed_in, except: [:create]
+  before_action :disable_footer
 
   def new
     @user = current_user

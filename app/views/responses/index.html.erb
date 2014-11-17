@@ -1,5 +1,5 @@
 <% content_for :notice_detail do %>
-<div>
+<div class="ari-survey-member">
   <div class="btn-group pull-left">
     <%= link_to "찬성", club_notice_responses_path(current_club, @notice, status: "yes"), method: :post, class: "btn btn-default #{@status == '찬성' ? 'btn-blue' : '' }" %>
     <%= link_to "보류", club_notice_responses_path(current_club, @notice, status: "maybe"), method: :post, class: "btn btn-default #{@status == '보류' ? 'btn-orange' : '' }" %>
