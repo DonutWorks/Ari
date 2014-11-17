@@ -62,10 +62,15 @@ textarea.textcomplete {
   background-color: #3366cc !important;
 }
 
-.ari-navbar-nav {
+.ari-navbar-nav > li > a {
   font-size: 13px;
+  color: #dddddd !important;
 }
 
+.ari-navbar-nav > li.active > a {
+  font-size: 13px;
+  color: #3366cc !important;
+}
 
 
 .ari-container {

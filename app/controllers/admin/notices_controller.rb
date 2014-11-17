@@ -20,10 +20,10 @@ class Admin::NoticesController < Admin::ApplicationController
     else
       params[:notice][:event_at] = Time.now
     end
-
+    # raise current_club.notices.inspect
     @notice = current_club.notices.new(notice_params)
     @notice.checklists.each do |checklist|
-      checklist.update(club_id: current_club.id)
+      checklist.club_id = current_club.id
     end if @notice.notice_type == "checklist"
 
     if @notice.save
@@ -34,7 +34,9 @@ class Admin::NoticesController < Admin::ApplicationController
       SlackNotifier.notify("햇빛봉사단 게이트 추가 알림 : #{@notice.title}, #{@notice.shortenURL}")
       redirect_to club_admin_notice_path(current_club, @notice)
     else
+
       @notice.checklists.last.assign_histories.build if @notice.checklist_notice? && !@notice.checklists.empty?
+
       @users = current_club.users.includes(:tags).decorate
       @activity_id = params[:notice][:activity_id]
       @init_date = params[:notice][:event_at].strftime("%m/%d/%Y")
@@ -97,7 +99,7 @@ class Admin::NoticesController < Admin::ApplicationController
 
     @notice.attributes = notice_params
     @notice.checklists.each do |checklist|
-      checklist.update(club_id: current_club.id)
+      checklist.club_id =  current_club.id
     end if @notice.notice_type == "checklist"
 
     if @notice.save
