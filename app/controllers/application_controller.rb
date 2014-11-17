@@ -3,14 +3,19 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!, except: [:index]
 
   def index
-    if current_user
-      redirect_to club_path(current_user.club)
-    else
-      redirect_to sign_in_path
-    end
   end
 
 protected
+  def footer_disable?
+    @disable_footer || false
+  end
+
+  def disable_footer
+    @disable_footer = true
+  end
+
+  helper_method :footer_disable?
+
   def default_url_options(options={})
     { redirect_url: params[:redirect_url] }
   end
