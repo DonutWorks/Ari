@@ -5,9 +5,9 @@ namespace :club do
   task :import, [:name] => :environment do |t, args|
     case ENV['DEPLOY_ENV']
     when "production"
-      host = "donut-ari.herokuapp.com"
+      host = "www.aritor.net"
     when "staging"
-      host = "donut-ari-staging.herokuapp.com"
+      host = "staging.aritor.net"
     else
       host = "localhost:3000"
     end
