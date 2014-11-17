@@ -220,6 +220,9 @@ textarea.textcomplete {
   float:left;
   padding-left:10px;
 }
+.ari-root-title{
+  font-family: NanumMyeongJo, SERIF;
+}
 
 .ari-file-form-control {
   height:50px !important;
@@ -273,11 +276,11 @@ textarea.textcomplete {
 
 .ari-video-wrap h4 {
   font-weight: 300;
-  font-size: 14px;
+  font-size: 20px;
   color: rgba(255,255,255,0.4);
   text-align: center;
   line-height: 18px;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .ari-video-wrap h2:first-child{
@@ -403,7 +406,10 @@ textarea.textcomplete {
   padding-top: 10px;
 }
 
-
+.ari-video-description{
+  font-size: 16px;
+  padding-top: 15px;
+}
 
 
 
