@@ -5,7 +5,7 @@
   <div class="login-content">
 
     <a href="" class="logo">
-      <%= image_tag(current_club.logo_url, width: "320") %>
+      <%= image_tag(current_club.try(:logo_url), width: "320") %>
     </a>
 
     <p class="description">관리자 페이지로 접속하려면 로그인해주세요!</p>
@@ -28,7 +28,7 @@
 
   <div class="login-content">
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= form_for(resource, as: resource_name, url: @action) do |f| %>
 
       <div class="form-group">
 
