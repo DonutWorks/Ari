@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!, except: [:index]
 
   def index
+    sign_out(:admin_user)
   end
 
 protected
