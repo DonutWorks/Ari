@@ -220,3 +220,121 @@ textarea.textcomplete {
   margin-bottom: 20px;
   color: #949494 !important;
 }
+
+.ari-main-explain {
+}
+
+.ari-video-section {
+
+}
+
+.ari-video-wrap {
+  margin: 0 auto;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.ari-video-wrap h1 {
+  font-weight: 300;
+  font-size: 46px;
+  color: white;
+  text-align: center;
+  margin-top: 100px;
+  letter-spacing: -1px;
+}
+
+.ari-video-wrap h4 {
+  font-weight: 300;
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+  line-height: 18px;
+  margin-top: 30px;
+}
+
+.ari-video {
+  height: 140x;
+  width: 140px;
+  display: block;
+  margin: 0 auto;
+  padding-top: 70px;
+  padding-bottom: 120px;
+}
+
+.ari-main-title {
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 50px; 
+}
+
+.ari-main-explain-row {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.ari-price-row {
+  padding-bottom: 100px;
+}
+
+.ari-price-table {
+  background-color: #fff;
+  margin: auto;
+  color: #999;
+  box-shadow: 0 0 7px rgba(0,0,0,0.3);
+  position: relative;
+  margin-top: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.ari-price-table .th {
+  background-color: #f9f9f9;
+  padding: 35px 15px 20px;
+  font-size: 45px;
+  overflow: hidden;
+  text-align: center;
+  color: #373e4a;
+  position: relative;
+}
+
+.ari-price-table .th strong {
+  font-family: Roboto;
+  font-weight: normal;
+  color: rgba(0,0,0,0.3);
+  letter-spacing: 0.5px;
+  display: block;
+  font-size: 18px;
+}
+
+.ari-price-table .tr {
+  display: block;
+}
+
+.ari-price-table .td {
+  padding: 25px;
+  text-align: center;
+  vertical-align: top;
+}
+
+.ari-price-ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ari-company-row {
+  margin-top: 30px;
+}
+
+.ari-main-company-item {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.ari-modal-dialog {
+  padding-top: 300px !important;
+}
+
+.ari-footer-logo {
+  display:inline;
+}

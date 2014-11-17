@@ -1,0 +1,372 @@
+<div class="wrap">
+	
+	<div class="site-header-container container">
+
+	<div class="row">
+	
+		<div class="col-md-12">
+			
+			<header class="site-header">
+			
+				<section class="site-logo">
+					<a href="<%= root_path %>">
+						<%= image_tag("logo.png", id: "playBtn", class: "img-responsive", width:"140") %>
+					</a>
+					
+				</section>
+				
+				<nav class="site-nav">
+					
+					<ul class="main-menu hidden-xs" id="main-menu">
+						<li>
+							<%= link_to "Demo", demo_path %>
+						</li>
+						<li>
+							<a href="javascript:;" onclick="jQuery('#modal-login').modal('show');">Login</a>
+						</li>
+					</ul>
+					
+				
+					<div class="visible-xs">
+						
+						<a href="#" class="menu-trigger">
+							<i class="entypo-menu"></i>
+						</a>
+						
+					</div>
+				</nav>
+				
+			</header>
+			
+		</div>
+		
+	</div>
+	
+</div>	
+	<section class="ari-video-section" style="background-image:url(<%=asset_path 'main_image.png'%>); height: 600px; background-repeat: no-repeat; background-size: cover; background-position: center center;">
+	
+	<div class="container">
+		
+		<div class="row">
+			
+			<div class="col-md-12">
+				<div class="ari-video-wrap">
+					
+					<h1>Outsource your vocabulary with Aritor!!</h1>
+					<h4>Biscuit is the ultimate vocabulary sidekick - <br> Faster than a dictionary,
+easier to use than traditional flash cards or word lists, and always by your side.</h4>
+					
+					<div class="ari-video">
+						<a href="javascript:;" onclick="jQuery('#modal-video').modal('show');">
+							<%= image_tag("btn_play.png", id: "playBtn", class: "img-responsive", width:"140", height:"140") %>
+							<br>
+							<p>Watch the Video</p>
+						</a>
+					</div>
+
+				</div>
+			</div>
+			
+		</div>
+		
+	</div>
+	
+</section>
+
+
+
+<section class="features-blocks">
+	
+	<div class="ari-main-explain container">
+		<div class="row">			
+			<div class="ari-main-explain-row col-md-12">
+				
+				<div class="row">
+
+					<div class="ari-main-title col-md-12">
+						<h1>Value</h1>
+						<h5>All plans have a completely free trial until you launch. <br> No credit cards until your site is ready to go!</h5>
+					</div>
+
+					<div class="col-md-6">
+						<h2>타겟팅된 In-App Promotion</h2>
+						<h3>핵심 유저 세그먼트를 위한 마케팅을 준비하세요.</h3>
+						<a class="home_btn btn_primary learn-more" data-value="2" href="#">자세히</a>
+						<p>세그먼트별로 다른 마케팅 전략이 필요합니다. 구매 경험이 있는 유저에게는 "지금 아이템을 구매하면 2배 지급" 과 같은 시간제한 이벤트로 추가 구매를 유도하고, 플레이 시간이 줄어들고 있는 유저에게는 자사의 다른 게임으로 유도하는 것이 좋습니다.</p>
+					</div>
+
+					<div class="col-md-6">
+						<%= image_tag("main1.png", class: "img-responsive") %>
+					</div>
+
+				</div>
+				
+			</div>
+
+			<hr />
+			
+			<div class="ari-main-explain-row col-md-12">
+				
+				<div class="row">
+
+					<div class="col-md-6">
+						<h2>타겟팅된 In-App Promotion</h2>
+						<h3>핵심 유저 세그먼트를 위한 마케팅을 준비하세요.</h3>
+						<a class="home_btn btn_primary learn-more" data-value="2" href="#">자세히</a>
+						<p>세그먼트별로 다른 마케팅 전략이 필요합니다. 구매 경험이 있는 유저에게는 "지금 아이템을 구매하면 2배 지급" 과 같은 시간제한 이벤트로 추가 구매를 유도하고, 플레이 시간이 줄어들고 있는 유저에게는 자사의 다른 게임으로 유도하는 것이 좋습니다.</p>
+					</div>
+
+					<div class="col-md-6">
+						<%= image_tag("main1.png", class: "img-responsive") %>
+					</div>
+
+				</div>
+				
+			</div>
+			
+			<hr />
+
+			<div class="ari-main-explain-row col-md-12">
+				
+				<div class="row">
+
+					<div class="col-md-6">
+						<h2>타겟팅된 In-App Promotion</h2>
+						<h3>핵심 유저 세그먼트를 위한 마케팅을 준비하세요.</h3>
+						<a class="home_btn btn_primary learn-more" data-value="2" href="#">자세히</a>
+						<p>세그먼트별로 다른 마케팅 전략이 필요합니다. 구매 경험이 있는 유저에게는 "지금 아이템을 구매하면 2배 지급" 과 같은 시간제한 이벤트로 추가 구매를 유도하고, 플레이 시간이 줄어들고 있는 유저에게는 자사의 다른 게임으로 유도하는 것이 좋습니다.</p>
+					</div>
+
+					<div class="col-md-6">
+						<%= image_tag("main1.png", class: "img-responsive") %>
+					</div>
+
+				</div>
+			
+		</div>
+	
+	</div>
+	
+</section>
+
+<hr />
+
+<section class="portfolio-widget">
+	
+	<div class="container">
+		
+		<div class="ari-price-row row">
+			<div class="ari-main-title col-sm-12">
+				<h1>Pricing</h1>
+				<h5>All plans have a completely free trial until you launch. <br> No credit cards until your site is ready to go!</h5>
+			</div>
+			<div class="col-sm-4">
+				
+				<div id="plans-free" class="ari-price-table">
+					<div class="tr">
+						<div class="th">Free<strong>Documentation</strong></div>
+					</div>
+					<div class="tr">
+						<div class="td">
+							<a href="/signup" class="btn btn-blue btn-lg plan-personal">Get Started Now<div class="fa fa-chevron-circle-right"></div></a>
+						</div>
+					</div>
+					<div class="tr">
+						<div class="td">
+							<ul class="ari-price-ul">
+								<li class="plan"><strong>Documentation</strong><span>Free</span></li>
+								<li><strong>Documentation</strong> on main page</li>
+								<li>Customize via the <strong>theme builder</strong></li>
+								<li><strong>3</strong> documentation versions</li>
+								<li><strong>1</strong> admin user</li><li>Custom <strong>subdomain</strong>.readme.io</li>
+								<li>Generate <strong>API keys</strong> for users (1,000)</li>
+								<li><hr></li>
+								<li><span class="addon-price">+$15/mo</span> <strong>Password-protected</strong> docs</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="col-sm-4">
+				
+				<div id="plans-free" class="ari-price-table">
+					<div class="tr">
+						<div class="th">Business<strong>Documentation</strong></div>
+					</div>
+					<div class="tr">
+						<div class="td">
+							<a href="/signup" class="btn btn-blue btn-lg plan-personal">Get Started Now<div class="fa fa-chevron-circle-right"></div></a>
+						</div>
+					</div>
+					<div class="tr">
+						<div class="td">
+							<ul class="ari-price-ul">
+								<li class="plan"><strong>Documentation</strong><span>Free</span></li>
+								<li><strong>Documentation</strong> on main page</li>
+								<li>Customize via the <strong>theme builder</strong></li>
+								<li><strong>3</strong> documentation versions</li>
+								<li><strong>1</strong> admin user</li><li>Custom <strong>subdomain</strong>.readme.io</li>
+								<li>Generate <strong>API keys</strong> for users (1,000)</li>
+								<li><hr></li>
+								<li><span class="addon-price">+$15/mo</span> <strong>Password-protected</strong> docs</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="col-sm-4">
+				
+				<div id="plans-free" class="ari-price-table">
+					<div class="tr">
+						<div class="th">Gold<strong>Documentation</strong></div>
+					</div>
+					<div class="tr">
+						<div class="td">
+							<a href="/signup" class="btn btn-blue btn-lg plan-personal">Get Started Now<div class="fa fa-chevron-circle-right"></div></a>
+						</div>
+					</div>
+					<div class="tr">
+						<div class="td">
+							<ul class="ari-price-ul">
+								<li class="plan"><strong>Documentation</strong><span>Free</span></li>
+								<li><strong>Documentation</strong> on main page</li>
+								<li>Customize via the <strong>theme builder</strong></li>
+								<li><strong>3</strong> documentation versions</li>
+								<li><strong>1</strong> admin user</li><li>Custom <strong>subdomain</strong>.readme.io</li>
+								<li>Generate <strong>API keys</strong> for users (1,000)</li>
+								<li><hr></li>
+								<li><span class="addon-price">+$15/mo</span> <strong>Password-protected</strong> docs</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+	</div>
+	
+</section>
+
+<hr />
+
+<section class="clients-logos-container">
+	
+	<div class="container">
+		
+		<div class="ari-company-row row">
+
+			<div class="ari-main-title col-sm-12">
+				<h1>Customer</h1>
+				<h5>All plans have a completely free trial until you launch. <br> No credit cards until your site is ready to go!</h5>
+			</div>
+			
+			<div class="client-logos carousel slide" data-ride="carousel" data-interval="5000">
+			
+				<div class="carousel-inner">
+				
+					<div class="ari-main-company-item item active">
+						
+						<div class="row">
+							<div class="col-md-6">
+								<%= image_tag("main1.png", width:"300") %>
+							</div>
+							<div class="col-md-6">
+								<h2>동아리 설명영여</h2>
+							</div>
+						</div>
+						
+						
+					</div>
+					
+					<div class="ari-main-company-item item">
+						
+						<div class="row">
+							<div class="col-md-6">
+								<%= image_tag("main1.png", width:"300") %>
+							</div>
+							<div class="col-md-6">
+								<h2>동아리 설명영여여</h2>
+							</div>
+						</div>
+						
+					</div>
+
+					<div class="ari-main-company-item item">
+						
+						<div class="row">
+							<div class="col-md-6">
+								<%= image_tag("main1.png", width:"300") %>
+							</div>
+							<div class="col-md-6">
+								<h2>동아리 설명영여여</h2>
+							</div>
+						</div>
+						
+					</div>
+
+					<div class="ari-main-company-item item">
+						
+						<div class="row">
+							<div class="col-md-6">
+								<%= image_tag("main1.png", width:"300") %>
+							</div>
+							<div class="col-md-6">
+								<h2>동아리 설명영여여</h2>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+		
+	</div>
+
+</div>
+
+
+<div class="modal fade" id="modal-login">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Login</h4>
+			</div>
+			
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6 text-center">
+						<%= link_to "운영자로 로그인", admin_sign_in_path, class: "btn btn-blue btn-lg" %>
+					</div>
+					<div class="col-md-6 text-center">
+						<%= link_to "멤버로 로그인", sign_in_path, class: "btn btn-success btn-lg" %>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal-footer">
+				<button type="button" class="btn btn-red" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade custom-width" id="modal-video" aria-hidden="true" style="display: none;">
+	<div class="ari-modal-dialog modal-dialog text-center">
+		<div>
+			<iframe id="player1" src="//player.vimeo.com/video/76979871?api=1&player_id=player1" width="630" height="354" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		</div>
+		<!-- <button type="button" class="btn btn-red" data-dismiss="modal">Close</button> -->
+	</div>
+</div>
+

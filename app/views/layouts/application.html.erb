@@ -11,13 +11,12 @@
 <body class="page-body <%= yield (:body_class) %>">
   <%= render 'layouts/messages' %>
   <div class="page-container without-sidebar">
-    <%= render 'layouts/status_bar' if current_user.try(:activated?) && !devise_controller? %>
+    <%= render 'layouts/status_bar' if current_club && current_user.try(:activated?) && !devise_controller? %>
     <%= yield %>
   </div>
 
-  <footer class="ari-footer main page-container">
-    © 2014 <strong>Aritor</strong> Software Maestro #5</a>
-  </footer>
+  <%= render 'layouts/footer' %>
+  
 </body>
 
 </html>
