@@ -55,11 +55,18 @@ textarea.textcomplete {
 .ari-navber {
   border-radius: 0px !important;
   margin-bottom: 0px !important;
+  background-color: #3366cc !important;
+}
+
+.ari-navbar-inverse {
+  background-color: #3366cc !important;
 }
 
 .ari-navbar-nav {
   font-size: 13px;
 }
+
+
 
 .ari-container {
   padding-left: 0px !important;
@@ -377,6 +384,10 @@ textarea.textcomplete {
 
 .ari-footer-logo {
   display:inline;
+}
+
+.ari-main-navber {
+  background-color: white;
 }
 
 

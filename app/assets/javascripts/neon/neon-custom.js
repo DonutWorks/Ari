@@ -25,6 +25,117 @@ var public_vars = public_vars || {};
 		
 		
 		public_vars.$body.addClass('loaded');
+
+		var $main_menu = $("nav.site-nav .main-menu");
+		
+			// Mobile Menu
+			var $mobile_menu = $main_menu.clone();
+			
+			$("body").prepend( $mobile_menu );
+			$mobile_menu.removeClass('hidden-xs main-menu').addClass('mobile-menu');
+			
+			$(".menu-trigger").on('click', function(ev)
+			{
+				ev.preventDefault();
+				
+				$mobile_menu.slideToggle();
+			});
+			
+			
+		
+			// Sub Menus
+			$main_menu.find('li:has(> ul)').addClass("has-sub").each(function(i, el)
+			{
+				var $this = $(el),
+					$sub = $this.children('ul'),
+					$sub_sub = $sub.find('> li > ul');
+				
+				
+				$sub.addClass('visible');
+				
+				if($sub_sub.length)
+				{
+					$sub_sub.removeClass('visible');
+				}
+				
+				$this.data('sub-height', $sub.outerHeight());
+				
+				if($sub_sub.length)
+				{
+					$sub_sub.addClass('visible');
+				}
+			});
+			
+			$main_menu.find('.visible').removeClass('visible');
+			
+			// First Level
+			$main_menu.find('> li:has(> ul)').addClass('is-root').each(function(i, el)
+			{
+				var $this = $(el),
+					$sub = $this.children('ul');
+				
+				TweenMax.set($sub, {css: {opacity: 0}});
+				
+				$this.hoverIntent({
+					over: function()
+					{
+						TweenMax.to($sub, 0.3, {css: {opacity: 1}, onStart: function()
+						{
+							$this.addClass('hover');
+						}});
+						
+						$sub.show();
+					},
+					
+					out: function()
+					{
+						$sub.hide();
+					},
+					
+					timeout: 300,
+					
+					interval: 0
+				});
+				
+				$this.on('mouseleave', function()
+				{
+					TweenMax.to($sub, 0.15, {css: {opacity: 0}, onComplete: function()
+					{
+						$this.removeClass('hover');
+					}});
+				});
+			});
+			
+			$main_menu.find('li:has(> ul)').not('.is-root').each(function(i, el)
+			{
+				var $this = $(el),
+					$sub = $this.children('ul'),
+					height = $this.data('sub-height');
+				
+				
+				$this.hoverIntent({
+					over: function()
+					{
+						if( ! $sub.is(':visible'))
+							$sub.css({height: 0}).show();
+							
+						TweenMax.to($sub, .2, {css: {height: height}, ease: Sine.easeOut, onComplete: function()
+						{
+							$sub.attr('style', '').addClass('visible');
+						}});
+					},
+					
+					out: function()
+					{
+						TweenMax.to($sub, .2, {css: {height: 0}, ease: Sine.easeOut, onComplete: function()
+						{
+							$sub.attr('style', '').removeClass('visible');
+						}});
+					},
+					
+					interval: 150
+				});
+			});
 		
 		// Just to make sure...
 		$(window).on('error', function(ev)
