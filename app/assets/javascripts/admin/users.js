@@ -1,6 +1,6 @@
 
 $(document).on('ready page:load', function () {
-  $('#tags').textcomplete([
+  $('#tags2').textcomplete([
     {
       match: /\B#([^\s]*)$/,
       search: function (term, callback) {
@@ -69,35 +69,66 @@ $(document).on('ready page:load', function () {
     return split( term ).pop();
   }
 
-  $( "#user_filter_word" )
-      // don't navigate away from the field on tab when selecting an item
-      .bind( "keydown", function( event ) {
-        if ( event.keyCode === $.ui.keyCode.TAB &&
-            $( this ).autocomplete( "instance" ).menu.active ) {
-          event.preventDefault();
+  $( "#user_filter_word" ).autocomplete({
+    source: function( request, response ) {
+      current_club = $("#current-club-slug").val()
+
+      $.getJSON('/' + current_club + '/admin/users/search/' + request.term )
+      .done(function (res) {
+
+        $("#table-user-list").find("tr:gt(0)").css("display","none");
+
+        for (var i in res) {
+          var user = res[i];
+          $("#tr-user-id-" + user.id).css("display","");
         }
+
       })
-      .autocomplete({
-        source: function( request, response ) {
-          current_club = $("#current-club-slug").val()
-          $.getJSON('/' + current_club + '/admin/users/search/' + extractLast( request.term ))
-          .done(function (res) {
-
-          $("#table-user-list").find("tr:gt(0)").css("display","none");
-
-          for (var i in res) {
-            var user = res[i];
-            $("#tr-user-id-" + user.id).css("display","");
-          }
-
-          })
-          .fail(function (res) {
-
-          });
-      }
+      .fail(function (res) {
 
       });
 
+    },
+    minLength: 0
+
+  });
+
+  $('#tags').bind( "keydown", function( event ) {
+    if ( event.keyCode === $.ui.keyCode.TAB &&
+        $( this ).autocomplete( "instance" ).menu.active ) {
+      event.preventDefault();
+    }
+  })
+  .autocomplete({
+    source: function( request, response ) {
+      current_club = $("#current-club-slug").val()
+
+      $.getJSON( '/' + current_club + '/admin/users/tags/' + extractLast( request.term )
+      , response );
+    },
+    search: function() {
+      // custom minLength
+      var term = extractLast( this.value );
+      if ( term.length < 0 ) {
+        return false;
+      }
+    },
+    focus: function() {
+      // prevent value inserted on focus
+      return false;
+    },
+    select: function( event, ui ) {
+      var terms = split( this.value );
+      // remove the current input
+      terms.pop();
+      // add the selected item
+      terms.push( ui.item.value );
+      // add placeholder to get the comma-and-space at the end
+      terms.push( "" );
+      this.value = terms.join( ", " );
+      return false;
+    }
+  });
 
 
 });

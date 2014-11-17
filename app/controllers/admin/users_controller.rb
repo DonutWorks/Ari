@@ -13,7 +13,7 @@ class Admin::UsersController < Admin::ApplicationController
     @user = current_club.users.new(user_params)
 
     if @user.valid?
-      associate_user_with_tags!
+      #associate_user_with_tags!
       @user.save!
       flash[:notice] = "\"#{@user.username}\"님의 멤버 정보 생성에 성공했습니다."
       redirect_to club_admin_users_path(current_club)
@@ -32,7 +32,7 @@ class Admin::UsersController < Admin::ApplicationController
     @user.assign_attributes(user_params)
 
     if @user.valid?
-      associate_user_with_tags!
+      #associate_user_with_tags!
       @user.update!(user_params)
       flash[:notice] = "\"#{@user.username}\"님의 멤버 정보 수정에 성공했습니다."
       redirect_to club_admin_user_path(current_club, @user)
@@ -57,6 +57,12 @@ class Admin::UsersController < Admin::ApplicationController
 
   def tags
     tags = current_club.tags.fetch_list_by_tag_name(params[:tag_name]).take(5)
+    tags_json = {}
+    tags.map! do |tag|
+      { label: tag.tag_name, value: tag.tag_name }
+    end
+
+    # raise tags_json.inspect
     respond_with tags
   end
 
