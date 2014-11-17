@@ -62,7 +62,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :notices do
+      resources :notices, except: :index do
         collection do
           get 'download_roster_example'
         end
