@@ -1,6 +1,15 @@
 class Admin::SessionsController < Devise::SessionsController
-	def new
-		disable_footer
-		super
-	end
+  skip_before_action :club_scoped_authenticate_admin_user!
+
+  def new
+    disable_footer
+    
+    if current_club
+      @action = session_path(resource_name)
+    else
+      @action = admin_sign_in_path
+    end
+
+    super
+  end
 end

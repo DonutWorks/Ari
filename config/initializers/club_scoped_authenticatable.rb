@@ -6,7 +6,12 @@ module Devise
       def validate(resource, &block)
         result = resource && super
 
-        if result && club_member?(resource)
+        club_id = params[:club_id].try(:downcase)
+
+        if result && club_id && club_member?(resource, club_id)
+          true
+        elsif result && club_id.nil?
+          # TODO: need to show club list
           true
         else
           fail!(:not_found_in_database)
@@ -15,8 +20,8 @@ module Devise
       end
 
     private
-      def club_member?(resource)
-        current_club = Club.friendly.find(params[:club_id].downcase)
+      def club_member?(resource, club_id)
+        current_club = Club.friendly.find(club_id)
         return resource.club == current_club
       end
     end

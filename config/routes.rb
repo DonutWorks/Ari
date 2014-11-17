@@ -9,7 +9,11 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :admin_users, path: ':club_id/admin', controllers: {sessions: 'admin/sessions'}
+  devise_for :admin_users, path: ':club_id/admin', controllers: { sessions: 'admin/sessions' }
+  devise_scope :admin_user do
+    get 'admin/sign_in', to: 'admin/sessions#new'
+    post 'admin/sign_in', to: 'admin/sessions#create'
+  end
 
   get 'sign_in', to: 'sessions#new'
   post 'auth', to: 'sessions#auth_without_club'

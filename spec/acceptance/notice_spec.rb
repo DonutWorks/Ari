@@ -25,7 +25,7 @@ RSpec.describe "notice", type: :feature do
   end
 
   it "should let me add a new notice" do
-    visit new_club_admin_notice_path(@club)
+    visit new_club_admin_notice_path(@club, activity_id: @activity.id)
 
     fill_in 'notice_title', :with => 'Protoss noticeway'
     fill_in 'notice_content', :with => 'Costs 150 mineral'
@@ -36,7 +36,7 @@ RSpec.describe "notice", type: :feature do
   end
 
   it "should let me fail to add a new notice when I forget to fill in" do
-    visit new_club_admin_notice_path(@club)
+    visit new_club_admin_notice_path(@club, activity_id: @activity.id)
 
     click_button "등록"
 
