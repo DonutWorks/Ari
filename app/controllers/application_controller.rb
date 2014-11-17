@@ -43,7 +43,7 @@ protected
       redirect_to new_club_invitation_path(current_club)
     elsif current_club.present? and current_user.club != current_club
       flash[:error] = "존재하지 않는 동아리입니다."
-      redirect_to(request.referer || club_path(current_user.club))
+      redirect_to club_path(current_user.club)
     end
   end
 
