@@ -2,7 +2,7 @@
 <div class="login-container">
 	<div class="login-header login-caret">
 		<div class="login-content">
-			<% if current_club %>
+			<% if current_club && current_club.try(:logo_url).present? %>
 				<a href="#" class="logo">
 					<%= image_tag(current_club.logo_url, width: "320") %>
 				</a>
