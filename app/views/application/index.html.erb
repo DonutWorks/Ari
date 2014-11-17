@@ -1,23 +1,23 @@
 <div class="wrap">
-	
+
 	<div class="site-header-container container">
 
 	<div class="row">
-	
+
 		<div class="col-md-12">
-			
+
 			<header class="site-header">
 
-			
+
 				<section class="site-logo">
 					<a href="<%= root_path %>">
 						<%= image_tag("logo.png", id: "playBtn", class: "img-responsive", width:"140") %>
 					</a>
-					
+
 				</section>
-				
+
 				<nav class="site-nav">
-					
+
 					<ul class="main-menu hidden-xs" id="main-menu">
 						<li>
 							<%= link_to "Demo", demo_path %>
@@ -28,58 +28,59 @@
 							</a>
 						</li>
 					</ul>
-				
+
 					<div class="visible-xs">
 						<a href="#" class="menu-trigger">
 							<i class="entypo-menu"></i>
 						</a>
 					</div>
 				</nav>
-				
+
 			</header>
-			
+
 		</div>
-		
+
 	</div>
-	
-</div>	
+
+</div>
 	<section class="ari-video-section" style="background-image:url(<%=asset_path 'main_image.png'%>); background-repeat: no-repeat; background-size: cover; background-position: center center;">
-	
+
 	<div class="container">
-		
+
 		<div class="row">
-			
+
 			<div class="col-md-12">
 				<div class="ari-video-wrap">
 
-					<h1>Enjoy Your Circle with Aritor!!</h1>
-					<br>
-					<h2>
-					<div class="title">동아리 멤버 활동 모니터링 플랫폼</div>Aritor와 함께 손쉬운 동아리 관리를 경험 하세요.</h2>
-					
+					<h1 class="ari-root-title">동아리 멤버 활동 모니터링 플랫폼</h1>
+
+					<h4>Aritor와 함께 손쉬운 동아리 관리를 경험 하세요.</h4>
+
 					<div class="ari-video">
 						<!-- <a href="javascript:;" onclick="jQuery('#modal-video').modal('show');"> -->
 						<a href="#">
 							<%= image_tag("btn_play.png", id: "playBtn", class: "img-responsive", width:"140", height:"140") %>
 						</a>
+						<div class="ari-video-description" >Watch the video</div>
 					</div>
+
 				</div>
 			</div>
-			
+
 		</div>
-		
+
 	</div>
-	
+
 </section>
 
 
 
 <section class="features-blocks">
-	
+
 	<div class="ari-main-explain container">
-		<div class="row">			
+		<div class="row">
 			<div class="ari-main-explain-row col-md-12">
-				
+
 				<div class="row">
 
 					<div class="ari-main-title col-md-12">
@@ -107,13 +108,13 @@
 					</div>
 
 				</div>
-				
+
 			</div>
 
 			<hr />
-			
+
 			<div class="ari-main-explain-row col-md-12">
-				
+
 				<div class="row">
 
 					<div class="contents col-md-6">
@@ -135,13 +136,13 @@
 					</div>
 
 				</div>
-				
+
 			</div>
-			
+
 			<hr />
 
 			<div class="ari-main-explain-row col-md-12">
-				
+
 				<div class="row">
 
 					<div class="contents col-md-6">
@@ -163,26 +164,26 @@
 					</div>
 
 				</div>
-			
+
 		</div>
-	
+
 	</div>
-	
+
 </section>
 
 <hr />
 
 <section class="portfolio-widget">
-	
+
 	<div class="container">
-		
+
 		<div class="ari-price-row row">
 			<div class="ari-main-title col-sm-12">
 				<h1>Pricing</h1>
 				<p class="lead">Aritor의 가격 정책 입니다.</p>
 			</div>
 			<div class="col-sm-4">
-				
+
 				<div id="plans-free" class="ari-price-table">
 					<div class="tr">
 						<div class="th">Basic<strong>멤버 최대 300명 수용가능</strong></div>
@@ -201,17 +202,17 @@
 								<li>업무 진행상황 모니터링 서비스</li>
 								<li>회계관리 모니터링 서비스</li>
 								<li><hr></li>
-								
+
 								<li><span class="addon-price">무료</span></li>
 							</ul>
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
-			
+
 			<div class="col-sm-4">
-				
+
 				<div class="ari-price-table">
 					<div class="tr">
 						<div class="th">Pro<strong>멤버 최대 1000명 수용가능</strong></div>
@@ -224,12 +225,12 @@
 					<div class="tr">
 						<div class="td">
 							<ul class="ari-price-ul">
-								
+
 								<li>Basic 제공기능 외</li>
 								<li class="header">납부내역 자동확인 서비스</li>
 								<li><br></li>
 								<li><br></li>
-								
+
 								<li><br></li>
 								<li><hr></li>
 								<li><span class="addon-price">9,900원/월</span></li>
@@ -237,11 +238,11 @@
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
-			
+
 			<div class="col-sm-4">
-				
+
 				<div class="ari-price-table">
 					<div class="tr">
 						<div class="th">Premium<strong>멤버 무제한 수용가능</strong></div>
@@ -256,7 +257,7 @@
 							<ul class="ari-price-ul">
 								<li>Pro 제공기능 외</li>
 								<li class="header">동아리 교류 매칭 플랫폼</li>
-								<li>동아리 연합 이벤트 서비스</li>	
+								<li>동아리 연합 이벤트 서비스</li>
 								<li>크로스 리쿠르팅 서비스</li>
 								<li><br></li>
 								<li><hr></li>
@@ -266,21 +267,21 @@
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
-			
+
 		</div>
-		
+
 	</div>
-	
+
 </section>
 
 <hr />
 
 <section class="clients-logos-container">
-	
+
 	<div class="container">
-		
+
 		<div class="ari-company-row row">
 
 			<div class="ari-main-title col-sm-12">
@@ -338,9 +339,9 @@
 					</a>
 				</div>
 			</div>
-			
+
 		</div>
-		
+
 	</div>
 
 </div>
@@ -348,12 +349,12 @@
 <div class="modal fade" id="modal-login">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			
+
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">Login</h4>
 			</div>
-			
+
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-xs-6 text-center">
@@ -374,7 +375,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="modal-footer">
 				<button type="button" class="btn btn-red" data-dismiss="modal">Close</button>
 			</div>
