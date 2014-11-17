@@ -9,9 +9,8 @@
 			<header class="site-header">
 			
 				<section class="site-logo">
-				
-					<a href="http://demo.neontheme.com/frontend/main/">
-						<img src="http://demo.neontheme.com/assets/frontend/images/logo@2x.png" width="120">
+					<a href="<%= root_path %>">
+						<%= image_tag("logo.png", id: "playBtn", class: "img-responsive", width:"140") %>
 					</a>
 					
 				</section>
@@ -44,7 +43,7 @@
 	</div>
 	
 </div>	
-	<section class="ari-video-section" style="background-image: url(http://demo.neontheme.com/assets/frontend/images/slide-img-1-bg.png);">
+	<section class="ari-video-section" style="background-image:url(<%=asset_path 'main_image.png'%>); height: 600px; background-repeat: no-repeat; background-size: cover; background-position: center center;">
 	
 	<div class="container">
 		
@@ -56,10 +55,12 @@
 					<h1>Outsource your vocabulary with Aritor!!</h1>
 					<h4>Biscuit is the ultimate vocabulary sidekick - <br> Faster than a dictionary,
 easier to use than traditional flash cards or word lists, and always by your side.</h4>
-
+					
 					<div class="ari-video">
-						<a href="">
+						<a href="javascript:;" onclick="jQuery('#modal-video').modal('show');">
 							<%= image_tag("btn_play.png", id: "playBtn", class: "img-responsive", width:"140", height:"140") %>
+							<br>
+							<p>Watch the Video</p>
 						</a>
 					</div>
 
@@ -72,13 +73,12 @@ easier to use than traditional flash cards or word lists, and always by your sid
 	
 </section>
 
-<hr />
+
 
 <section class="features-blocks">
 	
 	<div class="ari-main-explain container">
-		
-		<div class="row vspace">			
+		<div class="row">			
 			<div class="ari-main-explain-row col-md-12">
 				
 				<div class="row">
@@ -360,3 +360,13 @@ easier to use than traditional flash cards or word lists, and always by your sid
 		</div>
 	</div>
 </div>
+
+<div class="modal fade custom-width" id="modal-video" aria-hidden="true" style="display: none;">
+	<div class="ari-modal-dialog modal-dialog text-center">
+		<div>
+			<iframe id="player1" src="//player.vimeo.com/video/76979871?api=1&player_id=player1" width="630" height="354" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		</div>
+		<!-- <button type="button" class="btn btn-red" data-dismiss="modal">Close</button> -->
+	</div>
+</div>
+
