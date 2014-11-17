@@ -16,6 +16,7 @@ class Admin::ActivitiesController < Admin::ApplicationController
       SlackNotifier.notify("햇빛봉사단이 이벤트을 추가하였습니다! : #{@activity.title}, #{@activity.description}")
       redirect_to club_admin_root_path(current_club)
     else
+      @init_date = params[:activity][:event_at].strftime("%m/%d/%Y")
       render 'new'
     end
   end
