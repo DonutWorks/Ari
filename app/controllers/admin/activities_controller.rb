@@ -48,6 +48,7 @@ class Admin::ActivitiesController < Admin::ApplicationController
       flash[:notice] = "\"#{@activity.title}\" 이벤트 성공적으로 수정했습니다."
       redirect_to club_admin_root_path(current_club)
     else
+      @init_date = params[:activity][:event_at].strftime("%m/%d/%Y")
       render 'edit'
     end
   end
