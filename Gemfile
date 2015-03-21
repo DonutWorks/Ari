@@ -94,3 +94,4 @@ gem 'kaminari', '~> 0.16.1'
 # active-record observer
 gem 'rails-observers'
 gem 'draper', '~> 1.4.0'
+gem 'googl', '~> 0.7.0'

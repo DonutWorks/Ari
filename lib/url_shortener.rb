@@ -1,27 +1,17 @@
 class URLShortener
-  API_REQUEST_URL = "https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyA5-F8Di51O7rijYgzTeT8cmK1w4QDjCT8"
+  API_KEY = "AIzaSyBawrZ6u8uOTYieaoikGhqFXWibg5XJsq4".freeze
+
+  def initialize(request)
+    @request = request
+  end
 
   def shorten_url(url)
-    uri = URI.parse(API_REQUEST_URL)
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    if @request
+      result = Googl.shorten(url, @request.remote_ip, API_KEY)
+    else
+      result = Googl.shorten(url)
+    end
 
-    request = create_api_request(uri, url)
-    response = request_api_call(request, http)
-
-    result = JSON.parse(response.body.to_s)
-    result["id"]
-  end
-
-private
-  def create_api_request(uri, url)
-    request = Net::HTTP::Post.new(uri.path, {'Content-Type' => 'application/json'})
-    request.body = '{"longUrl" : "' + url + '"}'
-    request
-  end
-
-  def request_api_call(request, http)
-    http.request(request)
+    result.short_url
   end
 end
