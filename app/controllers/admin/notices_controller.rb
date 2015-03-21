@@ -27,7 +27,7 @@ class Admin::NoticesController < Admin::ApplicationController
     end if @notice.notice_type == "checklist"
 
     if @notice.save
-      shortener = URLShortener.new
+      shortener = URLShortener.new(request)
       @notice.shortenURL = shortener.shorten_url(club_notice_url(current_club, @notice))
       @notice.save!
 
