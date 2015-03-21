@@ -7,6 +7,7 @@ class Response < ActiveRecord::Base
   }
 
   STATUSES = %w(yes maybe no go wait)
+  PERMISSION_GROUP = %w(명예단원 정단원 예비단원)
 
   belongs_to :notice
   belongs_to :expense_record
@@ -21,6 +22,7 @@ class Response < ActiveRecord::Base
   validates :user, uniqueness: { scope: :notice_id, message: "는 하나의 응답만을 할 수 있습니다." }
   validates :user, presence: true
   validates :notice, presence: true
+  validate :user_has_permission?
 
   def self.find_remaining_responses(club)
     cases = []
@@ -43,5 +45,9 @@ private
   def destroy_public_activities
     activities = PublicActivity::Activity.where(trackable: self)
     activities.destroy_all
+  end
+
+  def user_has_permission?
+    errors.add(:base, "참가 권한이 없습니다.") unless PERMISSION_GROUP.include?(user.member_type)
   end
 end
