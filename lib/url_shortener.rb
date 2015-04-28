@@ -1,7 +1,7 @@
 class URLShortener
   API_KEY = "AIzaSyBawrZ6u8uOTYieaoikGhqFXWibg5XJsq4".freeze
 
-  def initialize(request)
+  def initialize(request = nil)
     @request = request
   end
 
