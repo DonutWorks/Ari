@@ -47,7 +47,7 @@ module Authenticates
 
     def send_invitation_sms(user, invitation_url)
       return true if Rails.env.test?
-      shortener = URLShortener.new(request)
+      shortener = URLShortener.new
       url = shortener.shorten_url(invitation_url)
 
       normalizer = FormNormalizers::PhoneNumberNormalizer.new
